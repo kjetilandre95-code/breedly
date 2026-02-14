@@ -1,0 +1,2719 @@
+﻿{
+  "@@locale": "en",
+  "appTitle": "Breedly",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Navigation label for home screen"
+  },
+  "dogs": "Dogs",
+  "@dogs": {
+    "description": "Navigation label for dogs section"
+  },
+  "litters": "Litters",
+  "@litters": {
+    "description": "Navigation label for litters section"
+  },
+  "finance": "Finance",
+  "@finance": {
+    "description": "Navigation label for finance section"
+  },
+  "gallery": "Gallery",
+  "@gallery": {
+    "description": "Navigation label for gallery section"
+  },
+  "buyers": "Buyers",
+  "@buyers": {
+    "description": "Navigation label for buyers section"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Navigation label for settings screen"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Label for language setting"
+  },
+  "addDog": "Add dog",
+  "@addDog": {
+    "description": "Button label to add a new dog"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Label for name field"
+  },
+  "breed": "Breed",
+  "@breed": {
+    "description": "Label for breed field"
+  },
+  "color": "Color",
+  "@color": {
+    "description": "Label for color field"
+  },
+  "gender": "Gender",
+  "@gender": {
+    "description": "Label for gender field"
+  },
+  "male": "Male",
+  "@male": {
+    "description": "Gender option for male"
+  },
+  "female": "Female",
+  "@female": {
+    "description": "Gender option for female"
+  },
+  "dateOfBirth": "Date of birth",
+  "@dateOfBirth": {
+    "description": "Label for date of birth field"
+  },
+  "age": "Age",
+  "@age": {
+    "description": "Label for age display"
+  },
+  "registrationNumber": "Registration number",
+  "@registrationNumber": {
+    "description": "Label for registration number field"
+  },
+  "notes": "Notes",
+  "@notes": {
+    "description": "Label for notes field"
+  },
+  "heatCycles": "Heat cycles",
+  "@heatCycles": {
+    "description": "Label for heat cycles section"
+  },
+  "addHeatCycle": "Add heat date",
+  "@addHeatCycle": {
+    "description": "Button label to add a heat cycle"
+  },
+  "noHeatCycles": "No heat dates registered",
+  "@noHeatCycles": {
+    "description": "Message when no heat cycles are registered"
+  },
+  "saveDog": "Save dog",
+  "@saveDog": {
+    "description": "Button label to save dog"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Button label for save action"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Button label for delete action"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Button label for edit action"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button label for cancel action"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Button label for confirm action"
+  },
+  "confirmDelete": "Are you sure you want to delete?",
+  "@confirmDelete": {
+    "description": "Confirmation message for delete action"
+  },
+  "deleteHeatCycle": "Delete heat date",
+  "@deleteHeatCycle": {
+    "description": "Title for delete heat cycle dialog"
+  },
+  "deleteHeatCycleConfirm": "Are you sure you want to delete this heat date?",
+  "@deleteHeatCycleConfirm": {
+    "description": "Confirmation message for deleting heat cycle"
+  },
+  "heatCycleAdded": "Heat date added",
+  "@heatCycleAdded": {
+    "description": "Success message when heat cycle is added"
+  },
+  "heatCycleDeleted": "Heat date deleted",
+  "@heatCycleDeleted": {
+    "description": "Success message when heat cycle is deleted"
+  },
+  "dogAdded": "Dog added",
+  "@dogAdded": {
+    "description": "Success message when dog is added"
+  },
+  "basic": "Basic information",
+  "@basic": {
+    "description": "Label for basic information section"
+  },
+  "pedigree": "Pedigree",
+  "@pedigree": {
+    "description": "Label for pedigree section"
+  },
+  "mother": "Dam (Female)",
+  "@mother": {
+    "description": "Label for mother/dam field"
+  },
+  "father": "Sire (Male)",
+  "@father": {
+    "description": "Label for father/sire field"
+  },
+  "notRegistered": "Not registered",
+  "@notRegistered": {
+    "description": "Status text for not registered"
+  },
+  "unknown": "Unknown",
+  "@unknown": {
+    "description": "Text for unknown value"
+  },
+  "daysSince": "days ago",
+  "@daysSince": {
+    "description": "Text suffix for days since"
+  },
+  "noDogsAdded": "No dogs added",
+  "@noDogsAdded": {
+    "description": "Message when no dogs are added"
+  },
+  "addNewDog": "Add a new dog to get started",
+  "@addNewDog": {
+    "description": "Instruction to add first dog"
+  },
+  "selectBreed": "Select breed",
+  "@selectBreed": {
+    "description": "Placeholder for breed selection"
+  },
+  "selectBreedTitle": "Select breed",
+  "@selectBreedTitle": {
+    "description": "Title for breed selection dialog"
+  },
+  "searchBreed": "Search breed...",
+  "@searchBreed": {
+    "description": "Placeholder for breed search field"
+  },
+  "noBreeds": "No breeds found",
+  "@noBreeds": {
+    "description": "Message when no breeds match search"
+  },
+  "optional": "optional",
+  "@optional": {
+    "description": "Text indicating field is optional"
+  },
+  "addLitter": "Add new litter",
+  "@addLitter": {
+    "description": "Button label to add a new litter"
+  },
+  "welcomeToBreedly": "Welcome to Breedly!",
+  "@welcomeToBreedly": {
+    "description": "Welcome message title"
+  },
+  "welcomeMessage": "Your digital kennel assistant",
+  "@welcomeMessage": {
+    "description": "Welcome message subtitle"
+  },
+  "quickActions": "Quick actions",
+  "@quickActions": {
+    "description": "Label for quick actions section"
+  },
+  "newLitter": "New litter",
+  "@newLitter": {
+    "description": "Button label for new litter"
+  },
+  "setupKennelProfile": "Set up kennel profile",
+  "@setupKennelProfile": {
+    "description": "Button label to set up kennel profile"
+  },
+  "setupKennelMessage": "Add information about your kennel",
+  "@setupKennelMessage": {
+    "description": "Description for kennel profile setup"
+  },
+  "syncingData": "Syncing data...",
+  "@syncingData": {
+    "description": "Status message during data sync"
+  },
+  "dataSynced": "Data synced",
+  "@dataSynced": {
+    "description": "Success message when data is synced"
+  },
+  "syncFailed": "Could not sync data",
+  "@syncFailed": {
+    "description": "Error message when sync fails"
+  },
+  "syncToCloud": "Upload to cloud",
+  "@syncToCloud": {
+    "description": "Button to upload local data to cloud"
+  },
+  "syncFromCloud": "Download from cloud",
+  "@syncFromCloud": {
+    "description": "Button to download data from cloud"
+  },
+  "syncInfo": "Use 'Upload to cloud' to sync local data to the cloud. 'Download from cloud' retrieves data from other devices.",
+  "@syncInfo": {
+    "description": "Info text explaining sync buttons"
+  },
+  "activeLitters": "Active litters",
+  "@activeLitters": {
+    "description": "Label for active litters section"
+  },
+  "puppies": "Puppies",
+  "@puppies": {
+    "description": "Label for puppies"
+  },
+  "overview": "Overview",
+  "@overview": {
+    "description": "Label for overview tab"
+  },
+  "statistics": "Statistics",
+  "@statistics": {
+    "description": "Label for statistics section"
+  },
+  "upcomingEvents": "Upcoming events",
+  "@upcomingEvents": {
+    "description": "Label for upcoming events section"
+  },
+  "newDog": "New dog",
+  "@newDog": {
+    "description": "Button label for adding new dog"
+  },
+  "kennel": "Kennel",
+  "@kennel": {
+    "description": "Label for kennel"
+  },
+  "all": "All",
+  "@all": {
+    "description": "Filter option for all items"
+  },
+  "active": "Active",
+  "@active": {
+    "description": "Filter option for active items"
+  },
+  "weaning": "Weaning",
+  "@weaning": {
+    "description": "Filter option for weaning phase"
+  },
+  "older": "Older",
+  "@older": {
+    "description": "Filter option for older items"
+  },
+  "noLittersRegistered": "No litters registered",
+  "@noLittersRegistered": {
+    "description": "Message when no litters are registered"
+  },
+  "registerFirstLitter": "Register your first litter to get started",
+  "@registerFirstLitter": {
+    "description": "Instruction to register first litter"
+  },
+  "noActiveLitters": "No active litters (0-8 weeks)",
+  "@noActiveLitters": {
+    "description": "Message when no active litters"
+  },
+  "noWeaningLitters": "No litters in weaning phase (8-12 weeks)",
+  "@noWeaningLitters": {
+    "description": "Message when no weaning litters"
+  },
+  "noOlderLitters": "No older litters (12+ weeks)",
+  "@noOlderLitters": {
+    "description": "Message when no older litters"
+  },
+  "noLittersInCategory": "No litters in this category",
+  "@noLittersInCategory": {
+    "description": "Message when no litters in selected category"
+  },
+  "tryAnotherCategory": "Try another category",
+  "@tryAnotherCategory": {
+    "description": "Suggestion to try another category"
+  },
+  "dataInApp": "App data",
+  "@dataInApp": {
+    "description": "Label for app data section"
+  },
+  "aboutApp": "About the app",
+  "@aboutApp": {
+    "description": "Label for about app section"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Label for version info"
+  },
+  "developer": "Developer",
+  "@developer": {
+    "description": "Label for developer info"
+  },
+  "sortBy": "Sort by",
+  "@sortBy": {
+    "description": "Label for sort options"
+  },
+  "birthDate": "Birth date",
+  "@birthDate": {
+    "description": "Label for birth date"
+  },
+  "puppyCount": "Puppy count",
+  "@puppyCount": {
+    "description": "Label for puppy count"
+  },
+  "available": "Available",
+  "@available": {
+    "description": "Status label for available"
+  },
+  "searchDog": "Search for dog...",
+  "@searchDog": {
+    "description": "Placeholder for dog search field"
+  },
+  "females": "Females",
+  "@females": {
+    "description": "Label for females filter"
+  },
+  "males": "Males",
+  "@males": {
+    "description": "Label for males filter"
+  },
+  "noResults": "No results",
+  "@noResults": {
+    "description": "Message when no search results"
+  },
+  "tryDifferentSearch": "Try a different search term",
+  "@tryDifferentSearch": {
+    "description": "Suggestion to try different search"
+  },
+  "noFemalesRegistered": "No females registered",
+  "@noFemalesRegistered": {
+    "description": "Message when no females registered"
+  },
+  "addFirstFemale": "Add your first female",
+  "@addFirstFemale": {
+    "description": "Instruction to add first female"
+  },
+  "noMalesRegistered": "No males registered",
+  "@noMalesRegistered": {
+    "description": "Message when no males registered"
+  },
+  "addFirstMale": "Add your first male",
+  "@addFirstMale": {
+    "description": "Instruction to add first male"
+  },
+  "noDogsRegistered": "No dogs registered",
+  "@noDogsRegistered": {
+    "description": "Message when no dogs registered"
+  },
+  "getStartedAddDog": "Get started by adding your first dog",
+  "@getStartedAddDog": {
+    "description": "Instruction to add first dog"
+  },
+  "heatInDays": "Heat in {days} d",
+  "@heatInDays": {
+    "description": "Text showing days until heat",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "year": "year",
+  "@year": {
+    "description": "Singular form of year"
+  },
+  "years": "years",
+  "@years": {
+    "description": "Plural form of years"
+  },
+  "month": "month",
+  "@month": {
+    "description": "Singular form of month"
+  },
+  "months": "months",
+  "@months": {
+    "description": "Plural form of months"
+  },
+  "myDogs": "My dogs",
+  "@myDogs": {
+    "description": "Title for my dogs section"
+  },
+  "welcomeTo": "Welcome to {name}!",
+  "@welcomeTo": {
+    "description": "Welcome message with kennel name",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "expenses": "Expenses",
+  "@expenses": {
+    "description": "Label for expenses"
+  },
+  "income": "Income",
+  "@income": {
+    "description": "Label for income"
+  },
+  "balance": "Balance",
+  "@balance": {
+    "description": "Label for balance"
+  },
+  "noTransactions": "No transactions",
+  "@noTransactions": {
+    "description": "Message when no transactions"
+  },
+  "addFirstTransaction": "Add your first transaction",
+  "@addFirstTransaction": {
+    "description": "Instruction to add first transaction"
+  },
+  "addTransaction": "Add transaction",
+  "@addTransaction": {
+    "description": "Button label to add transaction"
+  },
+  "amount": "Amount",
+  "@amount": {
+    "description": "Label for amount field"
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Label for description field"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Label for category field"
+  },
+  "date": "Date",
+  "@date": {
+    "description": "Label for date field"
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Label for type field"
+  },
+  "expense": "Expense",
+  "@expense": {
+    "description": "Label for expense type"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Label for theme setting"
+  },
+  "selectTheme": "Select theme",
+  "@selectTheme": {
+    "description": "Title for theme selection"
+  },
+  "colorTheme": "Color theme",
+  "@colorTheme": {
+    "description": "Label for color theme setting"
+  },
+  "lightMode": "Light mode",
+  "@lightMode": {
+    "description": "Theme option for light mode"
+  },
+  "darkMode": "Dark mode",
+  "@darkMode": {
+    "description": "Theme option for dark mode"
+  },
+  "systemMode": "Follow system",
+  "@systemMode": {
+    "description": "Theme option to follow system"
+  },
+  "noBuyersRegistered": "No buyers registered",
+  "@noBuyersRegistered": {
+    "description": "Message when no buyers registered"
+  },
+  "addFirstBuyer": "Add your first buyer",
+  "@addFirstBuyer": {
+    "description": "Instruction to add first buyer"
+  },
+  "addBuyer": "Add buyer",
+  "@addBuyer": {
+    "description": "Button label to add buyer"
+  },
+  "buyerName": "Buyer name",
+  "@buyerName": {
+    "description": "Label for buyer name field"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Label for email field"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Label for phone field"
+  },
+  "address": "Address",
+  "@address": {
+    "description": "Label for address field"
+  },
+  "reservedPuppy": "Reserved puppy",
+  "@reservedPuppy": {
+    "description": "Label for reserved puppy"
+  },
+  "noReservation": "No reservation",
+  "@noReservation": {
+    "description": "Status for no reservation"
+  },
+  "puppy": "Puppy",
+  "@puppy": {
+    "description": "Label for puppy"
+  },
+  "contract": "Contract",
+  "@contract": {
+    "description": "Label for contract"
+  },
+  "createContract": "Create contract",
+  "@createContract": {
+    "description": "Button label to create contract"
+  },
+  "sendContract": "Send contract",
+  "@sendContract": {
+    "description": "Button label to send contract"
+  },
+  "contractSent": "Contract sent",
+  "@contractSent": {
+    "description": "Status when contract is sent"
+  },
+  "contractSigned": "Contract signed",
+  "@contractSigned": {
+    "description": "Status when contract is signed"
+  },
+  "price": "Price",
+  "@price": {
+    "description": "Label for price field"
+  },
+  "deposit": "Deposit",
+  "@deposit": {
+    "description": "Label for deposit field"
+  },
+  "depositPaid": "Deposit paid",
+  "@depositPaid": {
+    "description": "Status when deposit is paid"
+  },
+  "fullPayment": "Full payment",
+  "@fullPayment": {
+    "description": "Label for full payment"
+  },
+  "paymentReceived": "Payment received",
+  "@paymentReceived": {
+    "description": "Status when payment is received"
+  },
+  "pickupDate": "Pickup date",
+  "@pickupDate": {
+    "description": "Label for pickup date field"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Label for search"
+  },
+  "filter": "Filter",
+  "@filter": {
+    "description": "Label for filter"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Button label to clear"
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Button label to apply"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading status text"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Label for error"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button label to retry"
+  },
+  "success": "Success",
+  "@success": {
+    "description": "Label for success"
+  },
+  "warning": "Warning",
+  "@warning": {
+    "description": "Label for warning"
+  },
+  "info": "Info",
+  "@info": {
+    "description": "Label for info"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Button label to close"
+  },
+  "back": "Back",
+  "@back": {
+    "description": "Button label to go back"
+  },
+  "next": "Next",
+  "@next": {
+    "description": "Button label for next"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Button label for done"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Button label for yes"
+  },
+  "no": "No",
+  "@no": {
+    "description": "Button label for no"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Button label for OK"
+  },
+  "sync": "Sync",
+  "@sync": {
+    "description": "Button label to sync"
+  },
+  "account": "Account",
+  "@account": {
+    "description": "Label for account"
+  },
+  "logOut": "Log out",
+  "@logOut": {
+    "description": "Button label to log out"
+  },
+  "logOutConfirm": "Are you sure you want to log out?",
+  "@logOutConfirm": {
+    "description": "Confirmation message for log out"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Label for notifications"
+  },
+  "manageReminders": "Manage reminders",
+  "@manageReminders": {
+    "description": "Label for manage reminders"
+  },
+  "updateAllReminders": "Update all reminders",
+  "@updateAllReminders": {
+    "description": "Button label to update all reminders"
+  },
+  "updatingReminders": "Updating all reminders...",
+  "@updatingReminders": {
+    "description": "Status message when updating reminders"
+  },
+  "remindersUpdated": "All reminders updated!",
+  "@remindersUpdated": {
+    "description": "Success message when reminders updated"
+  },
+  "notificationsInfo": "Notifications are automatically scheduled for treatments, whelping, and delivery dates.",
+  "@notificationsInfo": {
+    "description": "Information about notifications"
+  },
+  "turnOffAllNotifications": "Turn off all notifications",
+  "@turnOffAllNotifications": {
+    "description": "Button label to turn off notifications"
+  },
+  "turnOffNotificationsTitle": "Turn off all notifications?",
+  "@turnOffNotificationsTitle": {
+    "description": "Title for turn off notifications dialog"
+  },
+  "turnOffNotificationsMessage": "This will remove all scheduled reminders. You can always enable them again.",
+  "@turnOffNotificationsMessage": {
+    "description": "Message for turn off notifications dialog"
+  },
+  "turnOff": "Turn off",
+  "@turnOff": {
+    "description": "Button label to turn off"
+  },
+  "allNotificationsTurnedOff": "All notifications turned off",
+  "@allNotificationsTurnedOff": {
+    "description": "Success message when notifications turned off"
+  },
+  "viewDetailedStatistics": "View detailed statistics",
+  "@viewDetailedStatistics": {
+    "description": "Button label to view statistics"
+  },
+  "notLoggedIn": "Not logged in",
+  "@notLoggedIn": {
+    "description": "Status for not logged in"
+  },
+  "noUpcomingEvents": "No upcoming events",
+  "@noUpcomingEvents": {
+    "description": "Message when no upcoming events"
+  },
+  "registerHeatOrMating": "Register heat cycle or mating to see events here",
+  "@registerHeatOrMating": {
+    "description": "Instruction to register heat or mating"
+  },
+  "today": "Today",
+  "@today": {
+    "description": "Label for today"
+  },
+  "tomorrow": "Tomorrow",
+  "@tomorrow": {
+    "description": "Label for tomorrow"
+  },
+  "daysAgo": "{days} days ago",
+  "@daysAgo": {
+    "description": "Text showing days ago",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "daysRemaining": "{days} days",
+  "@daysRemaining": {
+    "description": "Text showing days remaining",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "weeksRemaining": "{weeks} weeks",
+  "@weeksRemaining": {
+    "description": "Text showing weeks remaining",
+    "placeholders": {
+      "weeks": {"type": "int"}
+    }
+  },
+  "urgent": "URGENT",
+  "@urgent": {
+    "description": "Label for urgent status"
+  },
+  "heatCycleEvent": "Heat: {dogName}",
+  "@heatCycleEvent": {
+    "description": "Event title for heat cycle",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "estimatedHeatStart": "Estimated heat starts",
+  "@estimatedHeatStart": {
+    "description": "Label for estimated heat start"
+  },
+  "matingWindow": "Mating window: {dogName}",
+  "@matingWindow": {
+    "description": "Event title for mating window",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "dueDate": "Due date: {dogName}",
+  "@dueDate": {
+    "description": "Event title for due date",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "daysUntilBirth": "{days} days until expected birth",
+  "@daysUntilBirth": {
+    "description": "Text showing days until birth",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "delivery": "Delivery: {puppyName}",
+  "@delivery": {
+    "description": "Event title for delivery",
+    "placeholders": {
+      "puppyName": {"type": "String"}
+    }
+  },
+  "toBuyer": "To {buyerName}",
+  "@toBuyer": {
+    "description": "Text showing buyer name",
+    "placeholders": {
+      "buyerName": {"type": "String"}
+    }
+  },
+  "readyForDelivery": "Ready for delivery",
+  "@readyForDelivery": {
+    "description": "Status for ready for delivery"
+  },
+  "planned": "Planned",
+  "@planned": {
+    "description": "Status for planned"
+  },
+  "nursing": "Nursing",
+  "@nursing": {
+    "description": "Status for nursing"
+  },
+  "archive": "Archive",
+  "@archive": {
+    "description": "Label for archive"
+  },
+  "themeForestGreen": "Forest Green",
+  "@themeForestGreen": {
+    "description": "Theme color option"
+  },
+  "themeOceanBlue": "Ocean Blue",
+  "@themeOceanBlue": {
+    "description": "Theme color option"
+  },
+  "themeTerracotta": "Terracotta",
+  "@themeTerracotta": {
+    "description": "Theme color option"
+  },
+  "themePlum": "Plum",
+  "@themePlum": {
+    "description": "Theme color option"
+  },
+  "themeSlate": "Slate",
+  "@themeSlate": {
+    "description": "Theme color option"
+  },
+  "themeRose": "Rose",
+  "@themeRose": {
+    "description": "Theme color option"
+  },
+  "themeTeal": "Teal",
+  "@themeTeal": {
+    "description": "Theme color option"
+  },
+  "themeAmber": "Amber",
+  "@themeAmber": {
+    "description": "Theme color option"
+  },
+  "kennelManagement": "Kennel Management",
+  "@kennelManagement": {
+    "description": "Title for kennel management"
+  },
+  "createKennel": "Create Kennel",
+  "@createKennel": {
+    "description": "Button label to create kennel"
+  },
+  "joinKennel": "Join",
+  "@joinKennel": {
+    "description": "Button label to join kennel"
+  },
+  "changeRole": "Change role",
+  "@changeRole": {
+    "description": "Button label to change role"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Button label to remove"
+  },
+  "codeCopied": "Code copied to clipboard",
+  "@codeCopied": {
+    "description": "Success message when code copied"
+  },
+  "inviteMember": "Invite member",
+  "@inviteMember": {
+    "description": "Button label to invite member"
+  },
+  "createInviteCode": "Create invite code",
+  "@createInviteCode": {
+    "description": "Button label to create invite code"
+  },
+  "createNewKennel": "Create new kennel",
+  "@createNewKennel": {
+    "description": "Button label to create new kennel"
+  },
+  "joinWithCode": "Use invite code",
+  "@joinWithCode": {
+    "description": "Button label to join with code"
+  },
+  "leaveKennel": "Leave kennel",
+  "@leaveKennel": {
+    "description": "Button label to leave kennel"
+  },
+  "deleteKennel": "Delete kennel",
+  "@deleteKennel": {
+    "description": "Button label to delete kennel"
+  },
+  "nameRequired": "Name is required",
+  "@nameRequired": {
+    "description": "Validation message for required name"
+  },
+  "mustBeLoggedIn": "You must be logged in",
+  "@mustBeLoggedIn": {
+    "description": "Message requiring login"
+  },
+  "kennelCreated": "Kennel created!",
+  "@kennelCreated": {
+    "description": "Success message when kennel created"
+  },
+  "create": "Create",
+  "@create": {
+    "description": "Button label to create"
+  },
+  "loadingError": "Error loading: {error}",
+  "@loadingError": {
+    "description": "Error message for loading failure",
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "genericError": "Error: {error}",
+  "@genericError": {
+    "description": "Generic error message",
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "forgotPassword": "Forgot password?",
+  "@forgotPassword": {
+    "description": "Link for forgot password"
+  },
+  "resetPassword": "Reset password",
+  "@resetPassword": {
+    "description": "Title for reset password"
+  },
+  "resetPasswordInstructions": "Enter your email address and we will send you a link to reset your password.",
+  "@resetPasswordInstructions": {
+    "description": "Instructions for password reset"
+  },
+  "emailRequired": "Please enter email",
+  "@emailRequired": {
+    "description": "Validation message for required email"
+  },
+  "invalidEmail": "Invalid email address",
+  "@invalidEmail": {
+    "description": "Validation message for invalid email"
+  },
+  "send": "Send",
+  "@send": {
+    "description": "Button label to send"
+  },
+  "emailSentTo": "Email sent to {email}. Check your inbox.",
+  "@emailSentTo": {
+    "description": "Success message for email sent",
+    "placeholders": {
+      "email": {"type": "String"}
+    }
+  },
+  "login": "Log in",
+  "@login": {
+    "description": "Button label for log in"
+  },
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "Button label for sign up"
+  },
+  "continueWithGoogle": "Continue with Google",
+  "@continueWithGoogle": {
+    "description": "Button label for Google login"
+  },
+  "orContinueWith": "or continue with",
+  "@orContinueWith": {
+    "description": "Separator text for login options"
+  },
+  "noAccount": "Don't have an account?",
+  "@noAccount": {
+    "description": "Text for no account"
+  },
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "Text for existing account"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Label for password field"
+  },
+  "confirmPassword": "Confirm password",
+  "@confirmPassword": {
+    "description": "Label for confirm password field"
+  },
+  "passwordRequired": "Please enter password",
+  "@passwordRequired": {
+    "description": "Validation message for required password"
+  },
+  "passwordTooShort": "Password must be at least 6 characters",
+  "@passwordTooShort": {
+    "description": "Validation message for short password"
+  },
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Validation message for mismatched passwords"
+  },
+  "selectDog": "Select dog",
+  "@selectDog": {
+    "description": "Label for dog selection"
+  },
+  "showResults": "Show results",
+  "@showResults": {
+    "description": "Button label to show results"
+  },
+  "totalIncome": "Total income",
+  "@totalIncome": {
+    "description": "Label for total income"
+  },
+  "totalExpense": "Total expense",
+  "@totalExpense": {
+    "description": "Label for total expense"
+  },
+  "netResult": "Net result",
+  "@netResult": {
+    "description": "Label for net result"
+  },
+  "numberOfExpenses": "Number of expenses",
+  "@numberOfExpenses": {
+    "description": "Label for expense count"
+  },
+  "numberOfIncomes": "Number of incomes",
+  "@numberOfIncomes": {
+    "description": "Label for income count"
+  },
+  "noExpensesRegistered": "No expenses registered",
+  "@noExpensesRegistered": {
+    "description": "Message when no expenses"
+  },
+  "addFirstExpense": "Add your first expense to get an overview",
+  "@addFirstExpense": {
+    "description": "Instruction to add first expense"
+  },
+  "addExpense": "Add expense",
+  "@addExpense": {
+    "description": "Button label to add expense"
+  },
+  "noIncomesRegistered": "No incomes registered",
+  "@noIncomesRegistered": {
+    "description": "Message when no incomes"
+  },
+  "addFirstIncome": "Add your first income to get an overview",
+  "@addFirstIncome": {
+    "description": "Instruction to add first income"
+  },
+  "addIncome": "Add income",
+  "@addIncome": {
+    "description": "Button label to add income"
+  },
+  "litter": "Litter",
+  "@litter": {
+    "description": "Label for litter"
+  },
+  "litterOptional": "Litter (optional)",
+  "@litterOptional": {
+    "description": "Label for optional litter field"
+  },
+  "noLitter": "No litter",
+  "@noLitter": {
+    "description": "Option for no litter"
+  },
+  "expenseAdded": "Expense added",
+  "@expenseAdded": {
+    "description": "Success message when expense added"
+  },
+  "incomeAdded": "Income added",
+  "@incomeAdded": {
+    "description": "Success message when income added"
+  },
+  "deleteExpense": "Delete expense?",
+  "@deleteExpense": {
+    "description": "Title for delete expense dialog"
+  },
+  "deleteIncome": "Delete income?",
+  "@deleteIncome": {
+    "description": "Title for delete income dialog"
+  },
+  "buyer": "Buyer",
+  "@buyer": {
+    "description": "Label for buyer"
+  },
+  "buyerOptional": "Buyer (optional)",
+  "@buyerOptional": {
+    "description": "Label for optional buyer field"
+  },
+  "statisticsAndReports": "Statistics & Reports",
+  "@statisticsAndReports": {
+    "description": "Title for statistics section"
+  },
+  "litterStatistics": "Litter statistics",
+  "@litterStatistics": {
+    "description": "Label for litter statistics"
+  },
+  "litterStatisticsDesc": "Average litter size, gender distribution and more.",
+  "@litterStatisticsDesc": {
+    "description": "Description for litter statistics"
+  },
+  "weightDevelopment": "Weight development",
+  "@weightDevelopment": {
+    "description": "Label for weight development"
+  },
+  "weightDevelopmentDesc": "Compare weight development between puppies and litters.",
+  "@weightDevelopmentDesc": {
+    "description": "Description for weight development"
+  },
+  "economyStats": "Economy",
+  "@economyStats": {
+    "description": "Label for economy statistics"
+  },
+  "economyStatsDesc": "Income reports per year and breed.",
+  "@economyStatsDesc": {
+    "description": "Description for economy statistics"
+  },
+  "breedingStatistics": "Breeding statistics",
+  "@breedingStatistics": {
+    "description": "Label for breeding statistics"
+  },
+  "breedingStatisticsDesc": "See which parent combinations give the best results.",
+  "@breedingStatisticsDesc": {
+    "description": "Description for breeding statistics"
+  },
+  "statisticsTip": "Statistics are automatically updated based on your registered data.",
+  "@statisticsTip": {
+    "description": "Tip about statistics updates"
+  },
+  "litterOverview": "Litter overview",
+  "@litterOverview": {
+    "description": "Title for litter overview"
+  },
+  "genderDistribution": "Gender distribution",
+  "@genderDistribution": {
+    "description": "Label for gender distribution"
+  },
+  "litterSizeByBreed": "Litter size by breed",
+  "@litterSizeByBreed": {
+    "description": "Label for litter size by breed"
+  },
+  "littersPerYear": "Litters per year",
+  "@littersPerYear": {
+    "description": "Label for litters per year"
+  },
+  "totalLitters": "Total litters",
+  "@totalLitters": {
+    "description": "Label for total litters"
+  },
+  "averageLitterSize": "Average litter size",
+  "@averageLitterSize": {
+    "description": "Label for average litter size"
+  },
+  "totalPuppies": "Total puppies",
+  "@totalPuppies": {
+    "description": "Label for total puppies"
+  },
+  "largestLitter": "Largest litter",
+  "@largestLitter": {
+    "description": "Label for largest litter"
+  },
+  "smallestLitter": "Smallest litter",
+  "@smallestLitter": {
+    "description": "Label for smallest litter"
+  },
+  "puppiesCount": "{count} puppies",
+  "@puppiesCount": {
+    "description": "Text showing puppy count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "average": "Average",
+  "@average": {
+    "description": "Label for average"
+  },
+  "weightComparison": "Weight comparison between litters",
+  "@weightComparison": {
+    "description": "Title for weight comparison"
+  },
+  "noWeightData": "No weight data registered yet",
+  "@noWeightData": {
+    "description": "Message when no weight data"
+  },
+  "registerWeightForComparison": "Register weight on puppies to compare",
+  "@registerWeightForComparison": {
+    "description": "Instruction to register weight"
+  },
+  "birthWeightAvg": "Birth weight (avg)",
+  "@birthWeightAvg": {
+    "description": "Label for average birth weight"
+  },
+  "latestWeightAvg": "Latest weight (avg)",
+  "@latestWeightAvg": {
+    "description": "Label for average latest weight"
+  },
+  "averageWeightDevelopment": "Average weight development",
+  "@averageWeightDevelopment": {
+    "description": "Title for weight development"
+  },
+  "basedOnAllWeightMeasurements": "Based on all registered weight measurements",
+  "@basedOnAllWeightMeasurements": {
+    "description": "Description for weight data"
+  },
+  "week": "Week",
+  "@week": {
+    "description": "Label for week"
+  },
+  "grams": "Grams",
+  "@grams": {
+    "description": "Unit label for grams"
+  },
+  "birthWeightStatistics": "Birth weight statistics",
+  "@birthWeightStatistics": {
+    "description": "Title for birth weight statistics"
+  },
+  "avgWeight": "Average",
+  "@avgWeight": {
+    "description": "Label for average weight"
+  },
+  "minWeight": "Min",
+  "@minWeight": {
+    "description": "Label for minimum weight"
+  },
+  "maxWeight": "Max",
+  "@maxWeight": {
+    "description": "Label for maximum weight"
+  },
+  "malesAvg": "Males (avg)",
+  "@malesAvg": {
+    "description": "Label for male average"
+  },
+  "femalesAvg": "Females (avg)",
+  "@femalesAvg": {
+    "description": "Label for female average"
+  },
+  "noSalesData": "No sales data available",
+  "@noSalesData": {
+    "description": "Message when no sales data"
+  },
+  "createContractsForStats": "Create purchase contracts to see economy statistics",
+  "@createContractsForStats": {
+    "description": "Instruction to create contracts"
+  },
+  "showResultsOverview": "Overview",
+  "@showResultsOverview": {
+    "description": "Tab label for overview"
+  },
+  "showResultsStatistics": "Statistics",
+  "@showResultsStatistics": {
+    "description": "Tab label for statistics"
+  },
+  "exhibitionResults": "Exhibition results",
+  "@exhibitionResults": {
+    "description": "Title for exhibition results"
+  },
+  "exhibitionResultsDesc": "Here you can register and track all exhibition results for {dogName}.",
+  "@exhibitionResultsDesc": {
+    "description": "Description for exhibition results",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "registerResults": "Register results",
+  "@registerResults": {
+    "description": "Button label to register results"
+  },
+  "registerResultsDesc": "Add results from exhibitions",
+  "@registerResultsDesc": {
+    "description": "Description for register results"
+  },
+  "showStatistics": "Statistics",
+  "@showStatistics": {
+    "description": "Button label for statistics"
+  },
+  "showStatisticsDesc": "See statistics on BIR, BIM, group and BIS results",
+  "@showStatisticsDesc": {
+    "description": "Description for show statistics"
+  },
+  "critique": "Critique",
+  "@critique": {
+    "description": "Label for critique"
+  },
+  "critiqueDesc": "Save judge critique for each exhibition",
+  "@critiqueDesc": {
+    "description": "Description for critique"
+  },
+  "showResultTip": "If the dog wins BIR, you can add group result. If it wins the group (BIG1), you can add BIS result.",
+  "@showResultTip": {
+    "description": "Tip for show results"
+  },
+  "results": "Results",
+  "@results": {
+    "description": "Label for results"
+  },
+  "noShowResults": "No exhibition results yet",
+  "@noShowResults": {
+    "description": "Message when no show results"
+  },
+  "tapToAdd": "Tap + to add a result",
+  "@tapToAdd": {
+    "description": "Instruction to tap to add"
+  },
+  "noStatisticsAvailable": "No statistics available",
+  "@noStatisticsAvailable": {
+    "description": "Message when no statistics"
+  },
+  "exhibitions": "Exhibitions",
+  "@exhibitions": {
+    "description": "Label for exhibitions"
+  },
+  "excellent": "Excellent",
+  "@excellent": {
+    "description": "Quality grade excellent"
+  },
+  "veryGood": "Very Good",
+  "@veryGood": {
+    "description": "Quality grade very good"
+  },
+  "good": "Good",
+  "@good": {
+    "description": "Quality grade good"
+  },
+  "sufficient": "Sufficient",
+  "@sufficient": {
+    "description": "Quality grade sufficient"
+  },
+  "disqualified": "Disqualified",
+  "@disqualified": {
+    "description": "Status for disqualified"
+  },
+  "cannotBeJudged": "Cannot be judged",
+  "@cannotBeJudged": {
+    "description": "Status for cannot be judged"
+  },
+  "classPlacements": "Class placements",
+  "bestMaleDog": "Best Male (BM)",
+  "bestFemaleDog": "Best Female (BF)",
+  "breedPlacements": "BOB/BOS",
+  "@breedPlacements": {
+    "description": "Label for breed placements"
+  },
+  "groupAndBIS": "Group & BIS",
+  "@groupAndBIS": {
+    "description": "Label for group and BIS"
+  },
+  "groupFinals": "Group finals",
+  "@groupFinals": {
+    "description": "Label for group finals"
+  },
+  "bestInShow": "Best In Show",
+  "@bestInShow": {
+    "description": "Label for Best In Show"
+  },
+  "certificates": "Certificates",
+  "@certificates": {
+    "description": "Label for certificates"
+  },
+  "juniorCertificates": "Junior certificates",
+  "veteranCertificates": "Veteran certificates",
+  "noCertificates": "No certificates yet",
+  "judges": "Judges",
+  "@judges": {
+    "description": "Label for judges"
+  },
+  "judgesCount": "{count} judges",
+  "@judgesCount": {
+    "description": "Text showing judge count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "seeAllJudges": "See all {count} judges",
+  "@seeAllJudges": {
+    "description": "Link to see all judges",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exhibitionCount": "{count} exhibition",
+  "@exhibitionCount": {
+    "description": "Singular exhibition count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exhibitionsCount": "{count} exhibitions",
+  "@exhibitionsCount": {
+    "description": "Plural exhibitions count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "allJudges": "All judges",
+  "@allJudges": {
+    "description": "Title for all judges"
+  },
+  "addResult": "Add result",
+  "@addResult": {
+    "description": "Button label to add result"
+  },
+  "editResult": "Edit result",
+  "@editResult": {
+    "description": "Button label to edit result"
+  },
+  "deleteResult": "Delete result",
+  "@deleteResult": {
+    "description": "Button label to delete result"
+  },
+  "confirmDeleteResult": "Are you sure you want to delete the result from {showName}?",
+  "@confirmDeleteResult": {
+    "description": "Confirmation for deleting result",
+    "placeholders": {
+      "showName": {"type": "String"}
+    }
+  },
+  "judge": "Judge",
+  "@judge": {
+    "description": "Label for judge"
+  },
+  "result": "Result",
+  "@result": {
+    "description": "Label for result"
+  },
+  "ownNotes": "Own notes",
+  "@ownNotes": {
+    "description": "Label for own notes"
+  },
+  "judgeCritique": "Judge critique",
+  "@judgeCritique": {
+    "description": "Label for judge critique"
+  },
+  "showName": "Show name",
+  "@showName": {
+    "description": "Label for show name"
+  },
+  "showNameHint": "e.g. NKK Drammen",
+  "@showNameHint": {
+    "description": "Hint for show name field"
+  },
+  "showType": "Show type",
+  "@showType": {
+    "description": "Label for show type"
+  },
+  "showClass": "Class",
+  "@showClass": {
+    "description": "Label for show class"
+  },
+  "quality": "Quality",
+  "@quality": {
+    "description": "Label for quality"
+  },
+  "classPlacement": "Class placement",
+  "@classPlacement": {
+    "description": "Label for class placement"
+  },
+  "unplaced": "Unplaced",
+  "@unplaced": {
+    "description": "Status for unplaced"
+  },
+  "bestOfSex": "Best of sex",
+  "@bestOfSex": {
+    "description": "Label for best of sex"
+  },
+  "groupResult": "Group result",
+  "@groupResult": {
+    "description": "Label for group result"
+  },
+  "noPlacement": "No placement",
+  "@noPlacement": {
+    "description": "Status for no placement"
+  },
+  "didNotParticipate": "Did not participate / no placement",
+  "@didNotParticipate": {
+    "description": "Status for did not participate"
+  },
+  "bisResult": "BIS result",
+  "@bisResult": {
+    "description": "Label for BIS result"
+  },
+  "required": "Required",
+  "@required": {
+    "description": "Validation label for required"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "Button label to update"
+  },
+  "puppyShow": "Puppy show",
+  "@puppyShow": {
+    "description": "Show type option"
+  },
+  "national": "National",
+  "@national": {
+    "description": "Show type option"
+  },
+  "nordic": "Nordic",
+  "@nordic": {
+    "description": "Show type option"
+  },
+  "international": "International",
+  "@international": {
+    "description": "Show type option"
+  },
+  "breedSpecial": "Breed special",
+  "@breedSpecial": {
+    "description": "Show type option"
+  },
+  "food": "Food",
+  "@food": {
+    "description": "Expense category"
+  },
+  "veterinary": "Veterinary",
+  "@veterinary": {
+    "description": "Expense category"
+  },
+  "registration": "Registration (Kennel Club)",
+  "@registration": {
+    "description": "Expense category"
+  },
+  "other": "Other",
+  "@other": {
+    "description": "Category option for other"
+  },
+  "noDataAvailable": "No data available",
+  "@noDataAvailable": {
+    "description": "Message when no data"
+  },
+  "registerWeightToSeeStats": "Register weight on puppies to see statistics",
+  "@registerWeightToSeeStats": {
+    "description": "Instruction to register weight"
+  },
+  "noWeightDataRegistered": "No weight data registered yet",
+  "@noWeightDataRegistered": {
+    "description": "Message when no weight data"
+  },
+  "registerWeightToCompare": "Register weight on puppies to compare",
+  "@registerWeightToCompare": {
+    "description": "Instruction to register weight"
+  },
+  "weightComparisonBetweenLitters": "Weight comparison between litters",
+  "@weightComparisonBetweenLitters": {
+    "description": "Title for weight comparison"
+  },
+  "birthWeightAverage": "Birth weight (avg)",
+  "@birthWeightAverage": {
+    "description": "Label for birth weight average"
+  },
+  "latestWeightAverage": "Latest weight (avg)",
+  "@latestWeightAverage": {
+    "description": "Label for latest weight average"
+  },
+  "gram": "Gram",
+  "@gram": {
+    "description": "Unit label for gram"
+  },
+  "min": "Min",
+  "@min": {
+    "description": "Label for minimum"
+  },
+  "max": "Max",
+  "@max": {
+    "description": "Label for maximum"
+  },
+  "malesAverage": "Males (avg)",
+  "@malesAverage": {
+    "description": "Label for males average"
+  },
+  "femalesAverage": "Females (avg)",
+  "@femalesAverage": {
+    "description": "Label for females average"
+  },
+  "noSalesDataAvailable": "No sales data available",
+  "@noSalesDataAvailable": {
+    "description": "Message when no sales data"
+  },
+  "createContractsToSeeStats": "Create purchase contracts to see economy statistics",
+  "@createContractsToSeeStats": {
+    "description": "Instruction to create contracts"
+  },
+  "revenueOverview": "Revenue overview",
+  "@revenueOverview": {
+    "description": "Title for revenue overview"
+  },
+  "totalTurnover": "Total turnover",
+  "@totalTurnover": {
+    "description": "Label for total turnover"
+  },
+  "paid": "Paid",
+  "@paid": {
+    "description": "Status for paid"
+  },
+  "outstanding": "Outstanding",
+  "@outstanding": {
+    "description": "Status for outstanding"
+  },
+  "contractsTotal": "contracts total",
+  "@contractsTotal": {
+    "description": "Label for total contracts"
+  },
+  "revenuePerYear": "Revenue per year",
+  "@revenuePerYear": {
+    "description": "Label for revenue per year"
+  },
+  "revenuePerBreed": "Revenue per breed",
+  "@revenuePerBreed": {
+    "description": "Label for revenue per breed"
+  },
+  "priceStatistics": "Price statistics",
+  "@priceStatistics": {
+    "description": "Title for price statistics"
+  },
+  "averagePrice": "Average price",
+  "@averagePrice": {
+    "description": "Label for average price"
+  },
+  "lowest": "Lowest",
+  "@lowest": {
+    "description": "Label for lowest"
+  },
+  "highest": "Highest",
+  "@highest": {
+    "description": "Label for highest"
+  },
+  "noBreedingDataAvailable": "No breeding data available",
+  "@noBreedingDataAvailable": {
+    "description": "Message when no breeding data"
+  },
+  "registerLittersToSeeBreedingStats": "Register litters to see breeding statistics",
+  "@registerLittersToSeeBreedingStats": {
+    "description": "Instruction to register litters"
+  },
+  "bestParentCombinations": "Best parent combinations",
+  "@bestParentCombinations": {
+    "description": "Title for parent combinations"
+  },
+  "sortedByAverageLitterSize": "Sorted by average litter size",
+  "@sortedByAverageLitterSize": {
+    "description": "Description for sorting"
+  },
+  "avgLitterSize": "Avg litter size",
+  "@avgLitterSize": {
+    "description": "Label for average litter size"
+  },
+  "avgBirthWeight": "Avg birth weight",
+  "@avgBirthWeight": {
+    "description": "Label for average birth weight"
+  },
+  "mostUsedBreedingDogs": "Most used breeding dogs",
+  "@mostUsedBreedingDogs": {
+    "description": "Title for most used breeding dogs"
+  },
+  "placementRate": "Placement rate",
+  "@placementRate": {
+    "description": "Label for placement rate"
+  },
+  "sold": "Sold",
+  "@sold": {
+    "description": "Status for sold"
+  },
+  "reserved": "Reserved",
+  "@reserved": {
+    "description": "Status for reserved"
+  },
+  "ckCertificateQuality": "CK (Certificate Quality)",
+  "@ckCertificateQuality": {
+    "description": "Label for CK certificate"
+  },
+  "bestMalePlacement": "Best male placement",
+  "@bestMalePlacement": {
+    "description": "Label for best male placement"
+  },
+  "bestFemalePlacement": "Best female placement",
+  "@bestFemalePlacement": {
+    "description": "Label for best female placement"
+  },
+  "groupFinal": "Group final",
+  "@groupFinal": {
+    "description": "Label for group final"
+  },
+  "deleteMeasurement": "Delete measurement?",
+  "@deleteMeasurement": {
+    "description": "Title for delete measurement dialog"
+  },
+  "confirmDeleteMeasurement": "Are you sure you want to delete this measurement?",
+  "@confirmDeleteMeasurement": {
+    "description": "Confirmation for deleting measurement"
+  },
+  "deleteVaccine": "Delete vaccine?",
+  "@deleteVaccine": {
+    "description": "Title for delete vaccine dialog"
+  },
+  "confirmDeleteVaccine": "Are you sure you want to delete {name}?",
+  "@confirmDeleteVaccine": {
+    "description": "Confirmation for deleting vaccine",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deleteVetVisit": "Delete vet visit?",
+  "@deleteVetVisit": {
+    "description": "Title for delete vet visit dialog"
+  },
+  "confirmDeleteVetVisit": "Are you sure you want to delete this visit?",
+  "@confirmDeleteVetVisit": {
+    "description": "Confirmation for deleting vet visit"
+  },
+  "deleteTreatment": "Delete treatment?",
+  "@deleteTreatment": {
+    "description": "Title for delete treatment dialog"
+  },
+  "confirmDeleteTreatment": "Are you sure you want to delete {name}?",
+  "@confirmDeleteTreatment": {
+    "description": "Confirmation for deleting treatment",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deleteTest": "Delete test?",
+  "@deleteTest": {
+    "description": "Title for delete test dialog"
+  },
+  "confirmDeleteTest": "Are you sure you want to delete {name}?",
+  "@confirmDeleteTest": {
+    "description": "Confirmation for deleting test",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "remindDaysBefore": "Remind {days} days before",
+  "@remindDaysBefore": {
+    "description": "Text for reminder setting",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "followUpDate": "Follow-up date",
+  "@followUpDate": {
+    "description": "Label for follow-up date"
+  },
+  "reminder": "Reminder",
+  "@reminder": {
+    "description": "Label for reminder"
+  },
+  "daysBefore": "{days} days before",
+  "@daysBefore": {
+    "description": "Text for days before",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "productNameRequired": "Product name is required",
+  "@productNameRequired": {
+    "description": "Validation message for product name"
+  },
+  "testNameRequired": "Test name is required",
+  "@testNameRequired": {
+    "description": "Validation message for test name"
+  },
+  "newBuyer": "New buyer",
+  "@newBuyer": {
+    "description": "Title for new buyer"
+  },
+  "editBuyer": "Edit buyer",
+  "@editBuyer": {
+    "description": "Title for edit buyer"
+  },
+  "deleteBuyer": "Delete buyer?",
+  "@deleteBuyer": {
+    "description": "Title for delete buyer dialog"
+  },
+  "confirmDeleteBuyer": "Are you sure you want to delete {name}?",
+  "@confirmDeleteBuyer": {
+    "description": "Confirmation for deleting buyer",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "confirmRemoveReservation": "Are you sure you want to remove the reservation for this buyer?",
+  "@confirmRemoveReservation": {
+    "description": "Confirmation for removing reservation"
+  },
+  "selectPuppyToReserve": "Select a puppy to reserve:",
+  "@selectPuppyToReserve": {
+    "description": "Instruction to select puppy"
+  },
+  "confirmDelivery": "Confirm that the puppy has been delivered to the buyer. This will mark the puppy as delivered.",
+  "@confirmDelivery": {
+    "description": "Confirmation message for delivery"
+  },
+  "buyerAdded": "Buyer added",
+  "@buyerAdded": {
+    "description": "Success message when buyer added"
+  },
+  "buyerUpdated": "Buyer updated",
+  "@buyerUpdated": {
+    "description": "Success message when buyer updated"
+  },
+  "buyerDeleted": "Buyer deleted",
+  "@buyerDeleted": {
+    "description": "Success message when buyer deleted"
+  },
+  "addDogsFirst": "Add dogs first",
+  "@addDogsFirst": {
+    "description": "Instruction to add dogs first"
+  },
+  "tapToSelectDate": "Tap to select date",
+  "@tapToSelectDate": {
+    "description": "Instruction to tap for date"
+  },
+  "setMatingDateFirst": "Set mating date first",
+  "@setMatingDateFirst": {
+    "description": "Instruction to set mating date"
+  },
+  "pleaseSelectBothParents": "Please select both dam and sire",
+  "@pleaseSelectBothParents": {
+    "description": "Validation message for parents"
+  },
+  "motherMustBeFemale": "Dam must be a female",
+  "@motherMustBeFemale": {
+    "description": "Validation message for mother"
+  },
+  "fatherMustBeMale": "Sire must be a male",
+  "@fatherMustBeMale": {
+    "description": "Validation message for father"
+  },
+  "birthDateLabel": "Birth date",
+  "@birthDateLabel": {
+    "description": "Label for birth date"
+  },
+  "registerBirth": "Register birth",
+  "@registerBirth": {
+    "description": "Button label to register birth"
+  },
+  "litterBornConfirm": "The litter is now born! Do you want to update the birth date to today?",
+  "@litterBornConfirm": {
+    "description": "Confirmation for litter born"
+  },
+  "birthRegistered": "Birth registered! You can now add puppies.",
+  "@birthRegistered": {
+    "description": "Success message when birth registered"
+  },
+  "openTemperatureLog": "Open temperature log",
+  "@openTemperatureLog": {
+    "description": "Button label to open temperature log"
+  },
+  "addMeasurement": "Add measurement",
+  "@addMeasurement": {
+    "description": "Button label to add measurement"
+  },
+  "addWeightMeasurement": "Add weight measurement",
+  "@addWeightMeasurement": {
+    "description": "Button label to add weight measurement"
+  },
+  "weightMeasurementAdded": "Weight measurement added",
+  "@weightMeasurementAdded": {
+    "description": "Success message when weight added"
+  },
+  "weightMeasurementsSaved": "{count} weight measurements saved",
+  "@weightMeasurementsSaved": {
+    "description": "Success message for weight measurements",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "editWeightMeasurement": "Edit weight measurement",
+  "@editWeightMeasurement": {
+    "description": "Title for edit weight measurement"
+  },
+  "weightMeasurementUpdated": "Weight measurement updated",
+  "@weightMeasurementUpdated": {
+    "description": "Success message when weight updated"
+  },
+  "motherAndFatherRequired": "Dam and Sire are required",
+  "@motherAndFatherRequired": {
+    "description": "Validation message for parents required"
+  },
+  "selectBuyer": "Select a buyer",
+  "@selectBuyer": {
+    "description": "Label for buyer selection"
+  },
+  "useStandardTerms": "Use standard terms",
+  "@useStandardTerms": {
+    "description": "Label for standard terms option"
+  },
+  "neuteringRequired": "Neutering/spaying required",
+  "@neuteringRequired": {
+    "description": "Label for neutering requirement"
+  },
+  "selectBuyerBeforeExport": "Select buyer before export",
+  "@selectBuyerBeforeExport": {
+    "description": "Validation message for export"
+  },
+  "confirmDeleteContract": "Are you sure you want to delete this contract?",
+  "@confirmDeleteContract": {
+    "description": "Confirmation for deleting contract"
+  },
+  "buyerInfoNotFound": "Buyer information not found",
+  "@buyerInfoNotFound": {
+    "description": "Error when buyer info not found"
+  },
+  "codeMustBe6Chars": "Code must be 6 characters",
+  "@codeMustBe6Chars": {
+    "description": "Validation for code length"
+  },
+  "youJoinedKennel": "You have joined the kennel!",
+  "@youJoinedKennel": {
+    "description": "Success message when joined kennel"
+  },
+  "canAlsoInviteMembers": "Can also invite members",
+  "@canAlsoInviteMembers": {
+    "description": "Permission description"
+  },
+  "couldNotOpenEmailClient": "Could not open email client",
+  "@couldNotOpenEmailClient": {
+    "description": "Error when email client fails"
+  },
+  "errorOpeningEmail": "Error opening email: {error}",
+  "@errorOpeningEmail": {
+    "description": "Error message for email",
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "fileSize": "File size: {size} MB",
+  "@fileSize": {
+    "description": "File size display",
+    "placeholders": {
+      "size": {"type": "String"}
+    }
+  },
+  "confirmDeleteImage": "Are you sure you want to delete this image?",
+  "@confirmDeleteImage": {
+    "description": "Confirmation for deleting image"
+  },
+  "confirmRemoveUser": "Are you sure you want to remove this user?",
+  "@confirmRemoveUser": {
+    "description": "Confirmation for removing user"
+  },
+  "temperatureMeasurementRegistered": "Temperature measurement registered",
+  "@temperatureMeasurementRegistered": {
+    "description": "Success message for temperature"
+  },
+  "deleteMating": "Delete mating",
+  "@deleteMating": {
+    "description": "Title for delete mating dialog"
+  },
+  "confirmDeleteMating": "Are you sure you want to delete this mating?",
+  "@confirmDeleteMating": {
+    "description": "Confirmation for deleting mating"
+  },
+  "yearsOld": "years",
+  "@yearsOld": {
+    "description": "Suffix for age in years"
+  },
+  "addPotentialBuyers": "Add potential buyers",
+  "@addPotentialBuyers": {
+    "description": "Button label to add potential buyers"
+  },
+  "removeReservation": "Remove reservation",
+  "@removeReservation": {
+    "description": "Button label to remove reservation"
+  },
+  "addReservation": "Add reservation",
+  "@addReservation": {
+    "description": "Button label to add reservation"
+  },
+  "noAvailablePuppiesInLitter": "No available puppies in this litter.",
+  "@noAvailablePuppiesInLitter": {
+    "description": "Message when no puppies available"
+  },
+  "selectPuppy": "Select puppy",
+  "@selectPuppy": {
+    "description": "Label for puppy selection"
+  },
+  "reservationAdded": "Reservation added",
+  "@reservationAdded": {
+    "description": "Success message when reservation added"
+  },
+  "markAsDelivered": "Mark as delivered",
+  "@markAsDelivered": {
+    "description": "Button label to mark as delivered"
+  },
+  "puppyMarkedAsDelivered": "Puppy marked as delivered!",
+  "@puppyMarkedAsDelivered": {
+    "description": "Success message when puppy delivered"
+  },
+  "confirmDeliveryButton": "Confirm delivery",
+  "@confirmDeliveryButton": {
+    "description": "Button label to confirm delivery"
+  },
+  "preferences": "Preferences (gender/temperament)",
+  "@preferences": {
+    "description": "Label for preferences field"
+  },
+  "linkToLitterAndPuppy": "Link to litter and puppy",
+  "@linkToLitterAndPuppy": {
+    "description": "Section title for linking"
+  },
+  "selectLitterOptional": "Select litter (optional)",
+  "@selectLitterOptional": {
+    "description": "Label for optional litter selection"
+  },
+  "selectPuppyOptional": "Select puppy (optional)",
+  "@selectPuppyOptional": {
+    "description": "Label for optional puppy selection"
+  },
+  "none": "None",
+  "@none": {
+    "description": "Option for none"
+  },
+  "enterMatingDateForPlannedLitter": "Please enter mating date for planned litter",
+  "@enterMatingDateForPlannedLitter": {
+    "description": "Validation message for mating date"
+  },
+  "historicalLitter": "Historical litter",
+  "@historicalLitter": {
+    "description": "Label for historical litter toggle"
+  },
+  "historicalLitterSubtitle": "Registering an older litter from before",
+  "@historicalLitterSubtitle": {
+    "description": "Subtitle when historical litter is enabled"
+  },
+  "newLitterSubtitle": "New litter (last 75 days)",
+  "@newLitterSubtitle": {
+    "description": "Subtitle when registering a new litter"
+  },
+  "birthDateHistorical": "Birth date (historical litter)",
+  "@birthDateHistorical": {
+    "description": "Label for birth date of historical litter"
+  },
+  "puppyIdentification": "Identification (to distinguish puppies)",
+  "@puppyIdentification": {
+    "description": "Section title for puppy identification"
+  },
+  "nicknameDisplayName": "Nickname / Display name",
+  "@nicknameDisplayName": {
+    "description": "Label for nickname field"
+  },
+  "nicknameHint": "e.g. \"Blue ribbon\", \"Little one\"",
+  "@nicknameHint": {
+    "description": "Hint text for nickname field"
+  },
+  "colorCodeBandMark": "Color code (band/mark)",
+  "@colorCodeBandMark": {
+    "description": "Label for color code selection"
+  },
+  "selected": "Selected",
+  "@selected": {
+    "description": "Label when something is selected"
+  },
+  "puppyName": "Puppy name",
+  "@puppyName": {
+    "description": "Label for puppy name field"
+  },
+  "pleaseEnterName": "Please enter a name",
+  "@pleaseEnterName": {
+    "description": "Validation message for name field"
+  },
+  "country": "Country",
+  "@country": {
+    "description": "Label for country field"
+  },
+  "ckSystemAvailable": "The CK system is available",
+  "@ckSystemAvailable": {
+    "description": "Helper text when CK system is available"
+  },
+  "ckOnlyNordic": "CK is only available in Nordic countries",
+  "@ckOnlyNordic": {
+    "description": "Helper text when CK is not available"
+  },
+  "requiresBHKBTK": "Requires 1st BHK or 1st BTK to select BIR/BIM",
+  "@requiresBHKBTK": {
+    "description": "Helper text for BIR/BIM requirements"
+  },
+  "selectDam": "Select dam",
+  "@selectDam": {
+    "description": "Label for dam selection"
+  },
+  "selectSire": "Select sire",
+  "@selectSire": {
+    "description": "Label for sire selection"
+  },
+  "commonTests": "Common tests",
+  "@commonTests": {
+    "description": "Label for common DNA tests section"
+  },
+  "testName": "Test name",
+  "@testName": {
+    "description": "Label for test name field"
+  },
+  "testDate": "Test date",
+  "@testDate": {
+    "description": "Label for test date field"
+  },
+  "result": "Result",
+  "@result": {
+    "description": "Label for result field"
+  },
+  "laboratory": "Laboratory",
+  "@laboratory": {
+    "description": "Label for laboratory field"
+  },
+  "certificateNumber": "Certificate number",
+  "@certificateNumber": {
+    "description": "Label for certificate number field"
+  },
+  "pendingResult": "Pending result",
+  "@pendingResult": {
+    "description": "Status for pending DNA test result"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "DNA test result - clear"
+  },
+  "carrier": "Carrier",
+  "@carrier": {
+    "description": "DNA test result - carrier"
+  },
+  "affected": "Affected",
+  "@affected": {
+    "description": "DNA test result - affected"
+  },
+  "searchDogsLittersBuyers": "Search for dogs, litters, buyers...",
+  "@searchDogsLittersBuyers": {
+    "description": "Placeholder text for search field"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Label for dark mode section"
+  },
+  "darkModeDescription": "Adjust the appearance for your eyes",
+  "@darkModeDescription": {
+    "description": "Description for dark mode section"
+  },
+  "useSystemTheme": "Use System Theme",
+  "@useSystemTheme": {
+    "description": "Label for system theme toggle"
+  },
+  "useSystemThemeDescription": "App follows your device theme automatically",
+  "@useSystemThemeDescription": {
+    "description": "Description for system theme toggle"
+  },
+  "darkModeOn": "Dark mode enabled",
+  "@darkModeOn": {
+    "description": "Label when dark mode is on"
+  },
+  "darkModeOff": "Light mode enabled",
+  "@darkModeOff": {
+    "description": "Label when dark mode is off"
+  },
+  "deliveryChecklist": "Delivery Checklist",
+  "@deliveryChecklist": {
+    "description": "Title for puppy delivery checklist"
+  },
+  "setDeliveryDate": "Set Delivery Date",
+  "@setDeliveryDate": {
+    "description": "Button to set delivery date"
+  },
+  "errorLoadingChecklist": "Could not load checklist",
+  "@errorLoadingChecklist": {
+    "description": "Error message when checklist fails to load"
+  },
+  "deliveryDate": "Delivery Date",
+  "@deliveryDate": {
+    "description": "Label for delivery date"
+  },
+  "progress": "Progress",
+  "@progress": {
+    "description": "Label for progress indicator"
+  },
+  "readyForDelivery": "Ready for delivery!",
+  "@readyForDelivery": {
+    "description": "Message when checklist is complete"
+  },
+  "addItem": "Add Item",
+  "@addItem": {
+    "description": "Button to add checklist item"
+  },
+  "title": "Title",
+  "@title": {
+    "description": "Label for title field"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Label for category field"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Add button label"
+  },
+  "deliveryDateSet": "Delivery date set",
+  "@deliveryDateSet": {
+    "description": "Message when delivery date is set"
+  },
+  "annualReport": "Annual Report",
+  "@annualReport": {
+    "description": "Title for annual report"
+  },
+  "selectYear": "Select Year",
+  "@selectYear": {
+    "description": "Label for year selector"
+  },
+  "annualSummary": "Annual Summary",
+  "@annualSummary": {
+    "description": "Title for annual summary section"
+  },
+  "littersRegistered": "Litters Registered",
+  "@littersRegistered": {
+    "description": "Label for litters count"
+  },
+  "puppiesBorn": "Puppies Born",
+  "@puppiesBorn": {
+    "description": "Label for puppies born count"
+  },
+  "malePuppies": "Male Puppies",
+  "@malePuppies": {
+    "description": "Label for male puppies count"
+  },
+  "femalePuppies": "Female Puppies",
+  "@femalePuppies": {
+    "description": "Label for female puppies count"
+  },
+  "puppiesSold": "Puppies Sold",
+  "@puppiesSold": {
+    "description": "Label for puppies sold count"
+  },
+  "financialSummary": "Financial Summary",
+  "@financialSummary": {
+    "description": "Title for financial summary section"
+  },
+  "totalIncome": "Total Income",
+  "@totalIncome": {
+    "description": "Label for total income"
+  },
+  "totalExpenses": "Total Expenses",
+  "@totalExpenses": {
+    "description": "Label for total expenses"
+  },
+  "showResults": "Show Results",
+  "@showResults": {
+    "description": "Title for show results section"
+  },
+  "shows": "Shows",
+  "@shows": {
+    "description": "Label for shows count"
+  },
+  "certificates": "Certificates",
+  "@certificates": {
+    "description": "Label for certificates count"
+  },
+  "generatePdfReport": "Generate PDF Report",
+  "@generatePdfReport": {
+    "description": "Button to generate PDF report"
+  },
+  "generating": "Generating...",
+  "@generating": {
+    "description": "Loading text while generating"
+  },
+  "reportInfo": "The report includes all litters, puppies, finances and show results for the selected year.",
+  "@reportInfo": {
+    "description": "Information about the report contents"
+  },
+  "contractTypes": "Contract Types",
+  "selectContractType": "Select Contract Type",
+  "purchaseContract": "Purchase Contract",
+  "purchaseContractDesc": "Standard contract for puppy sales",
+  "breedingContract": "Breeding Contract",
+  "breedingContractDesc": "Agreement for mating between stud and dam",
+  "coOwnershipContract": "Co-Ownership Agreement",
+  "coOwnershipContractDesc": "Agreement for shared ownership of a dog",
+  "fosterContract": "Foster Agreement",
+  "fosterContractDesc": "Agreement for placing a dog with a foster family",
+  "reservationContract": "Reservation Agreement",
+  "reservationContractDesc": "Agreement for reserving a puppy",
+  "studOwner": "Stud Owner",
+  "damOwner": "Dam Owner",
+  "studFee": "Stud Fee",
+  "paymentTerms": "Payment Terms",
+  "owner1": "Owner 1",
+  "owner2": "Owner 2",
+  "ownershipPercentage": "Ownership Percentage (%)",
+  "primaryCaretaker": "Primary Caretaker",
+  "breedingRights": "Breeding Rights",
+  "showRights": "Show Rights",
+  "expenseSharing": "Expense Sharing",
+  "fosterParent": "Foster Parent",
+  "owner": "Owner",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "returnConditions": "Return Conditions",
+  "reservationFee": "Reservation Fee",
+  "additionalTerms": "Additional Terms",
+  
+  "waitlist": "Waitlist",
+  "waitlistPosition": "Position",
+  "waitlistDate": "Date Registered",
+  "waitlistStatus": "Status",
+  "preferredGender": "Preferred Gender",
+  "preferredColor": "Preferred Color",
+  "depositAmount": "Deposit",
+  "noPreference": "No Preference",
+  "pending": "Pending",
+  "contacted": "Contacted",
+  "reserved": "Reserved",
+  "purchased": "Purchased",
+  "declined": "Declined",
+  "cancelled": "Cancelled",
+  "addToWaitlist": "Add to Waitlist",
+  "removeFromWaitlist": "Remove from Waitlist",
+  "moveUp": "Move Up",
+  "moveDown": "Move Down",
+  "waitlistEmpty": "No one on the waitlist",
+  "waitlistInfo": "Manage interested buyers and their position on the waitlist",
+  "position": "Position #{position}",
+  "@position": {
+    "description": "Waitlist position display",
+    "placeholders": {
+      "position": {
+        "type": "Object"
+      }
+    }
+  },
+  "addedToWaitlist": "Added to waitlist",
+  "removedFromWaitlist": "Removed from waitlist",
+  
+  "calendar": "Calendar",
+  "filter": "Filter",
+  "done": "Done",
+  "expectedBirth": "Expected Birth",
+  "treatments": "Treatments",
+  "birthdays": "Birthdays",
+  "plannedLitterTag": "[Planned litter]",
+  "@plannedLitterTag": { "description": "Tag shown for planned litters" },
+  "plannedLitterCreated": "Planned litter created",
+  "@plannedLitterCreated": { "description": "Snackbar when planned litter is saved" },
+  "litterAdded": "Litter added",
+  "@litterAdded": { "description": "Snackbar when litter is added" },
+  "maleNumberTemplate": "Male {number}",
+  "@maleNumberTemplate": { "description": "Default puppy name for male", "placeholders": { "number": { "type": "int" } } },
+  "femaleNumberTemplate": "Female {number}",
+  "@femaleNumberTemplate": { "description": "Default puppy name for female", "placeholders": { "number": { "type": "int" } } },
+  "planLitter": "Plan litter",
+  "@planLitter": { "description": "Title for planning litter mode" },
+  "planningFutureLitter": "Planning a future litter",
+  "@planningFutureLitter": { "description": "Subtitle for plan litter mode" },
+  "registeringBornLitter": "Registering a born litter",
+  "@registeringBornLitter": { "description": "Subtitle for registering born litter" },
+  "planningMode": "Planning mode",
+  "@planningMode": { "description": "Label for planning mode toggle" },
+  "planningModeDescription": "The litter is not born yet \u2014 you are planning ahead",
+  "@planningModeDescription": { "description": "Description when planning mode is on" },
+  "registeringModeDescription": "The litter is already born \u2014 you are registering data",
+  "@registeringModeDescription": { "description": "Description when planning mode is off" },
+  "registerPreviousLitter": "Register a previous litter",
+  "@registerPreviousLitter": { "description": "Subtitle for historical litter" },
+  "addNewFemale": "Add new female",
+  "@addNewFemale": { "description": "Button to add a new female dog" },
+  "addNewMale": "Add new male",
+  "@addNewMale": { "description": "Button to add a new male dog" },
+  "pleaseSelectDam": "Please select a dam",
+  "@pleaseSelectDam": { "description": "Validation message for dam" },
+  "pleaseSelectSire": "Please select a sire",
+  "@pleaseSelectSire": { "description": "Validation message for sire" },
+  "dateSetWhenMatingCompleted": "Date will be set when first mating is completed",
+  "@dateSetWhenMatingCompleted": { "description": "Info text about automatic date" },
+  "matingDate": "Mating date",
+  "@matingDate": { "description": "Label for mating date field" },
+  "removeMatingDate": "Remove mating date",
+  "@removeMatingDate": { "description": "Tooltip for removing mating date" },
+  "estimatedDueDate": "Estimated due date",
+  "@estimatedDueDate": { "description": "Label for estimated due date" },
+  "progesteroneMeasurements": "Progesterone measurements",
+  "@progesteroneMeasurements": { "description": "Label for progesterone section" },
+  "progesteroneMeasurementsSubtitle": "View and record measurements for optimal mating",
+  "@progesteroneMeasurementsSubtitle": { "description": "Subtitle for progesterone section" },
+  "breedingContractSubtitle": "Create contract between dam and sire owners",
+  "@breedingContractSubtitle": { "description": "Subtitle for breeding contract section" },
+  "numberOfPuppiesExpected": "Number of puppies (expected)",
+  "@numberOfPuppiesExpected": { "description": "Label for expected puppy count" },
+  "numberOfMales": "Number of males",
+  "@numberOfMales": { "description": "Label for male puppy count" },
+  "numberOfFemales": "Number of females",
+  "@numberOfFemales": { "description": "Label for female puppy count" },
+  "savePlannedLitter": "Save planned litter",
+  "@savePlannedLitter": { "description": "Button to save a planned litter" },
+  "saveLitter": "Save litter",
+  "@saveLitter": { "description": "Button to save a litter" },
+  "pleaseSelectBreed": "Please select a breed",
+  "@pleaseSelectBreed": { "description": "Validation message for breed" },
+  "showingAllBreeds": "Showing all breeds",
+  "@showingAllBreeds": { "description": "Toggle text when showing all breeds" },
+  "showingKennelBreeds": "Showing kennel breeds",
+  "@showingKennelBreeds": { "description": "Toggle text when showing kennel breeds" },
+  "tipSetUpBreeds": "Tip: Set up your breeds",
+  "@tipSetUpBreeds": { "description": "Info tip for breed setup" },
+  "addBreedsToKennelInfo": "Add breeds to kennel profile for faster selection.",
+  "@addBreedsToKennelInfo": { "description": "Info body for breed setup" },
+  "goToKennelProfile": "Go to kennel profile",
+  "@goToKennelProfile": { "description": "Button to navigate to kennel profile" },
+  "showOnlyKennelBreeds": "Show only kennel breeds",
+  "@showOnlyKennelBreeds": { "description": "Toggle for kennel breeds" },
+  "showAllBreeds": "Show all breeds",
+  "@showAllBreeds": { "description": "Toggle for all breeds" },
+  "noBreedsFoundForQuery": "No breeds found for \"{query}\"",
+  "@noBreedsFoundForQuery": { "description": "Empty state for breed search", "placeholders": { "query": { "type": "String" } } },
+  "pleaseEnterTemperature": "Please enter temperature",
+  "@pleaseEnterTemperature": { "description": "Validation for temperature input" },
+  "temperatureRecorded": "Temperature recorded",
+  "@temperatureRecorded": { "description": "Snackbar when temperature saved" },
+  "invalidTemperatureValue": "Invalid temperature value",
+  "@invalidTemperatureValue": { "description": "Error for invalid temperature" },
+  "temperatureTracking": "Temperature tracking",
+  "@temperatureTracking": { "description": "Title for temperature tracking screen" },
+  "planningInformation": "Planning information",
+  "@planningInformation": { "description": "Section for planning info" },
+  "daysUntilWhelping": "Days until whelping:",
+  "@daysUntilWhelping": { "description": "Label for whelping countdown" },
+  "temperatureHistory": "Temperature history",
+  "@temperatureHistory": { "description": "Section for temp history" },
+  "noDataToShowGraph": "No data to show graph",
+  "@noDataToShowGraph": { "description": "Empty state for graph" },
+  "addTemperatureReading": "Add temperature reading",
+  "@addTemperatureReading": { "description": "Dialog title for adding temp" },
+  "dateAndTime": "Date and time",
+  "@dateAndTime": { "description": "Label for date/time field" },
+  "temperatureCelsius": "Temperature (\u00b0C)",
+  "@temperatureCelsius": { "description": "Label for temp in Celsius" },
+  "notesOptional": "Notes (optional)",
+  "@notesOptional": { "description": "Label for optional notes" },
+  "noTemperatureReadings": "No temperature readings recorded",
+  "@noTemperatureReadings": { "description": "Empty state for temp list" },
+  "measurementsOverview": "Measurements overview",
+  "@measurementsOverview": { "description": "Section for measurements" },
+  "errorLoadingSharedUsers": "Error loading shared users: {error}",
+  "@errorLoadingSharedUsers": { "description": "Error loading users", "placeholders": { "error": { "type": "Object" } } },
+  "pleaseEnterEmail": "Please enter an email address",
+  "@pleaseEnterEmail": { "description": "Email validation" },
+  "sharedWithEmail": "Shared with {email}",
+  "@sharedWithEmail": { "description": "Share confirmation", "placeholders": { "email": { "type": "String" } } },
+  "userNotFoundByEmail": "User with email {email} not found",
+  "@userNotFoundByEmail": { "description": "User not found error", "placeholders": { "email": { "type": "String" } } },
+  "errorSharing": "Error sharing: {error}",
+  "@errorSharing": { "description": "Sharing error", "placeholders": { "error": { "type": "Object" } } },
+  "removeUser": "Remove user",
+  "@removeUser": { "description": "Dialog title" },
+  "userRemoved": "User removed",
+  "@userRemoved": { "description": "Snackbar after removal" },
+  "errorRemovingUser": "Error removing user: {error}",
+  "@errorRemovingUser": { "description": "Removal error", "placeholders": { "error": { "type": "Object" } } },
+  "shareGroupName": "Share {groupName}",
+  "@shareGroupName": { "description": "Share screen title", "placeholders": { "groupName": { "type": "String" } } },
+  "shareWithCollaborator": "Share with collaborator",
+  "@shareWithCollaborator": { "description": "Share subtitle" },
+  "emailAddress": "Email address",
+  "@emailAddress": { "description": "Email label" },
+  "share": "Share",
+  "@share": { "description": "Share button" },
+  "sharedWith": "Shared with",
+  "@sharedWith": { "description": "Section title" },
+  "notSharedWithAnyone": "Not shared with anyone yet",
+  "@notSharedWithAnyone": { "description": "Empty state" },
+  "collaborator": "Collaborator",
+  "@collaborator": { "description": "Role label" },
+  "selectBothForInbreeding": "Select both dam and sire to calculate inbreeding coefficient",
+  "@selectBothForInbreeding": { "description": "COI requirement message" },
+  "inbreedingCoefficientCoi": "Inbreeding coefficient (COI)",
+  "@inbreedingCoefficientCoi": { "description": "COI title" },
+  "commonAncestors": "Common ancestors ({count})",
+  "@commonAncestors": { "description": "Common ancestors count", "placeholders": { "count": { "type": "int" } } },
+  "seeAllAncestors": "See all {count} ancestors",
+  "@seeAllAncestors": { "description": "Button to see all", "placeholders": { "count": { "type": "int" } } },
+  "whatDoesThisMean": "What does this mean?",
+  "@whatDoesThisMean": { "description": "Button for explanation" },
+  "aboutInbreedingCoefficient": "About inbreeding coefficient",
+  "@aboutInbreedingCoefficient": { "description": "Dialog title" },
+  "inbreedingDescription": "The inbreeding coefficient (COI) measures the probability that two alleles at the same locus are identical because they descend from the same ancestor.",
+  "@inbreedingDescription": { "description": "COI explanation" },
+  "recommendedLevels": "Recommended levels:",
+  "@recommendedLevels": { "description": "Subtitle" },
+  "veryLow": "Very low",
+  "@veryLow": { "description": "Level label" },
+  "low": "Low",
+  "@low": { "description": "Level label" },
+  "moderate": "Moderate",
+  "@moderate": { "description": "Level label" },
+  "high": "High",
+  "@high": { "description": "Level label" },
+  "veryHigh": "Very high",
+  "@veryHigh": { "description": "Level label" },
+  "highInbreedingConsequences": "High inbreeding can lead to:",
+  "@highInbreedingConsequences": { "description": "Consequences subtitle" },
+  "reducedImmuneSystem": "Reduced immune system",
+  "@reducedImmuneSystem": { "description": "Consequence" },
+  "reducedFertility": "Reduced fertility",
+  "@reducedFertility": { "description": "Consequence" },
+  "increasedRiskOfDisease": "Increased risk of hereditary diseases",
+  "@increasedRiskOfDisease": { "description": "Consequence" },
+  "shorterLifespan": "Shorter lifespan",
+  "@shorterLifespan": { "description": "Consequence" },
+  "tipsCoi": "Tips:",
+  "@tipsCoi": { "description": "Tips section" },
+  "tipRegisterAncestors": "Register ancestors with registration numbers for accurate calculation",
+  "@tipRegisterAncestors": { "description": "Tip" },
+  "tipSystemRecognizes": "The system recognizes the same dog even if registered multiple times",
+  "@tipSystemRecognizes": { "description": "Tip" },
+  "tipCoiGenerations": "COI is calculated over 5 generations",
+  "@tipCoiGenerations": { "description": "Tip" },
+  "generationsFromParents": "{genMother} gen. from dam, {genFather} gen. from sire",
+  "@generationsFromParents": { "description": "Generation depth", "placeholders": { "genMother": { "type": "int" }, "genFather": { "type": "int" } } },
+  "compareMatingOptions": "Compare mating options",
+  "@compareMatingOptions": { "description": "Comparison title" },
+  "selectFemale": "Select female",
+  "@selectFemale": { "description": "Label for female selection" },
+  "dogNotFound": "Dog not found",
+  "@dogNotFound": { "description": "Error" },
+  "maleDog": "Male",
+  "@maleDog": { "description": "Male gender display" },
+  "born": "Born",
+  "@born": { "description": "Born label" },
+  "pedigreeOnly": "Pedigree only",
+  "@pedigreeOnly": { "description": "Visibility toggle" },
+  "visibleInDogList": "Visible in dog list",
+  "@visibleInDogList": { "description": "Visibility toggle" },
+  "pedigreeOnlyDescription": "This dog is only shown in pedigrees",
+  "@pedigreeOnlyDescription": { "description": "Pedigree-only description" },
+  "visibleInDogListDescription": "This dog is shown in your dog list",
+  "@visibleInDogListDescription": { "description": "Visible description" },
+  "pedigreeFilename": "Pedigree_{name}.pdf",
+  "@pedigreeFilename": { "description": "PDF filename", "placeholders": { "name": { "type": "String" } } },
+  "couldNotGeneratePdf": "Could not generate PDF: {error}",
+  "@couldNotGeneratePdf": { "description": "PDF error", "placeholders": { "error": { "type": "Object" } } },
+  "pedigreeTitle": "Pedigree \u2014 {name}",
+  "@pedigreeTitle": { "description": "Pedigree title", "placeholders": { "name": { "type": "String" } } },
+  "exportPdf": "Export PDF",
+  "@exportPdf": { "description": "Export button" },
+  "aboutPedigree": "About the pedigree",
+  "@aboutPedigree": { "description": "Section title" },
+  "pedigreeTipTapDetails": "Tap a dog for details",
+  "@pedigreeTipTapDetails": { "description": "Tip" },
+  "pedigreeTipPinkFemales": "Pink = females",
+  "@pedigreeTipPinkFemales": { "description": "Legend" },
+  "pedigreeTipBlueMales": "Blue = males",
+  "@pedigreeTipBlueMales": { "description": "Legend" },
+  "pedigreeTipScroll": "Scroll to see all generations",
+  "@pedigreeTipScroll": { "description": "Tip" },
+  "addNewMaleShort": "+ Add",
+  "@addNewMaleShort": { "description": "Short add button" },
+
+  "noImageSelected": "No image selected",
+  "@noImageSelected": { "description": "Message when no image was selected for scanning" },
+  "couldNotReadPedigree": "Could not read the pedigree",
+  "@couldNotReadPedigree": { "description": "Error when pedigree scanning fails" },
+  "scanPedigree": "Scan pedigree",
+  "@scanPedigree": { "description": "Title for pedigree scanner section" },
+  "scanPedigreeSubtitle": "Take a photo or upload a pedigree for automatic data entry",
+  "@scanPedigreeSubtitle": { "description": "Subtitle for pedigree scanner section" },
+  "processingImage": "Processing image...",
+  "@processingImage": { "description": "Loading text while image is being processed" },
+  "takePhoto": "Take photo",
+  "@takePhoto": { "description": "Button label for camera capture" },
+  "selectImage": "Select image",
+  "@selectImage": { "description": "Button label for gallery image selection" },
+  "tipsForBestResults": "Tips for best results",
+  "@tipsForBestResults": { "description": "Title for scanning tips section" },
+  "tipGoodLighting": "Ensure good lighting",
+  "@tipGoodLighting": { "description": "Scanning tip" },
+  "tipHoldCameraOver": "Hold the camera directly over the document",
+  "@tipHoldCameraOver": { "description": "Scanning tip" },
+  "tipAvoidShadows": "Avoid shadows and reflections",
+  "@tipAvoidShadows": { "description": "Scanning tip" },
+  "tipPedigreeReadable": "The pedigree must be clear and readable",
+  "@tipPedigreeReadable": { "description": "Scanning tip" },
+  "tipEditAfterScanning": "You can always edit the data after scanning",
+  "@tipEditAfterScanning": { "description": "Scanning tip" },
+  "reviewScannedData": "Review scanned data",
+  "@reviewScannedData": { "description": "AppBar title for scan review screen" },
+  "listView": "List view",
+  "@listView": { "description": "Tooltip for list view toggle" },
+  "treeView": "Tree view",
+  "@treeView": { "description": "Tooltip for tree view toggle" },
+  "scannerSettings": "Scanner settings",
+  "@scannerSettings": { "description": "Title for scanner settings screen" },
+  "showRawOcrText": "Show raw OCR text",
+  "@showRawOcrText": { "description": "Tooltip for OCR text toggle" },
+  "confirmData": "Confirm data",
+  "@confirmData": { "description": "Tooltip for confirm button" },
+  "accuracyPercent": "Accuracy: {accuracy}",
+  "@accuracyPercent": {
+    "description": "Scan accuracy display",
+    "placeholders": { "accuracy": { "type": "String" } }
+  },
+  "dogsFoundTapToEdit": "{count} dogs found \u2014 tap \u270f\ufe0f to edit",
+  "@dogsFoundTapToEdit": {
+    "description": "Summary of scanned dogs",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "rawOcrTextTitle": "Raw OCR text (what the scanner found)",
+  "@rawOcrTextTitle": { "description": "Title for raw OCR text section" },
+  "noDogsFoundInScan": "No dogs found in the scan",
+  "@noDogsFoundInScan": { "description": "Empty state for scan results" },
+  "tapToAddManually": "Tap + to add manually, or\ncheck raw OCR text to see what the scanner found",
+  "@tapToAddManually": { "description": "Hint when no dogs found" },
+  "allFieldsEditable": "All fields are editable. Tap ?? to change data.",
+  "@allFieldsEditable": { "description": "Info banner in list view" },
+  "regNoLabel": "Reg. no.:",
+  "@regNoLabel": { "description": "Label for registration number with colon" },
+  "bornLabel": "Born:",
+  "@bornLabel": { "description": "Label for birth date with colon" },
+  "confidencePercent": "Confidence: {confidence}",
+  "@confidencePercent": {
+    "description": "Confidence display for scanned dog",
+    "placeholders": { "confidence": { "type": "String" } }
+  },
+  "mainDog": "Main dog",
+  "@mainDog": { "description": "Position label for main dog in pedigree" },
+  "sire": "Sire",
+  "@sire": { "description": "Position label for father in pedigree" },
+  "dam": "Dam",
+  "@dam": { "description": "Position label for mother in pedigree" },
+  "paternalGrandfather": "Paternal grandfather",
+  "@paternalGrandfather": { "description": "Position label" },
+  "paternalGrandmother": "Paternal grandmother",
+  "@paternalGrandmother": { "description": "Position label" },
+  "maternalGrandfather": "Maternal grandfather",
+  "@maternalGrandfather": { "description": "Position label" },
+  "maternalGrandmother": "Maternal grandmother",
+  "@maternalGrandmother": { "description": "Position label" },
+  "greatGrandsirePP": "Pat. great-grandsire",
+  "@greatGrandsirePP": { "description": "Position label for paternal grandfather's sire" },
+  "greatGrandamPP": "Pat. great-grandam",
+  "@greatGrandamPP": { "description": "Position label for paternal grandfather's dam" },
+  "greatGrandsirePM": "Pat. great-grandsire (m)",
+  "@greatGrandsirePM": { "description": "Position label for paternal grandmother's sire" },
+  "greatGrandamPM": "Pat. great-grandam (m)",
+  "@greatGrandamPM": { "description": "Position label for paternal grandmother's dam" },
+  "greatGrandsireMP": "Mat. great-grandsire",
+  "@greatGrandsireMP": { "description": "Position label for maternal grandfather's sire" },
+  "greatGrandamMP": "Mat. great-grandam",
+  "@greatGrandamMP": { "description": "Position label for maternal grandfather's dam" },
+  "greatGrandsireMM": "Mat. great-grandsire (m)",
+  "@greatGrandsireMM": { "description": "Position label for maternal grandmother's sire" },
+  "greatGrandamMM": "Mat. great-grandam (m)",
+  "@greatGrandamMM": { "description": "Position label for maternal grandmother's dam" },
+  "editDog": "Edit dog",
+  "@editDog": { "description": "Title for edit dog dialog" },
+  "regNo": "Reg. no.",
+  "@regNo": { "description": "Label for registration number field" },
+  "regNoHint": "e.g. NO12345/2020",
+  "@regNoHint": { "description": "Hint text for registration number" },
+  "dateFormatHint": "dd.mm.yyyy",
+  "@dateFormatHint": { "description": "Hint for date format" },
+  "positionInPedigree": "Position in pedigree",
+  "@positionInPedigree": { "description": "Label for position dropdown" },
+  "settingsSaved": "Settings saved!",
+  "@settingsSaved": { "description": "Snackbar message when settings are saved" },
+  "geminiAiVision": "Gemini AI Vision",
+  "@geminiAiVision": { "description": "Scanner engine name" },
+  "cloudPowered": "Cloud-powered",
+  "@cloudPowered": { "description": "Badge label for cloud scanner" },
+  "scannerGeminiDescription": "The scanner uses Gemini AI Vision via a secure cloud service. No API key is needed \u2014 just sign in and scan!",
+  "@scannerGeminiDescription": { "description": "Description of Gemini AI scanner" },
+  "customizeScanner": "Customize scanner",
+  "@customizeScanner": { "description": "Title for scanner customization section" },
+  "addKeywordsDescription": "Add keywords for the scanner to look for in pedigree documents. The scanner uses these words to identify which dog is the main dog, sire, and dam.\n\nExample: If your pedigree has \"Object:\" before the main dog, add \"object:\" as a keyword for the main dog.",
+  "@addKeywordsDescription": { "description": "Description for keyword customization" },
+  "mainDogKeywords": "Main dog keywords",
+  "@mainDogKeywords": { "description": "Title for main dog keyword section" },
+  "wordsIdentifyMainDog": "Words that identify the main dog in the pedigree",
+  "@wordsIdentifyMainDog": { "description": "Subtitle for main dog keywords" },
+  "sireKeywords": "Sire keywords",
+  "@sireKeywords": { "description": "Title for sire keyword section" },
+  "wordsIdentifySire": "Words that identify the sire/male",
+  "@wordsIdentifySire": { "description": "Subtitle for sire keywords" },
+  "damKeywords": "Dam keywords",
+  "@damKeywords": { "description": "Title for dam keyword section" },
+  "wordsIdentifyDam": "Words that identify the dam/female",
+  "@wordsIdentifyDam": { "description": "Subtitle for dam keywords" },
+  "automaticLearning": "Automatic learning",
+  "@automaticLearning": { "description": "Title for automatic learning section" },
+  "automaticLearningDescription": "The scanner learns automatically when you correct data:\n\u2022 If you change position (e.g. Sire \u2192 Main dog), it remembers\n\u2022 Next time similar patterns are recognized\n\u2022 The scanner also uses position in the image (top = main dog)",
+  "@automaticLearningDescription": { "description": "Description of automatic learning feature" },
+  "resetLearningData": "Reset learning data",
+  "@resetLearningData": { "description": "Button label to reset learning data" },
+  "yourCustomKeywords": "Your custom keywords:",
+  "@yourCustomKeywords": { "description": "Label for custom keywords section" },
+  "resetLearningDataTitle": "Reset learning data?",
+  "@resetLearningDataTitle": { "description": "Dialog title for reset confirmation" },
+  "resetLearningDataBody": "This will delete all saved corrections. The scanner will start fresh without previous learning.",
+  "@resetLearningDataBody": { "description": "Dialog body for reset confirmation" },
+  "resetAction": "Reset",
+  "@resetAction": { "description": "Button label for reset action" },
+  "learningDataReset": "Learning data reset",
+  "@learningDataReset": { "description": "Snackbar message after learning data reset" },
+  "newKeywordHint": "New keyword...",
+  "@newKeywordHint": { "description": "Hint text for keyword input field" },
+  "tapToAdd": "Tap to add",
+  "@tapToAdd": { "description": "Hint in empty tree card slot" },
+  "addDogLabel": "Add dog",
+  "@addDogLabel": { "description": "FAB label for adding a dog" },
+  "birthDateLabel": "Date of birth",
+  "@birthDateLabel": { "description": "Label for birth date field in edit dialog" }
+
+}

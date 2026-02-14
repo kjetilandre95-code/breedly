@@ -1,0 +1,2676 @@
+﻿{
+  "@@locale": "da",
+  "appTitle": "Breedly",
+  "@appTitle": {
+    "description": "The application title"
+  },
+  "home": "Hjem",
+  "@home": {
+    "description": "Navigation label for home screen"
+  },
+  "dogs": "Hunde",
+  "@dogs": {
+    "description": "Navigation label for dogs section"
+  },
+  "litters": "Kuld",
+  "@litters": {
+    "description": "Navigation label for litters section"
+  },
+  "finance": "Økonomi",
+  "@finance": {
+    "description": "Navigation label for finance section"
+  },
+  "gallery": "Galleri",
+  "@gallery": {
+    "description": "Navigation label for gallery section"
+  },
+  "buyers": "Købere",
+  "@buyers": {
+    "description": "Navigation label for buyers section"
+  },
+  "settings": "Indstillinger",
+  "@settings": {
+    "description": "Navigation label for settings screen"
+  },
+  "language": "Sprog",
+  "@language": {
+    "description": "Label for language setting"
+  },
+  "addDog": "Tilføj hund",
+  "@addDog": {
+    "description": "Button label to add a new dog"
+  },
+  "name": "Navn",
+  "@name": {
+    "description": "Label for name field"
+  },
+  "breed": "Race",
+  "@breed": {
+    "description": "Label for breed field"
+  },
+  "color": "Farve",
+  "@color": {
+    "description": "Label for color field"
+  },
+  "gender": "Køn",
+  "@gender": {
+    "description": "Label for gender field"
+  },
+  "male": "Hanhund",
+  "@male": {
+    "description": "Gender option for male"
+  },
+  "female": "Tæve",
+  "@female": {
+    "description": "Gender option for female"
+  },
+  "dateOfBirth": "Fødselsdato",
+  "@dateOfBirth": {
+    "description": "Label for date of birth field"
+  },
+  "age": "Alder",
+  "@age": {
+    "description": "Label for age display"
+  },
+  "registrationNumber": "Registreringsnummer",
+  "@registrationNumber": {
+    "description": "Label for registration number field"
+  },
+  "notes": "Noter",
+  "@notes": {
+    "description": "Label for notes field"
+  },
+  "heatCycles": "Løbeperioder",
+  "@heatCycles": {
+    "description": "Label for heat cycles section"
+  },
+  "addHeatCycle": "Tilføj løbedato",
+  "@addHeatCycle": {
+    "description": "Button label to add a heat cycle"
+  },
+  "noHeatCycles": "Ingen løbedatoer registreret",
+  "@noHeatCycles": {
+    "description": "Message when no heat cycles are registered"
+  },
+  "saveDog": "Gem hund",
+  "@saveDog": {
+    "description": "Button label to save dog"
+  },
+  "save": "Gem",
+  "@save": {
+    "description": "Button label for save action"
+  },
+  "delete": "Slet",
+  "@delete": {
+    "description": "Button label for delete action"
+  },
+  "edit": "Rediger",
+  "@edit": {
+    "description": "Button label for edit action"
+  },
+  "cancel": "Annuller",
+  "@cancel": {
+    "description": "Button label for cancel action"
+  },
+  "confirm": "Bekræft",
+  "@confirm": {
+    "description": "Button label for confirm action"
+  },
+  "confirmDelete": "Er du sikker på, at du vil slette?",
+  "@confirmDelete": {
+    "description": "Confirmation message for delete action"
+  },
+  "deleteHeatCycle": "Slet løbedato",
+  "@deleteHeatCycle": {
+    "description": "Title for delete heat cycle dialog"
+  },
+  "deleteHeatCycleConfirm": "Er du sikker på, at du vil slette denne løbedato?",
+  "@deleteHeatCycleConfirm": {
+    "description": "Confirmation message for deleting heat cycle"
+  },
+  "heatCycleAdded": "Løbedato tilføjet",
+  "@heatCycleAdded": {
+    "description": "Success message when heat cycle is added"
+  },
+  "heatCycleDeleted": "Løbedato slettet",
+  "@heatCycleDeleted": {
+    "description": "Success message when heat cycle is deleted"
+  },
+  "dogAdded": "Hund tilføjet",
+  "@dogAdded": {
+    "description": "Success message when dog is added"
+  },
+  "basic": "Grundlæggende information",
+  "@basic": {
+    "description": "Label for basic information section"
+  },
+  "pedigree": "Stamtavle",
+  "@pedigree": {
+    "description": "Label for pedigree section"
+  },
+  "mother": "Mor (Tæve)",
+  "@mother": {
+    "description": "Label for mother/dam field"
+  },
+  "father": "Far (Hanhund)",
+  "@father": {
+    "description": "Label for father/sire field"
+  },
+  "notRegistered": "Ikke registreret",
+  "@notRegistered": {
+    "description": "Status text for not registered"
+  },
+  "unknown": "Ukendt",
+  "@unknown": {
+    "description": "Text for unknown value"
+  },
+  "daysSince": "dage siden",
+  "@daysSince": {
+    "description": "Text suffix for days since"
+  },
+  "noDogsAdded": "Ingen hunde tilføjet",
+  "@noDogsAdded": {
+    "description": "Message when no dogs are added"
+  },
+  "addNewDog": "Tilføj ny hund for at komme i gang",
+  "@addNewDog": {
+    "description": "Instruction to add first dog"
+  },
+  "selectBreed": "Vælg race",
+  "@selectBreed": {
+    "description": "Placeholder for breed selection"
+  },
+  "selectBreedTitle": "Vælg race",
+  "@selectBreedTitle": {
+    "description": "Title for breed selection dialog"
+  },
+  "searchBreed": "Søg race...",
+  "@searchBreed": {
+    "description": "Placeholder for breed search field"
+  },
+  "noBreeds": "Ingen racer fundet",
+  "@noBreeds": {
+    "description": "Message when no breeds match search"
+  },
+  "optional": "valgfri",
+  "@optional": {
+    "description": "Text indicating field is optional"
+  },
+  "addLitter": "Tilføj nyt kuld",
+  "@addLitter": {
+    "description": "Button label to add a new litter"
+  },
+  "welcomeToBreedly": "Velkommen til Breedly!",
+  "@welcomeToBreedly": {
+    "description": "Welcome message title"
+  },
+  "welcomeMessage": "Din digitale kennelassistent",
+  "@welcomeMessage": {
+    "description": "Welcome message subtitle"
+  },
+  "quickActions": "Hurtighandlinger",
+  "@quickActions": {
+    "description": "Label for quick actions section"
+  },
+  "newLitter": "Nyt kuld",
+  "@newLitter": {
+    "description": "Button label for new litter"
+  },
+  "setupKennelProfile": "Opsæt kennelprofil",
+  "@setupKennelProfile": {
+    "description": "Button label to set up kennel profile"
+  },
+  "setupKennelMessage": "Tilføj information om din kennel",
+  "@setupKennelMessage": {
+    "description": "Description for kennel profile setup"
+  },
+  "syncingData": "Synkroniserer data...",
+  "@syncingData": {
+    "description": "Status message during data sync"
+  },
+  "dataSynced": "Data synkroniseret",
+  "@dataSynced": {
+    "description": "Success message when data is synced"
+  },
+  "syncFailed": "Kunne ikke synkronisere data",
+  "@syncFailed": {
+    "description": "Error message when sync fails"
+  },
+  "syncToCloud": "Upload til sky",
+  "@syncToCloud": {
+    "description": "Button to upload local data to cloud"
+  },
+  "syncFromCloud": "Download fra sky",
+  "@syncFromCloud": {
+    "description": "Button to download data from cloud"
+  },
+  "syncInfo": "Brug 'Upload til sky' for at synkronisere lokale data til skyen. 'Download fra sky' henter data fra andre enheder.",
+  "@syncInfo": {
+    "description": "Info text explaining sync buttons"
+  },
+  "activeLitters": "Aktive kuld",
+  "@activeLitters": {
+    "description": "Label for active litters section"
+  },
+  "puppies": "Hvalpe",
+  "@puppies": {
+    "description": "Label for puppies"
+  },
+  "overview": "Oversigt",
+  "@overview": {
+    "description": "Label for overview tab"
+  },
+  "statistics": "Statistik",
+  "@statistics": {
+    "description": "Label for statistics section"
+  },
+  "upcomingEvents": "Kommende begivenheder",
+  "@upcomingEvents": {
+    "description": "Label for upcoming events section"
+  },
+  "newDog": "Ny hund",
+  "@newDog": {
+    "description": "Button label for adding new dog"
+  },
+  "kennel": "Kennel",
+  "@kennel": {
+    "description": "Label for kennel"
+  },
+  "all": "Alle",
+  "@all": {
+    "description": "Filter option for all items"
+  },
+  "active": "Aktive",
+  "@active": {
+    "description": "Filter option for active items"
+  },
+  "weaning": "Fravænning",
+  "@weaning": {
+    "description": "Filter option for weaning phase"
+  },
+  "older": "Ældre",
+  "@older": {
+    "description": "Filter option for older items"
+  },
+  "noLittersRegistered": "Ingen kuld registreret",
+  "@noLittersRegistered": {
+    "description": "Message when no litters are registered"
+  },
+  "registerFirstLitter": "Registrer dit første kuld for at komme i gang",
+  "@registerFirstLitter": {
+    "description": "Instruction to register first litter"
+  },
+  "noActiveLitters": "Ingen aktive kuld (0-8 uger)",
+  "@noActiveLitters": {
+    "description": "Message when no active litters"
+  },
+  "noWeaningLitters": "Ingen kuld i fravænningsfasen (8-12 uger)",
+  "@noWeaningLitters": {
+    "description": "Message when no weaning litters"
+  },
+  "noOlderLitters": "Ingen ældre kuld (12+ uger)",
+  "@noOlderLitters": {
+    "description": "Message when no older litters"
+  },
+  "noLittersInCategory": "Ingen kuld i denne kategori",
+  "@noLittersInCategory": {
+    "description": "Message when no litters in selected category"
+  },
+  "tryAnotherCategory": "Prøv en anden kategori",
+  "@tryAnotherCategory": {
+    "description": "Suggestion to try another category"
+  },
+  "dataInApp": "Data i appen",
+  "@dataInApp": {
+    "description": "Label for app data section"
+  },
+  "aboutApp": "Om appen",
+  "@aboutApp": {
+    "description": "Label for about app section"
+  },
+  "version": "Version",
+  "@version": {
+    "description": "Label for version info"
+  },
+  "developer": "Udvikler",
+  "@developer": {
+    "description": "Label for developer info"
+  },
+  "sortBy": "Sorter efter",
+  "@sortBy": {
+    "description": "Label for sort options"
+  },
+  "birthDate": "Fødselsdato",
+  "@birthDate": {
+    "description": "Label for birth date"
+  },
+  "puppyCount": "Antal hvalpe",
+  "@puppyCount": {
+    "description": "Label for puppy count"
+  },
+  "available": "Tilgængelig",
+  "@available": {
+    "description": "Status label for available"
+  },
+  "searchDog": "Søg efter hund...",
+  "@searchDog": {
+    "description": "Placeholder for dog search field"
+  },
+  "females": "Tæver",
+  "@females": {
+    "description": "Label for females filter"
+  },
+  "males": "Hanhunde",
+  "@males": {
+    "description": "Label for males filter"
+  },
+  "noResults": "Ingen resultater",
+  "@noResults": {
+    "description": "Message when no search results"
+  },
+  "tryDifferentSearch": "Prøv et andet søgeord",
+  "@tryDifferentSearch": {
+    "description": "Suggestion to try different search"
+  },
+  "noFemalesRegistered": "Ingen tæver registreret",
+  "@noFemalesRegistered": {
+    "description": "Message when no females registered"
+  },
+  "addFirstFemale": "Tilføj din første tæve",
+  "@addFirstFemale": {
+    "description": "Instruction to add first female"
+  },
+  "noMalesRegistered": "Ingen hanhunde registreret",
+  "@noMalesRegistered": {
+    "description": "Message when no males registered"
+  },
+  "addFirstMale": "Tilføj din første hanhund",
+  "@addFirstMale": {
+    "description": "Instruction to add first male"
+  },
+  "noDogsRegistered": "Ingen hunde registreret",
+  "@noDogsRegistered": {
+    "description": "Message when no dogs registered"
+  },
+  "getStartedAddDog": "Kom i gang ved at tilføje din første hund",
+  "@getStartedAddDog": {
+    "description": "Instruction to add first dog"
+  },
+  "heatInDays": "Løbetid om {days} d",
+  "@heatInDays": {
+    "description": "Text showing days until heat",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "year": "år",
+  "@year": {
+    "description": "Singular form of year"
+  },
+  "years": "år",
+  "@years": {
+    "description": "Plural form of years"
+  },
+  "month": "måned",
+  "@month": {
+    "description": "Singular form of month"
+  },
+  "months": "måneder",
+  "@months": {
+    "description": "Plural form of months"
+  },
+  "myDogs": "Mine hunde",
+  "@myDogs": {
+    "description": "Title for my dogs section"
+  },
+  "welcomeTo": "Velkommen til {name}!",
+  "@welcomeTo": {
+    "description": "Welcome message with kennel name",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "expenses": "Udgifter",
+  "@expenses": {
+    "description": "Label for expenses"
+  },
+  "income": "Indtægter",
+  "@income": {
+    "description": "Label for income"
+  },
+  "balance": "Saldo",
+  "@balance": {
+    "description": "Label for balance"
+  },
+  "noTransactions": "Ingen transaktioner",
+  "@noTransactions": {
+    "description": "Message when no transactions"
+  },
+  "addFirstTransaction": "Tilføj din første transaktion",
+  "@addFirstTransaction": {
+    "description": "Instruction to add first transaction"
+  },
+  "addTransaction": "Tilføj transaktion",
+  "@addTransaction": {
+    "description": "Button label to add transaction"
+  },
+  "amount": "Beløb",
+  "@amount": {
+    "description": "Label for amount field"
+  },
+  "description": "Beskrivelse",
+  "@description": {
+    "description": "Label for description field"
+  },
+  "category": "Kategori",
+  "@category": {
+    "description": "Label for category field"
+  },
+  "date": "Dato",
+  "@date": {
+    "description": "Label for date field"
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Label for type field"
+  },
+  "expense": "Udgift",
+  "@expense": {
+    "description": "Label for expense type"
+  },
+  "theme": "Tema",
+  "@theme": {
+    "description": "Label for theme setting"
+  },
+  "selectTheme": "Vælg tema",
+  "@selectTheme": {
+    "description": "Title for theme selection"
+  },
+  "colorTheme": "Farvetema",
+  "@colorTheme": {
+    "description": "Label for color theme setting"
+  },
+  "lightMode": "Lyst tilstand",
+  "@lightMode": {
+    "description": "Theme option for light mode"
+  },
+  "darkMode": "Mørk tilstand",
+  "@darkMode": {
+    "description": "Theme option for dark mode"
+  },
+  "systemMode": "Følg system",
+  "@systemMode": {
+    "description": "Theme option to follow system"
+  },
+  "noBuyersRegistered": "Ingen købere registreret",
+  "@noBuyersRegistered": {
+    "description": "Message when no buyers registered"
+  },
+  "addFirstBuyer": "Tilføj din første køber",
+  "@addFirstBuyer": {
+    "description": "Instruction to add first buyer"
+  },
+  "addBuyer": "Tilføj køber",
+  "@addBuyer": {
+    "description": "Button label to add buyer"
+  },
+  "buyerName": "Køberens navn",
+  "@buyerName": {
+    "description": "Label for buyer name field"
+  },
+  "email": "E-mail",
+  "@email": {
+    "description": "Label for email field"
+  },
+  "phone": "Telefon",
+  "@phone": {
+    "description": "Label for phone field"
+  },
+  "address": "Adresse",
+  "@address": {
+    "description": "Label for address field"
+  },
+  "reservedPuppy": "Reserveret hvalp",
+  "@reservedPuppy": {
+    "description": "Label for reserved puppy"
+  },
+  "noReservation": "Ingen reservation",
+  "@noReservation": {
+    "description": "Status for no reservation"
+  },
+  "puppy": "Hvalp",
+  "@puppy": {
+    "description": "Label for puppy"
+  },
+  "contract": "Kontrakt",
+  "@contract": {
+    "description": "Label for contract"
+  },
+  "createContract": "Opret kontrakt",
+  "@createContract": {
+    "description": "Button label to create contract"
+  },
+  "sendContract": "Send kontrakt",
+  "@sendContract": {
+    "description": "Button label to send contract"
+  },
+  "contractSent": "Kontrakt sendt",
+  "@contractSent": {
+    "description": "Status when contract is sent"
+  },
+  "contractSigned": "Kontrakt underskrevet",
+  "@contractSigned": {
+    "description": "Status when contract is signed"
+  },
+  "price": "Pris",
+  "@price": {
+    "description": "Label for price field"
+  },
+  "deposit": "Depositum",
+  "@deposit": {
+    "description": "Label for deposit field"
+  },
+  "depositPaid": "Depositum betalt",
+  "@depositPaid": {
+    "description": "Status when deposit is paid"
+  },
+  "fullPayment": "Fuld betaling",
+  "@fullPayment": {
+    "description": "Label for full payment"
+  },
+  "paymentReceived": "Betaling modtaget",
+  "@paymentReceived": {
+    "description": "Status when payment is received"
+  },
+  "pickupDate": "Afhentningsdato",
+  "@pickupDate": {
+    "description": "Label for pickup date field"
+  },
+  "search": "Søg",
+  "@search": {
+    "description": "Label for search"
+  },
+  "filter": "Filter",
+  "@filter": {
+    "description": "Label for filter"
+  },
+  "apply": "Anvend",
+  "@apply": {
+    "description": "Button label to apply"
+  },
+  "loading": "Indlæser...",
+  "@loading": {
+    "description": "Loading status text"
+  },
+  "error": "Fejl",
+  "@error": {
+    "description": "Label for error"
+  },
+  "retry": "Prøv igen",
+  "@retry": {
+    "description": "Button label to retry"
+  },
+  "success": "Succes",
+  "@success": {
+    "description": "Label for success"
+  },
+  "warning": "Advarsel",
+  "@warning": {
+    "description": "Label for warning"
+  },
+  "info": "Info",
+  "@info": {
+    "description": "Label for info"
+  },
+  "close": "Luk",
+  "@close": {
+    "description": "Button label to close"
+  },
+  "back": "Tilbage",
+  "@back": {
+    "description": "Button label to go back"
+  },
+  "next": "Næste",
+  "@next": {
+    "description": "Button label for next"
+  },
+  "yes": "Ja",
+  "@yes": {
+    "description": "Button label for yes"
+  },
+  "no": "Nej",
+  "@no": {
+    "description": "Button label for no"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "Button label for OK"
+  },
+  "sync": "Synkroniser",
+  "@sync": {
+    "description": "Button label to sync"
+  },
+  "account": "Konto",
+  "@account": {
+    "description": "Label for account"
+  },
+  "logOut": "Log ud",
+  "@logOut": {
+    "description": "Button label to log out"
+  },
+  "logOutConfirm": "Er du sikker på, at du vil logge ud?",
+  "@logOutConfirm": {
+    "description": "Confirmation message for log out"
+  },
+  "notifications": "Notifikationer",
+  "@notifications": {
+    "description": "Label for notifications"
+  },
+  "manageReminders": "Administrer påmindelser",
+  "@manageReminders": {
+    "description": "Label for manage reminders"
+  },
+  "updateAllReminders": "Opdater alle påmindelser",
+  "@updateAllReminders": {
+    "description": "Button label to update all reminders"
+  },
+  "updatingReminders": "Opdaterer alle påmindelser...",
+  "@updatingReminders": {
+    "description": "Status message when updating reminders"
+  },
+  "remindersUpdated": "Alle påmindelser opdateret!",
+  "@remindersUpdated": {
+    "description": "Success message when reminders updated"
+  },
+  "notificationsInfo": "Notifikationer planlægges automatisk for behandlinger, fødsel og leveringsdatoer.",
+  "@notificationsInfo": {
+    "description": "Information about notifications"
+  },
+  "turnOffAllNotifications": "Sluk alle notifikationer",
+  "@turnOffAllNotifications": {
+    "description": "Button label to turn off notifications"
+  },
+  "turnOffNotificationsTitle": "Sluk alle notifikationer?",
+  "@turnOffNotificationsTitle": {
+    "description": "Title for turn off notifications dialog"
+  },
+  "turnOffNotificationsMessage": "Dette vil fjerne alle planlagte påmindelser. Du kan altid aktivere dem igen.",
+  "@turnOffNotificationsMessage": {
+    "description": "Message for turn off notifications dialog"
+  },
+  "turnOff": "Sluk",
+  "@turnOff": {
+    "description": "Button label to turn off"
+  },
+  "allNotificationsTurnedOff": "Alle notifikationer slukket",
+  "@allNotificationsTurnedOff": {
+    "description": "Success message when notifications turned off"
+  },
+  "viewDetailedStatistics": "Se detaljeret statistik",
+  "@viewDetailedStatistics": {
+    "description": "Button label to view statistics"
+  },
+  "notLoggedIn": "Ikke logget ind",
+  "@notLoggedIn": {
+    "description": "Status for not logged in"
+  },
+  "noUpcomingEvents": "Ingen kommende begivenheder",
+  "@noUpcomingEvents": {
+    "description": "Message when no upcoming events"
+  },
+  "registerHeatOrMating": "Registrer løbetid eller parring for at se begivenheder her",
+  "@registerHeatOrMating": {
+    "description": "Instruction to register heat or mating"
+  },
+  "today": "I dag",
+  "@today": {
+    "description": "Label for today"
+  },
+  "tomorrow": "I morgen",
+  "@tomorrow": {
+    "description": "Label for tomorrow"
+  },
+  "daysAgo": "{days} dage siden",
+  "@daysAgo": {
+    "description": "Text showing days ago",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "daysRemaining": "{days} dage",
+  "@daysRemaining": {
+    "description": "Text showing days remaining",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "weeksRemaining": "{weeks} uger",
+  "@weeksRemaining": {
+    "description": "Text showing weeks remaining",
+    "placeholders": {
+      "weeks": {"type": "int"}
+    }
+  },
+  "urgent": "HASTER",
+  "@urgent": {
+    "description": "Label for urgent status"
+  },
+  "heatCycleEvent": "Løbetid: {dogName}",
+  "@heatCycleEvent": {
+    "description": "Event title for heat cycle",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "estimatedHeatStart": "Estimeret løbetid starter",
+  "@estimatedHeatStart": {
+    "description": "Label for estimated heat start"
+  },
+  "matingWindow": "Parringsvindue: {dogName}",
+  "@matingWindow": {
+    "description": "Event title for mating window",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "dueDate": "Termin: {dogName}",
+  "@dueDate": {
+    "description": "Event title for due date",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "daysUntilBirth": "{days} dage til estimert fødsel",
+  "@daysUntilBirth": {
+    "description": "Text showing days until birth",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "delivery": "Levering: {puppyName}",
+  "@delivery": {
+    "description": "Event title for delivery",
+    "placeholders": {
+      "puppyName": {"type": "String"}
+    }
+  },
+  "toBuyer": "Til {buyerName}",
+  "@toBuyer": {
+    "description": "Text showing buyer name",
+    "placeholders": {
+      "buyerName": {"type": "String"}
+    }
+  },
+  "planned": "Planlagt",
+  "@planned": {
+    "description": "Status for planned"
+  },
+  "nursing": "Diegivning",
+  "@nursing": {
+    "description": "Status for nursing"
+  },
+  "archive": "Arkiv",
+  "@archive": {
+    "description": "Label for archive"
+  },
+  "themeForestGreen": "Skovgrøn",
+  "@themeForestGreen": {
+    "description": "Theme color option"
+  },
+  "themeOceanBlue": "Havblå",
+  "@themeOceanBlue": {
+    "description": "Theme color option"
+  },
+  "themeTerracotta": "Terrakotta",
+  "@themeTerracotta": {
+    "description": "Theme color option"
+  },
+  "themePlum": "Blomme",
+  "@themePlum": {
+    "description": "Theme color option"
+  },
+  "themeSlate": "Skifer",
+  "@themeSlate": {
+    "description": "Theme color option"
+  },
+  "themeRose": "Rose",
+  "@themeRose": {
+    "description": "Theme color option"
+  },
+  "themeTeal": "Havgrøn",
+  "@themeTeal": {
+    "description": "Theme color option"
+  },
+  "themeAmber": "Rav",
+  "@themeAmber": {
+    "description": "Theme color option"
+  },
+  "kennelManagement": "Kennel-administration",
+  "@kennelManagement": {
+    "description": "Title for kennel management"
+  },
+  "createKennel": "Opret kennel",
+  "@createKennel": {
+    "description": "Button label to create kennel"
+  },
+  "joinKennel": "Deltag",
+  "@joinKennel": {
+    "description": "Button label to join kennel"
+  },
+  "changeRole": "Skift rolle",
+  "@changeRole": {
+    "description": "Button label to change role"
+  },
+  "remove": "Fjern",
+  "@remove": {
+    "description": "Button label to remove"
+  },
+  "codeCopied": "Kode kopieret til udklipsholder",
+  "@codeCopied": {
+    "description": "Success message when code copied"
+  },
+  "inviteMember": "Inviter medlem",
+  "@inviteMember": {
+    "description": "Button label to invite member"
+  },
+  "createInviteCode": "Opret invitationskode",
+  "@createInviteCode": {
+    "description": "Button label to create invite code"
+  },
+  "createNewKennel": "Opret ny kennel",
+  "@createNewKennel": {
+    "description": "Button label to create new kennel"
+  },
+  "joinWithCode": "Brug invitationskode",
+  "@joinWithCode": {
+    "description": "Button label to join with code"
+  },
+  "leaveKennel": "Forlad kennel",
+  "@leaveKennel": {
+    "description": "Button label to leave kennel"
+  },
+  "deleteKennel": "Slet kennel",
+  "@deleteKennel": {
+    "description": "Button label to delete kennel"
+  },
+  "nameRequired": "Navn er påkrævet",
+  "@nameRequired": {
+    "description": "Validation message for required name"
+  },
+  "mustBeLoggedIn": "Du skal være logget ind",
+  "@mustBeLoggedIn": {
+    "description": "Message requiring login"
+  },
+  "kennelCreated": "Kennel oprettet!",
+  "@kennelCreated": {
+    "description": "Success message when kennel created"
+  },
+  "create": "Opret",
+  "@create": {
+    "description": "Button label to create"
+  },
+  "loadingError": "Fejl ved indlæsning: {error}",
+  "@loadingError": {
+    "description": "Error message for loading failure",
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "genericError": "Fejl: {error}",
+  "@genericError": {
+    "description": "Generic error message",
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "forgotPassword": "Glemt adgangskode?",
+  "@forgotPassword": {
+    "description": "Link for forgot password"
+  },
+  "resetPassword": "Nulstil adgangskode",
+  "@resetPassword": {
+    "description": "Title for reset password"
+  },
+  "resetPasswordInstructions": "Indtast din e-mailadresse, så sender vi dig et link til at nulstille adgangskoden.",
+  "@resetPasswordInstructions": {
+    "description": "Instructions for password reset"
+  },
+  "emailRequired": "Indtast venligst e-mail",
+  "@emailRequired": {
+    "description": "Validation message for required email"
+  },
+  "invalidEmail": "Ugyldig e-mailadresse",
+  "@invalidEmail": {
+    "description": "Validation message for invalid email"
+  },
+  "send": "Send",
+  "@send": {
+    "description": "Button label to send"
+  },
+  "emailSentTo": "E-mail sendt til {email}. Tjek din indbakke.",
+  "@emailSentTo": {
+    "description": "Success message for email sent",
+    "placeholders": {
+      "email": {"type": "String"}
+    }
+  },
+  "login": "Log ind",
+  "@login": {
+    "description": "Button label for log in"
+  },
+  "signUp": "Tilmeld dig",
+  "@signUp": {
+    "description": "Button label for sign up"
+  },
+  "continueWithGoogle": "Fortsæt med Google",
+  "@continueWithGoogle": {
+    "description": "Button label for Google login"
+  },
+  "orContinueWith": "eller fortsæt med",
+  "@orContinueWith": {
+    "description": "Separator text for login options"
+  },
+  "noAccount": "Har du ikke en konto?",
+  "@noAccount": {
+    "description": "Text for no account"
+  },
+  "alreadyHaveAccount": "Har du allerede en konto?",
+  "@alreadyHaveAccount": {
+    "description": "Text for existing account"
+  },
+  "password": "Adgangskode",
+  "@password": {
+    "description": "Label for password field"
+  },
+  "confirmPassword": "Bekræft adgangskode",
+  "@confirmPassword": {
+    "description": "Label for confirm password field"
+  },
+  "passwordRequired": "Indtast venligst adgangskode",
+  "@passwordRequired": {
+    "description": "Validation message for required password"
+  },
+  "passwordTooShort": "Adgangskoden skal være mindst 6 tegn",
+  "@passwordTooShort": {
+    "description": "Validation message for short password"
+  },
+  "passwordsDoNotMatch": "Adgangskoderne matcher ikke",
+  "@passwordsDoNotMatch": {
+    "description": "Validation message for mismatched passwords"
+  },
+  "selectDog": "Vælg hund",
+  "@selectDog": {
+    "description": "Label for dog selection"
+  },
+  "totalExpense": "Samlet udgift",
+  "@totalExpense": {
+    "description": "Label for total expense"
+  },
+  "numberOfExpenses": "Antal udgifter",
+  "@numberOfExpenses": {
+    "description": "Label for expense count"
+  },
+  "numberOfIncomes": "Antal indtægter",
+  "@numberOfIncomes": {
+    "description": "Label for income count"
+  },
+  "noExpensesRegistered": "Ingen udgifter registreret",
+  "@noExpensesRegistered": {
+    "description": "Message when no expenses"
+  },
+  "addFirstExpense": "Tilføj din første udgift for at få overblik",
+  "@addFirstExpense": {
+    "description": "Instruction to add first expense"
+  },
+  "addExpense": "Tilføj udgift",
+  "@addExpense": {
+    "description": "Button label to add expense"
+  },
+  "noIncomesRegistered": "Ingen indtægter registreret",
+  "@noIncomesRegistered": {
+    "description": "Message when no incomes"
+  },
+  "addFirstIncome": "Tilføj din første indtægt for at få overblik",
+  "@addFirstIncome": {
+    "description": "Instruction to add first income"
+  },
+  "addIncome": "Tilføj indtægt",
+  "@addIncome": {
+    "description": "Button label to add income"
+  },
+  "litter": "Kuld",
+  "@litter": {
+    "description": "Label for litter"
+  },
+  "litterOptional": "Kuld (valgfri)",
+  "@litterOptional": {
+    "description": "Label for optional litter field"
+  },
+  "noLitter": "Intet kuld",
+  "@noLitter": {
+    "description": "Option for no litter"
+  },
+  "expenseAdded": "Udgift tilføjet",
+  "@expenseAdded": {
+    "description": "Success message when expense added"
+  },
+  "incomeAdded": "Indtægt tilføjet",
+  "@incomeAdded": {
+    "description": "Success message when income added"
+  },
+  "deleteExpense": "Slet udgift?",
+  "@deleteExpense": {
+    "description": "Title for delete expense dialog"
+  },
+  "deleteIncome": "Slet indtægt?",
+  "@deleteIncome": {
+    "description": "Title for delete income dialog"
+  },
+  "buyer": "Køber",
+  "@buyer": {
+    "description": "Label for buyer"
+  },
+  "buyerOptional": "Køber (valgfri)",
+  "@buyerOptional": {
+    "description": "Label for optional buyer field"
+  },
+  "statisticsAndReports": "Statistik & Rapporter",
+  "@statisticsAndReports": {
+    "description": "Title for statistics section"
+  },
+  "litterStatistics": "Kuldstatistik",
+  "@litterStatistics": {
+    "description": "Label for litter statistics"
+  },
+  "litterStatisticsDesc": "Gennemsnitlig kuldstørrelse, kønsfordeling og mere.",
+  "@litterStatisticsDesc": {
+    "description": "Description for litter statistics"
+  },
+  "weightDevelopment": "Vægtudvikling",
+  "@weightDevelopment": {
+    "description": "Label for weight development"
+  },
+  "weightDevelopmentDesc": "Sammenlign vægtudvikling mellem hvalpe og kuld.",
+  "@weightDevelopmentDesc": {
+    "description": "Description for weight development"
+  },
+  "economyStats": "Økonomi",
+  "@economyStats": {
+    "description": "Label for economy statistics"
+  },
+  "economyStatsDesc": "Indtægtsrapporter pr. år og race.",
+  "@economyStatsDesc": {
+    "description": "Description for economy statistics"
+  },
+  "breedingStatistics": "Avlsstatistik",
+  "@breedingStatistics": {
+    "description": "Label for breeding statistics"
+  },
+  "breedingStatisticsDesc": "Se hvilke forældrekombinationer der giver bedst resultat.",
+  "@breedingStatisticsDesc": {
+    "description": "Description for breeding statistics"
+  },
+  "statisticsTip": "Statistikken opdateres automatisk baseret på dine registrerede data.",
+  "@statisticsTip": {
+    "description": "Tip about statistics updates"
+  },
+  "litterOverview": "Kuldoversigt",
+  "@litterOverview": {
+    "description": "Title for litter overview"
+  },
+  "genderDistribution": "Kønsfordeling",
+  "@genderDistribution": {
+    "description": "Label for gender distribution"
+  },
+  "litterSizeByBreed": "Kuldstørrelse pr. race",
+  "@litterSizeByBreed": {
+    "description": "Label for litter size by breed"
+  },
+  "littersPerYear": "Kuld pr. år",
+  "@littersPerYear": {
+    "description": "Label for litters per year"
+  },
+  "totalLitters": "Kuld i alt",
+  "@totalLitters": {
+    "description": "Label for total litters"
+  },
+  "averageLitterSize": "Gennemsnitlig kuldstørrelse",
+  "@averageLitterSize": {
+    "description": "Label for average litter size"
+  },
+  "totalPuppies": "Hvalpe i alt",
+  "@totalPuppies": {
+    "description": "Label for total puppies"
+  },
+  "largestLitter": "Største kuld",
+  "@largestLitter": {
+    "description": "Label for largest litter"
+  },
+  "smallestLitter": "Mindste kuld",
+  "@smallestLitter": {
+    "description": "Label for smallest litter"
+  },
+  "puppiesCount": "{count} hvalpe",
+  "@puppiesCount": {
+    "description": "Text showing puppy count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "average": "Gns.",
+  "@average": {
+    "description": "Label for average"
+  },
+  "weightComparison": "Vægtsammenligning mellem kuld",
+  "@weightComparison": {
+    "description": "Title for weight comparison"
+  },
+  "noWeightData": "Ingen vægtdata registreret endnu",
+  "@noWeightData": {
+    "description": "Message when no weight data"
+  },
+  "registerWeightForComparison": "Registrer vægt på hvalpene for at sammenligne",
+  "@registerWeightForComparison": {
+    "description": "Instruction to register weight"
+  },
+  "birthWeightAvg": "Fødselsvægt (gns.)",
+  "@birthWeightAvg": {
+    "description": "Label for average birth weight"
+  },
+  "latestWeightAvg": "Seneste vægt (gns.)",
+  "@latestWeightAvg": {
+    "description": "Label for average latest weight"
+  },
+  "averageWeightDevelopment": "Gennemsnitlig vægtudvikling",
+  "@averageWeightDevelopment": {
+    "description": "Title for weight development"
+  },
+  "basedOnAllWeightMeasurements": "Baseret på alle registrerede vægtmålinger",
+  "@basedOnAllWeightMeasurements": {
+    "description": "Description for weight data"
+  },
+  "week": "Uge",
+  "@week": {
+    "description": "Label for week"
+  },
+  "grams": "Gram",
+  "@grams": {
+    "description": "Unit label for grams"
+  },
+  "birthWeightStatistics": "Fødselsvægt statistik",
+  "@birthWeightStatistics": {
+    "description": "Title for birth weight statistics"
+  },
+  "avgWeight": "Gns.",
+  "@avgWeight": {
+    "description": "Label for average weight"
+  },
+  "minWeight": "Min",
+  "@minWeight": {
+    "description": "Label for minimum weight"
+  },
+  "maxWeight": "Maks",
+  "@maxWeight": {
+    "description": "Label for maximum weight"
+  },
+  "malesAvg": "Hanhunde (gns.)",
+  "@malesAvg": {
+    "description": "Label for male average"
+  },
+  "femalesAvg": "Tæver (gns.)",
+  "@femalesAvg": {
+    "description": "Label for female average"
+  },
+  "noSalesData": "Ingen salgsdata tilgængelige",
+  "@noSalesData": {
+    "description": "Message when no sales data"
+  },
+  "createContractsForStats": "Opret købskontrakter for at se økonomistatistik",
+  "@createContractsForStats": {
+    "description": "Instruction to create contracts"
+  },
+  "showResultsOverview": "Oversigt",
+  "@showResultsOverview": {
+    "description": "Tab label for overview"
+  },
+  "showResultsStatistics": "Statistik",
+  "@showResultsStatistics": {
+    "description": "Tab label for statistics"
+  },
+  "exhibitionResults": "Udstillingsresultater",
+  "@exhibitionResults": {
+    "description": "Title for exhibition results"
+  },
+  "exhibitionResultsDesc": "Her kan du registrere og følge alle udstillingsresultater for {dogName}.",
+  "@exhibitionResultsDesc": {
+    "description": "Description for exhibition results",
+    "placeholders": {
+      "dogName": {"type": "String"}
+    }
+  },
+  "registerResults": "Registrer resultater",
+  "@registerResults": {
+    "description": "Button label to register results"
+  },
+  "registerResultsDesc": "Tilføj resultater fra udstillinger",
+  "@registerResultsDesc": {
+    "description": "Description for register results"
+  },
+  "showStatistics": "Statistik",
+  "@showStatistics": {
+    "description": "Button label for statistics"
+  },
+  "showStatisticsDesc": "Se statistik over BIR, BIM, gruppe- og BIS-resultater",
+  "@showStatisticsDesc": {
+    "description": "Description for show statistics"
+  },
+  "critique": "Kritik",
+  "@critique": {
+    "description": "Label for critique"
+  },
+  "critiqueDesc": "Gem dommerkritik for hver udstilling",
+  "@critiqueDesc": {
+    "description": "Description for critique"
+  },
+  "showResultTip": "Hvis hunden bliver BIR, kan du tilføje grupperesultat. Vinder den gruppen (BIG1), kan du tilføje BIS-resultat.",
+  "@showResultTip": {
+    "description": "Tip for show results"
+  },
+  "results": "Resultater",
+  "@results": {
+    "description": "Label for results"
+  },
+  "noShowResults": "Ingen udstillingsresultater endnu",
+  "@noShowResults": {
+    "description": "Message when no show results"
+  },
+  "tapToAdd": "Tryk + for at tilføje et resultat",
+  "@tapToAdd": {
+    "description": "Instruction to tap to add"
+  },
+  "noStatisticsAvailable": "Ingen statistik tilgængelig",
+  "@noStatisticsAvailable": {
+    "description": "Message when no statistics"
+  },
+  "exhibitions": "Udstillinger",
+  "@exhibitions": {
+    "description": "Label for exhibitions"
+  },
+  "excellent": "Excellent",
+  "@excellent": {
+    "description": "Quality grade excellent"
+  },
+  "veryGood": "Very Good",
+  "@veryGood": {
+    "description": "Quality grade very good"
+  },
+  "good": "Good",
+  "@good": {
+    "description": "Quality grade good"
+  },
+  "sufficient": "Sufficient",
+  "@sufficient": {
+    "description": "Quality grade sufficient"
+  },
+  "disqualified": "Diskvalificeret",
+  "@disqualified": {
+    "description": "Status for disqualified"
+  },
+  "cannotBeJudged": "Kan ikke bedømmes",
+  "@cannotBeJudged": {
+    "description": "Status for cannot be judged"
+  },
+  "classPlacements": "Klasseplacering",
+  "@classPlacements": {
+    "description": "Label for class placements"
+  },
+  "bestMaleDog": "Bedste hanhund (BHK)",
+  "@bestMaleDog": {
+    "description": "Label for best male dog"
+  },
+  "bestFemaleDog": "Bedste tæve (BTK)",
+  "@bestFemaleDog": {
+    "description": "Label for best female dog"
+  },
+  "breedPlacements": "BIR/BIM",
+  "@breedPlacements": {
+    "description": "Label for breed placements"
+  },
+  "groupAndBIS": "Gruppe & BIS",
+  "@groupAndBIS": {
+    "description": "Label for group and BIS"
+  },
+  "groupFinals": "Gruppefinaler",
+  "@groupFinals": {
+    "description": "Label for group finals"
+  },
+  "bestInShow": "Best In Show",
+  "@bestInShow": {
+    "description": "Label for Best In Show"
+  },
+  "certificates": "Certifikater",
+  "@certificates": {
+    "description": "Label for certificates"
+  },
+  "juniorCertificates": "Junior certifikater",
+  "@juniorCertificates": {
+    "description": "Label for junior certificates"
+  },
+  "veteranCertificates": "Veteran certifikater",
+  "@veteranCertificates": {
+    "description": "Label for veteran certificates"
+  },
+  "noCertificates": "Ingen certifikater endnu",
+  "@noCertificates": {
+    "description": "Message when no certificates"
+  },
+  "judges": "Dommere",
+  "@judges": {
+    "description": "Label for judges"
+  },
+  "judgesCount": "{count} dommere",
+  "@judgesCount": {
+    "description": "Text showing judge count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "seeAllJudges": "Se alle {count} dommere",
+  "@seeAllJudges": {
+    "description": "Link to see all judges",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exhibitionCount": "{count} udstilling",
+  "@exhibitionCount": {
+    "description": "Singular exhibition count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "exhibitionsCount": "{count} udstillinger",
+  "@exhibitionsCount": {
+    "description": "Plural exhibitions count",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "allJudges": "Alle dommere",
+  "@allJudges": {
+    "description": "Title for all judges"
+  },
+  "addResult": "Tilføj resultat",
+  "@addResult": {
+    "description": "Button label to add result"
+  },
+  "editResult": "Rediger resultat",
+  "@editResult": {
+    "description": "Button label to edit result"
+  },
+  "deleteResult": "Slet resultat",
+  "@deleteResult": {
+    "description": "Button label to delete result"
+  },
+  "confirmDeleteResult": "Er du sikker på, at du vil slette resultatet fra {showName}?",
+  "@confirmDeleteResult": {
+    "description": "Confirmation for deleting result",
+    "placeholders": {
+      "showName": {"type": "String"}
+    }
+  },
+  "judge": "Dommer",
+  "@judge": {
+    "description": "Label for judge"
+  },
+  "result": "Resultat",
+  "@result": {
+    "description": "Label for result"
+  },
+  "ownNotes": "Egne noter",
+  "@ownNotes": {
+    "description": "Label for own notes"
+  },
+  "judgeCritique": "Dommerkritik",
+  "@judgeCritique": {
+    "description": "Label for judge critique"
+  },
+  "showName": "Udstillingsnavn",
+  "@showName": {
+    "description": "Label for show name"
+  },
+  "showNameHint": "f.eks. DKK København",
+  "@showNameHint": {
+    "description": "Hint for show name field"
+  },
+  "showType": "Udstillingstype",
+  "@showType": {
+    "description": "Label for show type"
+  },
+  "showClass": "Klasse",
+  "@showClass": {
+    "description": "Label for show class"
+  },
+  "quality": "Kvalitet",
+  "@quality": {
+    "description": "Label for quality"
+  },
+  "classPlacement": "Klasseplacing",
+  "@classPlacement": {
+    "description": "Label for class placement"
+  },
+  "unplaced": "Uplaceret",
+  "@unplaced": {
+    "description": "Status for unplaced"
+  },
+  "bestOfSex": "Bedste hanhund/tæve",
+  "@bestOfSex": {
+    "description": "Label for best of sex"
+  },
+  "groupResult": "Grupperesultat",
+  "@groupResult": {
+    "description": "Label for group result"
+  },
+  "noPlacement": "Ingen placering",
+  "@noPlacement": {
+    "description": "Status for no placement"
+  },
+  "didNotParticipate": "Deltog ikke / ingen placering",
+  "@didNotParticipate": {
+    "description": "Status for did not participate"
+  },
+  "bisResult": "BIS-resultat",
+  "@bisResult": {
+    "description": "Label for BIS result"
+  },
+  "required": "Påkrævet",
+  "@required": {
+    "description": "Validation label for required"
+  },
+  "update": "Opdater",
+  "@update": {
+    "description": "Button label to update"
+  },
+  "puppyShow": "Hvalpeshow",
+  "@puppyShow": {
+    "description": "Show type option"
+  },
+  "national": "National",
+  "@national": {
+    "description": "Show type option"
+  },
+  "nordic": "Nordisk",
+  "@nordic": {
+    "description": "Show type option"
+  },
+  "international": "International",
+  "@international": {
+    "description": "Show type option"
+  },
+  "breedSpecial": "Racespecial",
+  "@breedSpecial": {
+    "description": "Show type option"
+  },
+  "food": "Foder",
+  "@food": {
+    "description": "Expense category"
+  },
+  "veterinary": "Dyrlæge",
+  "@veterinary": {
+    "description": "Expense category"
+  },
+  "registration": "Registrering (DKK)",
+  "@registration": {
+    "description": "Expense category"
+  },
+  "other": "Andet",
+  "@other": {
+    "description": "Category option for other"
+  },
+  "noDataAvailable": "Ingen data tilgængelig",
+  "@noDataAvailable": {
+    "description": "Message when no data"
+  },
+  "registerWeightToSeeStats": "Registrer vægt på hvalpene for at se statistik",
+  "@registerWeightToSeeStats": {
+    "description": "Instruction to register weight"
+  },
+  "noWeightDataRegistered": "Ingen vægtdata registreret endnu",
+  "@noWeightDataRegistered": {
+    "description": "Message when no weight data"
+  },
+  "registerWeightToCompare": "Registrer vægt på hvalpene for at sammenligne",
+  "@registerWeightToCompare": {
+    "description": "Instruction to register weight"
+  },
+  "weightComparisonBetweenLitters": "Vægtsammenligning mellem kuld",
+  "@weightComparisonBetweenLitters": {
+    "description": "Title for weight comparison"
+  },
+  "birthWeightAverage": "Fødselsvægt (gns)",
+  "@birthWeightAverage": {
+    "description": "Label for birth weight average"
+  },
+  "latestWeightAverage": "Seneste vægt (gns)",
+  "@latestWeightAverage": {
+    "description": "Label for latest weight average"
+  },
+  "gram": "Gram",
+  "@gram": {
+    "description": "Unit label for gram"
+  },
+  "min": "Min",
+  "@min": {
+    "description": "Label for minimum"
+  },
+  "max": "Maks",
+  "@max": {
+    "description": "Label for maximum"
+  },
+  "malesAverage": "Hanner (gns)",
+  "@malesAverage": {
+    "description": "Label for males average"
+  },
+  "femalesAverage": "Tæver (gns)",
+  "@femalesAverage": {
+    "description": "Label for females average"
+  },
+  "noSalesDataAvailable": "Ingen salgsdata tilgængelig",
+  "@noSalesDataAvailable": {
+    "description": "Message when no sales data"
+  },
+  "createContractsToSeeStats": "Opret købskontrakter for at se økonomistatistik",
+  "@createContractsToSeeStats": {
+    "description": "Instruction to create contracts"
+  },
+  "revenueOverview": "Indtægtsoversigt",
+  "@revenueOverview": {
+    "description": "Title for revenue overview"
+  },
+  "totalTurnover": "Total omsætning",
+  "@totalTurnover": {
+    "description": "Label for total turnover"
+  },
+  "paid": "Betalt",
+  "@paid": {
+    "description": "Status for paid"
+  },
+  "outstanding": "Udestående",
+  "@outstanding": {
+    "description": "Status for outstanding"
+  },
+  "contractsTotal": "kontrakter i alt",
+  "@contractsTotal": {
+    "description": "Label for total contracts"
+  },
+  "revenuePerYear": "Indtægt per år",
+  "@revenuePerYear": {
+    "description": "Label for revenue per year"
+  },
+  "revenuePerBreed": "Indtægt per race",
+  "@revenuePerBreed": {
+    "description": "Label for revenue per breed"
+  },
+  "priceStatistics": "Prisstatistik",
+  "@priceStatistics": {
+    "description": "Title for price statistics"
+  },
+  "averagePrice": "Gennemsnitspris",
+  "@averagePrice": {
+    "description": "Label for average price"
+  },
+  "lowest": "Laveste",
+  "@lowest": {
+    "description": "Label for lowest"
+  },
+  "highest": "Højeste",
+  "@highest": {
+    "description": "Label for highest"
+  },
+  "noBreedingDataAvailable": "Ingen avlsdata tilgængelig",
+  "@noBreedingDataAvailable": {
+    "description": "Message when no breeding data"
+  },
+  "registerLittersToSeeBreedingStats": "Registrer kuld for at se avlsstatistik",
+  "@registerLittersToSeeBreedingStats": {
+    "description": "Instruction to register litters"
+  },
+  "bestParentCombinations": "Bedste forældrekombinationer",
+  "@bestParentCombinations": {
+    "description": "Title for parent combinations"
+  },
+  "sortedByAverageLitterSize": "Sorteret efter gennemsnitlig kuldstørrelse",
+  "@sortedByAverageLitterSize": {
+    "description": "Description for sorting"
+  },
+  "avgLitterSize": "Gns kuldstørrelse",
+  "@avgLitterSize": {
+    "description": "Label for average litter size"
+  },
+  "avgBirthWeight": "Gns fødselsvægt",
+  "@avgBirthWeight": {
+    "description": "Label for average birth weight"
+  },
+  "mostUsedBreedingDogs": "Mest brugte avlshunde",
+  "@mostUsedBreedingDogs": {
+    "description": "Title for most used breeding dogs"
+  },
+  "placementRate": "Placeringsrate",
+  "@placementRate": {
+    "description": "Label for placement rate"
+  },
+  "sold": "Solgt",
+  "@sold": {
+    "description": "Status for sold"
+  },
+  "reserved": "Reserveret",
+  "@reserved": {
+    "description": "Status for reserved"
+  },
+  "ckCertificateQuality": "CK (Certifikat Kvalitet)",
+  "@ckCertificateQuality": {
+    "description": "Label for CK certificate"
+  },
+  "bestMalePlacement": "Placering bedste hanhund",
+  "@bestMalePlacement": {
+    "description": "Label for best male placement"
+  },
+  "bestFemalePlacement": "Placering bedste tæve",
+  "@bestFemalePlacement": {
+    "description": "Label for best female placement"
+  },
+  "groupFinal": "Gruppefinale",
+  "@groupFinal": {
+    "description": "Label for group final"
+  },
+  "deleteMeasurement": "Slet måling?",
+  "@deleteMeasurement": {
+    "description": "Title for delete measurement dialog"
+  },
+  "confirmDeleteMeasurement": "Er du sikker på, at du vil slette denne måling?",
+  "@confirmDeleteMeasurement": {
+    "description": "Confirmation for deleting measurement"
+  },
+  "deleteVaccine": "Slet vaccine?",
+  "@deleteVaccine": {
+    "description": "Title for delete vaccine dialog"
+  },
+  "confirmDeleteVaccine": "Er du sikker på, at du vil slette {name}?",
+  "@confirmDeleteVaccine": {
+    "description": "Confirmation for deleting vaccine",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deleteVetVisit": "Slet dyrlægebesøg?",
+  "@deleteVetVisit": {
+    "description": "Title for delete vet visit dialog"
+  },
+  "confirmDeleteVetVisit": "Er du sikker på, at du vil slette dette besøg?",
+  "@confirmDeleteVetVisit": {
+    "description": "Confirmation for deleting vet visit"
+  },
+  "deleteTreatment": "Slet behandling?",
+  "@deleteTreatment": {
+    "description": "Title for delete treatment dialog"
+  },
+  "confirmDeleteTreatment": "Er du sikker på, at du vil slette {name}?",
+  "@confirmDeleteTreatment": {
+    "description": "Confirmation for deleting treatment",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "deleteTest": "Slet test?",
+  "@deleteTest": {
+    "description": "Title for delete test dialog"
+  },
+  "confirmDeleteTest": "Er du sikker på, at du vil slette {name}?",
+  "@confirmDeleteTest": {
+    "description": "Confirmation for deleting test",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "remindDaysBefore": "Påmind {days} dage før",
+  "@remindDaysBefore": {
+    "description": "Text for reminder setting",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "followUpDate": "Opfølgningsdato",
+  "@followUpDate": {
+    "description": "Label for follow-up date"
+  },
+  "reminder": "Påmindelse",
+  "@reminder": {
+    "description": "Label for reminder"
+  },
+  "daysBefore": "{days} dage før",
+  "@daysBefore": {
+    "description": "Text for days before",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "productNameRequired": "Produktnavn er påkrævet",
+  "@productNameRequired": {
+    "description": "Validation message for product name"
+  },
+  "testNameRequired": "Testnavn er påkrævet",
+  "@testNameRequired": {
+    "description": "Validation message for test name"
+  },
+  "newBuyer": "Ny køber",
+  "@newBuyer": {
+    "description": "Title for new buyer"
+  },
+  "editBuyer": "Rediger køber",
+  "@editBuyer": {
+    "description": "Title for edit buyer"
+  },
+  "deleteBuyer": "Slet køber?",
+  "@deleteBuyer": {
+    "description": "Title for delete buyer dialog"
+  },
+  "confirmDeleteBuyer": "Er du sikker på, at du vil slette {name}?",
+  "@confirmDeleteBuyer": {
+    "description": "Confirmation for deleting buyer",
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "confirmRemoveReservation": "Er du sikker på, at du vil fjerne reservationen for denne køber?",
+  "@confirmRemoveReservation": {
+    "description": "Confirmation for removing reservation"
+  },
+  "selectPuppyToReserve": "Vælg en hvalp at reservere:",
+  "@selectPuppyToReserve": {
+    "description": "Instruction to select puppy"
+  },
+  "confirmDelivery": "Bekræft at hvalpen er leveret til køberen. Dette vil markere hvalpen som leveret.",
+  "@confirmDelivery": {
+    "description": "Confirmation message for delivery"
+  },
+  "buyerAdded": "Køber tilføjet",
+  "@buyerAdded": {
+    "description": "Success message when buyer added"
+  },
+  "buyerUpdated": "Køber opdateret",
+  "@buyerUpdated": {
+    "description": "Success message when buyer updated"
+  },
+  "buyerDeleted": "Køber slettet",
+  "@buyerDeleted": {
+    "description": "Success message when buyer deleted"
+  },
+  "addDogsFirst": "Tilføj hunde først",
+  "@addDogsFirst": {
+    "description": "Instruction to add dogs first"
+  },
+  "tapToSelectDate": "Tryk for at vælge dato",
+  "@tapToSelectDate": {
+    "description": "Instruction to tap for date"
+  },
+  "setMatingDateFirst": "Indstil parringsdato først",
+  "@setMatingDateFirst": {
+    "description": "Instruction to set mating date"
+  },
+  "pleaseSelectBothParents": "Vælg venligst både mor og far",
+  "@pleaseSelectBothParents": {
+    "description": "Validation message for parents"
+  },
+  "motherMustBeFemale": "Mor skal være en tæve (female)",
+  "@motherMustBeFemale": {
+    "description": "Validation message for mother"
+  },
+  "fatherMustBeMale": "Far skal være en hanhund (male)",
+  "@fatherMustBeMale": {
+    "description": "Validation message for father"
+  },
+  "birthDateLabel": "Fødselsdato",
+  "@birthDateLabel": {
+    "description": "Label for birth date"
+  },
+  "registerBirth": "Registrer fødsel",
+  "@registerBirth": {
+    "description": "Button label to register birth"
+  },
+  "litterBornConfirm": "Kuldet er nu født! Vil du opdatere fødselsdatoen til i dag?",
+  "@litterBornConfirm": {
+    "description": "Confirmation for litter born"
+  },
+  "birthRegistered": "Fødsel registreret! Du kan nu tilføje hvalpe.",
+  "@birthRegistered": {
+    "description": "Success message when birth registered"
+  },
+  "openTemperatureLog": "Åbn temperaturlog",
+  "@openTemperatureLog": {
+    "description": "Button label to open temperature log"
+  },
+  "addMeasurement": "Tilføj måling",
+  "@addMeasurement": {
+    "description": "Button label to add measurement"
+  },
+  "addWeightMeasurement": "Tilføj vægtmåling",
+  "@addWeightMeasurement": {
+    "description": "Button label to add weight measurement"
+  },
+  "weightMeasurementAdded": "Vægtmåling tilføjet",
+  "@weightMeasurementAdded": {
+    "description": "Success message when weight added"
+  },
+  "weightMeasurementsSaved": "{count} vægtmålinger gemt",
+  "@weightMeasurementsSaved": {
+    "description": "Success message for weight measurements",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "editWeightMeasurement": "Rediger vægtmåling",
+  "@editWeightMeasurement": {
+    "description": "Title for edit weight measurement"
+  },
+  "weightMeasurementUpdated": "Vægtmåling opdateret",
+  "@weightMeasurementUpdated": {
+    "description": "Success message when weight updated"
+  },
+  "motherAndFatherRequired": "Mor og far er påkrævet",
+  "@motherAndFatherRequired": {
+    "description": "Validation message for parents required"
+  },
+  "selectBuyer": "Vælg en køber",
+  "@selectBuyer": {
+    "description": "Label for buyer selection"
+  },
+  "useStandardTerms": "Brug standardvilkår",
+  "@useStandardTerms": {
+    "description": "Label for standard terms option"
+  },
+  "neuteringRequired": "Kastrering/sterilisering påkrævet",
+  "@neuteringRequired": {
+    "description": "Label for neutering requirement"
+  },
+  "selectBuyerBeforeExport": "Vælg køber før eksport",
+  "@selectBuyerBeforeExport": {
+    "description": "Validation message for export"
+  },
+  "confirmDeleteContract": "Er du sikker på, at du vil slette denne kontrakt?",
+  "@confirmDeleteContract": {
+    "description": "Confirmation for deleting contract"
+  },
+  "buyerInfoNotFound": "Køberinformation ikke fundet",
+  "@buyerInfoNotFound": {
+    "description": "Error when buyer info not found"
+  },
+  "codeMustBe6Chars": "Koden skal være 6 tegn",
+  "@codeMustBe6Chars": {
+    "description": "Validation for code length"
+  },
+  "youJoinedKennel": "Du er nu med i kennelen!",
+  "@youJoinedKennel": {
+    "description": "Success message when joined kennel"
+  },
+  "canAlsoInviteMembers": "Kan også invitere medlemmer",
+  "@canAlsoInviteMembers": {
+    "description": "Permission description"
+  },
+  "couldNotOpenEmailClient": "Kunne ikke åbne e-mailklient",
+  "@couldNotOpenEmailClient": {
+    "description": "Error when email client fails"
+  },
+  "errorOpeningEmail": "Fejl ved åbning af e-mail: {error}",
+  "@errorOpeningEmail": {
+    "description": "Error message for email",
+    "placeholders": {
+      "error": {"type": "String"}
+    }
+  },
+  "fileSize": "Filstørrelse: {size} MB",
+  "@fileSize": {
+    "description": "File size display",
+    "placeholders": {
+      "size": {"type": "String"}
+    }
+  },
+  "confirmDeleteImage": "Er du sikker på, at du vil slette dette billede?",
+  "@confirmDeleteImage": {
+    "description": "Confirmation for deleting image"
+  },
+  "confirmRemoveUser": "Er du sikker på, at du vil fjerne denne bruger?",
+  "@confirmRemoveUser": {
+    "description": "Confirmation for removing user"
+  },
+  "temperatureMeasurementRegistered": "Temperaturmåling registreret",
+  "@temperatureMeasurementRegistered": {
+    "description": "Success message for temperature"
+  },
+  "deleteMating": "Slet parring",
+  "@deleteMating": {
+    "description": "Title for delete mating dialog"
+  },
+  "confirmDeleteMating": "Er du sikker på, at du vil slette denne parring?",
+  "@confirmDeleteMating": {
+    "description": "Confirmation for deleting mating"
+  },
+  "yearsOld": "år",
+  "@yearsOld": {
+    "description": "Suffix for age in years"
+  },
+  "addPotentialBuyers": "Tilføj potentielle købere",
+  "@addPotentialBuyers": {
+    "description": "Button label to add potential buyers"
+  },
+  "removeReservation": "Fjern reservation",
+  "@removeReservation": {
+    "description": "Button label to remove reservation"
+  },
+  "addReservation": "Tilføj reservation",
+  "@addReservation": {
+    "description": "Button label to add reservation"
+  },
+  "noAvailablePuppiesInLitter": "Ingen tilgængelige hvalpe i dette kuld.",
+  "@noAvailablePuppiesInLitter": {
+    "description": "Message when no puppies available"
+  },
+  "selectPuppy": "Vælg hvalp",
+  "@selectPuppy": {
+    "description": "Label for puppy selection"
+  },
+  "reservationAdded": "Reservation tilføjet",
+  "@reservationAdded": {
+    "description": "Success message when reservation added"
+  },
+  "markAsDelivered": "Marker som leveret",
+  "@markAsDelivered": {
+    "description": "Button label to mark as delivered"
+  },
+  "puppyMarkedAsDelivered": "Hvalp markeret som leveret!",
+  "@puppyMarkedAsDelivered": {
+    "description": "Success message when puppy delivered"
+  },
+  "confirmDeliveryButton": "Bekræft levering",
+  "@confirmDeliveryButton": {
+    "description": "Button label to confirm delivery"
+  },
+  "preferences": "Præferencer (køn/temperament)",
+  "@preferences": {
+    "description": "Label for preferences field"
+  },
+  "linkToLitterAndPuppy": "Link til kuld og hvalp",
+  "@linkToLitterAndPuppy": {
+    "description": "Section title for linking"
+  },
+  "selectLitterOptional": "Vælg kuld (valgfrit)",
+  "@selectLitterOptional": {
+    "description": "Label for optional litter selection"
+  },
+  "selectPuppyOptional": "Vælg hvalp (valgfrit)",
+  "@selectPuppyOptional": {
+    "description": "Label for optional puppy selection"
+  },
+  "none": "Ingen",
+  "@none": {
+    "description": "Option for none"
+  },
+  "enterMatingDateForPlannedLitter": "Angiv parringsdato for planlagt kuld",
+  "@enterMatingDateForPlannedLitter": {
+    "description": "Validation message for mating date"
+  },
+  "historicalLitter": "Historisk kuld",
+  "@historicalLitter": {
+    "description": "Label for historical litter toggle"
+  },
+  "historicalLitterSubtitle": "Registrerer et ældre kuld fra før",
+  "@historicalLitterSubtitle": {
+    "description": "Subtitle when historical litter is enabled"
+  },
+  "newLitterSubtitle": "Nyt kuld (sidste 75 dage)",
+  "@newLitterSubtitle": {
+    "description": "Subtitle when registering a new litter"
+  },
+  "birthDateHistorical": "Fødselsdato (historisk kuld)",
+  "@birthDateHistorical": {
+    "description": "Label for birth date of historical litter"
+  },
+  "puppyIdentification": "Identifikation (for at skelne hvalpe)",
+  "@puppyIdentification": {
+    "description": "Section title for puppy identification"
+  },
+  "nicknameDisplayName": "Kælenavn / Visningsnavn",
+  "@nicknameDisplayName": {
+    "description": "Label for nickname field"
+  },
+  "nicknameHint": "f.eks. \"Blå bånd\", \"Lille ven\"",
+  "@nicknameHint": {
+    "description": "Hint text for nickname field"
+  },
+  "colorCodeBandMark": "Farvekode (bånd/mærke)",
+  "@colorCodeBandMark": {
+    "description": "Label for color code selection"
+  },
+  "selected": "Valgt",
+  "@selected": {
+    "description": "Label when something is selected"
+  },
+  "puppyName": "Hvalpenavn",
+  "@puppyName": {
+    "description": "Label for puppy name field"
+  },
+  "pleaseEnterName": "Indtast venligst et navn",
+  "@pleaseEnterName": {
+    "description": "Validation message for name field"
+  },
+  "country": "Land",
+  "@country": {
+    "description": "Label for country field"
+  },
+  "ckSystemAvailable": "CK-systemet er tilgængeligt",
+  "@ckSystemAvailable": {
+    "description": "Helper text when CK system is available"
+  },
+  "ckOnlyNordic": "CK er kun tilgængeligt i Norden",
+  "@ckOnlyNordic": {
+    "description": "Helper text when CK is not available"
+  },
+  "requiresBHKBTK": "Kræver 1. BHK eller 1. BTK for at vælge BIR/BIM",
+  "@requiresBHKBTK": {
+    "description": "Helper text for BIR/BIM requirements"
+  },
+  "selectDam": "Vælg mor",
+  "@selectDam": {
+    "description": "Label for dam selection"
+  },
+  "selectSire": "Vælg far",
+  "@selectSire": {
+    "description": "Label for sire selection"
+  },
+  "commonTests": "Almindelige tests",
+  "@commonTests": {
+    "description": "Label for common DNA tests section"
+  },
+  "testName": "Testnavn",
+  "@testName": {
+    "description": "Label for test name field"
+  },
+  "testDate": "Testdato",
+  "@testDate": {
+    "description": "Label for test date field"
+  },
+  "laboratory": "Laboratorium",
+  "@laboratory": {
+    "description": "Label for laboratory field"
+  },
+  "certificateNumber": "Certifikatnummer",
+  "@certificateNumber": {
+    "description": "Label for certificate number field"
+  },
+  "pendingResult": "Venter på resultat",
+  "@pendingResult": {
+    "description": "Status for pending DNA test result"
+  },
+  "clear": "Fri",
+  "@clear": {
+    "description": "DNA test result - clear"
+  },
+  "carrier": "Bærer",
+  "@carrier": {
+    "description": "DNA test result - carrier"
+  },
+  "affected": "Ramt",
+  "@affected": {
+    "description": "DNA test result - affected"
+  },
+  "searchDogsLittersBuyers": "Søg efter hunde, kuld, købere...",
+  "@searchDogsLittersBuyers": {
+    "description": "Placeholder text for search field"
+  },
+  "darkModeDescription": "Tilpas udseendet for dine øjne",
+  "@darkModeDescription": {
+    "description": "Description for dark mode section"
+  },
+  "useSystemTheme": "Følg systemindstilling",
+  "@useSystemTheme": {
+    "description": "Label for system theme toggle"
+  },
+  "useSystemThemeDescription": "Appen følger enhedens tema automatisk",
+  "@useSystemThemeDescription": {
+    "description": "Description for system theme toggle"
+  },
+  "darkModeOn": "Mørk tilstand aktiveret",
+  "@darkModeOn": {
+    "description": "Label when dark mode is on"
+  },
+  "darkModeOff": "Lys tilstand aktiveret",
+  "@darkModeOff": {
+    "description": "Label when dark mode is off"
+  },
+  "deliveryChecklist": "Leveringscheckliste",
+  "@deliveryChecklist": {
+    "description": "Title for puppy delivery checklist"
+  },
+  "setDeliveryDate": "Indstil leveringsdato",
+  "@setDeliveryDate": {
+    "description": "Button to set delivery date"
+  },
+  "errorLoadingChecklist": "Kunne ikke indlæse checkliste",
+  "@errorLoadingChecklist": {
+    "description": "Error message when checklist fails to load"
+  },
+  "deliveryDate": "Leveringsdato",
+  "@deliveryDate": {
+    "description": "Label for delivery date"
+  },
+  "progress": "Fremgang",
+  "@progress": {
+    "description": "Label for progress indicator"
+  },
+  "readyForDelivery": "Klar til levering!",
+  "@readyForDelivery": {
+    "description": "Message when checklist is complete"
+  },
+  "addItem": "Tilføj punkt",
+  "@addItem": {
+    "description": "Button to add checklist item"
+  },
+  "title": "Titel",
+  "@title": {
+    "description": "Label for title field"
+  },
+  "add": "Tilføj",
+  "@add": {
+    "description": "Add button label"
+  },
+  "deliveryDateSet": "Leveringsdato indstillet",
+  "@deliveryDateSet": {
+    "description": "Message when delivery date is set"
+  },
+  "annualReport": "Årsrapport",
+  "@annualReport": {
+    "description": "Title for annual report"
+  },
+  "selectYear": "Vælg år",
+  "@selectYear": {
+    "description": "Label for year selector"
+  },
+  "annualSummary": "Årsoversigt",
+  "@annualSummary": {
+    "description": "Title for annual summary section"
+  },
+  "littersRegistered": "Registrerede kuld",
+  "@littersRegistered": {
+    "description": "Label for litters count"
+  },
+  "puppiesBorn": "Fødte hvalpe",
+  "@puppiesBorn": {
+    "description": "Label for puppies born count"
+  },
+  "malePuppies": "Hanhvalpe",
+  "@malePuppies": {
+    "description": "Label for male puppies count"
+  },
+  "femalePuppies": "Tisphvalpe",
+  "@femalePuppies": {
+    "description": "Label for female puppies count"
+  },
+  "puppiesSold": "Solgte hvalpe",
+  "@puppiesSold": {
+    "description": "Label for puppies sold count"
+  },
+  "financialSummary": "Økonomisk oversigt",
+  "@financialSummary": {
+    "description": "Title for financial summary section"
+  },
+  "totalIncome": "Total indkomst",
+  "@totalIncome": {
+    "description": "Label for total income"
+  },
+  "totalExpenses": "Samlede udgifter",
+  "@totalExpenses": {
+    "description": "Label for total expenses"
+  },
+  "netResult": "Nettoresultat",
+  "@netResult": {
+    "description": "Label for net result"
+  },
+  "showResults": "Udstillingsresultater",
+  "@showResults": {
+    "description": "Title for show results section"
+  },
+  "shows": "Udstillinger",
+  "@shows": {
+    "description": "Label for shows count"
+  },
+  "certificateCount": "Certifikater",
+  "@certificateCount": {
+    "description": "Label for certificates count"
+  },
+  "generatePdfReport": "Generer PDF-rapport",
+  "@generatePdfReport": {
+    "description": "Button to generate PDF report"
+  },
+  "generating": "Genererer...",
+  "@generating": {
+    "description": "Loading text while generating"
+  },
+  "reportInfo": "Rapporten inkluderer alle kuld, hvalpe, økonomi og udstillingsresultater for det valgte år.",
+  "@reportInfo": {
+    "description": "Information about the report contents"
+  },
+  "contractTypes": "Kontrakttyper",
+  "@contractTypes": {
+    "description": "Title for contract types"
+  },
+  "selectContractType": "Vælg kontrakttype",
+  "@selectContractType": {
+    "description": "Label for contract type selection"
+  },
+  "purchaseContract": "Købskontrakt",
+  "@purchaseContract": {
+    "description": "Label for purchase contract"
+  },
+  "purchaseContractDesc": "Standardkontrakt for salg af hvalp",
+  "@purchaseContractDesc": {
+    "description": "Description for purchase contract"
+  },
+  "breedingContract": "Avlskontrakt",
+  "@breedingContract": {
+    "description": "Label for breeding contract"
+  },
+  "breedingContractDesc": "Aftale om parring mellem hanhund og tæve",
+  "@breedingContractDesc": {
+    "description": "Description for breeding contract"
+  },
+  "coOwnershipContract": "Medejerskabsaftale",
+  "@coOwnershipContract": {
+    "description": "Label for co-ownership contract"
+  },
+  "coOwnershipContractDesc": "Aftale om delt ejerskab af hund",
+  "@coOwnershipContractDesc": {
+    "description": "Description for co-ownership contract"
+  },
+  "fosterContract": "Foderværtsaftale",
+  "@fosterContract": {
+    "description": "Label for foster contract"
+  },
+  "fosterContractDesc": "Aftale hvor hund placeres hos fodervært",
+  "@fosterContractDesc": {
+    "description": "Description for foster contract"
+  },
+  "reservationContract": "Reservationsaftale",
+  "@reservationContract": {
+    "description": "Label for reservation contract"
+  },
+  "reservationContractDesc": "Aftale om reservation af hvalp",
+  "@reservationContractDesc": {
+    "description": "Description for reservation contract"
+  },
+  "studOwner": "Hanhundsejer",
+  "@studOwner": {
+    "description": "Label for stud owner"
+  },
+  "damOwner": "Tævejer",
+  "@damOwner": {
+    "description": "Label for dam owner"
+  },
+  "studFee": "Parningsgebyr",
+  "@studFee": {
+    "description": "Label for stud fee"
+  },
+  "paymentTerms": "Betalingsbetingelser",
+  "@paymentTerms": {
+    "description": "Label for payment terms"
+  },
+  "owner1": "Ejer 1",
+  "@owner1": {
+    "description": "Label for owner 1"
+  },
+  "owner2": "Ejer 2",
+  "@owner2": {
+    "description": "Label for owner 2"
+  },
+  "ownershipPercentage": "Ejerandel (%)",
+  "@ownershipPercentage": {
+    "description": "Label for ownership percentage"
+  },
+  "primaryCaretaker": "Primær omsorgsgiver",
+  "@primaryCaretaker": {
+    "description": "Label for primary caretaker"
+  },
+  "breedingRights": "Avlsrettigheder",
+  "@breedingRights": {
+    "description": "Label for breeding rights"
+  },
+  "showRights": "Udstillingsrettigheder",
+  "@showRights": {
+    "description": "Label for show rights"
+  },
+  "expenseSharing": "Fordeling af udgifter",
+  "@expenseSharing": {
+    "description": "Label for expense sharing"
+  },
+  "fosterParent": "Fodervært",
+  "@fosterParent": {
+    "description": "Label for foster parent"
+  },
+  "owner": "Ejer",
+  "@owner": {
+    "description": "Label for owner"
+  },
+  "startDate": "Startdato",
+  "@startDate": {
+    "description": "Label for start date"
+  },
+  "endDate": "Slutdato",
+  "@endDate": {
+    "description": "Label for end date"
+  },
+  "returnConditions": "Tilbageleveringsbetingelser",
+  "@returnConditions": {
+    "description": "Label for return conditions"
+  },
+  "reservationFee": "Reservationsgebyr",
+  "@reservationFee": {
+    "description": "Label for reservation fee"
+  },
+  "additionalTerms": "Tillægsbetingelser",
+  "@additionalTerms": {
+    "description": "Label for additional terms"
+  },
+  "waitlist": "Venteliste",
+  "@waitlist": {
+    "description": "Label for waitlist"
+  },
+  "waitlistPosition": "Position",
+  "@waitlistPosition": {
+    "description": "Label for waitlist position"
+  },
+  "waitlistDate": "Dato registreret",
+  "@waitlistDate": {
+    "description": "Label for waitlist date"
+  },
+  "waitlistStatus": "Status",
+  "@waitlistStatus": {
+    "description": "Label for waitlist status"
+  },
+  "preferredGender": "Foretrukne køn",
+  "@preferredGender": {
+    "description": "Label for preferred gender"
+  },
+  "preferredColor": "Foretrukne farve",
+  "@preferredColor": {
+    "description": "Label for preferred color"
+  },
+  "depositAmount": "Depositum",
+  "@depositAmount": {
+    "description": "Label for deposit amount"
+  },
+  "noPreference": "Ingen præference",
+  "@noPreference": {
+    "description": "Label for no preference"
+  },
+  "pending": "Afventer",
+  "@pending": {
+    "description": "Status for pending"
+  },
+  "contacted": "Kontaktet",
+  "@contacted": {
+    "description": "Status for contacted"
+  },
+  "reserved": "Reserveret",
+  "@reserved": {
+    "description": "Status for reserved"
+  },
+  "purchased": "Købt",
+  "@purchased": {
+    "description": "Status for purchased"
+  },
+  "declined": "Afvist",
+  "@declined": {
+    "description": "Status for declined"
+  },
+  "cancelled": "Annulleret",
+  "@cancelled": {
+    "description": "Status for cancelled"
+  },
+  "addToWaitlist": "Tilføj til venteliste",
+  "@addToWaitlist": {
+    "description": "Button to add to waitlist"
+  },
+  "removeFromWaitlist": "Fjern fra venteliste",
+  "@removeFromWaitlist": {
+    "description": "Button to remove from waitlist"
+  },
+  "moveUp": "Flyt op",
+  "@moveUp": {
+    "description": "Button to move up"
+  },
+  "moveDown": "Flyt ned",
+  "@moveDown": {
+    "description": "Button to move down"
+  },
+  "waitlistEmpty": "Ingen på ventelisten",
+  "@waitlistEmpty": {
+    "description": "Message when waitlist is empty"
+  },
+  "waitlistInfo": "Administrer interesserede købere og deres placering på ventelisten",
+  "@waitlistInfo": {
+    "description": "Info about waitlist"
+  },
+  "position": "Position #{position}",
+  "@position": {
+    "description": "Waitlist position display",
+    "placeholders": {
+      "position": {
+        "type": "Object"
+      }
+    }
+  },
+  "addedToWaitlist": "Tilføjet til venteliste",
+  "@addedToWaitlist": {
+    "description": "Message when added to waitlist"
+  },
+  "removedFromWaitlist": "Fjernet fra venteliste",
+  "@removedFromWaitlist": {
+    "description": "Message when removed from waitlist"
+  },
+  "calendar": "Kalender",
+  "@calendar": {
+    "description": "Label for calendar"
+  },
+  "done": "Færdig",
+  "@done": {
+    "description": "Button for done"
+  },
+  "expectedBirth": "Estimert dato for fødsel",
+  "@expectedBirth": {
+    "description": "Label for expected birth"
+  },
+  "treatments": "Behandlinger",
+  "@treatments": {
+    "description": "Label for treatments"
+  },
+  "birthdays": "Fødselsdage",
+  "@birthdays": {
+    "description": "Label for birthdays"
+  },
+  "plannedLitterTag": "[Planlagt kuld]",
+  "plannedLitterCreated": "Planlagt kuld oprettet",
+  "litterAdded": "Kuld tilf\u00f8jet",
+  "maleNumberTemplate": "Han {number}",
+  "femaleNumberTemplate": "T\u00e6ve {number}",
+  "planLitter": "Planl\u00e6g kuld",
+  "planningFutureLitter": "Planl\u00e6gger et fremtidigt kuld",
+  "registeringBornLitter": "Registrerer et f\u00f8dt kuld",
+  "planningMode": "Planl\u00e6gningstilstand",
+  "planningModeDescription": "Kuldet er ikke f\u00f8dt endnu \u2014 du planl\u00e6gger fremad",
+  "registeringModeDescription": "Kuldet er allerede f\u00f8dt \u2014 du registrerer data",
+  "registerPreviousLitter": "Registrer et tidligere kuld",
+  "addNewFemale": "Tilf\u00f8j ny t\u00e6ve",
+  "addNewMale": "Tilf\u00f8j ny hanhund",
+  "pleaseSelectDam": "V\u00e6lg venligst en mor",
+  "pleaseSelectSire": "V\u00e6lg venligst en far",
+  "dateSetWhenMatingCompleted": "Dato s\u00e6ttes n\u00e5r f\u00f8rste parring er gennemf\u00f8rt",
+  "matingDate": "Parringsdato",
+  "removeMatingDate": "Fjern parringsdato",
+  "estimatedDueDate": "Estimeret f\u00f8dselsdato",
+  "progesteroneMeasurements": "Progesteronm\u00e5linger",
+  "progesteroneMeasurementsSubtitle": "Se og registrer m\u00e5linger for optimal parring",
+  "breedingContractSubtitle": "Opret aftale mellem ejere af t\u00e6ve og hanhund",
+  "numberOfPuppiesExpected": "Antal hvalpe (forventet)",
+  "numberOfMales": "Antal hanner",
+  "numberOfFemales": "Antal t\u00e6ver",
+  "savePlannedLitter": "Gem planlagt kuld",
+  "saveLitter": "Gem kuld",
+  "pleaseSelectBreed": "V\u00e6lg venligst en race",
+  "showingAllBreeds": "Viser alle racer",
+  "showingKennelBreeds": "Viser kennelracer",
+  "tipSetUpBreeds": "Tip: Ops\u00e6t dine racer",
+  "addBreedsToKennelInfo": "Tilf\u00f8j racer til kennelprofilen for hurtigere valg.",
+  "goToKennelProfile": "G\u00e5 til kennelprofil",
+  "showOnlyKennelBreeds": "Vis kun kennelracer",
+  "showAllBreeds": "Vis alle racer",
+  "noBreedsFoundForQuery": "Ingen racer fundet for \"{query}\"",
+  "pleaseEnterTemperature": "Indtast venligst temperatur",
+  "temperatureRecorded": "Temperatur registreret",
+  "invalidTemperatureValue": "Ugyldig temperaturv\u00e6rdi",
+  "temperatureTracking": "Temperatursporing",
+  "planningInformation": "Planl\u00e6gningsinformation",
+  "daysUntilWhelping": "Dage til f\u00f8dsel:",
+  "temperatureHistory": "Temperaturhistorik",
+  "noDataToShowGraph": "Ingen data at vise i graf",
+  "addTemperatureReading": "Tilf\u00f8j temperaturm\u00e5ling",
+  "dateAndTime": "Dato og tid",
+  "temperatureCelsius": "Temperatur (\u00b0C)",
+  "notesOptional": "Noter (valgfri)",
+  "noTemperatureReadings": "Ingen temperaturm\u00e5linger registreret",
+  "measurementsOverview": "M\u00e5lingsoversigt",
+  "noImageSelected": "Intet billede valgt",
+  "couldNotReadPedigree": "Kunne ikke l\u00e6se stamtavlen",
+  "scanPedigree": "Skan stamtavle",
+  "scanPedigreeSubtitle": "Tag et billede eller upload en stamtavle til automatisk udfyldning",
+  "processingImage": "Behandler billede...",
+  "takePhoto": "Tag billede",
+  "selectImage": "V\u00e6lg billede",
+  "tipsForBestResults": "Tips til bedste resultater",
+  "tipGoodLighting": "S\u00f8rg for god belysning",
+  "tipHoldCameraOver": "Hold kameraet direkte over dokumentet",
+  "tipAvoidShadows": "Undg\u00e5 skygger og refleksioner",
+  "tipPedigreeReadable": "Stamtavlen skal v\u00e6re klar og l\u00e6sbar",
+  "tipEditAfterScanning": "Du kan altid redigere data efter skanning",
+  "reviewScannedData": "Gennemg\u00e5 skannet data",
+  "listView": "Listevisning",
+  "treeView": "Tr\u00e6visning",
+  "scannerSettings": "Scannerindstillinger",
+  "showRawOcrText": "Vis r\u00e5 OCR-tekst",
+  "confirmData": "Bekr\u00e6ft data",
+  "accuracyPercent": "Nøjagtighed: {accuracy}",
+  "dogsFoundTapToEdit": "{count} hunde fundet \u2014 tryk \u270f\ufe0f for at redigere",
+  "rawOcrTextTitle": "R\u00e5 OCR-tekst (hvad scanneren fandt)",
+  "noDogsFoundInScan": "Ingen hunde fundet i skanningen",
+  "tapToAddManually": "Tryk + for at tilf\u00f8je manuelt...",
+  "allFieldsEditable": "Alle felter kan redigeres. Tryk p\u00e5 \u270f\ufe0f for at \u00e6ndre data.",
+  "regNoLabel": "Reg.nr.:",
+  "bornLabel": "F\u00f8dt:",
+  "confidencePercent": "Sikkerhed: {confidence}",
+  "mainDog": "Hovedhund",
+  "sire": "Far",
+  "dam": "Mor",
+  "paternalGrandfather": "Farfar",
+  "paternalGrandmother": "Farmor",
+  "maternalGrandfather": "Morfar",
+  "maternalGrandmother": "Mormor",
+  "greatGrandsirePP": "Farfarsfar",
+  "greatGrandamPP": "Farfarsmor",
+  "greatGrandsirePM": "Farmorsfar",
+  "greatGrandamPM": "Farmorsmor",
+  "greatGrandsireMP": "Morfarsfar",
+  "greatGrandamMP": "Morfarsmor",
+  "greatGrandsireMM": "Mormorsfar",
+  "greatGrandamMM": "Mormorsmor",
+  "editDog": "Rediger hund",
+  "regNo": "Reg.nr.",
+  "regNoHint": "f.eks. DK12345/2020",
+  "dateFormatHint": "dd.mm.\u00e5\u00e5\u00e5\u00e5",
+  "positionInPedigree": "Position i stamtavle",
+  "settingsSaved": "Indstillinger gemt!",
+  "geminiAiVision": "Gemini AI Vision",
+  "cloudPowered": "Skydrevet",
+  "scannerGeminiDescription": "Scanneren bruger Gemini AI Vision via en sikker skytjeneste. Ingen API-n\u00f8gle er n\u00f8dvendig \u2014 log bare ind og scan!",
+  "customizeScanner": "Tilpas scanneren",
+  "addKeywordsDescription": "Tilf\u00f8j n\u00f8gleord som scanneren skal lede efter i stamtavledokumenter.",
+  "mainDogKeywords": "Hovedhund-n\u00f8gleord",
+  "wordsIdentifyMainDog": "Ord der identificerer hovedhunden i stamtavlen",
+  "sireKeywords": "Far-n\u00f8gleord",
+  "wordsIdentifySire": "Ord der identificerer faderen/hanhunden",
+  "damKeywords": "Mor-n\u00f8gleord",
+  "wordsIdentifyDam": "Ord der identificerer moderen/t\u00e6ven",
+  "automaticLearning": "Automatisk l\u00e6ring",
+  "automaticLearningDescription": "Scanneren l\u00e6rer automatisk n\u00e5r du retter data:\n\u2022 \u00c6ndrer du position (f.eks. Far \u2192 Hovedhund), huskes det\n\u2022 N\u00e6ste gang genkendes lignende m\u00f8nstre\n\u2022 Scanneren bruger ogs\u00e5 position i billedet (top = hovedhund)",
+  "resetLearningData": "Nulstil l\u00e6ringsdata",
+  "yourCustomKeywords": "Dine tilpassede n\u00f8gleord:",
+  "resetLearningDataTitle": "Nulstil l\u00e6ringsdata?",
+  "resetLearningDataBody": "Dette sletter alle gemte rettelser. Scanneren starter forfra uden tidligere l\u00e6ring.",
+  "resetAction": "Nulstil",
+  "learningDataReset": "L\u00e6ringsdata nulstillet",
+  "newKeywordHint": "Nyt n\u00f8gleord...",
+  "errorLoadingSharedUsers": "Fejl ved indl\u00e6sning af delte brugere: {error}",
+  "pleaseEnterEmail": "Indtast venligst en e-mailadresse",
+  "sharedWithEmail": "Delt med {email}",
+  "userNotFoundByEmail": "Bruger med e-mail {email} ikke fundet",
+  "errorSharing": "Fejl ved deling: {error}",
+  "removeUser": "Fjern bruger",
+  "userRemoved": "Bruger fjernet",
+  "errorRemovingUser": "Fejl ved fjernelse af bruger: {error}",
+  "shareGroupName": "Del {groupName}",
+  "shareWithCollaborator": "Del med samarbejdspartner",
+  "emailAddress": "E-mailadresse",
+  "share": "Del",
+  "sharedWith": "Delt med",
+  "notSharedWithAnyone": "Ikke delt med nogen endnu",
+  "collaborator": "Samarbejdspartner",
+  "selectBothForInbreeding": "V\u00e6lg b\u00e5de mor og far for at beregne indavlskoefficient",
+  "inbreedingCoefficientCoi": "Indavlskoefficient (COI)",
+  "commonAncestors": "F\u00e6lles forf\u00e6dre ({count})",
+  "seeAllAncestors": "Se alle {count} forf\u00e6dre",
+  "whatDoesThisMean": "Hvad betyder dette?",
+  "aboutInbreedingCoefficient": "Om indavlskoefficient",
+  "inbreedingDescription": "Indavlskoefficienten (COI) m\u00e5ler sandsynligheden for, at to alleler p\u00e5 samme locus er identiske, fordi de stammer fra samme forfader.",
+  "recommendedLevels": "Anbefalede niveauer:",
+  "veryLow": "Meget lav",
+  "low": "Lav",
+  "moderate": "Moderat",
+  "high": "H\u00f8j",
+  "veryHigh": "Meget h\u00f8j",
+  "highInbreedingConsequences": "H\u00f8j indavl kan f\u00f8re til:",
+  "reducedImmuneSystem": "Nedsat immunforsvar",
+  "reducedFertility": "Nedsat frugtbarhed",
+  "increasedRiskOfDisease": "\u00d8get risiko for arvelige sygdomme",
+  "shorterLifespan": "Kortere levetid",
+  "tipsCoi": "Tips:",
+  "tipRegisterAncestors": "Registrer forf\u00e6dre med registreringsnummer for n\u00f8jagtig beregning",
+  "tipSystemRecognizes": "Systemet genkender samme hund, selv om den er registreret flere gange",
+  "tipCoiGenerations": "COI beregnes over 5 generationer",
+  "generationsFromParents": "{genMother} gen. fra mor, {genFather} gen. fra far",
+  "compareMatingOptions": "Sammenlign parringsalternativer",
+  "selectFemale": "V\u00e6lg t\u00e6ve",
+  "dogNotFound": "Hund ikke fundet",
+  "maleDog": "Hanhund",
+  "born": "F\u00f8dt",
+  "pedigreeOnly": "Kun i stamtavle",
+  "visibleInDogList": "Synlig i hundelisten",
+  "pedigreeOnlyDescription": "Denne hund vises kun i stamtavler",
+  "visibleInDogListDescription": "Denne hund vises i din hundeliste",
+  "pedigreeFilename": "Stamtavle_{name}.pdf",
+  "couldNotGeneratePdf": "Kunne ikke generere PDF: {error}",
+  "pedigreeTitle": "Stamtavle \u2014 {name}",
+  "exportPdf": "Eksporter PDF",
+  "aboutPedigree": "Om stamtavlen",
+  "pedigreeTipTapDetails": "Tryk p\u00e5 en hund for at se detaljer",
+  "pedigreeTipPinkFemales": "Pink = t\u00e6ver",
+  "pedigreeTipBlueMales": "Bl\u00e5 = hanhunde",
+  "pedigreeTipScroll": "Scroll for at se flere generationer",
+  "addNewMaleShort": "+ Tilf\u00f8j"
+
+}

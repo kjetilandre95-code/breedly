@@ -1,0 +1,6 @@
+{
+  "arb.suppressedRules": ["missing_metadata_for_key", "missing_placeholders"],
+  "arb.lint.enabled": false,
+  "arb.lint.suppressMissingMetadata": true,
+  "arb.editor.templateFile": "lib/l10n/app_en.arb"
+}
