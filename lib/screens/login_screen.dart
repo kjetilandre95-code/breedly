@@ -5,14 +5,13 @@ import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/providers/language_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  final LanguageProvider languageProvider;
   final VoidCallback onLoginSuccess;
 
   const LoginScreen({
     super.key,
-    required this.languageProvider,
     required this.onLoginSuccess,
   });
 
@@ -337,7 +336,8 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildLanguageSelector(Color primaryColor) {
-    final currentLang = widget.languageProvider.currentLocale.languageCode;
+    final languageProvider = context.read<LanguageProvider>();
+    final currentLang = languageProvider.currentLocale.languageCode;
     final languages = [
       {'code': 'nb', 'name': 'Norsk', 'flag': '🇳🇴'},
       {'code': 'en', 'name': 'English', 'flag': '🇬🇧'},
@@ -345,7 +345,7 @@ class _LoginScreenState extends State<LoginScreen>
 
     return PopupMenuButton<String>(
       onSelected: (String languageCode) async {
-        await widget.languageProvider.setLanguage(languageCode);
+        await context.read<LanguageProvider>().setLanguage(languageCode);
         if (mounted) setState(() {});
       },
       shape: RoundedRectangleBorder(borderRadius: AppRadius.lgAll),

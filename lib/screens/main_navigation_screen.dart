@@ -20,10 +20,9 @@ import 'package:breedly/screens/calendar_screen.dart';
 import 'package:breedly/screens/waitlist_screen.dart';
 import 'package:breedly/screens/all_contracts_screen.dart';
 import 'package:breedly/screens/annual_report_screen.dart';
-import 'package:breedly/providers/language_provider.dart';
-import 'package:breedly/providers/theme_provider.dart';
 import 'package:breedly/providers/kennel_provider.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:breedly/utils/sync_helper.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/modern_widgets.dart';
@@ -36,18 +35,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/models/progesterone_measurement.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  final LanguageProvider languageProvider;
-  final ThemeProvider themeProvider;
-  final KennelProvider kennelProvider;
-  final OfflineModeManager offlineModeManager;
-
-  const MainNavigationScreen({
-    super.key,
-    required this.languageProvider,
-    required this.themeProvider,
-    required this.kennelProvider,
-    required this.offlineModeManager,
-  });
+  const MainNavigationScreen({super.key});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -61,10 +49,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   void initState() {
     super.initState();
-    _onlineStatusSubscription = widget.offlineModeManager.onlineStatusStream
+    final offlineModeManager = context.read<OfflineModeManager>();
+    _onlineStatusSubscription = offlineModeManager.onlineStatusStream
         .listen(_onOnlineStatusChanged);
-    // Listen to kennel provider changes
-    widget.kennelProvider.addListener(_onKennelChanged);
     // Perform initial data sync from Firebase on app start
     _performInitialSync();
   }
@@ -82,12 +69,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   void dispose() {
     _onlineStatusSubscription?.cancel();
     _pageController.dispose();
-    widget.kennelProvider.removeListener(_onKennelChanged);
     super.dispose();
-  }
-
-  void _onKennelChanged() {
-    if (mounted) setState(() {});
   }
 
   void _onOnlineStatusChanged(bool isOnline) {
@@ -112,9 +94,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   String? _getKennelName() {
-    return widget.kennelProvider.activeKennel?.name ?? 
-           (widget.kennelProvider.kennels.isNotEmpty 
-               ? widget.kennelProvider.kennels.first.name 
+    final kennelProvider = context.read<KennelProvider>();
+    return kennelProvider.activeKennel?.name ?? 
+           (kennelProvider.kennels.isNotEmpty 
+               ? kennelProvider.kennels.first.name 
                : null);
   }
 
@@ -303,10 +286,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => SettingsScreen(
-                    languageProvider: widget.languageProvider,
-                    themeProvider: widget.themeProvider,
-                  ),
+                  builder: (_) => const SettingsScreen(),
                 ),
               ),
               icon: const Icon(Icons.settings_rounded),

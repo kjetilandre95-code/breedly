@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/data_sync_service.dart';
 import 'package:breedly/models/dog.dart';
@@ -19,14 +20,7 @@ import 'package:breedly/screens/annual_report_screen.dart';
 import 'package:breedly/screens/pedigree_scanner_test_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final LanguageProvider languageProvider;
-  final ThemeProvider themeProvider;
-
-  const SettingsScreen({
-    super.key,
-    required this.languageProvider,
-    required this.themeProvider,
-  });
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -189,7 +183,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       {'code': 'en', 'name': 'English', 'flag': '🇬🇧'},
     ];
 
-    final currentLanguage = widget.languageProvider.currentLocale.languageCode;
+    final currentLanguage = context.read<LanguageProvider>().currentLocale.languageCode;
     final primaryColor = Theme.of(context).primaryColor;
 
     return Column(
@@ -202,7 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () async {
-                await widget.languageProvider.setLanguage(lang['code']!);
+                await context.read<LanguageProvider>().setLanguage(lang['code']!);
                 setState(() {});
               },
               borderRadius: AppRadius.mdAll,
@@ -256,9 +250,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildThemeColorGrid() {
     final themes = ThemeProvider.availableThemes;
-    final selectedIndex = widget.themeProvider.selectedThemeIndex;
+    final selectedIndex = context.read<ThemeProvider>().selectedThemeIndex;
     final localizations = AppLocalizations.of(context);
-    final isEnglish = widget.languageProvider.currentLocale.languageCode == 'en';
+    final isEnglish = context.read<LanguageProvider>().currentLocale.languageCode == 'en';
 
     return GridView.builder(
       shrinkWrap: true,
@@ -290,7 +284,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
         return GestureDetector(
           onTap: () async {
-            await widget.themeProvider.setTheme(index);
+            await context.read<ThemeProvider>().setTheme(index);
             setState(() {});
           },
           child: Column(
@@ -345,8 +339,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildDarkModeSection(AppLocalizations localizations) {
     final primaryColor = Theme.of(context).primaryColor;
-    final useSystemTheme = widget.themeProvider.useSystemTheme;
-    final isDarkMode = widget.themeProvider.isDarkMode;
+    final useSystemTheme = context.read<ThemeProvider>().useSystemTheme;
+    final isDarkMode = context.read<ThemeProvider>().isDarkMode;
 
     return Column(
       children: [
@@ -355,7 +349,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           color: Colors.transparent,
           child: InkWell(
             onTap: () async {
-              await widget.themeProvider.setUseSystemTheme(!useSystemTheme);
+              await context.read<ThemeProvider>().setUseSystemTheme(!useSystemTheme);
               setState(() {});
             },
             borderRadius: AppRadius.mdAll,
@@ -407,7 +401,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Switch(
                     value: useSystemTheme,
                     onChanged: (value) async {
-                      await widget.themeProvider.setUseSystemTheme(value);
+                      await context.read<ThemeProvider>().setUseSystemTheme(value);
                       setState(() {});
                     },
                     activeThumbColor: primaryColor,
@@ -430,7 +424,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () async {
-                  await widget.themeProvider.setDarkMode(!isDarkMode);
+                  await context.read<ThemeProvider>().setDarkMode(!isDarkMode);
                   setState(() {});
                 },
                 borderRadius: AppRadius.mdAll,
@@ -483,7 +477,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onChanged: useSystemTheme 
                             ? null 
                             : (value) async {
-                                await widget.themeProvider.setDarkMode(value);
+                                await context.read<ThemeProvider>().setDarkMode(value);
                                 setState(() {});
                               },
                         activeThumbColor: primaryColor,

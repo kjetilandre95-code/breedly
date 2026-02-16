@@ -19,6 +19,7 @@ import 'package:breedly/providers/kennel_provider.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -128,27 +129,23 @@ void main() async {
   // Initialize kennel provider
   final kennelProvider = KennelProvider();
 
-  runApp(MyApp(
-    languageProvider: LanguageProvider(),
-    themeProvider: themeProvider,
-    offlineModeManager: offlineModeManager,
-    kennelProvider: kennelProvider,
-  ));
+  final languageProvider = LanguageProvider();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: languageProvider),
+        ChangeNotifierProvider.value(value: themeProvider),
+        ChangeNotifierProvider.value(value: kennelProvider),
+        Provider.value(value: offlineModeManager),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
-  final LanguageProvider languageProvider;
-  final ThemeProvider themeProvider;
-  final OfflineModeManager offlineModeManager;
-  final KennelProvider kennelProvider;
-
-  const MyApp({
-    super.key,
-    required this.languageProvider,
-    required this.themeProvider,
-    required this.offlineModeManager,
-    required this.kennelProvider,
-  });
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -156,48 +153,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late AuthService _authService;
-  VoidCallback? _languageListener;
-  VoidCallback? _themeListener;
-  VoidCallback? _kennelListener;
   String? _initializedForUserId;
 
   @override
   void initState() {
     super.initState();
     _authService = AuthService();
-    _languageListener = () {
-      if (!mounted) return;
-      setState(() {});
-    };
-    _themeListener = () {
-      if (!mounted) return;
-      setState(() {});
-    };
-    _kennelListener = () {
-      if (!mounted) return;
-      setState(() {});
-    };
-    widget.languageProvider.addListener(_languageListener!);
-    widget.themeProvider.addListener(_themeListener!);
-    widget.kennelProvider.addListener(_kennelListener!);
-  }
-
-  @override
-  void dispose() {
-    if (_languageListener != null) {
-      widget.languageProvider.removeListener(_languageListener!);
-    }
-    if (_themeListener != null) {
-      widget.themeProvider.removeListener(_themeListener!);
-    }
-    if (_kennelListener != null) {
-      widget.kennelProvider.removeListener(_kennelListener!);
-    }
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final languageProvider = context.watch<LanguageProvider>();
+    final themeProvider = context.watch<ThemeProvider>();
+    final kennelProvider = context.read<KennelProvider>();
+
     return MaterialApp(
       title: 'Breedly',
       debugShowCheckedModeBanner: false,
@@ -206,21 +175,21 @@ class _MyAppState extends State<MyApp> {
       checkerboardOffscreenLayers: false,
       showSemanticsDebugger: false,
       debugShowMaterialGrid: false,
-      locale: widget.languageProvider.currentLocale,
+      locale: languageProvider.currentLocale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: widget.languageProvider.supportedLocales,
-      theme: widget.themeProvider.buildTheme(),
-      darkTheme: widget.themeProvider.buildDarkTheme(),
-      themeMode: widget.themeProvider.useSystemTheme 
+      supportedLocales: languageProvider.supportedLocales,
+      theme: themeProvider.buildTheme(),
+      darkTheme: themeProvider.buildDarkTheme(),
+      themeMode: themeProvider.useSystemTheme 
           ? ThemeMode.system 
-          : (widget.themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light),
+          : (themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light),
       home: StreamBuilder<User?>(
-        stream: _authService.idTokenChanges,
+        stream: _authService.authStateChanges,
         builder: (context, snapshot) {
           // If connection state is waiting, show loading
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -238,16 +207,11 @@ class _MyAppState extends State<MyApp> {
             if (_initializedForUserId != user.uid) {
               _initializedForUserId = user.uid;
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                widget.kennelProvider.initialize(user.uid, user.email ?? '');
+                kennelProvider.initialize(user.uid, user.email ?? '');
               });
             }
             
-            return _AuthenticatedHome(
-              languageProvider: widget.languageProvider,
-              themeProvider: widget.themeProvider,
-              kennelProvider: widget.kennelProvider,
-              offlineModeManager: widget.offlineModeManager,
-            );
+            return const _AuthenticatedHome();
           }
 
           // User is logged out, reset initialization state
@@ -255,7 +219,6 @@ class _MyAppState extends State<MyApp> {
 
           // Otherwise, show login screen
           return LoginScreen(
-            languageProvider: widget.languageProvider,
             onLoginSuccess: () {
               setState(() {});
             },
@@ -264,7 +227,6 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         '/signup': (context) => SignUpScreen(
-          languageProvider: widget.languageProvider,
           onSignUpSuccess: () {
             setState(() {});
           },
@@ -276,17 +238,7 @@ class _MyAppState extends State<MyApp> {
 
 /// Wrapper widget that handles onboarding flow for authenticated users
 class _AuthenticatedHome extends StatefulWidget {
-  final LanguageProvider languageProvider;
-  final ThemeProvider themeProvider;
-  final KennelProvider kennelProvider;
-  final OfflineModeManager offlineModeManager;
-
-  const _AuthenticatedHome({
-    required this.languageProvider,
-    required this.themeProvider,
-    required this.kennelProvider,
-    required this.offlineModeManager,
-  });
+  const _AuthenticatedHome();
 
   @override
   State<_AuthenticatedHome> createState() => _AuthenticatedHomeState();
@@ -335,11 +287,6 @@ class _AuthenticatedHomeState extends State<_AuthenticatedHome> {
     }
 
     // Show main navigation
-    return MainNavigationScreen(
-      languageProvider: widget.languageProvider,
-      themeProvider: widget.themeProvider,
-      kennelProvider: widget.kennelProvider,
-      offlineModeManager: widget.offlineModeManager,
-    );
+    return const MainNavigationScreen();
   }
 }
