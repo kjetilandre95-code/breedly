@@ -45,3 +45,15 @@ app.*.map.json
 /android/app/release
 
 functions/node_modules/
+
+# Firebase config files (contains API keys)
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+
+# Environment & secrets
+*.env
+*.key
+*.pem
+*.secret
+local.properties
