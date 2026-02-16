@@ -233,7 +233,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       _buildHighlightedInfoRow(
                         'Dager til valping',
                         '${widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays}',
-                        Colors.orange,
+                        Theme.of(context).primaryColor,
                       ),
                     ],
                   ],
@@ -264,12 +264,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     final daysToGo = hasEstimatedDate
         ? widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays
         : null;
+    final primaryColor = Theme.of(context).primaryColor;
 
     return Card(
-      color: Colors.orange.withValues(alpha: ThemeOpacity.medium(context)),
+      color: primaryColor.withValues(alpha: ThemeOpacity.medium(context)),
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.lgAll,
-        side: const BorderSide(color: Colors.orange, width: 2),
+        side: BorderSide(color: primaryColor, width: 2),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -280,12 +281,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.orange.withValues(alpha: ThemeOpacity.high(context)),
+                    color: primaryColor.withValues(alpha: ThemeOpacity.high(context)),
                     borderRadius: AppRadius.lgAll,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.calendar_month,
-                    color: Colors.orange,
+                    color: primaryColor,
                     size: 32,
                   ),
                 ),
@@ -294,12 +295,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Planlagt kull',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange,
+                          color: primaryColor,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -325,7 +326,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               child: ElevatedButton.icon(
                 onPressed: () => _registerBirth(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
@@ -363,13 +364,18 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               ],
             ),
             const SizedBox(height: 16),
+
+            // Parringsdato-seksjon
+            _buildMatingDateSection(),
+            const SizedBox(height: 12),
+
             Row(
               children: [
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.thermostat,
                     label: 'Temperatur',
-                    color: AppColors.error,
+                    color: Theme.of(context).primaryColor,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -384,7 +390,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   child: _buildQuickActionButton(
                     icon: Icons.science,
                     label: 'Progesteron',
-                    color: Colors.purple,
+                    color: Theme.of(context).colorScheme.secondary,
                     onTap: () => _openProgesteroneMeasurements(),
                   ),
                 ),
@@ -397,7 +403,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   child: _buildQuickActionButton(
                     icon: Icons.edit_calendar,
                     label: 'Rediger',
-                    color: AppColors.info,
+                    color: Theme.of(context).primaryColor,
                     onTap: () => _editLitter(context),
                   ),
                 ),
@@ -406,7 +412,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   child: _buildQuickActionButton(
                     icon: Icons.cake,
                     label: 'Fødsel',
-                    color: Colors.orange,
+                    color: Theme.of(context).colorScheme.secondary,
                     onTap: () => _registerBirth(),
                   ),
                 ),
@@ -416,6 +422,145 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         ),
       ),
     );
+  }
+
+  Widget _buildMatingDateSection() {
+    final hasMatingDate = widget.litter.damMatingDate != null;
+    final hasEstimatedDate = widget.litter.estimatedDueDate != null;
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: primaryColor.withValues(alpha: 0.08),
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(
+          color: primaryColor.withValues(alpha: 0.3),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                hasMatingDate ? Icons.check_circle : Icons.calendar_today,
+                color: primaryColor,
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  hasMatingDate
+                      ? 'Parringsdato: ${DateFormat('dd.MM.yyyy').format(widget.litter.damMatingDate!)}'
+                      : 'Ingen parringsdato satt',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: primaryColor,
+                  ),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: _selectMatingDate,
+                icon: Icon(
+                  hasMatingDate ? Icons.edit : Icons.add,
+                  size: 16,
+                ),
+                label: Text(hasMatingDate ? 'Endre' : 'Sett dato'),
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                ),
+              ),
+            ],
+          ),
+          if (hasEstimatedDate) ...[
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.child_care, color: Theme.of(context).primaryColor, size: 18),
+                const SizedBox(width: 8),
+                Text(
+                  'Estimert fødsel: ${DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!)}',
+                  style: TextStyle(
+                    color: AppColors.neutral700,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            if (widget.litter.estimatedDueDate!.isAfter(DateTime.now())) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const SizedBox(width: 26),
+                  Text(
+                    '${widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays} dager igjen',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ],
+        ],
+      ),
+    );
+  }
+
+  Future<void> _selectMatingDate() async {
+    final now = DateTime.now();
+    final initialDate = widget.litter.damMatingDate ?? now;
+
+    final selectedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate.isAfter(now) ? now : initialDate,
+      firstDate: now.subtract(const Duration(days: 120)),
+      lastDate: now,
+      helpText: 'Velg parringsdato',
+    );
+
+    if (selectedDate != null) {
+      setState(() {
+        widget.litter.damMatingDate = selectedDate;
+        // Beregn estimert fødselsdato: 63 dager etter parring
+        final estimatedDue = selectedDate.add(const Duration(days: 63));
+        widget.litter.estimatedDueDate = estimatedDue;
+        // Oppdater dateOfBirth til estimert fødselsdato (for visning)
+        widget.litter.dateOfBirth = estimatedDue;
+      });
+
+      await widget.litter.save();
+
+      // Synkroniser til Firebase
+      final authService = AuthService();
+      if (authService.isAuthenticated) {
+        final cloudSync = CloudSyncService();
+        try {
+          await cloudSync.saveLitter(
+            userId: authService.currentUserId!,
+            litterId: widget.litter.id,
+            litterData: widget.litter.toJson(),
+          );
+        } catch (e) {
+          // Ignorer feil
+        }
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Parringsdato satt til ${DateFormat('dd.MM.yyyy').format(selectedDate)}. '
+              'Estimert fødsel: ${DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!)}',
+            ),
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
+        );
+      }
+    }
   }
 
   void _openProgesteroneMeasurements() async {
@@ -583,7 +728,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildMiniStatusBox('Ledig', available, AppColors.info),
-                _buildMiniStatusBox('Reservert', reserved, Colors.orange),
+                _buildMiniStatusBox('Reservert', reserved, AppColors.reserved),
                 _buildMiniStatusBox('Solgt', sold, AppColors.success),
               ],
             ),
@@ -644,7 +789,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   child: _buildQuickActionButton(
                     icon: Icons.thermostat,
                     label: 'Temperatur',
-                    color: AppColors.error,
+                    color: Theme.of(context).primaryColor,
                     onTap: widget.litter.damMatingDate != null
                         ? () {
                             Navigator.push(
@@ -664,7 +809,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   child: _buildQuickActionButton(
                     icon: Icons.scale,
                     label: 'Veiing',
-                    color: Colors.purple,
+                    color: Theme.of(context).colorScheme.secondary,
                     onTap: () => _showBulkWeightDialog(context),
                   ),
                 ),
@@ -768,7 +913,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               'Avmasket',
               totalDewormed,
               total,
-              Colors.orange,
+              AppColors.warning,
             ),
             const SizedBox(height: 8),
             _buildTreatmentProgressRow(
@@ -934,13 +1079,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       _buildSummaryBoxWithIcon(
                         'Hanner',
                         '${widget.litter.getActualMalesCountFromPuppies()}',
-                        Colors.lightBlue,
+                        AppColors.male,
                         Icons.male,
                       ),
                       _buildSummaryBoxWithIcon(
                         'Tisper',
                         '${widget.litter.getActualFemalesCountFromPuppies()}',
-                        Colors.pink,
+                        AppColors.female,
                         Icons.female,
                       ),
                     ],
@@ -1539,7 +1684,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       case 'Sold':
         return AppColors.success;
       case 'Reserved':
-        return Colors.orange;
+        return AppColors.reserved;
       default:
         return AppColors.info;
     }
@@ -1779,9 +1924,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             mainAxisSize: MainAxisSize.min,
             children: [
               if (displayLogs.isNotEmpty)
-                SizedBox(
-                  height: 350,
-                  width: 450,
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: 350,
+                    maxWidth: MediaQuery.of(context).size.width * 0.8,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: LineChart(

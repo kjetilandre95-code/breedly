@@ -153,9 +153,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 300,
-                width: 300,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 300, maxWidth: 300),
                 child: Image.file(
                   File(image.imagePath),
                   fit: BoxFit.cover,

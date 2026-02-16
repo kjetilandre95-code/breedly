@@ -4759,6 +4759,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add dog'**
   String get addDogLabel;
+
+  /// Sign up page title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// Sign up header text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get registerYourself;
+
+  /// Sign up subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to get started'**
+  String get createAccountSubtitle;
+
+  /// Full name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get fullName;
+
+  /// Full name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'John Doe'**
+  String get fullNameHint;
+
+  /// Email address label
+  ///
+  /// In en, this message translates to:
+  /// **'Email address'**
+  String get emailAddressLabel;
+
+  /// Email field hint
+  ///
+  /// In en, this message translates to:
+  /// **'name@example.com'**
+  String get emailHint;
+
+  /// Password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// Password field hint
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters'**
+  String get passwordHintText;
+
+  /// Confirm password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPasswordLabel;
+
+  /// Confirm password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat the password'**
+  String get repeatPasswordHint;
+
+  /// Terms checkbox prefix
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get iAgreeToThe;
+
+  /// Terms link text
+  ///
+  /// In en, this message translates to:
+  /// **'terms of use'**
+  String get termsOfUse;
+
+  /// Create account button
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccountButton;
+
+  /// Login link prefix
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAccountQuestion;
+
+  /// Login link text
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get logIn;
+
+  /// Name validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get pleaseEnterNameValidation;
+
+  /// Email validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an email address'**
+  String get pleaseEnterEmailValidation;
+
+  /// Invalid email error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get invalidEmailValidation;
+
+  /// Password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password'**
+  String get pleaseEnterPasswordValidation;
+
+  /// Password too short error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMin6Chars;
+
+  /// Password mismatch error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatchValidation;
+
+  /// Terms not accepted error
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms of use'**
+  String get mustAcceptTerms;
+
+  /// Gen 4: paternal grandfather's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.GF\'s sire'**
+  String get gen4PGFSire;
+
+  /// Gen 4: paternal grandfather's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.GF\'s dam'**
+  String get gen4PGFDam;
+
+  /// Gen 4: paternal grandfather's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.GM\'s sire'**
+  String get gen4PGMSire;
+
+  /// Gen 4: paternal grandfather's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.GM\'s dam'**
+  String get gen4PGMDam;
+
+  /// Gen 4: paternal grandmother's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.MF\'s sire'**
+  String get gen4PMFSire;
+
+  /// Gen 4: paternal grandmother's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.MF\'s dam'**
+  String get gen4PMFDam;
+
+  /// Gen 4: paternal grandmother's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.MM\'s sire'**
+  String get gen4PMMSire;
+
+  /// Gen 4: paternal grandmother's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.MM\'s dam'**
+  String get gen4PMMDam;
+
+  /// Gen 4: maternal grandfather's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.GF\'s sire'**
+  String get gen4MGFSire;
+
+  /// Gen 4: maternal grandfather's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.GF\'s dam'**
+  String get gen4MGFDam;
+
+  /// Gen 4: maternal grandfather's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.GM\'s sire'**
+  String get gen4MGMSire;
+
+  /// Gen 4: maternal grandfather's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.GM\'s dam'**
+  String get gen4MGMDam;
+
+  /// Gen 4: maternal grandmother's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.MF\'s sire'**
+  String get gen4MMFSire;
+
+  /// Gen 4: maternal grandmother's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.MF\'s dam'**
+  String get gen4MMFDam;
+
+  /// Gen 4: maternal grandmother's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.MM\'s sire'**
+  String get gen4MMMSire;
+
+  /// Gen 4: maternal grandmother's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.MM\'s dam'**
+  String get gen4MMMDam;
 }
 
 class _AppLocalizationsDelegate

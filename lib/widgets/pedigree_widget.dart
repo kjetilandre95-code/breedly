@@ -9,7 +9,7 @@ import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 
-/// Widget for displaying a visual pedigree (3 generations)
+/// Widget for displaying a visual pedigree (up to 5 generations)
 class PedigreeWidget extends StatefulWidget {
   final String? dogId;
   final Dog? dog;
@@ -19,7 +19,7 @@ class PedigreeWidget extends StatefulWidget {
     super.key,
     this.dogId,
     this.dog,
-    this.generations = 3,
+    this.generations = 4,
   });
 
   @override
@@ -79,6 +79,26 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
     final pmGrandfather = _getDogById(paternalGrandmother?.sireId);
     final pfGrandmother = _getDogById(paternalGrandfather?.damId);
     final pfGrandfather = _getDogById(paternalGrandfather?.sireId);
+
+    // Great-great-grandparents (generation 4) — 16 dogs
+    // Paternal side
+    final pfFather = _getDogById(pfGrandfather?.sireId);
+    final pfMother = _getDogById(pfGrandfather?.damId);
+    final pfmFather = _getDogById(pfGrandmother?.sireId);
+    final pfmMother = _getDogById(pfGrandmother?.damId);
+    final pmfFather = _getDogById(pmGrandfather?.sireId);
+    final pmfMother = _getDogById(pmGrandfather?.damId);
+    final pmmFather = _getDogById(pmGrandmother?.sireId);
+    final pmmMother = _getDogById(pmGrandmother?.damId);
+    // Maternal side
+    final mfFather = _getDogById(mfGrandfather?.sireId);
+    final mfMother = _getDogById(mfGrandfather?.damId);
+    final mfmFather = _getDogById(mfGrandmother?.sireId);
+    final mfmMother = _getDogById(mfGrandmother?.damId);
+    final mmfFather = _getDogById(mmGrandfather?.sireId);
+    final mmfMother = _getDogById(mmGrandfather?.damId);
+    final mmmFather = _getDogById(mmGrandmother?.sireId);
+    final mmmMother = _getDogById(mmGrandmother?.damId);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,6 +160,50 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
               _buildDogCard(context, mmGrandfather, small: true, mini: true),
               const SizedBox(height: 5),
               _buildDogCard(context, mmGrandmother, small: true, mini: true),
+            ],
+          ),
+        ],
+
+        if (widget.generations >= 4) ...[
+          const SizedBox(width: 14),
+          _buildConnector(),
+          const SizedBox(width: 14),
+          
+          // Column 5: Great-great-grandparents (gen 4)
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildDogCard(context, pfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, pfmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pfmMother, small: true, mini: true),
+              const SizedBox(height: 8),
+              _buildDogCard(context, pmfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pmfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, pmmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pmmMother, small: true, mini: true),
+              const SizedBox(height: 12),
+              _buildDogCard(context, mfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, mfmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mfmMother, small: true, mini: true),
+              const SizedBox(height: 8),
+              _buildDogCard(context, mmfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mmfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, mmmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mmmMother, small: true, mini: true),
             ],
           ),
         ],
@@ -470,7 +534,7 @@ class PedigreeScreen extends StatelessWidget {
       body: PedigreeWidget(
         dog: dog,
 
-        generations: 3,
+        generations: 4,
       ),
     );
   }

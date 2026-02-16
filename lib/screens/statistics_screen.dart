@@ -400,6 +400,8 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     final yearCounts = <int, int>{};
 
     for (final litter in litters) {
+      // Skip planned litters (future dateOfBirth)
+      if (litter.dateOfBirth.isAfter(DateTime.now())) continue;
       final year = litter.dateOfBirth.year;
       yearCounts[year] = (yearCounts[year] ?? 0) + 1;
     }

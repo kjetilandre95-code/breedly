@@ -311,6 +311,25 @@ class PedigreeScannerService {
     _addAncestor(json, 'maternal_gm_father', 'Mormors far', 'Male', greatGrandparents);
     _addAncestor(json, 'maternal_gm_mother', 'Mormors mor', 'Female', greatGrandparents);
 
+    // Great-great-grandparents (4th generation - 16 dogs)
+    final greatGreatGrandparents = <ScannedDog>[];
+    _addAncestor(json, 'p_gf_f_sire', 'Farfars fars far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'p_gf_f_dam', 'Farfars fars mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'p_gf_m_sire', 'Farfars mors far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'p_gf_m_dam', 'Farfars mors mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'p_gm_f_sire', 'Farmors fars far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'p_gm_f_dam', 'Farmors fars mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'p_gm_m_sire', 'Farmors mors far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'p_gm_m_dam', 'Farmors mors mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'm_gf_f_sire', 'Morfars fars far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'm_gf_f_dam', 'Morfars fars mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'm_gf_m_sire', 'Morfars mors far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'm_gf_m_dam', 'Morfars mors mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'm_gm_f_sire', 'Mormors fars far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'm_gm_f_dam', 'Mormors fars mor', 'Female', greatGreatGrandparents);
+    _addAncestor(json, 'm_gm_m_sire', 'Mormors mors far', 'Male', greatGreatGrandparents);
+    _addAncestor(json, 'm_gm_m_dam', 'Mormors mors mor', 'Female', greatGreatGrandparents);
+
     double confidence = 0.0;
     if (mainDog != null) confidence += 0.4;
     if (parents.isNotEmpty) confidence += 0.3;
@@ -323,6 +342,7 @@ class PedigreeScannerService {
       parents: parents,
       grandparents: grandparents,
       greatGrandparents: greatGrandparents,
+      greatGreatGrandparents: greatGreatGrandparents,
       rawText: rawText,
     );
   }
@@ -372,6 +392,9 @@ class PedigreeScanResult {
   /// Great-grandparents (should be 8)
   final List<ScannedDog> greatGrandparents;
 
+  /// Great-great-grandparents (should be 16)
+  final List<ScannedDog> greatGreatGrandparents;
+
   /// Raw OCR text from the scan
   final String? rawText;
 
@@ -381,6 +404,7 @@ class PedigreeScanResult {
     required this.parents,
     required this.grandparents,
     required this.greatGrandparents,
+    this.greatGreatGrandparents = const [],
     this.rawText,
   });
 
@@ -389,7 +413,8 @@ class PedigreeScanResult {
       (dog != null ? 1 : 0) +
       parents.length +
       grandparents.length +
-      greatGrandparents.length;
+      greatGrandparents.length +
+      greatGreatGrandparents.length;
 
   /// Whether the scan was successful
   bool get isSuccessful => confidence > 0.7 && dog != null;

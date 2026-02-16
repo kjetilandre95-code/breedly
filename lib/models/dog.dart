@@ -72,11 +72,12 @@ class Dog extends HiveObject {
   });
 
   int getAgeInYears() {
-    return DateTime.now().difference(dateOfBirth).inDays ~/ 365;
+    final endDate = deathDate ?? DateTime.now();
+    return endDate.difference(dateOfBirth).inDays ~/ 365;
   }
 
   int getAgeInMonths() {
-    final now = DateTime.now();
+    final now = deathDate ?? DateTime.now();
     final months =
         (now.year - dateOfBirth.year) * 12 + (now.month - dateOfBirth.month);
     return months;

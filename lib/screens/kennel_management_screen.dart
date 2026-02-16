@@ -129,15 +129,16 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               style: TextStyle(color: Colors.grey[600]),
             ),
             const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 16,
+              runSpacing: 12,
               children: [
                 ElevatedButton.icon(
                   onPressed: _showCreateKennelDialog,
                   icon: const Icon(Icons.add),
                   label: Text(localizations.createKennel),
                 ),
-                const SizedBox(width: 16),
                 OutlinedButton.icon(
                   onPressed: _showJoinKennelDialog,
                   icon: const Icon(Icons.login),

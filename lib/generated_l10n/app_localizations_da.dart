@@ -2487,4 +2487,121 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get addDogLabel => 'Add dog';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get registerYourself => 'Sign up';
+
+  @override
+  String get createAccountSubtitle => 'Create an account to get started';
+
+  @override
+  String get fullName => 'Full name';
+
+  @override
+  String get fullNameHint => 'John Doe';
+
+  @override
+  String get emailAddressLabel => 'Email address';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get passwordHintText => 'At least 6 characters';
+
+  @override
+  String get confirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get repeatPasswordHint => 'Repeat the password';
+
+  @override
+  String get iAgreeToThe => 'I agree to the ';
+
+  @override
+  String get termsOfUse => 'terms of use';
+
+  @override
+  String get createAccountButton => 'Create account';
+
+  @override
+  String get alreadyHaveAccountQuestion => 'Already have an account? ';
+
+  @override
+  String get logIn => 'Log in';
+
+  @override
+  String get pleaseEnterNameValidation => 'Please enter your name';
+
+  @override
+  String get pleaseEnterEmailValidation => 'Please enter an email address';
+
+  @override
+  String get invalidEmailValidation => 'Invalid email address';
+
+  @override
+  String get pleaseEnterPasswordValidation => 'Please enter a password';
+
+  @override
+  String get passwordMin6Chars => 'Password must be at least 6 characters';
+
+  @override
+  String get passwordsDoNotMatchValidation => 'Passwords do not match';
+
+  @override
+  String get mustAcceptTerms => 'You must accept the terms of use';
+
+  @override
+  String get gen4PGFSire => 'P.GF\'s sire';
+
+  @override
+  String get gen4PGFDam => 'P.GF\'s dam';
+
+  @override
+  String get gen4PGMSire => 'P.GM\'s sire';
+
+  @override
+  String get gen4PGMDam => 'P.GM\'s dam';
+
+  @override
+  String get gen4PMFSire => 'P.MF\'s sire';
+
+  @override
+  String get gen4PMFDam => 'P.MF\'s dam';
+
+  @override
+  String get gen4PMMSire => 'P.MM\'s sire';
+
+  @override
+  String get gen4PMMDam => 'P.MM\'s dam';
+
+  @override
+  String get gen4MGFSire => 'M.GF\'s sire';
+
+  @override
+  String get gen4MGFDam => 'M.GF\'s dam';
+
+  @override
+  String get gen4MGMSire => 'M.GM\'s sire';
+
+  @override
+  String get gen4MGMDam => 'M.GM\'s dam';
+
+  @override
+  String get gen4MMFSire => 'M.MF\'s sire';
+
+  @override
+  String get gen4MMFDam => 'M.MF\'s dam';
+
+  @override
+  String get gen4MMMSire => 'M.MM\'s sire';
+
+  @override
+  String get gen4MMMDam => 'M.MM\'s dam';
 }

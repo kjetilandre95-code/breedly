@@ -2490,4 +2490,121 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get addDogLabel => 'Legg til hund';
+
+  @override
+  String get createAccount => 'Opprett konto';
+
+  @override
+  String get registerYourself => 'Registrer deg';
+
+  @override
+  String get createAccountSubtitle => 'Opprett en konto for å komme i gang';
+
+  @override
+  String get fullName => 'Fullt navn';
+
+  @override
+  String get fullNameHint => 'Ola Nordmann';
+
+  @override
+  String get emailAddressLabel => 'E-postadresse';
+
+  @override
+  String get emailHint => 'navn@eksempel.no';
+
+  @override
+  String get passwordLabel => 'Passord';
+
+  @override
+  String get passwordHintText => 'Minst 6 tegn';
+
+  @override
+  String get confirmPasswordLabel => 'Bekreft passord';
+
+  @override
+  String get repeatPasswordHint => 'Gjenta passordet';
+
+  @override
+  String get iAgreeToThe => 'Jeg godtar ';
+
+  @override
+  String get termsOfUse => 'vilkårene for bruk';
+
+  @override
+  String get createAccountButton => 'Opprett konto';
+
+  @override
+  String get alreadyHaveAccountQuestion => 'Har du allerede en konto? ';
+
+  @override
+  String get logIn => 'Logg inn';
+
+  @override
+  String get pleaseEnterNameValidation => 'Vennligst skriv inn navn';
+
+  @override
+  String get pleaseEnterEmailValidation => 'Vennligst skriv inn e-postadresse';
+
+  @override
+  String get invalidEmailValidation => 'Ugyldig e-postadresse';
+
+  @override
+  String get pleaseEnterPasswordValidation => 'Vennligst skriv inn passord';
+
+  @override
+  String get passwordMin6Chars => 'Passordet må være minst 6 tegn';
+
+  @override
+  String get passwordsDoNotMatchValidation => 'Passordene stemmer ikke overens';
+
+  @override
+  String get mustAcceptTerms => 'Du må godta vilkårene for bruk';
+
+  @override
+  String get gen4PGFSire => 'Farfars fars far';
+
+  @override
+  String get gen4PGFDam => 'Farfars fars mor';
+
+  @override
+  String get gen4PGMSire => 'Farfars mors far';
+
+  @override
+  String get gen4PGMDam => 'Farfars mors mor';
+
+  @override
+  String get gen4PMFSire => 'Farmors fars far';
+
+  @override
+  String get gen4PMFDam => 'Farmors fars mor';
+
+  @override
+  String get gen4PMMSire => 'Farmors mors far';
+
+  @override
+  String get gen4PMMDam => 'Farmors mors mor';
+
+  @override
+  String get gen4MGFSire => 'Morfars fars far';
+
+  @override
+  String get gen4MGFDam => 'Morfars fars mor';
+
+  @override
+  String get gen4MGMSire => 'Morfars mors far';
+
+  @override
+  String get gen4MGMDam => 'Morfars mors mor';
+
+  @override
+  String get gen4MMFSire => 'Mormors fars far';
+
+  @override
+  String get gen4MMFDam => 'Mormors fars mor';
+
+  @override
+  String get gen4MMMSire => 'Mormors mors far';
+
+  @override
+  String get gen4MMMDam => 'Mormors mors mor';
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/services/pedigree_scanner_service.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 /// Widget for scanning pedigree documents
 class PedigreeScannerWidget extends StatefulWidget {
@@ -214,7 +215,7 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
         children: [
           Icon(Icons.check_circle, size: 14, color: Colors.green[600]),
           const SizedBox(width: 8),
-          Text(text, style: const TextStyle(fontSize: 12)),
+          Expanded(child: Text(text, style: const TextStyle(fontSize: 12))),
         ],
       ),
     );
@@ -249,6 +250,7 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
       ...widget.scanResult.parents,
       ...widget.scanResult.grandparents,
       ...widget.scanResult.greatGrandparents,
+      ...widget.scanResult.greatGreatGrandparents,
     ];
   }
 
@@ -571,9 +573,9 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
   }
 
   Color _getConfidenceColor() {
-    if (widget.scanResult.confidence > 0.8) return Colors.green;
-    if (widget.scanResult.confidence > 0.6) return Colors.orange;
-    return Colors.red;
+    if (widget.scanResult.confidence > 0.8) return AppColors.success;
+    if (widget.scanResult.confidence > 0.6) return AppColors.warning;
+    return AppColors.error;
   }
 
   IconData _getConfidenceIcon() {
@@ -604,6 +606,23 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
       case 'Morfars mor': return l10n.greatGrandamMP;
       case 'Mormors far': return l10n.greatGrandsireMM;
       case 'Mormors mor': return l10n.greatGrandamMM;
+      // Generation 4
+      case 'Farfars fars far': return l10n.gen4PGFSire;
+      case 'Farfars fars mor': return l10n.gen4PGFDam;
+      case 'Farfars mors far': return l10n.gen4PGMSire;
+      case 'Farfars mors mor': return l10n.gen4PGMDam;
+      case 'Farmors fars far': return l10n.gen4PMFSire;
+      case 'Farmors fars mor': return l10n.gen4PMFDam;
+      case 'Farmors mors far': return l10n.gen4PMMSire;
+      case 'Farmors mors mor': return l10n.gen4PMMDam;
+      case 'Morfars fars far': return l10n.gen4MGFSire;
+      case 'Morfars fars mor': return l10n.gen4MGFDam;
+      case 'Morfars mors far': return l10n.gen4MGMSire;
+      case 'Morfars mors mor': return l10n.gen4MGMDam;
+      case 'Mormors fars far': return l10n.gen4MMFSire;
+      case 'Mormors fars mor': return l10n.gen4MMFDam;
+      case 'Mormors mors far': return l10n.gen4MMMSire;
+      case 'Mormors mors mor': return l10n.gen4MMMDam;
       default: return position;
     }
   }
@@ -673,6 +692,46 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
                   _buildTreeCard('Mormors far', mini: true),
                   const SizedBox(height: 4),
                   _buildTreeCard('Mormors mor', mini: true),
+                ],
+              ),
+              const SizedBox(width: 10),
+              _buildTreeConnector(900),
+              const SizedBox(width: 10),
+              // Column 5: Great-great-grandparents (gen 4)
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildTreeCard('Farfars fars far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Farfars fars mor', mini: true),
+                  const SizedBox(height: 6),
+                  _buildTreeCard('Farfars mors far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Farfars mors mor', mini: true),
+                  const SizedBox(height: 10),
+                  _buildTreeCard('Farmors fars far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Farmors fars mor', mini: true),
+                  const SizedBox(height: 6),
+                  _buildTreeCard('Farmors mors far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Farmors mors mor', mini: true),
+                  const SizedBox(height: 14),
+                  _buildTreeCard('Morfars fars far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Morfars fars mor', mini: true),
+                  const SizedBox(height: 6),
+                  _buildTreeCard('Morfars mors far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Morfars mors mor', mini: true),
+                  const SizedBox(height: 10),
+                  _buildTreeCard('Mormors fars far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Mormors fars mor', mini: true),
+                  const SizedBox(height: 6),
+                  _buildTreeCard('Mormors mors far', mini: true),
+                  const SizedBox(height: 2),
+                  _buildTreeCard('Mormors mors mor', mini: true),
                 ],
               ),
             ],
@@ -810,6 +869,11 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
       'Farfar', 'Farmor', 'Morfar', 'Mormor',
       'Farfars far', 'Farfars mor', 'Farmors far', 'Farmors mor',
       'Morfars far', 'Morfars mor', 'Mormors far', 'Mormors mor',
+      // Generation 4
+      'Farfars fars far', 'Farfars fars mor', 'Farfars mors far', 'Farfars mors mor',
+      'Farmors fars far', 'Farmors fars mor', 'Farmors mors far', 'Farmors mors mor',
+      'Morfars fars far', 'Morfars fars mor', 'Morfars mors far', 'Morfars mors mor',
+      'Mormors fars far', 'Mormors fars mor', 'Mormors mors far', 'Mormors mors mor',
     ];
 
     final nameCtrl = TextEditingController(text: dog.name != 'Ukjent' ? dog.name : '');
@@ -916,6 +980,23 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
                     DropdownMenuItem(value: 'Morfars mor', child: Text(l10n.greatGrandamMP)),
                     DropdownMenuItem(value: 'Mormors far', child: Text(l10n.greatGrandsireMM)),
                     DropdownMenuItem(value: 'Mormors mor', child: Text(l10n.greatGrandamMM)),
+                    // Generation 4
+                    DropdownMenuItem(value: 'Farfars fars far', child: Text(l10n.gen4PGFSire)),
+                    DropdownMenuItem(value: 'Farfars fars mor', child: Text(l10n.gen4PGFDam)),
+                    DropdownMenuItem(value: 'Farfars mors far', child: Text(l10n.gen4PGMSire)),
+                    DropdownMenuItem(value: 'Farfars mors mor', child: Text(l10n.gen4PGMDam)),
+                    DropdownMenuItem(value: 'Farmors fars far', child: Text(l10n.gen4PMFSire)),
+                    DropdownMenuItem(value: 'Farmors fars mor', child: Text(l10n.gen4PMFDam)),
+                    DropdownMenuItem(value: 'Farmors mors far', child: Text(l10n.gen4PMMSire)),
+                    DropdownMenuItem(value: 'Farmors mors mor', child: Text(l10n.gen4PMMDam)),
+                    DropdownMenuItem(value: 'Morfars fars far', child: Text(l10n.gen4MGFSire)),
+                    DropdownMenuItem(value: 'Morfars fars mor', child: Text(l10n.gen4MGFDam)),
+                    DropdownMenuItem(value: 'Morfars mors far', child: Text(l10n.gen4MGMSire)),
+                    DropdownMenuItem(value: 'Morfars mors mor', child: Text(l10n.gen4MGMDam)),
+                    DropdownMenuItem(value: 'Mormors fars far', child: Text(l10n.gen4MMFSire)),
+                    DropdownMenuItem(value: 'Mormors fars mor', child: Text(l10n.gen4MMFDam)),
+                    DropdownMenuItem(value: 'Mormors mors far', child: Text(l10n.gen4MMMSire)),
+                    DropdownMenuItem(value: 'Mormors mors mor', child: Text(l10n.gen4MMMDam)),
                   ],
                   onChanged: (v) => setDialogState(() => selectedPosition = v),
                 ),
@@ -1016,6 +1097,13 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
         .where((d) => d.position == 'Far' || d.position == 'Mor')
         .toList();
 
+    final gen4Positions = [
+      'Farfars fars far', 'Farfars fars mor', 'Farfars mors far', 'Farfars mors mor',
+      'Farmors fars far', 'Farmors fars mor', 'Farmors mors far', 'Farmors mors mor',
+      'Morfars fars far', 'Morfars fars mor', 'Morfars mors far', 'Morfars mors mor',
+      'Mormors fars far', 'Mormors fars mor', 'Mormors mors far', 'Mormors mors mor',
+    ];
+
     final updatedResult = PedigreeScanResult(
       confidence: widget.scanResult.confidence,
       dog: mainDog,
@@ -1028,6 +1116,9 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
             'Farfars far', 'Farfars mor', 'Farmors far', 'Farmors mor',
             'Morfars far', 'Morfars mor', 'Mormors far', 'Mormors mor',
           ].contains(d.position))
+          .toList(),
+      greatGreatGrandparents: _editableDogs
+          .where((d) => gen4Positions.contains(d.position))
           .toList(),
       rawText: widget.scanResult.rawText,
     );

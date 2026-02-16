@@ -528,8 +528,10 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
     final baseFontStyle = _selectedFont.textStyle;
     TextStyle fontStyle(double size) => baseFontStyle(size * _fontScale);
 
-    return Container(
-      width: 400,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 400),
+      child: Container(
+      width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: theme.cardBg,
@@ -701,12 +703,14 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           if (_showPhoto != null)
             Stack(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 300,
-                  child: Image.file(
-                    _showPhoto!,
-                    fit: BoxFit.cover,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 300),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Image.file(
+                      _showPhoto!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 // Top gradient fade from header
@@ -864,6 +868,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           ),
         ],
       ),
+    ),
     );
   }
 

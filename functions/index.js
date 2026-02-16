@@ -11,14 +11,15 @@ IMPORTANT RULES:
 - The MAIN DOG (Hovedhund) is the dog this pedigree belongs to. Its name is usually at the top, often after a label like "Name:", "Navn:", "Nimi:", "Namn:", or in the title.
 - The SIRE (Far/Father) is marked with labels like "Sire:", "Far:", "Father:", "Fader:", "Isä:"
 - The DAM (Mor/Mother) is marked with labels like "Dam:", "Mor:", "Mother:", "Moder:", "Emä:"
-- Most pedigrees show 3 generations: parents, grandparents, and great-grandparents
-- Great-grandparents are the outermost/rightmost column in the pedigree tree
+- Pedigrees can show 3 to 5 generations: parents, grandparents, great-grandparents, and potentially 4th and 5th generation ancestors
+- The rightmost/outermost columns contain the oldest ancestors
 - Registration numbers look like "NO12345/2020", "FIN12345/20", "S12345/2020", etc.
 - Dates can be dd.mm.yyyy, dd/mm/yyyy, or yyyy-mm-dd format
 - Keep dates in the format you find them
 - If you cannot read a field clearly, set it to null
 - Names of dogs are typically multi-word, often including kennel names like "Kennel's Champion Name"
 - Gender must be exactly "Male" or "Female" or null
+- Extract as many generations as visible in the document (up to 5)
 
 Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 {
@@ -53,7 +54,23 @@ Return ONLY valid JSON in this exact format (no markdown, no code blocks):
   "maternal_gf_father": {"name": "string or null", "registration_number": "string or null"},
   "maternal_gf_mother": {"name": "string or null", "registration_number": "string or null"},
   "maternal_gm_father": {"name": "string or null", "registration_number": "string or null"},
-  "maternal_gm_mother": {"name": "string or null", "registration_number": "string or null"}
+  "maternal_gm_mother": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_m_dam": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_m_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_m_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_m_dam": {"name": "string or null", "registration_number": "string or null"}
 }`;
 
 exports.scanPedigree = onCall(
@@ -92,7 +109,7 @@ exports.scanPedigree = onCall(
         model: "gemini-2.0-flash",
         generationConfig: {
           temperature: 0.1,
-          maxOutputTokens: 4096,
+          maxOutputTokens: 8192,
         },
       });
 

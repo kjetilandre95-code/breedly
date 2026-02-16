@@ -356,6 +356,9 @@ class LitterCard extends StatelessWidget {
     // Sjekk om dette er et planlagt kull (fødselsdato i fremtiden)
     if (birthDate.isAfter(now)) {
       final daysUntil = birthDate.difference(now).inDays;
+      // Hvis dateOfBirth er en placeholder langt i fremtiden (f.eks. 2099),
+      // vis ikke antall dager
+      if (daysUntil > 365) return 'Dato ikke satt';
       if (daysUntil == 0) return 'I dag';
       if (daysUntil == 1) return 'I morgen';
       return '$daysUntil dager';
@@ -373,11 +376,11 @@ class LitterCard extends StatelessWidget {
   bool get _isPlanned => birthDate.isAfter(DateTime.now());
 
   Color _getStatusColor(BuildContext context) {
-    // Planlagt kull = oransje
-    if (_isPlanned) return Colors.orange;
+    final primaryColor = Theme.of(context).primaryColor;
+    // Planlagt kull = bruk temafarge
+    if (_isPlanned) return primaryColor;
     
     final weeks = DateTime.now().difference(birthDate).inDays ~/ 7;
-    final primaryColor = Theme.of(context).primaryColor;
     if (weeks < 8) return primaryColor; // Active
     if (weeks < 12) return primaryColor.withValues(alpha: 0.7); // Weaning
     return AppColors.neutral500; // Older

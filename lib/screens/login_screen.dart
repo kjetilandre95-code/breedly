@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/utils/app_theme.dart';
@@ -304,15 +305,15 @@ class _LoginScreenState extends State<LoginScreen>
 
                     const SizedBox(height: AppSpacing.xxl),
 
-                    // Divider
-                    _buildDivider(),
-
-                    const SizedBox(height: AppSpacing.xxl),
-
-                    // Google sign in
-                    _buildGoogleButton(),
-
-                    const SizedBox(height: AppSpacing.xxl),
+                    // Google sign in (only on supported platforms)
+                    if (!kIsWeb &&
+                        defaultTargetPlatform != TargetPlatform.windows &&
+                        defaultTargetPlatform != TargetPlatform.linux) ...[
+                      _buildDivider(),
+                      const SizedBox(height: AppSpacing.xxl),
+                      _buildGoogleButton(),
+                      const SizedBox(height: AppSpacing.xxl),
+                    ],
 
                     // Sign up link
                     _buildSignUpLink(primaryColor),

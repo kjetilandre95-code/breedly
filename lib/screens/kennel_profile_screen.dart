@@ -526,7 +526,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
       title: const Text('Velg raser'),
       content: SizedBox(
         width: double.maxFinite,
-        height: 400,
+        height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           children: [
             TextField(

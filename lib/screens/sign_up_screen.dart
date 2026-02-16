@@ -4,6 +4,7 @@ import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/constants.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class SignUpScreen extends StatefulWidget {
   final LanguageProvider languageProvider;
@@ -50,39 +51,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUp() async {
+    final l10n = AppLocalizations.of(context)!;
     // Validation
     if (_nameController.text.isEmpty) {
-      setState(() => _errorMessage = 'Vennligst skriv inn navn');
+      setState(() => _errorMessage = l10n.pleaseEnterNameValidation);
       return;
     }
 
     if (_emailController.text.isEmpty) {
-      setState(() => _errorMessage = 'Vennligst skriv inn e-postadresse');
+      setState(() => _errorMessage = l10n.pleaseEnterEmailValidation);
       return;
     }
 
     if (!_isValidEmail(_emailController.text)) {
-      setState(() => _errorMessage = 'Ugyldig e-postadresse');
+      setState(() => _errorMessage = l10n.invalidEmailValidation);
       return;
     }
 
     if (_passwordController.text.isEmpty) {
-      setState(() => _errorMessage = 'Vennligst skriv inn passord');
+      setState(() => _errorMessage = l10n.pleaseEnterPasswordValidation);
       return;
     }
 
     if (_passwordController.text.length < 6) {
-      setState(() => _errorMessage = 'Passordet må være minst 6 tegn');
+      setState(() => _errorMessage = l10n.passwordMin6Chars);
       return;
     }
 
     if (_passwordController.text != _confirmPasswordController.text) {
-      setState(() => _errorMessage = 'Passordene stemmer ikke overens');
+      setState(() => _errorMessage = l10n.passwordsDoNotMatchValidation);
       return;
     }
 
     if (!_agreedToTerms) {
-      setState(() => _errorMessage = 'Du må godta vilkårene for bruk');
+      setState(() => _errorMessage = l10n.mustAcceptTerms);
       return;
     }
 
@@ -131,13 +133,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final currentLang = widget.languageProvider.currentLocale.languageCode;
-    final isEnglish = currentLang == 'en';
+    final l10n = AppLocalizations.of(context)!;
     
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text(isEnglish ? 'Create Account' : 'Opprett konto'),
+        title: Text(l10n.createAccount),
         elevation: 0,
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
@@ -164,7 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Registrer deg',
+                    l10n.registerYourself,
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -173,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Opprett en konto for å komme i gang',
+                    l10n.createAccountSubtitle,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -206,8 +207,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _nameController,
                 enabled: !_isLoading,
                 decoration: InputDecoration(
-                  labelText: 'Fullt navn',
-                  hintText: 'Ola Nordmann',
+                  labelText: l10n.fullName,
+                  hintText: l10n.fullNameHint,
                   prefixIcon: const Icon(Icons.person_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -233,8 +234,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               enabled: !_isLoading,
               focusNode: _emailFocusNode,
               decoration: InputDecoration(
-                labelText: 'E-postadresse',
-                hintText: 'navn@eksempel.no',
+                labelText: l10n.emailAddressLabel,
+                hintText: l10n.emailHint,
                 prefixIcon: const Icon(Icons.email_outlined),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -261,8 +262,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               obscureText: !_showPassword,
               focusNode: _passwordFocusNode,
               decoration: InputDecoration(
-                labelText: 'Passord',
-                hintText: 'Minst 6 tegn',
+                labelText: l10n.passwordLabel,
+                hintText: l10n.passwordHintText,
                 prefixIcon: const Icon(Icons.lock_outlined),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -296,8 +297,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               obscureText: !_showConfirmPassword,
               focusNode: _confirmPasswordFocusNode,
               decoration: InputDecoration(
-                labelText: 'Bekreft passord',
-                hintText: 'Gjenta passordet',
+                labelText: l10n.confirmPasswordLabel,
+                hintText: l10n.repeatPasswordHint,
                 prefixIcon: const Icon(Icons.lock_outlined),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -341,14 +342,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 text: TextSpan(
                   style: TextStyle(color: Colors.grey[700], fontSize: 13),
                   children: [
-                    const TextSpan(text: 'Jeg godtar '),
+                    TextSpan(text: l10n.iAgreeToThe),
                     WidgetSpan(
                       child: GestureDetector(
                         onTap: () {
                           // Open terms and conditions
                         },
                         child: Text(
-                          'vilkårene for bruk',
+                          l10n.termsOfUse,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
@@ -383,8 +384,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
-                  : const Text(
-                      'Opprett konto',
+                  : Text(
+                      l10n.createAccountButton,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -399,7 +400,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 text: TextSpan(
                   style: TextStyle(color: Colors.grey[700], fontSize: 14),
                   children: [
-                    const TextSpan(text: 'Har du allerede en konto? '),
+                    TextSpan(text: l10n.alreadyHaveAccountQuestion),
                     WidgetSpan(
                       child: GestureDetector(
                         onTap: _isLoading
@@ -408,7 +409,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Navigator.pop(context);
                               },
                         child: Text(
-                          'Logg inn',
+                          l10n.logIn,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,

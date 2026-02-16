@@ -315,17 +315,33 @@ class _AddDogScreenState extends State<AddDogScreen> {
     for (final ggp in scanResult.greatGrandparents) {
       if (ggp.position != null) ggpMap[ggp.position!] = ggp;
     }
+    final gggpMap = <String, ScannedDog>{};
+    for (final gggp in scanResult.greatGreatGrandparents) {
+      if (gggp.position != null) gggpMap[gggp.position!] = gggp;
+    }
 
-    // 1. Create great-grandparents (no parents of their own from scan)
-    final ggpIds = <String, String>{}; // position → id
-    for (final entry in ggpMap.entries) {
+    // 1. Create great-great-grandparents (no parents of their own from scan)
+    final gggpIds = <String, String>{}; // position → id
+    for (final entry in gggpMap.entries) {
       if (!mounted) return;
-      ggpIds[entry.key] = await _getOrCreateDog(
+      gggpIds[entry.key] = await _getOrCreateDog(
         entry.value, box: box, defaultBreed: defaultBreed, dialogContext: context,
       );
     }
 
-    // 2. Create grandparents, linked to their great-grandparents
+    // 2. Create great-grandparents, linked to their great-great-grandparents
+    final ggpIds = <String, String>{}; // position → id
+    for (final pos in ['Farfars far', 'Farfars mor', 'Farmors far', 'Farmors mor',
+                        'Morfars far', 'Morfars mor', 'Mormors far', 'Mormors mor']) {
+      if (ggpMap.containsKey(pos) && mounted) {
+        ggpIds[pos] = await _getOrCreateDog(
+          ggpMap[pos]!, box: box, defaultBreed: defaultBreed, dialogContext: context,
+          sireId: gggpIds['${pos}s far'], damId: gggpIds['${pos}s mor'],
+        );
+      }
+    }
+
+    // 3. Create grandparents, linked to their great-grandparents
     final gpIds = <String, String>{}; // position → id
     for (final pos in ['Farfar', 'Farmor', 'Morfar', 'Mormor']) {
       if (gpMap.containsKey(pos) && mounted) {
@@ -371,7 +387,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     }
 
     // 5. Sync to Firebase if authenticated
-    final allIds = <String>{mainId, ...ggpIds.values, ...gpIds.values};
+    final allIds = <String>{mainId, ...gggpIds.values, ...ggpIds.values, ...gpIds.values};
     if (sireId != null) allIds.add(sireId);
     if (damId != null) allIds.add(damId);
 
@@ -390,12 +406,13 @@ class _AddDogScreenState extends State<AddDogScreen> {
     }
 
     final totalCreated = 1 + scanResult.parents.length +
-        scanResult.grandparents.length + scanResult.greatGrandparents.length;
+        scanResult.grandparents.length + scanResult.greatGrandparents.length +
+        scanResult.greatGreatGrandparents.length;
 
     messenger.showSnackBar(
       SnackBar(
         content: Text('${scannedDog.name} lagt til med stamtavle ($totalCreated hunder totalt)'),
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).primaryColor,
         duration: const Duration(seconds: 4),
       ),
     );
