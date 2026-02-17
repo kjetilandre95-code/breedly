@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/health.dart';
 import 'package:breedly/models/vaccine.dart';
@@ -32,13 +33,14 @@ class DogHealthScreen extends StatefulWidget {
 class _DogHealthScreenState extends State<DogHealthScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final primaryColor = Theme.of(context).primaryColor;
 
     return DefaultTabController(
       length: 7,
       child: Scaffold(
         appBar: AppBarBuilder.buildAppBar(
-          title: 'Helse - ${widget.dog.name}',
+          title: l10n.healthTitle(widget.dog.name),
           context: context,
           actions: [
             PageInfoHelper.buildInfoButton(
@@ -56,14 +58,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             indicatorWeight: 3,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
-            tabs: const [
-              Tab(text: 'Helsestatus'),
-              Tab(text: 'Vaksiner'),
-              Tab(text: 'Veterinær'),
-              Tab(text: 'Behandlinger'),
-              Tab(text: 'DNA-tester'),
-              Tab(text: 'Vekt'),
-              Tab(text: 'Hormoner'),
+            tabs: [
+              Tab(text: l10n.healthStatusTab),
+              Tab(text: l10n.vaccinesTab),
+              Tab(text: l10n.vetTab),
+              Tab(text: l10n.treatmentsTab),
+              Tab(text: l10n.dnaTestsTab),
+              Tab(text: l10n.weightTab),
+              Tab(text: l10n.hormonesTab),
             ],
           ),
         ),
@@ -85,13 +87,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildHealthStatusTab() {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Helseopplysninger',
+            l10n.healthInformation,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -121,7 +124,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   Text(
-                    'Ingen helseopplysninger registrert',
+                    l10n.noHealthInfoRegistered,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: 18,
@@ -129,14 +132,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Legg til helseopplysninger for ${widget.dog.name}',
+                    l10n.addHealthInfoFor(widget.dog.name),
                     style: TextStyle(color: context.colors.textMuted, fontSize: 14),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   ElevatedButton.icon(
                     onPressed: _addHealthInfo,
                     icon: const Icon(Icons.add),
-                    label: const Text('Legg til helseopplysninger'),
+                    label: Text(l10n.addHealthInfo),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
                       foregroundColor: context.colors.textPrimary,
@@ -151,11 +154,12 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildHealthCard() {
+    final l10n = AppLocalizations.of(context)!;
     final healthBox = Hive.box<HealthInfo>('health_info');
     final health = healthBox.get(widget.dog.healthInfoId!);
 
     if (health == null) {
-      return Text('Helseopplysninger ikke funnet');
+      return Text(l10n.healthInfoNotFound);
     }
 
     return Card(
@@ -193,7 +197,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(width: AppSpacing.md),
                   Text(
-                    'Helsestatus',
+                    l10n.healthStatus,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: 16,
@@ -233,7 +237,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Merknader',
+                        l10n.remarks,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -258,7 +262,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     child: ElevatedButton.icon(
                       onPressed: () => _editHealthInfo(health),
                       icon: const Icon(Icons.edit_rounded),
-                      label: const Text('Rediger'),
+                      label: Text(l10n.edit),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
                         foregroundColor: context.colors.textPrimary,
@@ -271,7 +275,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     child: ElevatedButton.icon(
                       onPressed: () => _deleteHealthInfo(health),
                       icon: const Icon(Icons.delete_outline_rounded),
-                      label: const Text('Slett'),
+                      label: Text(l10n.delete),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.error.withValues(alpha: 0.1),
                         foregroundColor: AppColors.error,
@@ -289,6 +293,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildHealthInfoRow(String label, String value, DateTime? date) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
@@ -321,7 +326,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (date != null) ...[
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Dato: ${DateFormat('dd.MM.yyyy').format(date)}',
+              l10n.dateWithValue(DateFormat('dd.MM.yyyy').format(date)),
               style: TextStyle(color: context.colors.textCaption, fontSize: 11),
             ),
           ],
@@ -331,8 +336,9 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildADStatusRow(String label, int value, DateTime? date) {
-    final adStatusLabels = {0: 'Grad 0 (Fri)', 1: 'Grad 1 (Svak)', 2: 'Grad 2 (Moderat)', 3: 'Grad 3 (Sterk)'};
-    final statusText = adStatusLabels[value] ?? 'Ukjent';
+    final l10n = AppLocalizations.of(context)!;
+    final adStatusLabels = {0: l10n.adGrade0, 1: l10n.adGrade1, 2: l10n.adGrade2, 3: l10n.adGrade3};
+    final statusText = adStatusLabels[value] ?? l10n.healthInfoNotFound;
     final statusColor = value == 0
         ? AppColors.success
         : value == 1
@@ -386,7 +392,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (date != null) ...[
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Dato: ${DateFormat('dd.MM.yyyy').format(date)}',
+              l10n.dateWithValue(DateFormat('dd.MM.yyyy').format(date)),
               style: TextStyle(color: context.colors.textCaption, fontSize: 11),
             ),
           ],
@@ -396,6 +402,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildPatellaStatusRow(String label, String value, DateTime? date) {
+    final l10n = AppLocalizations.of(context)!;
     // Konverter gammel eller ny verdi til numerisk
     int? numericValue;
     if (int.tryParse(value) != null) {
@@ -468,7 +475,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (date != null) ...[
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Dato: ${DateFormat('dd.MM.yyyy').format(date)}',
+              l10n.dateWithValue(DateFormat('dd.MM.yyyy').format(date)),
               style: TextStyle(color: context.colors.textCaption, fontSize: 11),
             ),
           ],
@@ -478,6 +485,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildVaccinesTab() {
+    final l10n = AppLocalizations.of(context)!;
     final vaccineBox = Hive.box<Vaccine>('vaccines');
     final vaccineIds = widget.dog.vaccineIds ?? [];
     final vaccines = vaccineIds
@@ -494,14 +502,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Vaksiner',
+                l10n.vaccinesTab,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 onPressed: _addVaccine,
-                tooltip: 'Legg til vaksin',
+                tooltip: l10n.addVaccine,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -525,7 +533,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   Text(
-                    'Ingen vaksiner registrert',
+                    l10n.noVaccinesRegistered,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: 18,
@@ -533,7 +541,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Legg til vaksiner for ${widget.dog.name}',
+                    l10n.addVaccinesFor(widget.dog.name),
                     style: TextStyle(color: context.colors.textMuted, fontSize: 14),
                   ),
                 ],
@@ -605,7 +613,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                     ),
                                     const SizedBox(height: AppSpacing.xs),
                                     Text(
-                                      'Tatt: ${DateFormat('dd.MM.yyyy').format(vaccine.dateTaken)}',
+                                      l10n.takenWithDate(DateFormat('dd.MM.yyyy').format(vaccine.dateTaken)),
                                       style: TextStyle(
                                         color: context.colors.textMuted,
                                         fontSize: 12,
@@ -628,7 +636,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                     borderRadius: AppRadius.smAll,
                                   ),
                                   child: Text(
-                                    'Forfalt',
+                                    l10n.overdueLabel,
                                     style: TextStyle(
                                       color: AppColors.error,
                                       fontSize: 12,
@@ -652,7 +660,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                     borderRadius: AppRadius.smAll,
                                   ),
                                   child: Text(
-                                    'Varsel',
+                                    l10n.alertLabel,
                                     style: TextStyle(
                                       color: AppColors.warning,
                                       fontSize: 12,
@@ -707,7 +715,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                   ),
                                   const SizedBox(width: AppSpacing.sm),
                                   Text(
-                                    'Neste dose: ${DateFormat('dd.MM.yyyy').format(vaccine.nextDueDate!)}',
+                                    l10n.nextDoseWithDate(DateFormat('dd.MM.yyyy').format(vaccine.nextDueDate!)),
                                     style: TextStyle(
                                       color: AppColors.info,
                                       fontSize: 12,
@@ -739,7 +747,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                   const SizedBox(width: AppSpacing.sm),
                                   Expanded(
                                     child: Text(
-                                      'Veterinær: ${vaccine.veterinarian!}',
+                                      l10n.veterinarianWithName(vaccine.veterinarian!),
                                       style: TextStyle(
                                         color: AppColors.accent5,
                                         fontSize: 12,
@@ -760,7 +768,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                 child: ElevatedButton.icon(
                                   onPressed: () => _editVaccine(vaccine),
                                   icon: const Icon(Icons.edit_rounded),
-                                  label: const Text('Rediger'),
+                                  label: Text(l10n.edit),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Theme.of(
                                       context,
@@ -779,7 +787,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                   icon: const Icon(
                                     Icons.delete_outline_rounded,
                                   ),
-                                  label: const Text('Slett'),
+                                  label: Text(l10n.delete),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.error.withValues(
                                       alpha: 0.1,
@@ -806,6 +814,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildHormonesTab() {
+    final l10n = AppLocalizations.of(context)!;
     final progesteroneBox = Hive.box<ProgesteroneMeasurement>(
       'progesterone_measurements',
     );
@@ -822,14 +831,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Progesteronmålinger',
+                l10n.progesteroneMeasurements,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 onPressed: _addProgesteroneMeasurement,
-                tooltip: 'Legg til måling',
+                tooltip: l10n.addMeasurement,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -857,7 +866,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(height: AppSpacing.xl),
                   Text(
-                    'Ingen progesteronmålinger registrert',
+                    l10n.noProgesteroneMeasurements,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: 18,
@@ -865,7 +874,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Legg til progesteronmålinger for å følge ${widget.dog.name}s syklus',
+                    l10n.addProgesteroneTracking(widget.dog.name),
                     style: TextStyle(color: context.colors.textMuted, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
@@ -882,6 +891,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildProgesteroneCard(ProgesteroneMeasurement measurement) {
+    final l10n = AppLocalizations.of(context)!;
     final interpretation = measurement.getInterpretation();
     Color statusColor;
 
@@ -937,15 +947,15 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 PopupMenuButton(
                   itemBuilder: (context) => [
                     PopupMenuItem(
-                      child: const Text('Rediger'),
+                      child: Text(l10n.edit),
                       onTap: () => Future.delayed(
                         Duration.zero,
                         () => _editProgesteroneMeasurement(measurement),
                       ),
                     ),
                     PopupMenuItem(
-                      child: const Text(
-                        'Slett',
+                      child: Text(
+                        l10n.delete,
                         style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
@@ -959,14 +969,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              'Dato: ${DateFormat('dd.MM.yyyy HH:mm').format(measurement.dateMeasured)}',
+              l10n.dateWithValue(DateFormat('dd.MM.yyyy HH:mm').format(measurement.dateMeasured)),
               style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
             if (measurement.veterinarian != null &&
                 measurement.veterinarian!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Veterinær: ${measurement.veterinarian}',
+                l10n.veterinarianWithName(measurement.veterinarian!),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -996,17 +1006,18 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _deleteProgesteroneMeasurement(ProgesteroneMeasurement measurement) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett måling?'),
-        content: const Text(
-          'Er du sikker på at du vil slette denne progesteronmålingen?',
+        title: Text(l10n.deleteMeasurement),
+        content: Text(
+          l10n.confirmDeleteProgesterone,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -1028,7 +1039,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1050,17 +1061,18 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _deleteHealthInfo(HealthInfo health) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett helseopplysninger?'),
-        content: const Text(
-          'Er du sikker på at du vil slette disse helseopplysningene?',
+        title: Text(l10n.deleteHealthInfo),
+        content: Text(
+          l10n.confirmDeleteHealthInfo,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -1084,7 +1096,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1106,15 +1118,16 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _deleteVaccine(Vaccine vaccine) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett vaksin?'),
-        content: Text('Er du sikker på at du vil slette ${vaccine.name}?'),
+        title: Text(l10n.deleteVaccine),
+        content: Text(l10n.confirmDeleteVaccine(vaccine.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -1138,7 +1151,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1147,6 +1160,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   // ==================== VET VISITS TAB ====================
   Widget _buildVetVisitsTab() {
+    final l10n = AppLocalizations.of(context)!;
     final vetVisitsBox = Hive.box<VetVisit>('vet_visits');
     final visits =
         vetVisitsBox.values.where((v) => v.dogId == widget.dog.id).toList()
@@ -1161,14 +1175,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Veterinærbesøk',
+                l10n.vetVisits,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 onPressed: _addVetVisit,
-                tooltip: 'Legg til besøk',
+                tooltip: l10n.addVisit,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -1177,8 +1191,8 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (visits.isEmpty)
             _buildEmptyState(
               icon: Icons.local_hospital_outlined,
-              title: 'Ingen veterinærbesøk registrert',
-              subtitle: 'Legg til veterinærbesøk for ${widget.dog.name}',
+              title: l10n.noVetVisitsRegistered,
+              subtitle: l10n.addVetVisitsFor(widget.dog.name),
             )
           else
             ...visits.map((visit) => _buildVetVisitCard(visit)),
@@ -1188,13 +1202,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildVetVisitCard(VetVisit visit) {
+    final l10n = AppLocalizations.of(context)!;
     final visitTypeLabels = {
-      'routine': 'Rutinekontroll',
-      'emergency': 'Akutt',
-      'surgery': 'Operasjon',
-      'vaccination': 'Vaksinering',
-      'followup': 'Oppfølging',
-      'other': 'Annet',
+      'routine': l10n.visitTypeRoutine,
+      'emergency': l10n.visitTypeEmergency,
+      'surgery': l10n.visitTypeSurgery,
+      'vaccination': l10n.visitTypeVaccination,
+      'followup': l10n.visitTypeFollowup,
+      'other': l10n.visitTypeOther,
     };
 
     Color typeColor;
@@ -1257,15 +1272,15 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 PopupMenuButton(
                   itemBuilder: (context) => [
                     PopupMenuItem(
-                      child: const Text('Rediger'),
+                      child: Text(l10n.edit),
                       onTap: () => Future.delayed(
                         Duration.zero,
                         () => _editVetVisit(visit),
                       ),
                     ),
                     PopupMenuItem(
-                      child: const Text(
-                        'Slett',
+                      child: Text(
+                        l10n.delete,
                         style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
@@ -1280,21 +1295,21 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             if (visit.reason != null && visit.reason!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.md),
               Text(
-                'Årsak: ${visit.reason}',
+                l10n.reasonWithValue(visit.reason!),
                 style: const TextStyle(fontSize: 14),
               ),
             ],
             if (visit.diagnosis != null && visit.diagnosis!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Diagnose: ${visit.diagnosis}',
+                l10n.diagnosisWithValue(visit.diagnosis!),
                 style: const TextStyle(fontSize: 14),
               ),
             ],
             if (visit.treatment != null && visit.treatment!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Behandling: ${visit.treatment}',
+                l10n.treatmentWithValue(visit.treatment!),
                 style: const TextStyle(fontSize: 14),
               ),
             ],
@@ -1302,14 +1317,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 visit.veterinarian!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Veterinær: ${visit.veterinarian}',
+                l10n.veterinarianWithName(visit.veterinarian!),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (visit.cost != null) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Kostnad: ${visit.cost!.toStringAsFixed(0)} kr',
+                l10n.costWithValue(visit.cost!.toStringAsFixed(0)),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -1327,7 +1342,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     const Icon(Icons.event, size: 14, color: AppColors.warning),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
-                      'Oppfølging: ${DateFormat('dd.MM.yyyy').format(visit.followUpDate!)}',
+                      l10n.followUpWithDate(DateFormat('dd.MM.yyyy').format(visit.followUpDate!)),
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.warning,
@@ -1358,15 +1373,16 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _deleteVetVisit(VetVisit visit) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett veterinærbesøk?'),
-        content: const Text('Er du sikker på at du vil slette dette besøket?'),
+        title: Text(l10n.deleteVetVisit),
+        content: Text(l10n.confirmDeleteVetVisit),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -1392,7 +1408,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1401,6 +1417,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   // ==================== TREATMENTS TAB ====================
   Widget _buildTreatmentsTab() {
+    final l10n = AppLocalizations.of(context)!;
     final treatmentsBox = Hive.box<MedicalTreatment>('medical_treatments');
     final treatments =
         treatmentsBox.values.where((t) => t.dogId == widget.dog.id).toList()
@@ -1415,14 +1432,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Behandlinger',
+                l10n.treatmentsTab,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 onPressed: _addTreatment,
-                tooltip: 'Legg til behandling',
+                tooltip: l10n.addTreatment,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -1431,8 +1448,8 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (treatments.isEmpty)
             _buildEmptyState(
               icon: Icons.medication_outlined,
-              title: 'Ingen behandlinger registrert',
-              subtitle: 'Legg til ormebehandlinger, lopper/flått osv.',
+              title: l10n.noTreatmentsRegistered,
+              subtitle: l10n.addTreatmentsSubtitle,
             )
           else
             ...treatments.map((treatment) => _buildTreatmentCard(treatment)),
@@ -1442,13 +1459,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildTreatmentCard(MedicalTreatment treatment) {
+    final l10n = AppLocalizations.of(context)!;
     final typeLabels = {
-      'deworming': 'Ormekur',
-      'flea': 'Loppebehandling',
-      'tick': 'Flåttbehandling',
-      'medication': 'Medisin',
-      'supplement': 'Kosttilskudd',
-      'other': 'Annet',
+      'deworming': l10n.treatmentTypeDeworming,
+      'flea': l10n.treatmentTypeFlea,
+      'tick': l10n.treatmentTypeTick,
+      'medication': l10n.treatmentTypeMedication,
+      'supplement': l10n.treatmentTypeSupplement,
+      'other': l10n.treatmentTypeOther,
     };
 
     IconData typeIcon;
@@ -1525,22 +1543,22 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 PopupMenuButton(
                   itemBuilder: (context) => [
                     PopupMenuItem(
-                      child: const Text('Rediger'),
+                      child: Text(l10n.edit),
                       onTap: () => Future.delayed(
                         Duration.zero,
                         () => _editTreatment(treatment),
                       ),
                     ),
                     PopupMenuItem(
-                      child: const Text('Registrer ny dose'),
+                      child: Text(l10n.registerNewDose),
                       onTap: () => Future.delayed(
                         Duration.zero,
                         () => _registerNewDose(treatment),
                       ),
                     ),
                     PopupMenuItem(
-                      child: const Text(
-                        'Slett',
+                      child: Text(
+                        l10n.delete,
                         style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
@@ -1554,13 +1572,13 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
-              'Sist gitt: ${DateFormat('dd.MM.yyyy').format(treatment.dateGiven)}',
+              l10n.lastGivenWithDate(DateFormat('dd.MM.yyyy').format(treatment.dateGiven)),
               style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
             if (treatment.dosage != null && treatment.dosage!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Dosering: ${treatment.dosage}',
+                l10n.dosageWithValue(treatment.dosage!),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -1568,7 +1586,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 treatment.manufacturer!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Produsent: ${treatment.manufacturer}',
+                l10n.manufacturerWithValue(treatment.manufacturer!),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -1592,7 +1610,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
-                      'Neste: ${DateFormat('dd.MM.yyyy').format(treatment.nextDueDate!)}',
+                      l10n.nextWithDate(DateFormat('dd.MM.yyyy').format(treatment.nextDueDate!)),
                       style: TextStyle(
                         fontSize: 12,
                         color: isDue ? AppColors.error : AppColors.success,
@@ -1625,6 +1643,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _registerNewDose(MedicalTreatment treatment) async {
+    final l10n = AppLocalizations.of(context)!;
     final now = DateTime.now();
     treatment.dateGiven = now;
     if (treatment.intervalDays != null && treatment.intervalDays! > 0) {
@@ -1650,21 +1669,22 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     setState(() {});
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ny dose av ${treatment.name} registrert')),
+        SnackBar(content: Text(l10n.newDoseRegistered(treatment.name))),
       );
     }
   }
 
   void _deleteTreatment(MedicalTreatment treatment) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett behandling?'),
-        content: Text('Er du sikker på at du vil slette ${treatment.name}?'),
+        title: Text(l10n.deleteTreatment),
+        content: Text(l10n.confirmDeleteTreatment(treatment.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -1688,7 +1708,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1697,6 +1717,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   // ==================== DNA TESTS TAB ====================
   Widget _buildDnaTestsTab() {
+    final l10n = AppLocalizations.of(context)!;
     final dnaTestsBox = Hive.box<DnaTest>('dna_tests');
     final tests =
         dnaTestsBox.values.where((t) => t.dogId == widget.dog.id).toList()
@@ -1715,14 +1736,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'DNA-tester',
+                l10n.dnaTestsTab,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 onPressed: _addDnaTest,
-                tooltip: 'Legg til DNA-test',
+                tooltip: l10n.addDnaTest,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -1731,8 +1752,8 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (tests.isEmpty)
             _buildEmptyState(
               icon: Icons.biotech_outlined,
-              title: 'Ingen DNA-tester registrert',
-              subtitle: 'Legg til genetiske tester for ${widget.dog.name}',
+              title: l10n.noDnaTestsRegistered,
+              subtitle: l10n.addGeneticTestsFor(widget.dog.name),
             )
           else
             ...tests.map((test) => _buildDnaTestCard(test)),
@@ -1742,6 +1763,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildDnaTestCard(DnaTest test) {
+    final l10n = AppLocalizations.of(context)!;
     Color resultColor;
     IconData resultIcon;
     String resultLabel;
@@ -1750,22 +1772,22 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
       case 'clear':
         resultColor = AppColors.success;
         resultIcon = Icons.check_circle;
-        resultLabel = 'Fri';
+        resultLabel = l10n.clear;
         break;
       case 'carrier':
         resultColor = AppColors.warning;
         resultIcon = Icons.warning;
-        resultLabel = 'Bærer';
+        resultLabel = l10n.carrier;
         break;
       case 'affected':
         resultColor = AppColors.error;
         resultIcon = Icons.error;
-        resultLabel = 'Affisert';
+        resultLabel = l10n.affected;
         break;
       case 'pending':
         resultColor = AppColors.neutral500;
         resultIcon = Icons.hourglass_empty;
-        resultLabel = 'Venter på resultat';
+        resultLabel = l10n.pendingResult;
         break;
       default:
         resultColor = AppColors.neutral500;
@@ -1822,15 +1844,15 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 PopupMenuButton(
                   itemBuilder: (context) => [
                     PopupMenuItem(
-                      child: const Text('Rediger'),
+                      child: Text(l10n.edit),
                       onTap: () => Future.delayed(
                         Duration.zero,
                         () => _editDnaTest(test),
                       ),
                     ),
                     PopupMenuItem(
-                      child: const Text(
-                        'Slett',
+                      child: Text(
+                        l10n.delete,
                         style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
@@ -1845,13 +1867,13 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             const SizedBox(height: AppSpacing.md),
             if (test.testDate != null)
               Text(
-                'Testet: ${DateFormat('dd.MM.yyyy').format(test.testDate!)}',
+                l10n.testedWithDate(DateFormat('dd.MM.yyyy').format(test.testDate!)),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             if (test.laboratory != null && test.laboratory!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Laboratorium: ${test.laboratory}',
+                l10n.laboratoryWithValue(test.laboratory!),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -1859,7 +1881,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 test.certificateNumber!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Sertifikatnr: ${test.certificateNumber}',
+                l10n.certificateNoWithValue(test.certificateNumber!),
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -1888,15 +1910,16 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _deleteDnaTest(DnaTest test) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett DNA-test?'),
-        content: Text('Er du sikker på at du vil slette ${test.testName}?'),
+        title: Text(l10n.deleteTest),
+        content: Text(l10n.confirmDeleteTest(test.testName)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -1918,7 +1941,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1927,6 +1950,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   // ==================== WEIGHT TAB ====================
   Widget _buildWeightTab() {
+    final l10n = AppLocalizations.of(context)!;
     final weightBox = Hive.box<WeightRecord>('weight_records');
     final records =
         weightBox.values.where((r) => r.dogId == widget.dog.id).toList()
@@ -1941,14 +1965,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Vekthistorikk',
+                l10n.weightHistory,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               IconButton(
                 onPressed: _addWeightRecord,
-                tooltip: 'Legg til vekt',
+                tooltip: l10n.addWeight,
                 icon: Icon(Icons.add, color: Theme.of(context).primaryColor),
               ),
             ],
@@ -1957,8 +1981,8 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           if (records.isEmpty)
             _buildEmptyState(
               icon: Icons.monitor_weight_outlined,
-              title: 'Ingen vektregistreringer',
-              subtitle: 'Følg ${widget.dog.name}s vektutvikling',
+              title: l10n.noWeightRecords,
+              subtitle: l10n.trackWeightFor(widget.dog.name),
             )
           else ...[
             _buildWeightSummary(records),
@@ -1971,6 +1995,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildWeightSummary(List<WeightRecord> records) {
+    final l10n = AppLocalizations.of(context)!;
     if (records.isEmpty) return const SizedBox.shrink();
 
     final latestWeight = records.first.weightKg;
@@ -1989,7 +2014,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             Column(
               children: [
                 Text(
-                  'Nåværende vekt',
+                  l10n.currentWeight,
                   style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                 ),
                 Text(
@@ -2006,7 +2031,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               Column(
                 children: [
                   Text(
-                    'Endring',
+                    l10n.changeLabel,
                     style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                   ),
                   Row(
@@ -2047,6 +2072,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   Widget _buildWeightCard(WeightRecord record) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: ListTile(
@@ -2070,14 +2096,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
         trailing: PopupMenuButton(
           itemBuilder: (context) => [
             PopupMenuItem(
-              child: const Text('Rediger'),
+              child: Text(l10n.edit),
               onTap: () => Future.delayed(
                 Duration.zero,
                 () => _editWeightRecord(record),
               ),
             ),
             PopupMenuItem(
-              child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+              child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
               onTap: () => Future.delayed(
                 Duration.zero,
                 () => _deleteWeightRecord(record),
@@ -2104,17 +2130,18 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
   }
 
   void _deleteWeightRecord(WeightRecord record) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett vektregistrering?'),
-        content: const Text(
-          'Er du sikker på at du vil slette denne registreringen?',
+        title: Text(l10n.deleteWeightRecord),
+        content: Text(
+          l10n.confirmDeleteWeightRecord,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -2138,7 +2165,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
+            child: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -2225,8 +2252,9 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Helseopplysninger'),
+      title: Text(l10n.healthInformation),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -2238,7 +2266,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                 setState(() => hdStatus = value);
               },
               hdStatus,
-              'HD dato',
+              l10n.hdDateLabel,
               hdDate,
               (date) {
                 setState(() => hdDate = date);
@@ -2251,9 +2279,9 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Merknader',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.remarks,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
@@ -2263,15 +2291,16 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _saveHealthInfo, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _saveHealthInfo, child: Text(l10n.save)),
       ],
     );
   }
 
   Widget _buildADStatusSelector() {
-    final adStatusLabels = {0: 'Grad 0 (Fri)', 1: 'Grad 1 (Svak)', 2: 'Grad 2 (Moderat)', 3: 'Grad 3 (Sterk)'};
+    final l10n = AppLocalizations.of(context)!;
+    final adStatusLabels = {0: l10n.adGrade0, 1: l10n.adGrade1, 2: l10n.adGrade2, 3: l10n.adGrade3};
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2280,12 +2309,12 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
         const SizedBox(height: AppSpacing.xs),
         DropdownButton<int?>(  
           value: adStatus,
-          hint: const Text('Velg AD Status'),
+          hint: Text(l10n.selectAdStatus),
           isExpanded: true,
           items: [
             DropdownMenuItem<int?>(
               value: null,
-              child: Text('Ingen (fjern valg)', style: TextStyle(color: context.colors.textDisabled)),
+              child: Text(l10n.noneRemoveSelection, style: TextStyle(color: context.colors.textDisabled)),
             ),
             ...adStatusLabels.entries
                 .map(
@@ -2310,7 +2339,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                 child: Text(
                   adDate != null
                       ? DateFormat('dd.MM.yyyy').format(adDate!)
-                      : 'AD dato',
+                      : l10n.adDateLabel,
                   style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
@@ -2336,7 +2365,8 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
   }
 
   Widget _buildPatellaStatusSelector() {
-    final patellaStatusLabels = {0: 'Grad 0 (Normal)', 1: 'Grad 1', 2: 'Grad 2', 3: 'Grad 3'};
+    final l10n = AppLocalizations.of(context)!;
+    final patellaStatusLabels = {0: l10n.patellaGrade0, 1: l10n.patellaGrade1, 2: l10n.patellaGrade2, 3: l10n.patellaGrade3};
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2345,12 +2375,12 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
         const SizedBox(height: AppSpacing.xs),
         DropdownButton<int?>(
           value: patellaStatus != null ? int.tryParse(patellaStatus!) ?? _convertOldPatellaStatus(patellaStatus!) : null,
-          hint: const Text('Velg Patella Status'),
+          hint: Text(l10n.selectPatellaStatus),
           isExpanded: true,
           items: [
             DropdownMenuItem<int?>(
               value: null,
-              child: Text('Ingen (fjern valg)', style: TextStyle(color: context.colors.textDisabled)),
+              child: Text(l10n.noneRemoveSelection, style: TextStyle(color: context.colors.textDisabled)),
             ),
             ...patellaStatusLabels.entries
                 .map(
@@ -2375,7 +2405,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                 child: Text(
                   patellaDate != null
                       ? DateFormat('dd.MM.yyyy').format(patellaDate!)
-                      : 'Patella dato',
+                      : l10n.patellaDateLabel,
                   style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
@@ -2421,6 +2451,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
     DateTime? selectedDate,
     Function(DateTime?) onDateChanged,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -2428,12 +2459,12 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
         const SizedBox(height: AppSpacing.xs),
         DropdownButton<String?>(
           value: selectedValue,
-          hint: Text('Velg $label'),
+          hint: Text(l10n.selectStatus(label)),
           isExpanded: true,
           items: [
             DropdownMenuItem<String?>(
               value: null,
-              child: Text('Ingen (fjern valg)', style: TextStyle(color: context.colors.textDisabled)),
+              child: Text(l10n.noneRemoveSelection, style: TextStyle(color: context.colors.textDisabled)),
             ),
             ...options.map(
               (status) =>
@@ -2599,17 +2630,18 @@ class __VaccineDialogState extends State<_VaccineDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Vaksin'),
+      title: Text(l10n.vaccineDialogTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Vaksin navn (f.eks. DHPPL, Rabies)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.vaccineNameHint,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.md),
@@ -2617,7 +2649,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
               children: [
                 Expanded(
                   child: Text(
-                    'Tatt dato: ${DateFormat('dd.MM.yyyy').format(dateTaken)}',
+                    l10n.takenDateWithValue(DateFormat('dd.MM.yyyy').format(dateTaken)),
                   ),
                 ),
                 IconButton(
@@ -2641,7 +2673,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
               children: [
                 Expanded(
                   child: Text(
-                    'Neste dato: ${nextDueDate != null ? DateFormat('dd.MM.yyyy').format(nextDueDate!) : 'Ikke satt'}',
+                    l10n.nextDateWithValue(nextDueDate != null ? DateFormat('dd.MM.yyyy').format(nextDueDate!) : l10n.notSet),
                   ),
                 ),
                 IconButton(
@@ -2667,14 +2699,14 @@ class __VaccineDialogState extends State<_VaccineDialog> {
               value: reminderEnabled,
               onChanged: (value) =>
                   setState(() => reminderEnabled = value ?? true),
-              title: const Text('Aktiver varsel'),
+              title: Text(l10n.enableReminder),
             ),
             if (reminderEnabled) ...[
               const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
-                    child: Text('Varsle $reminderDaysBeforeDue dager før'),
+                    child: Text(l10n.remindDaysBefore(reminderDaysBeforeDue)),
                   ),
                   SizedBox(
                     width: 60,
@@ -2697,17 +2729,17 @@ class __VaccineDialogState extends State<_VaccineDialog> {
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: veterinarianController,
-              decoration: const InputDecoration(
-                labelText: 'Veterinær (valgfritt)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.veterinarianOptional,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Merknader (valgfritt)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.remarksOptional,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -2717,17 +2749,18 @@ class __VaccineDialogState extends State<_VaccineDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _saveVaccine, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _saveVaccine, child: Text(l10n.save)),
       ],
     );
   }
 
   void _saveVaccine() async {
+    final l10n = AppLocalizations.of(context)!;
     if (nameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Vennligst angi vaksin navn')),
+        SnackBar(content: Text(l10n.pleaseEnterVaccineName)),
       );
       return;
     }
@@ -2845,11 +2878,12 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
       title: Text(
         widget.measurement == null
-            ? 'Legg til progesteronmåling'
-            : 'Rediger måling',
+            ? l10n.addProgesteroneMeasurement
+            : l10n.editMeasurementTitle,
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -2857,10 +2891,10 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
           children: [
             TextField(
               controller: valueController,
-              decoration: const InputDecoration(
-                labelText: 'Progesteronverdi (ng/mL) *',
-                border: OutlineInputBorder(),
-                hintText: 'f.eks. 5.2',
+              decoration: InputDecoration(
+                labelText: l10n.progesteroneValueLabel,
+                border: const OutlineInputBorder(),
+                hintText: l10n.progesteroneHint,
               ),
               keyboardType: TextInputType.number,
               autofocus: true,
@@ -2868,7 +2902,7 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
             const SizedBox(height: AppSpacing.md),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Dato og tid'),
+              title: Text(l10n.dateAndTime),
               subtitle: Text(
                 DateFormat('dd.MM.yyyy HH:mm').format(selectedDate),
               ),
@@ -2878,17 +2912,17 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: veterinarianController,
-              decoration: const InputDecoration(
-                labelText: 'Veterinær (valgfritt)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.veterinarianOptional,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Merknader (valgfritt)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.remarksOptional,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -2898,9 +2932,9 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _saveMeasurement, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _saveMeasurement, child: Text(l10n.save)),
       ],
     );
   }
@@ -2934,11 +2968,12 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
   }
 
   void _saveMeasurement() async {
+    final l10n = AppLocalizations.of(context)!;
     final value = double.tryParse(valueController.text);
     if (value == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Vennligst angi en gyldig progesteronverdi'),
+        SnackBar(
+          content: Text(l10n.invalidProgesteroneValue),
         ),
       );
       return;
@@ -3023,15 +3058,6 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
   late TextEditingController notesController;
   DateTime? followUpDate;
 
-  final visitTypes = [
-    ('routine', 'Rutinekontroll'),
-    ('emergency', 'Akutt'),
-    ('surgery', 'Operasjon'),
-    ('vaccination', 'Vaksinering'),
-    ('followup', 'Oppfølging'),
-    ('other', 'Annet'),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -3073,16 +3099,25 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localVisitTypes = [
+      ('routine', l10n.visitTypeRoutine),
+      ('emergency', l10n.visitTypeEmergency),
+      ('surgery', l10n.visitTypeSurgery),
+      ('vaccination', l10n.visitTypeVaccination),
+      ('followup', l10n.visitTypeFollowup),
+      ('other', l10n.visitTypeOther),
+    ];
     return AlertDialog(
       title: Text(
-        widget.visit == null ? 'Nytt veterinærbesøk' : 'Rediger besøk',
+        widget.visit == null ? l10n.newVetVisit : l10n.editVisit,
       ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('Dato'),
+              title: Text(l10n.date),
               subtitle: Text(DateFormat('dd.MM.yyyy').format(visitDate)),
               trailing: const Icon(Icons.calendar_today),
               onTap: () async {
@@ -3098,11 +3133,11 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
             const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<String>(
               initialValue: visitType,
-              decoration: const InputDecoration(
-                labelText: 'Type besøk',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.visitTypeLabel,
+                border: const OutlineInputBorder(),
               ),
-              items: visitTypes
+              items: localVisitTypes
                   .map((t) => DropdownMenuItem(value: t.$1, child: Text(t.$2)))
                   .toList(),
               onChanged: (value) => setState(() => visitType = value!),
@@ -3110,68 +3145,68 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: reasonController,
-              decoration: const InputDecoration(
-                labelText: 'Årsak',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.reasonLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: diagnosisController,
-              decoration: const InputDecoration(
-                labelText: 'Diagnose',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.diagnosisLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: treatmentController,
-              decoration: const InputDecoration(
-                labelText: 'Behandling',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.treatmentFieldLabel,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: prescriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Resept/medisin',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.prescriptionLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: veterinarianController,
-              decoration: const InputDecoration(
-                labelText: 'Veterinær',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.veterinarianFieldLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: clinicController,
-              decoration: const InputDecoration(
-                labelText: 'Klinikk',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.clinicLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: costController,
-              decoration: const InputDecoration(
-                labelText: 'Kostnad (kr)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.costKrLabel,
+                border: const OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: AppSpacing.sm),
             ListTile(
-              title: const Text('Oppfølgingsdato'),
+              title: Text(l10n.followUpDate),
               subtitle: Text(
                 followUpDate != null
                     ? DateFormat('dd.MM.yyyy').format(followUpDate!)
-                    : 'Ikke satt',
+                    : l10n.notSet,
               ),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -3199,9 +3234,9 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notater',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.notes,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
@@ -3211,9 +3246,9 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _save, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _save, child: Text(l10n.save)),
       ],
     );
   }
@@ -3325,15 +3360,6 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
   bool reminderEnabled = true;
   int reminderDaysBefore = 3;
 
-  final treatmentTypes = [
-    ('deworming', 'Ormekur'),
-    ('flea', 'Loppebehandling'),
-    ('tick', 'Flåttbehandling'),
-    ('medication', 'Medisin'),
-    ('supplement', 'Kosttilskudd'),
-    ('other', 'Annet'),
-  ];
-
   final commonTreatments = {
     'deworming': ['Milbemax', 'Drontal', 'Panacur', 'Advocate'],
     'flea': ['Frontline', 'Advantix', 'Bravecto', 'Simparica', 'NexGard'],
@@ -3378,9 +3404,18 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localTreatmentTypes = [
+      ('deworming', l10n.treatmentTypeDeworming),
+      ('flea', l10n.treatmentTypeFlea),
+      ('tick', l10n.treatmentTypeTick),
+      ('medication', l10n.treatmentTypeMedication),
+      ('supplement', l10n.treatmentTypeSupplement),
+      ('other', l10n.treatmentTypeOther),
+    ];
     return AlertDialog(
       title: Text(
-        widget.treatment == null ? 'Ny behandling' : 'Rediger behandling',
+        widget.treatment == null ? l10n.newTreatment : l10n.editTreatment,
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -3388,11 +3423,11 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
           children: [
             DropdownButtonFormField<String>(
               initialValue: treatmentType,
-              decoration: const InputDecoration(
-                labelText: 'Type',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.visitTypeLabel,
+                border: const OutlineInputBorder(),
               ),
-              items: treatmentTypes
+              items: localTreatmentTypes
                   .map((t) => DropdownMenuItem(value: t.$1, child: Text(t.$2)))
                   .toList(),
               onChanged: (value) => setState(() => treatmentType = value!),
@@ -3425,14 +3460,14 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
             ],
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Produktnavn*',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.productNameLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             ListTile(
-              title: const Text('Dato gitt'),
+              title: Text(l10n.dateGivenLabel),
               subtitle: Text(DateFormat('dd.MM.yyyy').format(dateGiven)),
               trailing: const Icon(Icons.calendar_today),
               onTap: () async {
@@ -3448,49 +3483,49 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: dosageController,
-              decoration: const InputDecoration(
-                labelText: 'Dosering',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.dosageLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: manufacturerController,
-              decoration: const InputDecoration(
-                labelText: 'Produsent',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.manufacturerLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: batchNumberController,
-              decoration: const InputDecoration(
-                labelText: 'Batchnummer',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.batchNumberLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: intervalController,
-              decoration: const InputDecoration(
-                labelText: 'Intervall (dager)',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.intervalDaysLabel,
+                border: const OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: AppSpacing.sm),
             SwitchListTile(
-              title: const Text('Påminnelse'),
-              subtitle: Text('$reminderDaysBefore dager før'),
+              title: Text(l10n.reminder),
+              subtitle: Text(l10n.daysBefore(reminderDaysBefore)),
               value: reminderEnabled,
               onChanged: (value) => setState(() => reminderEnabled = value),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notater',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.notes,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -3500,18 +3535,19 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _save, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _save, child: Text(l10n.save)),
       ],
     );
   }
 
   void _save() async {
+    final l10n = AppLocalizations.of(context)!;
     if (nameController.text.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Produktnavn er påkrevd')));
+      ).showSnackBar(SnackBar(content: Text(l10n.productNameRequired)));
       return;
     }
 
@@ -3615,13 +3651,6 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
   late TextEditingController certificateController;
   late TextEditingController notesController;
 
-  final results = [
-    ('pending', 'Venter på resultat'),
-    ('clear', 'Fri'),
-    ('carrier', 'Bærer'),
-    ('affected', 'Affisert'),
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -3650,15 +3679,22 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final localResults = [
+      ('pending', l10n.pendingResult),
+      ('clear', l10n.clear),
+      ('carrier', l10n.carrier),
+      ('affected', l10n.affected),
+    ];
     return AlertDialog(
-      title: Text(widget.test == null ? 'Ny DNA-test' : 'Rediger DNA-test'),
+      title: Text(widget.test == null ? l10n.newDnaTest : l10n.editDnaTest),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Vanlige tester:',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              l10n.commonTests,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppSpacing.sm),
             Wrap(
@@ -3687,14 +3723,14 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: testNameController,
-              decoration: const InputDecoration(
-                labelText: 'Testnavn*',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.testNameLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             ListTile(
-              title: const Text('Testdato'),
+              title: Text(l10n.testDateLabel),
               subtitle: Text(DateFormat('dd.MM.yyyy').format(testDate)),
               trailing: const Icon(Icons.calendar_today),
               onTap: () async {
@@ -3710,11 +3746,11 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
             const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<String>(
               initialValue: result,
-              decoration: const InputDecoration(
-                labelText: 'Resultat',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.result,
+                border: const OutlineInputBorder(),
               ),
-              items: results
+              items: localResults
                   .map((r) => DropdownMenuItem(value: r.$1, child: Text(r.$2)))
                   .toList(),
               onChanged: (value) => setState(() => result = value!),
@@ -3722,25 +3758,25 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: laboratoryController,
-              decoration: const InputDecoration(
-                labelText: 'Laboratorium',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.laboratory,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: certificateController,
-              decoration: const InputDecoration(
-                labelText: 'Sertifikatnummer',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.certificateNumber,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notater',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.notes,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -3750,18 +3786,19 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _save, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _save, child: Text(l10n.save)),
       ],
     );
   }
 
   void _save() async {
+    final l10n = AppLocalizations.of(context)!;
     if (testNameController.text.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Testnavn er påkrevd')));
+      ).showSnackBar(SnackBar(content: Text(l10n.testNameRequired)));
       return;
     }
 
@@ -3853,14 +3890,15 @@ class __WeightDialogState extends State<_WeightDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: Text(widget.record == null ? 'Registrer vekt' : 'Rediger vekt'),
+      title: Text(widget.record == null ? l10n.registerWeight : l10n.editWeight),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('Dato'),
+              title: Text(l10n.date),
               subtitle: Text(DateFormat('dd.MM.yyyy').format(date)),
               trailing: const Icon(Icons.calendar_today),
               onTap: () async {
@@ -3876,9 +3914,9 @@ class __WeightDialogState extends State<_WeightDialog> {
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: weightController,
-              decoration: const InputDecoration(
-                labelText: 'Vekt (kg)*',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.weightKgLabel,
+                border: const OutlineInputBorder(),
                 suffixText: 'kg',
               ),
               keyboardType: const TextInputType.numberWithOptions(
@@ -3889,9 +3927,9 @@ class __WeightDialogState extends State<_WeightDialog> {
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(
-                labelText: 'Notater',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.notes,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -3901,19 +3939,20 @@ class __WeightDialogState extends State<_WeightDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
-        ElevatedButton(onPressed: _save, child: const Text('Lagre')),
+        ElevatedButton(onPressed: _save, child: Text(l10n.save)),
       ],
     );
   }
 
   void _save() async {
+    final l10n = AppLocalizations.of(context)!;
     final weight = double.tryParse(weightController.text.replaceAll(',', '.'));
     if (weight == null || weight <= 0) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Ugyldig vekt')));
+      ).showSnackBar(SnackBar(content: Text(l10n.invalidWeight)));
       return;
     }
 

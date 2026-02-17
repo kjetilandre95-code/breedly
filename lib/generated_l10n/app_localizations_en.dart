@@ -1415,7 +1415,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fatherMustBeMale => 'Sire must be a male';
 
   @override
-  String get birthDateLabel => 'Date of birth';
+  String get birthDateLabel => 'Birth date';
 
   @override
   String get registerBirth => 'Register birth';
@@ -1615,7 +1615,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectSire => 'Select sire';
 
   @override
-  String get commonTests => 'Common tests';
+  String get commonTests => 'Common tests:';
 
   @override
   String get testName => 'Test name';
@@ -2085,7 +2085,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String errorSharing(Object error) {
+  String errorSharing(String error) {
     return 'Error sharing: $error';
   }
 
@@ -2607,4 +2607,2390 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get gen4MMMDam => 'M.MM\'s dam';
+
+  @override
+  String get testPedigreeScanner => 'Test Pedigree Scanner';
+
+  @override
+  String get scanResult => 'Scan Result';
+
+  @override
+  String totalDogsFound(int count) {
+    return 'Total found: $count dogs';
+  }
+
+  @override
+  String scanSuccessful(String value) {
+    return 'Successful: $value';
+  }
+
+  @override
+  String get scanConfidence => 'Confidence';
+
+  @override
+  String get testInstructions => 'Test instructions';
+
+  @override
+  String get testingScannerInfo => 'Testing pedigree scanner';
+
+  @override
+  String get scannerUsesInfo => 'This function uses Google ML Kit for:';
+
+  @override
+  String get readTextFromImages => 'Read text from images (OCR)';
+
+  @override
+  String get findRegistrationNumbers => 'Find registration numbers';
+
+  @override
+  String get identifyDogNames => 'Identify dog names';
+
+  @override
+  String get recognizeParents => 'Recognize parents (Sire/Dam)';
+
+  @override
+  String get extractBirthDates => 'Extract birth dates';
+
+  @override
+  String get tipClearImage =>
+      'Tip: Use a clear image of a pedigree for best results.';
+
+  @override
+  String get step1TakePhoto => 'Take a photo of a pedigree';
+
+  @override
+  String get step2WaitProcessing => 'Wait while ML Kit processes the image';
+
+  @override
+  String get step3SeeResults => 'See results and accuracy';
+
+  @override
+  String get step4EditData => 'Edit data if necessary';
+
+  @override
+  String get step5SaveDogs => 'Save dog(s) to the database';
+
+  @override
+  String get exampleDataRecognized => 'Example data that can be recognized';
+
+  @override
+  String get keywords => 'Keywords';
+
+  @override
+  String get debugInfo => 'Debug information';
+
+  @override
+  String get parents => 'Parents';
+
+  @override
+  String get grandparents => 'Grandparents';
+
+  @override
+  String dogsFound(int count) {
+    return '$count dogs found';
+  }
+
+  @override
+  String get dogAlreadyExists => 'Dog already exists';
+
+  @override
+  String get whatDoYouWantToDo => 'What do you want to do?';
+
+  @override
+  String get createNew => 'Create new';
+
+  @override
+  String get useExisting => 'Use existing';
+
+  @override
+  String get updateData => 'Update data';
+
+  @override
+  String dogAddedWithPedigree(String name, int count) {
+    return '$name added with pedigree ($count dogs total)';
+  }
+
+  @override
+  String get dogUpdated => 'Dog updated';
+
+  @override
+  String get dateOfDeathOptional => 'Date of death (optional)';
+
+  @override
+  String get noneSelected => 'None selected';
+
+  @override
+  String get puppyAdded => 'Puppy added';
+
+  @override
+  String get puppyNameLabel => 'Puppy name';
+
+  @override
+  String get birthWeightGrams => 'Birth weight (grams)';
+
+  @override
+  String get birthNotes => 'Birth notes (e.g. assistance required)';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get healthAndDocumentation => 'Health & documentation';
+
+  @override
+  String get vaccinated => 'Vaccinated';
+
+  @override
+  String get dewormed => 'Dewormed';
+
+  @override
+  String get microchipped => 'Microchipped';
+
+  @override
+  String get savePuppy => 'Save puppy';
+
+  @override
+  String get contracts => 'Contracts';
+
+  @override
+  String get purchaseContracts => 'Purchase Contracts';
+
+  @override
+  String get reservations => 'Reservations';
+
+  @override
+  String get breedingContracts => 'Breeding Contracts';
+
+  @override
+  String get coOwnership => 'Co-Ownership';
+
+  @override
+  String get fosterContracts => 'Foster Contracts';
+
+  @override
+  String get purchaseContractDeleted => 'Purchase contract deleted';
+
+  @override
+  String get reservationContractDeleted => 'Reservation contract deleted';
+
+  @override
+  String get breedingContractDeleted => 'Breeding contract deleted';
+
+  @override
+  String get coOwnershipContractDeleted => 'Co-ownership contract deleted';
+
+  @override
+  String get fosterContractDeleted => 'Foster contract deleted';
+
+  @override
+  String get selectSireAndDam => 'Select sire and dam';
+
+  @override
+  String get enterStudFee => 'Enter stud fee';
+
+  @override
+  String errorGenerating(String error) {
+    return 'Error generating: $error';
+  }
+
+  @override
+  String get contractGenerated => 'Contract generated!';
+
+  @override
+  String get selectStud => 'Select stud dog';
+
+  @override
+  String get studOwnerName => 'Stud owner (name)';
+
+  @override
+  String get selectDamForContract => 'Select dam';
+
+  @override
+  String get damOwnerName => 'Dam owner (name)';
+
+  @override
+  String get amountNok => 'Amount (NOK)';
+
+  @override
+  String get paymentTermsHint => 'E.g. \"Payment at mating\"';
+
+  @override
+  String get additionalTermsHint => 'Add special terms...';
+
+  @override
+  String get searchBuyer => 'Search buyer...';
+
+  @override
+  String get removeFilter => 'Remove filter';
+
+  @override
+  String get allLitters => 'All litters';
+
+  @override
+  String get reservationRemoved => 'Reservation removed';
+
+  @override
+  String get pleaseSelectPuppy => 'Please select a puppy';
+
+  @override
+  String get deleteDog => 'Delete dog';
+
+  @override
+  String get addHeatDate => 'Add heat date';
+
+  @override
+  String get createBreedingContract => 'Create contract for mating services';
+
+  @override
+  String get coOwnershipAgreement => 'Co-ownership agreement';
+
+  @override
+  String get createCoOwnershipAgreement =>
+      'Create agreement for shared ownership';
+
+  @override
+  String get fosterAgreement => 'Foster agreement';
+
+  @override
+  String get createFosterAgreement => 'Create agreement for foster care';
+
+  @override
+  String get heatDateAdded => 'Heat date added';
+
+  @override
+  String get confirmDeleteHeatDate =>
+      'Are you sure you want to delete this heat date?';
+
+  @override
+  String get heatDateDeleted => 'Heat date deleted';
+
+  @override
+  String get addChampionship => 'Add championship';
+
+  @override
+  String get enterOtherTitle => 'Enter other title';
+
+  @override
+  String get selectFromList => 'Select from list';
+
+  @override
+  String get titleAlreadyRegistered => 'This title is already registered';
+
+  @override
+  String get removeChampionship => 'Remove championship';
+
+  @override
+  String confirmRemoveChampionship(String title) {
+    return 'Are you sure you want to remove \"$title\"?';
+  }
+
+  @override
+  String get addMating => 'Add mating';
+
+  @override
+  String get externalDam => 'External dam';
+
+  @override
+  String get matingAdded => 'Mating added';
+
+  @override
+  String get editMating => 'Edit mating';
+
+  @override
+  String get matingUpdated => 'Mating updated';
+
+  @override
+  String get matingDeleted => 'Mating deleted';
+
+  @override
+  String healthTitle(String name) {
+    return 'Health - $name';
+  }
+
+  @override
+  String get healthStatusTab => 'Health Status';
+
+  @override
+  String get vaccinesTab => 'Vaccines';
+
+  @override
+  String get vetTab => 'Veterinary';
+
+  @override
+  String get treatmentsTab => 'Treatments';
+
+  @override
+  String get dnaTestsTab => 'DNA Tests';
+
+  @override
+  String get weightTab => 'Weight';
+
+  @override
+  String get hormonesTab => 'Hormones';
+
+  @override
+  String get addHealthInfo => 'Add health information';
+
+  @override
+  String get healthInfoNotFound => 'Health information not found';
+
+  @override
+  String get addVaccine => 'Add vaccine';
+
+  @override
+  String get deleteHealthInfo => 'Delete health information?';
+
+  @override
+  String get offlineChangesLocal => 'Offline - changes saved locally';
+
+  @override
+  String get registrationNumberColon => 'Registration number:';
+
+  @override
+  String get registrationNumberOptional => 'Registration number (optional)';
+
+  @override
+  String get addPuppy => 'Add puppy';
+
+  @override
+  String get birthTimeLabel => 'Birth time';
+
+  @override
+  String get birthTimeOptional => 'Birth time (optional)';
+
+  @override
+  String get pleaseEnterColor => 'Please enter a color';
+
+  @override
+  String dogWasDeleted(String name) {
+    return '«$name» was deleted';
+  }
+
+  @override
+  String couldNotDelete(String error) {
+    return 'Could not delete: $error';
+  }
+
+  @override
+  String confirmDeleteDogMessage(String name) {
+    return 'Are you sure you want to delete «$name»?\n\nThis removes the dog and all associated data. This action cannot be undone.';
+  }
+
+  @override
+  String get healthInformation => 'Health information';
+
+  @override
+  String get noHealthInfoRegistered => 'No health information registered';
+
+  @override
+  String addHealthInfoFor(String name) {
+    return 'Add health information for $name';
+  }
+
+  @override
+  String get healthStatus => 'Health status';
+
+  @override
+  String get remarks => 'Remarks';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Date: $date';
+  }
+
+  @override
+  String get noVaccinesRegistered => 'No vaccines registered';
+
+  @override
+  String addVaccinesFor(String name) {
+    return 'Add vaccines for $name';
+  }
+
+  @override
+  String takenWithDate(String value) {
+    return 'Taken: $value';
+  }
+
+  @override
+  String get overdueLabel => 'Overdue';
+
+  @override
+  String get alertLabel => 'Alert';
+
+  @override
+  String nextDoseWithDate(String value) {
+    return 'Next dose: $value';
+  }
+
+  @override
+  String veterinarianWithName(String value) {
+    return 'Veterinarian: $value';
+  }
+
+  @override
+  String get noProgesteroneMeasurements =>
+      'No progesterone measurements registered';
+
+  @override
+  String addProgesteroneTracking(String name) {
+    return 'Add progesterone measurements to track $name\'s cycle';
+  }
+
+  @override
+  String get confirmDeleteProgesterone =>
+      'Are you sure you want to delete this progesterone measurement?';
+
+  @override
+  String get vetVisits => 'Veterinary visits';
+
+  @override
+  String get addVisit => 'Add visit';
+
+  @override
+  String get noVetVisitsRegistered => 'No veterinary visits registered';
+
+  @override
+  String addVetVisitsFor(String name) {
+    return 'Add veterinary visits for $name';
+  }
+
+  @override
+  String get visitTypeRoutine => 'Routine check';
+
+  @override
+  String get visitTypeEmergency => 'Emergency';
+
+  @override
+  String get visitTypeSurgery => 'Surgery';
+
+  @override
+  String get visitTypeVaccination => 'Vaccination';
+
+  @override
+  String get visitTypeFollowup => 'Follow-up';
+
+  @override
+  String get visitTypeOther => 'Other';
+
+  @override
+  String reasonWithValue(String value) {
+    return 'Reason: $value';
+  }
+
+  @override
+  String diagnosisWithValue(String value) {
+    return 'Diagnosis: $value';
+  }
+
+  @override
+  String treatmentWithValue(String value) {
+    return 'Treatment: $value';
+  }
+
+  @override
+  String costWithValue(String value) {
+    return 'Cost: $value kr';
+  }
+
+  @override
+  String followUpWithDate(String value) {
+    return 'Follow-up: $value';
+  }
+
+  @override
+  String get addTreatment => 'Add treatment';
+
+  @override
+  String get noTreatmentsRegistered => 'No treatments registered';
+
+  @override
+  String get addTreatmentsSubtitle =>
+      'Add deworming, flea/tick treatments, etc.';
+
+  @override
+  String get treatmentTypeDeworming => 'Deworming';
+
+  @override
+  String get treatmentTypeFlea => 'Flea treatment';
+
+  @override
+  String get treatmentTypeTick => 'Tick treatment';
+
+  @override
+  String get treatmentTypeMedication => 'Medication';
+
+  @override
+  String get treatmentTypeSupplement => 'Supplement';
+
+  @override
+  String get treatmentTypeOther => 'Other';
+
+  @override
+  String get registerNewDose => 'Register new dose';
+
+  @override
+  String lastGivenWithDate(String value) {
+    return 'Last given: $value';
+  }
+
+  @override
+  String dosageWithValue(String value) {
+    return 'Dosage: $value';
+  }
+
+  @override
+  String manufacturerWithValue(String value) {
+    return 'Manufacturer: $value';
+  }
+
+  @override
+  String nextWithDate(String value) {
+    return 'Next: $value';
+  }
+
+  @override
+  String newDoseRegistered(String name) {
+    return 'New dose of $name registered';
+  }
+
+  @override
+  String get noDnaTestsRegistered => 'No DNA tests registered';
+
+  @override
+  String get addDnaTest => 'Add DNA test';
+
+  @override
+  String addGeneticTestsFor(String name) {
+    return 'Add genetic tests for $name';
+  }
+
+  @override
+  String testedWithDate(String value) {
+    return 'Tested: $value';
+  }
+
+  @override
+  String laboratoryWithValue(String value) {
+    return 'Laboratory: $value';
+  }
+
+  @override
+  String certificateNoWithValue(String value) {
+    return 'Certificate no: $value';
+  }
+
+  @override
+  String get weightHistory => 'Weight history';
+
+  @override
+  String get addWeight => 'Add weight';
+
+  @override
+  String get noWeightRecords => 'No weight records';
+
+  @override
+  String trackWeightFor(String name) {
+    return 'Track $name\'s weight development';
+  }
+
+  @override
+  String get currentWeight => 'Current weight';
+
+  @override
+  String get changeLabel => 'Change';
+
+  @override
+  String get deleteWeightRecord => 'Delete weight record?';
+
+  @override
+  String get confirmDeleteWeightRecord =>
+      'Are you sure you want to delete this record?';
+
+  @override
+  String get confirmDeleteHealthInfo =>
+      'Are you sure you want to delete this health information?';
+
+  @override
+  String get hdDateLabel => 'HD date';
+
+  @override
+  String get adGrade0 => 'Grade 0 (Clear)';
+
+  @override
+  String get adGrade1 => 'Grade 1 (Mild)';
+
+  @override
+  String get adGrade2 => 'Grade 2 (Moderate)';
+
+  @override
+  String get adGrade3 => 'Grade 3 (Severe)';
+
+  @override
+  String get selectAdStatus => 'Select AD Status';
+
+  @override
+  String get noneRemoveSelection => 'None (remove selection)';
+
+  @override
+  String get adDateLabel => 'AD date';
+
+  @override
+  String get patellaGrade0 => 'Grade 0 (Normal)';
+
+  @override
+  String get patellaGrade1 => 'Grade 1';
+
+  @override
+  String get patellaGrade2 => 'Grade 2';
+
+  @override
+  String get patellaGrade3 => 'Grade 3';
+
+  @override
+  String get selectPatellaStatus => 'Select Patella Status';
+
+  @override
+  String get patellaDateLabel => 'Patella date';
+
+  @override
+  String selectStatus(String label) {
+    return 'Select $label';
+  }
+
+  @override
+  String get vaccineDialogTitle => 'Vaccine';
+
+  @override
+  String get vaccineNameHint => 'Vaccine name (e.g. DHPPL, Rabies)';
+
+  @override
+  String takenDateWithValue(String value) {
+    return 'Taken date: $value';
+  }
+
+  @override
+  String nextDateWithValue(String value) {
+    return 'Next date: $value';
+  }
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get enableReminder => 'Enable reminder';
+
+  @override
+  String get veterinarianOptional => 'Veterinarian (optional)';
+
+  @override
+  String get remarksOptional => 'Remarks (optional)';
+
+  @override
+  String get pleaseEnterVaccineName => 'Please enter vaccine name';
+
+  @override
+  String get addProgesteroneMeasurement => 'Add progesterone measurement';
+
+  @override
+  String get editMeasurementTitle => 'Edit measurement';
+
+  @override
+  String get progesteroneValueLabel => 'Progesterone value (ng/mL) *';
+
+  @override
+  String get progesteroneHint => 'e.g. 5.2';
+
+  @override
+  String get invalidProgesteroneValue =>
+      'Please enter a valid progesterone value';
+
+  @override
+  String get newVetVisit => 'New veterinary visit';
+
+  @override
+  String get editVisit => 'Edit visit';
+
+  @override
+  String get visitTypeLabel => 'Visit type';
+
+  @override
+  String get reasonLabel => 'Reason';
+
+  @override
+  String get diagnosisLabel => 'Diagnosis';
+
+  @override
+  String get treatmentFieldLabel => 'Treatment';
+
+  @override
+  String get prescriptionLabel => 'Prescription/medication';
+
+  @override
+  String get veterinarianFieldLabel => 'Veterinarian';
+
+  @override
+  String get clinicLabel => 'Clinic';
+
+  @override
+  String get costKrLabel => 'Cost (kr)';
+
+  @override
+  String get newTreatment => 'New treatment';
+
+  @override
+  String get editTreatment => 'Edit treatment';
+
+  @override
+  String get productNameLabel => 'Product name*';
+
+  @override
+  String get dateGivenLabel => 'Date given';
+
+  @override
+  String get dosageLabel => 'Dosage';
+
+  @override
+  String get manufacturerLabel => 'Manufacturer';
+
+  @override
+  String get batchNumberLabel => 'Batch number';
+
+  @override
+  String get intervalDaysLabel => 'Interval (days)';
+
+  @override
+  String get newDnaTest => 'New DNA test';
+
+  @override
+  String get editDnaTest => 'Edit DNA test';
+
+  @override
+  String get testNameLabel => 'Test name*';
+
+  @override
+  String get testDateLabel => 'Test date';
+
+  @override
+  String get registerWeight => 'Register weight';
+
+  @override
+  String get editWeight => 'Edit weight';
+
+  @override
+  String get weightKgLabel => 'Weight (kg)*';
+
+  @override
+  String get invalidWeight => 'Invalid weight';
+
+  @override
+  String noMatchesForQuery(String query) {
+    return 'No matches for \"$query\"';
+  }
+
+  @override
+  String get noBuyersForLitter => 'No buyers for this litter';
+
+  @override
+  String get filterByLitter => 'Filter by litter';
+
+  @override
+  String get deliveredStatus => 'Delivered';
+
+  @override
+  String get withReservationSection => 'With reservation';
+
+  @override
+  String get interestedParties => 'Interested parties';
+
+  @override
+  String puppyLabelWithName(String name) {
+    return 'Puppy: $name';
+  }
+
+  @override
+  String get subscription => 'Subscription';
+
+  @override
+  String get manageSubscription => 'Manage your Breedly subscription';
+
+  @override
+  String get promoCode => 'Promo code';
+
+  @override
+  String get lifetimeAccess => 'Lifetime';
+
+  @override
+  String subscriptionExpiresInfo(String source, String expiry) {
+    return '$source • Expires: $expiry';
+  }
+
+  @override
+  String get activeStatus => 'Active';
+
+  @override
+  String get purchasesRestored => 'Purchases restored.';
+
+  @override
+  String get restorePurchases => 'Restore purchases';
+
+  @override
+  String get usingFreeVersion => 'You are using the free version';
+
+  @override
+  String get upgradeForUnlimited =>
+      'Upgrade for unlimited access to all features.';
+
+  @override
+  String get upgradeToPremium => 'Upgrade to Premium';
+
+  @override
+  String get premiumRestored => 'Premium restored!';
+
+  @override
+  String get noPreviousPurchases => 'No previous purchases found.';
+
+  @override
+  String get developerAndTesting => 'Developer & Testing';
+
+  @override
+  String get testNewFeatures => 'Test new features';
+
+  @override
+  String get pedigreeScannerSubtitleSettings =>
+      'Google ML Kit OCR - Scan pedigrees with AI';
+
+  @override
+  String get newBadge => 'NEW';
+
+  @override
+  String get noCertCacibYet => 'No Cert/Cacib yet';
+
+  @override
+  String judgeStatsSummary(int showCount, int excellentCount, int ckCount) {
+    return '$showCount exhibitions • $excellentCount Excellent • $ckCount CK';
+  }
+
+  @override
+  String get shareResultCard => 'Share result card';
+
+  @override
+  String groupJudgeWithName(String name) {
+    return 'Group judge: $name';
+  }
+
+  @override
+  String bisJudgeWithName(String name) {
+    return 'BIS judge: $name';
+  }
+
+  @override
+  String get noPlacementWithQuality =>
+      'No placement or certificates available with this quality grade';
+
+  @override
+  String get requiresHighlyPromising => 'Requires Highly promising';
+
+  @override
+  String get qualifiesForBestPuppy =>
+      'Qualifies for best male puppy/female puppy';
+
+  @override
+  String get requiresExcellent => 'Requires Excellent';
+
+  @override
+  String get bestMalePuppy => 'Best male puppy';
+
+  @override
+  String get bestFemalePuppy => 'Best female puppy';
+
+  @override
+  String get qualifiedForBIRBIMPuppy => 'Qualified for BIR/BIM Puppy';
+
+  @override
+  String get requiresFirstWithHP => 'Requires 1st place with HP to participate';
+
+  @override
+  String get requiresBestPuppy => 'Requires being best male/female puppy';
+
+  @override
+  String get requiresBHKBTKFirstNordic =>
+      'BHK/BTK 1st required for BIR/BIM in Nordic countries';
+
+  @override
+  String get yesWon => 'Yes - Won';
+
+  @override
+  String get groupJudge => 'Group judge';
+
+  @override
+  String get bisJudge => 'BIS judge';
+
+  @override
+  String get resultSaved => 'Result saved!';
+
+  @override
+  String get hpAward => 'HP (Hopeful Puppy)';
+
+  @override
+  String get birBimPuppy => 'BIR/BIM Puppy';
+
+  @override
+  String get classAbbrev => 'Cl';
+
+  @override
+  String get bestMaleAbbrev => 'BM';
+
+  @override
+  String get bestFemaleAbbrev => 'BF';
+
+  @override
+  String get bestOfSexAbbrev => 'BOS';
+
+  @override
+  String get enterPrice => 'Enter price';
+
+  @override
+  String get contractSaved => 'Contract saved';
+
+  @override
+  String errorSaving(String error) {
+    return 'Error saving: $error';
+  }
+
+  @override
+  String get buyerInformation => 'Buyer information';
+
+  @override
+  String get contractDetails => 'Contract details';
+
+  @override
+  String get depositOptional => 'Deposit (optional)';
+
+  @override
+  String get amountAlreadyPaidAsAdvance => 'Amount already paid as advance';
+
+  @override
+  String get contractNumberOptional => 'Contract number (optional)';
+
+  @override
+  String get paymentTermsExampleHint => 'E.g. Full payment at pickup';
+
+  @override
+  String get deliveryLocationOptional => 'Delivery location (optional)';
+
+  @override
+  String get deliveryLocationHint => 'E.g. Breeder\'s address';
+
+  @override
+  String get contractTerms => 'Contract terms';
+
+  @override
+  String get selectTermsToInclude =>
+      'Select which terms to include in the contract';
+
+  @override
+  String get termGeneral => 'General';
+
+  @override
+  String get termGeneralSubtitle => 'Basic purchase and sale terms';
+
+  @override
+  String get termHealth => 'Health';
+
+  @override
+  String get termHealthSubtitle => 'Guarantee of healthy puppy and vet check';
+
+  @override
+  String get termVaccinations => 'Vaccinations and treatments';
+
+  @override
+  String get termVaccinationsSubtitle =>
+      'Vaccinated and dewormed per guidelines';
+
+  @override
+  String get termReturn => 'Return';
+
+  @override
+  String get termReturnSubtitle => 'Seller contacted first for rehoming';
+
+  @override
+  String get termResponsibility => 'Responsibility';
+
+  @override
+  String get termResponsibilitySubtitle =>
+      'Buyer takes over responsibility from handover';
+
+  @override
+  String get termRegistration => 'Registration';
+
+  @override
+  String get termRegistrationSubtitle => 'Puppy registered to new owner';
+
+  @override
+  String get returnClauseIncluded => 'Return clause included';
+
+  @override
+  String get documentation => 'Documentation';
+
+  @override
+  String get pedigreeDeliveredLabel => 'Pedigree delivered';
+
+  @override
+  String get pedigreeDeliveredSubtitle => 'Pedigree included at handover';
+
+  @override
+  String get vetCertificateAttached => 'Vet certificate attached';
+
+  @override
+  String get vetCertificateAttachedSubtitle =>
+      'Veterinary certificate on health status';
+
+  @override
+  String get insuranceTransferred => 'Insurance transferred';
+
+  @override
+  String get insuranceTransferredSubtitle =>
+      'Puppy insurance transferred to buyer';
+
+  @override
+  String get specialTermsOptional => 'Special terms (optional)';
+
+  @override
+  String get specialTermsHint =>
+      'Any special agreements between the parties...';
+
+  @override
+  String get saveContract => 'Save contract';
+
+  @override
+  String get downloadAsPdf => 'Download as PDF';
+
+  @override
+  String pdfSavedAt(String path) {
+    return 'PDF saved:\n$path';
+  }
+
+  @override
+  String errorExporting(String error) {
+    return 'Error exporting: $error';
+  }
+
+  @override
+  String get malePuppy => 'Male puppy';
+
+  @override
+  String get femalePuppy => 'Female puppy';
+
+  @override
+  String get coOwnershipContractCreated => 'Co-ownership agreement created!';
+
+  @override
+  String get dog => 'Dog';
+
+  @override
+  String get ownershipShare => 'Ownership share';
+
+  @override
+  String get sharedResponsibility => 'Shared responsibility';
+
+  @override
+  String get rightsAndResponsibilities => 'Rights and responsibilities';
+
+  @override
+  String get additionalTermsOptional => 'Additional terms (optional)';
+
+  @override
+  String get additionalTermsHintText => 'Enter any additional terms...';
+
+  @override
+  String get generateCoOwnershipContract => 'Generate co-ownership agreement';
+
+  @override
+  String get fosterContractCreated => 'Foster agreement created!';
+
+  @override
+  String get contractPeriod => 'Contract period';
+
+  @override
+  String get hasDefiniteEndDate => 'Has definite end date';
+
+  @override
+  String get selectDate => 'Select date';
+
+  @override
+  String get contractTermsSection => 'Terms';
+
+  @override
+  String get breedingTerms => 'Breeding terms';
+
+  @override
+  String get generateFosterContract => 'Generate foster agreement';
+
+  @override
+  String get reservationContractCreated => 'Reservation agreement created!';
+
+  @override
+  String get reservationContractUpdated => 'Reservation agreement updated!';
+
+  @override
+  String get prices => 'Prices';
+
+  @override
+  String get reservationFeeLabel => 'Reservation fee (kr)';
+
+  @override
+  String get totalPriceForPuppy => 'Total price for puppy (kr)';
+
+  @override
+  String get invalidAmount => 'Invalid amount';
+
+  @override
+  String remainingAmount(String amount) {
+    return 'Remaining: kr $amount,-';
+  }
+
+  @override
+  String get remarksHint => 'Enter any remarks...';
+
+  @override
+  String get generateReservationContract => 'Generate reservation agreement';
+
+  @override
+  String get pdfDownloaded => 'PDF downloaded';
+
+  @override
+  String dogHeatCycle(String dogName) {
+    return '$dogName - Heat cycle';
+  }
+
+  @override
+  String dogExpectedHeat(String dogName) {
+    return '$dogName - Expected heat';
+  }
+
+  @override
+  String dogGaveBirth(String dogName) {
+    return '$dogName gave birth';
+  }
+
+  @override
+  String litterDeliveryEvent(String damName) {
+    return 'Delivery: $damName litter';
+  }
+
+  @override
+  String get eightWeeksOld => '8 weeks old';
+
+  @override
+  String get unknownDog => 'Unknown';
+
+  @override
+  String puppyVaccination(String puppyName, String number) {
+    return '$puppyName - Vaccination $number';
+  }
+
+  @override
+  String puppyDeworming(String puppyName, String number) {
+    return '$puppyName - Deworming $number';
+  }
+
+  @override
+  String puppyMicrochip(String puppyName) {
+    return '$puppyName - Microchipping';
+  }
+
+  @override
+  String dogBirthdayAge(String dogName, String age) {
+    return '$dogName turns $age years';
+  }
+
+  @override
+  String get expectedHeatCycles => 'Heat cycles (expected)';
+
+  @override
+  String get estimatedBirthDate => 'Estimated birth date';
+
+  @override
+  String get selectKennel => 'Select kennel';
+
+  @override
+  String get memberSingular => 'member';
+
+  @override
+  String get membersPlural => 'members';
+
+  @override
+  String get membersSection => 'Members';
+
+  @override
+  String get youLabel => 'You';
+
+  @override
+  String get ownerRole => 'Owner';
+
+  @override
+  String get administratorRole => 'Administrator';
+
+  @override
+  String get memberRole => 'Member';
+
+  @override
+  String get removeLabel => 'Remove';
+
+  @override
+  String get pendingInvitations => 'Pending invitations';
+
+  @override
+  String openInvitationExpires(String days) {
+    return 'Open invitation • Expires in $days days';
+  }
+
+  @override
+  String get codeCopiedToClipboard => 'Code copied to clipboard';
+
+  @override
+  String get actionsSection => 'Actions';
+
+  @override
+  String get createInvitationCode => 'Create invitation code';
+
+  @override
+  String get joinKennelLabel => 'Join kennel';
+
+  @override
+  String get useInvitationCode => 'Use invitation code';
+
+  @override
+  String get deleteKennelLabel => 'Delete kennel';
+
+  @override
+  String get kennelNameRequired => 'Kennel name *';
+
+  @override
+  String get nameIsRequired => 'Name is required';
+
+  @override
+  String get createButton => 'Create';
+
+  @override
+  String get enterInvitationCodeMessage =>
+      'Enter the invitation code you received:';
+
+  @override
+  String get invitationCode => 'Invitation code';
+
+  @override
+  String get invitationCodeHint => 'E.g. ABC123';
+
+  @override
+  String get joinedKennelSuccess => 'You have joined the kennel!';
+
+  @override
+  String get joinButton => 'Join';
+
+  @override
+  String get editKennel => 'Edit kennel';
+
+  @override
+  String get kennelNameLabel => 'Kennel name';
+
+  @override
+  String get kennelUpdated => 'Kennel updated!';
+
+  @override
+  String changeRoleFor(String name) {
+    return 'Change role for $name';
+  }
+
+  @override
+  String get removeMemberQuestion => 'Remove member?';
+
+  @override
+  String confirmRemoveMember(String name) {
+    return 'Are you sure you want to remove $name from the kennel?';
+  }
+
+  @override
+  String get memberRemoved => 'Member removed';
+
+  @override
+  String get leaveKennelQuestion => 'Leave kennel?';
+
+  @override
+  String confirmLeaveKennel(String name) {
+    return 'Are you sure you want to leave $name? You will lose access to all data.';
+  }
+
+  @override
+  String get leftKennel => 'You have left the kennel';
+
+  @override
+  String get leaveButton => 'Leave';
+
+  @override
+  String get deleteKennelQuestion => 'Delete kennel?';
+
+  @override
+  String confirmDeleteKennel(String name) {
+    return 'Are you ABSOLUTELY sure you want to delete $name? This cannot be undone!';
+  }
+
+  @override
+  String get kennelDeleted => 'Kennel deleted';
+
+  @override
+  String get invitationCodeDescription =>
+      'You can create an invitation code that others can use to join the kennel.';
+
+  @override
+  String get emailOptional => 'Email address (optional)';
+
+  @override
+  String get emailPlaceholder => 'user@example.com';
+
+  @override
+  String get leaveEmptyForOpen => 'Leave empty for open invitation';
+
+  @override
+  String get roleLabel => 'Role';
+
+  @override
+  String get canViewAndEdit => 'Can view and edit data';
+
+  @override
+  String get canAlsoInvite => 'Can also invite members';
+
+  @override
+  String get createInvitation => 'Create invitation';
+
+  @override
+  String get invitationCreated => 'Invitation created!';
+
+  @override
+  String get shareCodeMessage =>
+      'Share this code with the person you want to invite:';
+
+  @override
+  String get validFor7Days => 'Valid for 7 days';
+
+  @override
+  String get shareInvitationLabel => 'Share the invitation:';
+
+  @override
+  String get copyLabel => 'Copy';
+
+  @override
+  String get emailButtonLabel => 'Email';
+
+  @override
+  String get shareButtonLabel => 'Share';
+
+  @override
+  String get finishedButton => 'Done';
+
+  @override
+  String invitationEmailSubject(String kennelName) {
+    return 'Invitation to $kennelName on Breedly';
+  }
+
+  @override
+  String invitationEmailBody(String kennelName, String code) {
+    return 'Hi!\n\nYou have been invited to join $kennelName on the Breedly app.\n\nYour invitation code is: $code\n\nHow to join:\n1. Download the Breedly app if you don\'t have it\n2. Log in or create an account\n3. Go to Settings → Kennel Management\n4. Tap \"Join kennel\"\n5. Enter the code: $code\n\nThe code is valid for 7 days.\n\nWelcome!\n';
+  }
+
+  @override
+  String get couldNotOpenEmail => 'Could not open email client';
+
+  @override
+  String invitationShareMessage(String kennelName, String code) {
+    return 'You have been invited to $kennelName on Breedly!\n\n🐕 Invitation code: $code\n\nOpen the Breedly app, go to Settings → Kennel Management → \"Join kennel\" and enter the code.\n\nThe code is valid for 7 days.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get kennelCreatedSuccess => 'Kennel created!';
+
+  @override
+  String get kennelProfile => 'Kennel Profile';
+
+  @override
+  String get kennelProfileSaved => 'Kennel profile saved';
+
+  @override
+  String get kennelInfo => 'Kennel Information';
+
+  @override
+  String get kennelNameFieldLabel => 'Kennel name';
+
+  @override
+  String get kennelNameHint => 'E.g. \"Nordlys Kennel\"';
+
+  @override
+  String get descriptionOptional => 'Description (optional)';
+
+  @override
+  String get kennelDescriptionHint => 'Tell a little about your kennel...';
+
+  @override
+  String get breedsSection => 'Breeds';
+
+  @override
+  String get selectBreedsForBreeding => 'Select the breeds you breed';
+
+  @override
+  String get tapToSelectBreeds => 'Tap to select breeds...';
+
+  @override
+  String get breedSelectedSingular => 'breed selected';
+
+  @override
+  String get breedsSelectedPlural => 'breeds selected';
+
+  @override
+  String get contactInfo => 'Contact Information';
+
+  @override
+  String get phoneOptional => 'Phone (optional)';
+
+  @override
+  String get addressOptional => 'Address (optional)';
+
+  @override
+  String get websiteOptional => 'Website (optional)';
+
+  @override
+  String get saveKennelProfile => 'Save kennel profile';
+
+  @override
+  String get selectBreeds => 'Select breeds';
+
+  @override
+  String nSelected(String count) {
+    return '$count selected';
+  }
+
+  @override
+  String noBreedsFoundFor(String query) {
+    return 'No breeds found for \"$query\"';
+  }
+
+  @override
+  String get noImagesYet => 'No images yet';
+
+  @override
+  String get tapToAddPhotos => 'Tap + to add photos';
+
+  @override
+  String get imageDetails => 'Image details';
+
+  @override
+  String fileSizeLabel(String size) {
+    return 'File size: $size MB';
+  }
+
+  @override
+  String descriptionWithValue(String value) {
+    return 'Description: $value';
+  }
+
+  @override
+  String get editImageNotes => 'Edit image notes';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get imageNotesUpdated => 'Image notes updated';
+
+  @override
+  String get deleteImage => 'Delete image';
+
+  @override
+  String get imageDeleted => 'Image deleted';
+
+  @override
+  String get searchPrompt => 'Search for dogs, litters, puppies or buyers';
+
+  @override
+  String get exportData => 'Export data';
+
+  @override
+  String exportingItem(String item) {
+    return 'Exporting $item...';
+  }
+
+  @override
+  String get exportCompleted => 'Export completed!';
+
+  @override
+  String exportError(String error) {
+    return 'Export error: $error';
+  }
+
+  @override
+  String itemExported(String item) {
+    return '$item exported!';
+  }
+
+  @override
+  String get aboutExport => 'About export';
+
+  @override
+  String get exportDescription =>
+      'Data is exported as CSV files that can be opened in Excel, Google Sheets or other spreadsheet programs. Files use UTF-8 with BOM to support special characters.';
+
+  @override
+  String get exportAll => 'Export all';
+
+  @override
+  String get orExportIndividually => 'Or export individually';
+
+  @override
+  String get exportDogsDesc => 'All registered dogs with pedigree info';
+
+  @override
+  String get exportLittersDesc => 'All litters with parents and puppy status';
+
+  @override
+  String get exportPuppiesDesc => 'All puppies with details and sales status';
+
+  @override
+  String get exportExpensesDesc => 'All expenses sorted by date';
+
+  @override
+  String get exportIncomeDesc => 'All income sorted by date';
+
+  @override
+  String get exportFinancialSummaryDesc => 'Annual overview of results';
+
+  @override
+  String get exportLitterStatsDesc => 'Statistics per breed';
+
+  @override
+  String get allData => 'all data';
+
+  @override
+  String get noContracts => 'No contracts';
+
+  @override
+  String get createPurchaseContractForPuppy =>
+      'Create a purchase contract for this puppy';
+
+  @override
+  String contractNumberLabel(String number) {
+    return 'Contract no. $number';
+  }
+
+  @override
+  String get statusDraft => 'Draft';
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusCompleted => 'Completed';
+
+  @override
+  String get statusCancelled => 'Cancelled';
+
+  @override
+  String get deleteContract => 'Delete contract';
+
+  @override
+  String get contractDeleted => 'Contract deleted';
+
+  @override
+  String get createdDate => 'Created';
+
+  @override
+  String get purchasedDate => 'Purchased';
+
+  @override
+  String get termsLabel => 'Terms:';
+
+  @override
+  String get spayNeuterRequired => 'Spay/neuter required';
+
+  @override
+  String get newContract => 'New contract';
+
+  @override
+  String get fullSalesContract => 'Full sales contract for the puppy';
+
+  @override
+  String get reserveWithDeposit => 'Reserve the puppy with a deposit';
+
+  @override
+  String get reservationAgreement => 'Reservation agreement';
+
+  @override
+  String exportErrorGeneric(String error) {
+    return 'Export error: $error';
+  }
+
+  @override
+  String photoGalleryTitle(String damName) {
+    return '$damName - Photo Gallery';
+  }
+
+  @override
+  String get editMenu => 'Edit';
+
+  @override
+  String get deleteLitterMenu => 'Delete litter';
+
+  @override
+  String get tabPuppies => 'Puppies';
+
+  @override
+  String get tabRegistration => 'Registration';
+
+  @override
+  String get plannedLitterLabel => 'Planned litter';
+
+  @override
+  String get litterInfoLabel => 'Litter info';
+
+  @override
+  String get damLabel => 'Dam';
+
+  @override
+  String get sireLabel => 'Sire';
+
+  @override
+  String get breedLabel => 'Breed';
+
+  @override
+  String get ageLabel => 'Age';
+
+  @override
+  String get totalPuppiesLabel => 'Total puppies';
+
+  @override
+  String get malesLabel => 'Males';
+
+  @override
+  String get femalesLabel => 'Females';
+
+  @override
+  String get matingDateLabel => 'Mating date';
+
+  @override
+  String get estimatedDueDateLabel => 'Estimated due date';
+
+  @override
+  String get daysUntilWhelpingLabel => 'Days until whelping';
+
+  @override
+  String daysToEstimatedBirth(int days) {
+    return '$days days to estimated birth';
+  }
+
+  @override
+  String get estimatedDatePassed => 'Estimated due date has passed';
+
+  @override
+  String get setMatingDateToCalculate =>
+      'Set mating date to calculate due date';
+
+  @override
+  String get registerBirthButton => 'Register birth';
+
+  @override
+  String get planningToolsLabel => 'Planning tools';
+
+  @override
+  String get temperatureLabel => 'Temperature';
+
+  @override
+  String get progesteroneLabel => 'Progesterone';
+
+  @override
+  String get editLabel => 'Edit';
+
+  @override
+  String get birthLabel => 'Birth';
+
+  @override
+  String matingDateColon(String date) {
+    return 'Mating date: $date';
+  }
+
+  @override
+  String get noMatingDateSet => 'No mating date set';
+
+  @override
+  String get setDateLabel => 'Set date';
+
+  @override
+  String estimatedBirthColon(String date) {
+    return 'Estimated birth: $date';
+  }
+
+  @override
+  String daysLeft(int days) {
+    return '$days days left';
+  }
+
+  @override
+  String get selectMatingDateLabel => 'Select mating date';
+
+  @override
+  String matingDateSetSnackbar(String matingDate, String dueDate) {
+    return 'Mating date set to $matingDate. Estimated birth: $dueDate';
+  }
+
+  @override
+  String get couldNotFindDam => 'Could not find the dam';
+
+  @override
+  String get registerBirthTitle => 'Register birth';
+
+  @override
+  String get litterBornConfirmText =>
+      'The litter is now born! Do you want to update the birth date to today?';
+
+  @override
+  String get canThenAddPuppies => 'You can then add puppies manually.';
+
+  @override
+  String get cancelLabel => 'Cancel';
+
+  @override
+  String get registerLabel => 'Register';
+
+  @override
+  String get birthRegisteredSnackbar =>
+      'Birth registered! You can now add puppies.';
+
+  @override
+  String get noPuppiesYet => 'No puppies yet';
+
+  @override
+  String get goToPuppiesTabHint => 'Go to the Puppies tab to add puppies';
+
+  @override
+  String puppiesCount2(int count) {
+    return 'Puppies ($count)';
+  }
+
+  @override
+  String get availableLabel => 'Available';
+
+  @override
+  String get reservedLabel => 'Reserved';
+
+  @override
+  String get soldLabel => 'Sold';
+
+  @override
+  String get quickActionsLabel => 'Quick actions';
+
+  @override
+  String get weighingLabel => 'Weighing';
+
+  @override
+  String get newPuppyLabel => 'New puppy';
+
+  @override
+  String get treatmentOverviewLabel => 'Treatment overview';
+
+  @override
+  String get vaccinatedLabel => 'Vaccinated';
+
+  @override
+  String get dewormedLabel => 'Dewormed';
+
+  @override
+  String get microchippedLabel => 'Microchipped';
+
+  @override
+  String dayUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'days',
+      one: 'day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weekUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'weeks',
+      one: 'week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weeksAndDays(int weeks, String weekLabel, int days, String dayLabel) {
+    return '$weeks $weekLabel and $days $dayLabel';
+  }
+
+  @override
+  String get todayParens => '(today)';
+
+  @override
+  String get tomorrowParens => '(tomorrow)';
+
+  @override
+  String get yesterdayParens => '(yesterday)';
+
+  @override
+  String get summaryLabel => 'Summary';
+
+  @override
+  String get addPuppyLabel => 'Add puppy';
+
+  @override
+  String get totalLabel => 'Total';
+
+  @override
+  String get puppyListLabel => 'Puppy list';
+
+  @override
+  String get noPuppiesRegisteredYet => 'No puppies registered yet';
+
+  @override
+  String colorAge(String color, int weeks) {
+    return 'Color: $color • Age: $weeks weeks';
+  }
+
+  @override
+  String get basicInfoLabel => 'Basic info';
+
+  @override
+  String get genderLabel => 'Gender';
+
+  @override
+  String get birthWeightLabel => 'Birth weight';
+
+  @override
+  String get treatmentsLabel => 'Treatments';
+
+  @override
+  String get yesLabel => 'Yes';
+
+  @override
+  String get noLabel => 'No';
+
+  @override
+  String get buyerLabel => 'Buyer';
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get contactLabel => 'Contact';
+
+  @override
+  String get notesLabel => 'Notes';
+
+  @override
+  String get weightButton => 'Weight';
+
+  @override
+  String get planButton => 'Plan';
+
+  @override
+  String get contractButton => 'Contract';
+
+  @override
+  String get healthCertificateButton => 'Health cert.';
+
+  @override
+  String get shareButton => 'Share';
+
+  @override
+  String get temperatureRegistrationLabel => 'Temperature registration';
+
+  @override
+  String get registerTempBeforeBirth =>
+      'Register temperature on the dam before estimated birth';
+
+  @override
+  String get openTemperatureLogButton => 'Open temperature log';
+
+  @override
+  String get puppyWeightLabel => 'Puppy weight';
+
+  @override
+  String get registerWeightForAll => 'Register weight for all puppies';
+
+  @override
+  String get noPuppiesRegisteredShort => 'No puppies registered';
+
+  @override
+  String get editPuppyTitle => 'Edit puppy';
+
+  @override
+  String get statusLabel => 'Status';
+
+  @override
+  String get birthWeightGramsLabel => 'Birth weight (grams)';
+
+  @override
+  String get birthNoteLabel => 'Birth note';
+
+  @override
+  String get buyerNameLabel => 'Buyer name';
+
+  @override
+  String get buyerContactLabel => 'Buyer contact';
+
+  @override
+  String get notesFieldLabel => 'Notes';
+
+  @override
+  String get saveLabel => 'Save';
+
+  @override
+  String get puppyUpdatedSnackbar => 'Puppy updated';
+
+  @override
+  String weightCurveTitle(String name) {
+    return '$name - Weight curve';
+  }
+
+  @override
+  String get birthWeightNote => 'Birth weight';
+
+  @override
+  String get daysSinceBirthAxis => 'Days since birth';
+
+  @override
+  String get gramAxis => 'Gram';
+
+  @override
+  String get noWeightOrBirthWeight =>
+      'No weight measurements or birth weight registered';
+
+  @override
+  String get registeredMeasurements => 'Registered measurements:';
+
+  @override
+  String gramUnit(String weight) {
+    return '$weight gram';
+  }
+
+  @override
+  String dayDateLabel(int day, String date) {
+    return 'Day $day - $date';
+  }
+
+  @override
+  String get weightMeasurementDeleted => 'Weight measurement deleted';
+
+  @override
+  String get addMeasurementButton => 'Add measurement';
+
+  @override
+  String get closeButton => 'Close';
+
+  @override
+  String get addWeightMeasurementTitle => 'Add weight measurement';
+
+  @override
+  String get dateLabel => 'Date';
+
+  @override
+  String get clockLabel => 'Time';
+
+  @override
+  String get weightGramsLabel => 'Weight (grams)';
+
+  @override
+  String get weightMeasurementAddedSnackbar => 'Weight measurement added';
+
+  @override
+  String get registerWeightForAllTitle => 'Register weight for all puppies';
+
+  @override
+  String get notesOptionalLabel => 'Notes (optional)';
+
+  @override
+  String get saveAllLabel => 'Save all';
+
+  @override
+  String weightMeasurementsSavedSnackbar(int count) {
+    return '$count weight measurements saved';
+  }
+
+  @override
+  String get editWeightMeasurementTitle => 'Edit weight measurement';
+
+  @override
+  String get weightMeasurementUpdatedSnackbar => 'Weight measurement updated';
+
+  @override
+  String treatmentPlanTitle(String name) {
+    return '$name - Treatment plan';
+  }
+
+  @override
+  String get dewormingLabel => 'Deworming:';
+
+  @override
+  String get deworming1 => '1st deworming (approx. 2 weeks)';
+
+  @override
+  String get deworming2 => '2nd deworming (approx. 4 weeks)';
+
+  @override
+  String get deworming3 => '3rd deworming (approx. 6 weeks)';
+
+  @override
+  String get vaccinesLabel => 'Vaccines:';
+
+  @override
+  String get vaccine1 => '1st vaccination (8 weeks)';
+
+  @override
+  String get vaccine2 => '2nd vaccination (12 weeks)';
+
+  @override
+  String get vaccine3 => '3rd vaccination (16 weeks)';
+
+  @override
+  String get otherLabel => 'Other:';
+
+  @override
+  String get idMarkingLabel => 'ID marking';
+
+  @override
+  String get idMarkingNumberLabel => 'ID marking number';
+
+  @override
+  String get selectDateLabel => 'Select date';
+
+  @override
+  String get treatmentPlanUpdatedSnackbar =>
+      'Treatment plan updated and reminders scheduled';
+
+  @override
+  String get pdfDownloadedTitle => 'PDF downloaded';
+
+  @override
+  String pdfSavedSnackbar(String path) {
+    return 'PDF saved:\n$path';
+  }
+
+  @override
+  String errorGeneratingPdf(String error) {
+    return 'Error generating PDF: $error';
+  }
+
+  @override
+  String get healthCertificateTitle => 'Health certificate';
+
+  @override
+  String generateHealthCertFor(String name) {
+    return 'Generate health certificate for $name';
+  }
+
+  @override
+  String get healthExaminationLabel => 'Health examination';
+
+  @override
+  String get tapToAddNote => 'Tap an item to add a note';
+
+  @override
+  String get generalConditionLabel => 'General condition';
+
+  @override
+  String get eyesLabel => 'Eyes';
+
+  @override
+  String get earsLabel => 'Ears';
+
+  @override
+  String get heartLabel => 'Heart';
+
+  @override
+  String get lungsLabel => 'Lungs';
+
+  @override
+  String get skinCoatLabel => 'Skin/coat';
+
+  @override
+  String get teethMouthLabel => 'Teeth/mouth';
+
+  @override
+  String get abdomenLabel => 'Abdomen';
+
+  @override
+  String get limbsJointsLabel => 'Limbs/joints';
+
+  @override
+  String get vetInfoOptional => 'Veterinary information (optional):';
+
+  @override
+  String get vetNameLabel => 'Veterinarian name';
+
+  @override
+  String get phoneLabel => 'Phone';
+
+  @override
+  String get generalNotesLabel => 'General notes';
+
+  @override
+  String get generatePdfButton => 'Generate PDF';
+
+  @override
+  String addNoteFor(String label) {
+    return 'Add note for $label...';
+  }
+
+  @override
+  String get healthCertificateDownloaded => 'Health certificate downloaded';
+
+  @override
+  String healthCertSavedSnackbar(String path) {
+    return 'Health certificate saved:\n$path';
+  }
+
+  @override
+  String errorGeneratingHealthCert(String error) {
+    return 'Error generating health certificate: $error';
+  }
+
+  @override
+  String get shareUpdateTitle => 'Share update';
+
+  @override
+  String shareUpdateAbout(String name) {
+    return 'Share update about $name with buyer';
+  }
+
+  @override
+  String get includeInMessage => 'Include in message:';
+
+  @override
+  String get ageCheckbox => 'Age';
+
+  @override
+  String get weightCheckbox => 'Weight';
+
+  @override
+  String get treatmentsCheckbox => 'Treatments';
+
+  @override
+  String get customMessageOptional => 'Custom message (optional)';
+
+  @override
+  String get personalGreetingHint => 'Write a personal greeting...';
+
+  @override
+  String updateAbout(String name) {
+    return 'Update about $name';
+  }
+
+  @override
+  String get editLitterTitle => 'Edit litter';
+
+  @override
+  String get damFemaleLabel => 'Dam (Female) *';
+
+  @override
+  String get sireMaleLabel => 'Sire (Male) *';
+
+  @override
+  String get puppyCountBasedOnRegistered =>
+      'Puppy count (based on registered puppies):';
+
+  @override
+  String get updatesAutomatically =>
+      'These numbers update automatically when you add or delete puppies.';
+
+  @override
+  String get damAndSireRequired => 'Dam and Sire are required';
+
+  @override
+  String get litterUpdatedSnackbar => 'Litter updated';
+
+  @override
+  String get deleteLitterTitle => 'Delete litter?';
+
+  @override
+  String confirmDeleteLitterText(String damName, String sireName) {
+    return 'Are you sure you want to delete the litter from $damName x $sireName?\n\nNote: This will also delete all puppies in the litter!';
+  }
+
+  @override
+  String get deleteLabel => 'Delete';
+
+  @override
+  String get litterDeletedSnackbar => 'Litter deleted';
+
+  @override
+  String get placedLabel => 'placed';
+
+  @override
+  String get ownerRoleLabel => 'Owner';
+
+  @override
+  String get skipButton => 'Skip';
+
+  @override
+  String get getStartedButton => 'Get started';
+
+  @override
+  String get onboardingWelcomeTitle => 'Welcome to Breedly';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Your complete solution for breeding management. Keep track of dogs, litters, buyers and much more.';
+
+  @override
+  String get onboardingDogsTitle => 'Manage your dogs';
+
+  @override
+  String get onboardingDogsDesc =>
+      'Add dogs with pedigree, health information, show results and photos. All in one place.';
+
+  @override
+  String get onboardingLittersTitle => 'Track litters and puppies';
+
+  @override
+  String get onboardingLittersDesc =>
+      'Register litters, follow puppy development with weight logs, and generate contracts for buyers.';
+
+  @override
+  String get onboardingCalendarTitle => 'Calendar and reminders';
+
+  @override
+  String get onboardingCalendarDesc =>
+      'Never forget important dates. Get notifications for vaccinations, vet visits and other events.';
+
+  @override
+  String get onboardingStatsTitle => 'Statistics and reports';
+
+  @override
+  String get onboardingStatsDesc =>
+      'Get insights into your breeding with detailed statistics, financial overview and annual reports.';
+
+  @override
+  String get tabInfo => 'Info';
+
+  @override
+  String get veterinaryInfoOptional => 'Veterinary information (optional):';
+
+  @override
+  String deleteLitterConfirmMessage(String damName, String sireName) {
+    return 'Are you sure you want to delete the litter from $damName x $sireName?\n\nNOTE: This will also delete all puppies in the litter!';
+  }
+
+  @override
+  String get couldNotGenerateImage => 'Could not generate image';
+
+  @override
+  String get contentSection => 'CONTENT';
+
+  @override
+  String get detailsToggle => 'Details';
+
+  @override
+  String get backgroundSection => 'BACKGROUND';
+
+  @override
+  String get autoTheme => 'Auto';
+
+  @override
+  String get themeGoldBlack => 'Gold & Black';
+
+  @override
+  String get themeNavyGold => 'Navy & Gold';
+
+  @override
+  String get themeTealAmber => 'Teal & Amber';
+
+  @override
+  String get themeSlateSilver => 'Slate & Silver';
+
+  @override
+  String get themeForestJade => 'Forest & Jade';
+
+  @override
+  String get themeIndigo => 'Indigo';
+
+  @override
+  String get themeClassic => 'Classic';
+
+  @override
+  String get patternSection => 'PATTERN';
+
+  @override
+  String get patternNone => 'None';
+
+  @override
+  String get patternGeometric => 'Geometric';
+
+  @override
+  String get patternCircles => 'Circles';
+
+  @override
+  String get patternLines => 'Lines';
+
+  @override
+  String get patternDots => 'Dots';
+
+  @override
+  String get patternWaves => 'Waves';
+
+  @override
+  String get patternElegant => 'Elegant';
+
+  @override
+  String get fontTypeSection => 'FONT TYPE';
+
+  @override
+  String get fontStandard => 'Standard';
+
+  @override
+  String get fontSerif => 'Serif';
+
+  @override
+  String get fontElegant => 'Elegant';
+
+  @override
+  String get fontModern => 'Modern';
+
+  @override
+  String get fontClassic => 'Classic';
+
+  @override
+  String get fontHandwritten => 'Handwriting';
+
+  @override
+  String get fontSizeSection => 'SIZE';
+
+  @override
+  String get resultCardTitle => 'Result card';
+
+  @override
+  String get removePhoto => 'Remove photo';
+
+  @override
+  String get addPhoto => 'Add photo';
+
+  @override
+  String get selectFromGallery => 'Select from gallery';
+
+  @override
+  String breedJudgeWithName(String name) {
+    return 'Breed judge: $name';
+  }
+
+  @override
+  String classPlacementAbbr(String placement) {
+    return 'Cl. $placement';
+  }
 }

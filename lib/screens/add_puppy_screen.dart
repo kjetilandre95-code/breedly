@@ -10,6 +10,7 @@ import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/utils/logger.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class AddPuppyScreen extends StatefulWidget {
   final Litter litter;
@@ -104,8 +105,9 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
       widget.litter.save();
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Valp lagt til')),
+          SnackBar(content: Text(l10n.puppyAdded)),
         );
 
         Navigator.pop(context);
@@ -115,9 +117,10 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: 'Legg til valp',
+        title: l10n.addPuppy,
         context: context,
       ),
       body: SafeArea(
@@ -137,7 +140,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Navn på valpen',
+                    labelText: l10n.puppyNameLabel,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -152,7 +155,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                   ),
                   onChanged: (value) => _name = value,
                   validator: (value) =>
-                      value?.isEmpty ?? true ? 'Vennligst skriv inn navn' : null,
+                      value?.isEmpty ?? true ? l10n.pleaseEnterName : null,
                 ),
               ),
             ),
@@ -174,17 +177,17 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                       children: [
                         Icon(Icons.label_outline, color: Theme.of(context).primaryColor),
                         const SizedBox(width: AppSpacing.sm),
-                        const Text(
-                          'Identifikasjon (for å skille valper)',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Text(
+                          l10n.puppyIdentification,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.md),
                     TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Kallenavn / Visningsnavn',
-                        hintText: 'f.eks. "Blå bånd", "Lillegutt"',
+                        labelText: l10n.nicknameDisplayName,
+                        hintText: l10n.nicknameHint,
                         border: OutlineInputBorder(
                           borderRadius: AppRadius.mdAll,
                         ),
@@ -200,7 +203,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                       onChanged: (value) => _displayName = value,
                     ),
                     const SizedBox(height: AppSpacing.lg),
-                    const Text('Fargekode (bånd/merke)', style: TextStyle(fontSize: 14)),
+                    Text(l10n.colorCodeBandMark, style: const TextStyle(fontSize: 14)),
                     const SizedBox(height: AppSpacing.sm),
                     Wrap(
                       spacing: AppSpacing.sm,
@@ -242,7 +245,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                     if (_colorCode != null) ...[
                       const SizedBox(height: AppSpacing.sm),
                       Text(
-                        'Valgt: ${_puppyColors.firstWhere((c) => c['color'] == _colorCode, orElse: () => {'name': 'Ukjent'})['name']}',
+                        '${l10n.selected}: ${_puppyColors.firstWhere((c) => c['color'] == _colorCode, orElse: () => {'name': l10n.unknown})['name']}',
                         style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                       ),
                     ],
@@ -262,15 +265,15 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: DropdownButtonFormField<String>(
                   initialValue: _gender,
-                  items: const [
-                    DropdownMenuItem(value: 'Male', child: Text('Hann')),
-                    DropdownMenuItem(value: 'Female', child: Text('Tispe')),
+                  items: [
+                    DropdownMenuItem(value: 'Male', child: Text(l10n.male)),
+                    DropdownMenuItem(value: 'Female', child: Text(l10n.female)),
                   ],
                   onChanged: (value) {
                     setState(() => _gender = value ?? 'Male');
                   },
                   decoration: InputDecoration(
-                    labelText: 'Kjønn',
+                    labelText: l10n.gender,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -298,7 +301,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Farge',
+                    labelText: l10n.color,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -313,7 +316,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                   ),
                   onChanged: (value) => _color = value,
                   validator: (value) =>
-                      value?.isEmpty ?? true ? 'Vennligst skriv inn farge' : null,
+                      value?.isEmpty ?? true ? l10n.pleaseEnterColor : null,
                 ),
               ),
             ),
@@ -348,7 +351,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Fødselsdato: ${DateFormat('dd.MM.yyyy').format(_dateOfBirth)}'),
+                        Text('${l10n.dateOfBirth}: ${DateFormat('dd.MM.yyyy').format(_dateOfBirth)}'),
                         Icon(Icons.calendar_today, size: 20, color: Theme.of(context).primaryColor),
                       ],
                     ),
@@ -368,7 +371,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Fødselsvekt (gram)',
+                    labelText: l10n.birthWeightGrams,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -420,8 +423,8 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                       children: [
                         Text(
                           _birthTime != null
-                              ? 'Fødselsidspunkt: ${DateFormat('HH:mm').format(_birthTime!)}'
-                              : 'Fødselsidspunkt (valgfritt)',
+                              ? '${l10n.birthTimeLabel}: ${DateFormat('HH:mm').format(_birthTime!)}'
+                              : l10n.birthTimeOptional,
                         ),
                         Icon(Icons.access_time, size: 20, color: Theme.of(context).primaryColor),
                       ],
@@ -442,7 +445,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Merknader fra fødsel (f.eks. drahjelp)',
+                    labelText: l10n.birthNotes,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -472,16 +475,16 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: DropdownButtonFormField<String>(
                   initialValue: _status,
-                  items: const [
-                    DropdownMenuItem(value: 'Available', child: Text('Ledig')),
-                    DropdownMenuItem(value: 'Sold', child: Text('Solgt')),
-                    DropdownMenuItem(value: 'Reserved', child: Text('Reservert')),
+                  items: [
+                    DropdownMenuItem(value: 'Available', child: Text(l10n.available)),
+                    DropdownMenuItem(value: 'Sold', child: Text(l10n.sold)),
+                    DropdownMenuItem(value: 'Reserved', child: Text(l10n.reserved)),
                   ],
                   onChanged: (value) {
                     setState(() => _status = value ?? 'Available');
                   },
                   decoration: InputDecoration(
-                    labelText: 'Status',
+                    labelText: l10n.status,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -512,7 +515,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                      child: Text('Helse & dokumentasjon', 
+                      child: Text(l10n.healthAndDocumentation, 
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w700,
@@ -523,21 +526,21 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                     CheckboxListTile(
                       dense: true,
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Vaksinert', style: TextStyle(fontSize: 13)),
+                      title: Text(l10n.vaccinated, style: const TextStyle(fontSize: 13)),
                       value: _vaccinated,
                       onChanged: (value) => setState(() => _vaccinated = value ?? false),
                     ),
                     CheckboxListTile(
                       dense: true,
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Avmasket', style: TextStyle(fontSize: 13)),
+                      title: Text(l10n.dewormed, style: const TextStyle(fontSize: 13)),
                       value: _dewormed,
                       onChanged: (value) => setState(() => _dewormed = value ?? false),
                     ),
                     CheckboxListTile(
                       dense: true,
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Microchippet', style: TextStyle(fontSize: 13)),
+                      title: Text(l10n.microchipped, style: const TextStyle(fontSize: 13)),
                       value: _microchipped,
                       onChanged: (value) =>
                           setState(() => _microchipped = value ?? false),
@@ -558,7 +561,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText: 'Notater',
+                    labelText: l10n.notes,
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.mdAll,
                     ),
@@ -584,7 +587,7 @@ class _AddPuppyScreenState extends State<AddPuppyScreen> {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
-              child: const Text('Lagre valp'),
+              child: Text(l10n.savePuppy),
             ),
             ],
           ),

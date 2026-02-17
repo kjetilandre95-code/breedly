@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/theme_colors.dart';
 
@@ -26,43 +27,40 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<OnboardingPage> _pages = [
-    OnboardingPage(
-      icon: Icons.pets_rounded,
-      title: 'Velkommen til Breedly',
-      description: 'Din komplette løsning for oppdrettsadministrasjon. '
-          'Hold oversikt over hunder, kull, kjøpere og mye mer.',
-      color: AppColors.primary,
-    ),
-    OnboardingPage(
-      icon: Icons.favorite_rounded,
-      title: 'Administrer hundene dine',
-      description: 'Legg til hunder med stamtavle, helseinformasjon, '
-          'utstillingsresultater og bilder. Alt på ett sted.',
-      color: AppColors.female,
-    ),
-    OnboardingPage(
-      icon: Icons.pets_rounded,
-      title: 'Spor kull og valper',
-      description: 'Registrer kull, følg valpenes utvikling med vektlogg, '
-          'og generer kontrakter for kjøpere.',
-      color: AppColors.secondary,
-    ),
-    OnboardingPage(
-      icon: Icons.calendar_today_rounded,
-      title: 'Kalender og påminnelser',
-      description: 'Aldri glem viktige datoer. Få varsler om vaksinasjoner, '
-          'veterinærbesøk og andre hendelser.',
-      color: AppColors.success,
-    ),
-    OnboardingPage(
-      icon: Icons.analytics_rounded,
-      title: 'Statistikk og rapporter',
-      description: 'Få innsikt i ditt oppdrett med detaljert statistikk, '
-          'finansoversikt og årsrapporter.',
-      color: AppColors.info,
-    ),
-  ];
+  List<OnboardingPage> _buildPages(AppLocalizations l10n) {
+    return [
+      OnboardingPage(
+        icon: Icons.pets_rounded,
+        title: l10n.onboardingWelcomeTitle,
+        description: l10n.onboardingWelcomeDesc,
+        color: AppColors.primary,
+      ),
+      OnboardingPage(
+        icon: Icons.favorite_rounded,
+        title: l10n.onboardingDogsTitle,
+        description: l10n.onboardingDogsDesc,
+        color: AppColors.female,
+      ),
+      OnboardingPage(
+        icon: Icons.pets_rounded,
+        title: l10n.onboardingLittersTitle,
+        description: l10n.onboardingLittersDesc,
+        color: AppColors.secondary,
+      ),
+      OnboardingPage(
+        icon: Icons.calendar_today_rounded,
+        title: l10n.onboardingCalendarTitle,
+        description: l10n.onboardingCalendarDesc,
+        color: AppColors.success,
+      ),
+      OnboardingPage(
+        icon: Icons.analytics_rounded,
+        title: l10n.onboardingStatsTitle,
+        description: l10n.onboardingStatsDesc,
+        color: AppColors.info,
+      ),
+    ];
+  }
 
   @override
   void dispose() {
@@ -71,7 +69,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _nextPage() {
-    if (_currentPage < _pages.length - 1) {
+    if (_currentPage < _buildPages(AppLocalizations.of(context)!).length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -95,6 +93,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
+    final pages = _buildPages(l10n);
 
     return Scaffold(
       body: SafeArea(
@@ -108,7 +108,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: TextButton(
                   onPressed: _skipOnboarding,
                   child: Text(
-                    'Hopp over',
+                    l10n.skipButton,
                     style: AppTypography.labelLarge.copyWith(
                       color: AppColors.primary,
                     ),
@@ -121,14 +121,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 onPageChanged: (index) {
                   setState(() {
                     _currentPage = index;
                   });
                 },
                 itemBuilder: (context, index) {
-                  final page = _pages[index];
+                  final page = pages[index];
                   return _buildPage(page, isDark);
                 },
               ),
@@ -140,7 +140,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                  _pages.length,
+                  pages.length,
                   (index) => _buildIndicator(index, theme),
                 ),
               ),
@@ -155,9 +155,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: FilledButton(
                   onPressed: _nextPage,
                   child: Text(
-                    _currentPage == _pages.length - 1 
-                        ? 'Kom i gang' 
-                        : 'Neste',
+                    _currentPage == pages.length - 1 
+                        ? l10n.getStartedButton 
+                        : l10n.next,
                     style: AppTypography.labelLarge.copyWith(
                       color: Colors.white,
                     ),

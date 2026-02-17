@@ -189,15 +189,16 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   Widget _buildKennelSelector() {
+    final localizations = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Velg kennel',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              localizations.selectKennel,
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<String>(
@@ -230,6 +231,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   Widget _buildKennelInfoCard() {
+    final localizations = AppLocalizations.of(context)!;
     final kennel = _activeKennel!;
     final isOwner = _currentUserMember?.isOwner ?? false;
 
@@ -266,7 +268,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                         ),
                       ),
                       Text(
-                        '${_members.length} ${_members.length == 1 ? 'medlem' : 'medlemmer'}',
+                        '${_members.length} ${_members.length == 1 ? localizations.memberSingular : localizations.membersPlural}',
                         style: TextStyle(color: context.colors.textMuted),
                       ),
                     ],
@@ -316,9 +318,9 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               children: [
                 const Icon(Icons.people, size: 20),
                 const SizedBox(width: AppSpacing.sm),
-                const Text(
-                  'Medlemmer',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.membersSection,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -339,6 +341,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   Widget _buildMemberTile(KennelMember member) {
+    final localizations = AppLocalizations.of(context)!;
     final isCurrentUser = member.userId == AuthService().currentUserId;
     final canManage = (_currentUserMember?.isOwner ?? false) && !isCurrentUser;
 
@@ -368,26 +371,26 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: AppRadius.smAll,
               ),
-              child: const Text(
-                'Deg',
-                style: TextStyle(fontSize: 11, color: AppColors.info),
+              child: Text(
+                localizations.youLabel,
+                style: const TextStyle(fontSize: 11, color: AppColors.info),
               ),
             ),
         ],
       ),
-      subtitle: Text(_getRoleText(member.role)),
+      subtitle: Text(_getRoleText(member.role, localizations)),
       trailing: canManage
           ? PopupMenuButton(
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  child: const Text('Endre rolle'),
+                  child: Text(localizations.changeRole),
                   onTap: () => Future.delayed(
                     Duration.zero,
                     () => _showChangeRoleDialog(member),
                   ),
                 ),
                 PopupMenuItem(
-                  child: const Text('Fjern', style: TextStyle(color: AppColors.error)),
+                  child: Text(localizations.removeLabel, style: const TextStyle(color: AppColors.error)),
                   onTap: () => Future.delayed(
                     Duration.zero,
                     () => _confirmRemoveMember(member),
@@ -399,14 +402,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
     );
   }
 
-  String _getRoleText(String role) {
+  String _getRoleText(String role, AppLocalizations localizations) {
     switch (role) {
       case 'owner':
-        return 'Eier';
+        return localizations.ownerRole;
       case 'admin':
-        return 'Administrator';
+        return localizations.administratorRole;
       default:
-        return 'Medlem';
+        return localizations.memberRole;
     }
   }
 
@@ -421,9 +424,9 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               children: [
                 const Icon(Icons.mail_outline, size: 20),
                 const SizedBox(width: AppSpacing.sm),
-                const Text(
-                  'Ventende invitasjoner',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.pendingInvitations,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -444,6 +447,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   Widget _buildInvitationTile(KennelInvitation invitation) {
+    final localizations = AppLocalizations.of(context)!;
     final daysLeft = invitation.expiresAt.difference(DateTime.now()).inDays;
 
     return ListTile(
@@ -454,7 +458,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
         style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
       ),
       subtitle: Text(
-        invitation.invitedEmail ?? 'Åpen invitasjon • Utløper om $daysLeft dager',
+        invitation.invitedEmail ?? localizations.openInvitationExpires(daysLeft.toString()),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -464,7 +468,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             onPressed: () {
               Clipboard.setData(ClipboardData(text: invitation.code));
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Kode kopiert til utklippstavle')),
+                SnackBar(content: Text(localizations.codeCopiedToClipboard)),
               );
             },
           ),
@@ -478,15 +482,16 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   Widget _buildActionsSection() {
+    final localizations = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Handlinger',
-              style: TextStyle(
+            Text(
+              localizations.actionsSection,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -496,35 +501,35 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.person_add, color: Theme.of(context).primaryColor),
-                title: Text('Inviter medlem', style: TextStyle(color: Theme.of(context).primaryColor)),
-                subtitle: const Text('Opprett invitasjonskode'),
+                title: Text(localizations.inviteMember, style: TextStyle(color: Theme.of(context).primaryColor)),
+                subtitle: Text(localizations.createInvitationCode),
                 onTap: _showCreateInvitationDialog,
               ),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.add_home_work),
-              title: const Text('Opprett ny kennel'),
+              title: Text(localizations.createNewKennel),
               onTap: _showCreateKennelDialog,
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.login),
-              title: const Text('Bli med i kennel'),
-              subtitle: const Text('Bruk invitasjonskode'),
+              title: Text(localizations.joinKennelLabel),
+              subtitle: Text(localizations.useInvitationCode),
               onTap: _showJoinKennelDialog,
             ),
             if (_currentUserMember != null && !_currentUserMember!.isOwner)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.logout, color: AppColors.warning),
-                title: const Text('Forlat kennel', style: TextStyle(color: AppColors.warning)),
+                title: Text(localizations.leaveKennel, style: const TextStyle(color: AppColors.warning)),
                 onTap: _confirmLeaveKennel,
               ),
             if (_currentUserMember?.isOwner ?? false)
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.delete_forever, color: AppColors.error),
-                title: const Text('Slett kennel', style: TextStyle(color: AppColors.error)),
+                title: Text(localizations.deleteKennelLabel, style: const TextStyle(color: AppColors.error)),
                 onTap: _confirmDeleteKennel,
               ),
           ],
@@ -534,30 +539,31 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _showCreateKennelDialog() {
+    final localizations = AppLocalizations.of(context)!;
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Opprett ny kennel'),
+        title: Text(localizations.createNewKennel),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Kennelnavn *',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: localizations.kennelNameRequired,
+                border: const OutlineInputBorder(),
               ),
               autofocus: true,
             ),
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Beskrivelse',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: localizations.descriptionLabel,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -566,13 +572,13 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
               if (nameController.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Navn er påkrevd')),
+                  SnackBar(content: Text(localizations.nameIsRequired)),
                 );
                 return;
               }
@@ -580,7 +586,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               final user = AuthService().currentUser;
               if (user == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Du må være logget inn')),
+                  SnackBar(content: Text(localizations.mustBeLoggedIn)),
                 );
                 return;
               }
@@ -599,18 +605,18 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   Navigator.pop(context);
                   _loadData();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Kennel opprettet!')),
+                    SnackBar(content: Text(localizations.kennelCreatedSuccess)),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Feil: $e')),
+                    SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                   );
                 }
               }
             },
-            child: const Text('Opprett'),
+            child: Text(localizations.createButton),
           ),
         ],
       ),
@@ -618,23 +624,24 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _showJoinKennelDialog() {
+    final localizations = AppLocalizations.of(context)!;
     final codeController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Bli med i kennel'),
+        title: Text(localizations.joinKennelLabel),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Skriv inn invitasjonskoden du har mottatt:'),
+            Text(localizations.enterInvitationCodeMessage),
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: codeController,
-              decoration: const InputDecoration(
-                labelText: 'Invitasjonskode',
-                border: OutlineInputBorder(),
-                hintText: 'F.eks. ABC123',
+              decoration: InputDecoration(
+                labelText: localizations.invitationCode,
+                border: const OutlineInputBorder(),
+                hintText: localizations.invitationCodeHint,
               ),
               textCapitalization: TextCapitalization.characters,
               maxLength: 6,
@@ -645,13 +652,13 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
               if (codeController.text.length != 6) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Koden må være 6 tegn')),
+                  SnackBar(content: Text(localizations.codeMustBe6Chars)),
                 );
                 return;
               }
@@ -662,7 +669,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   Navigator.pop(context);
                   _loadData();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Du er nå med i kennelen!')),
+                    SnackBar(content: Text(localizations.joinedKennelSuccess)),
                   );
                 }
               } catch (e) {
@@ -673,7 +680,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 }
               }
             },
-            child: const Text('Bli med'),
+            child: Text(localizations.joinButton),
           ),
         ],
       ),
@@ -681,6 +688,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _showEditKennelDialog() {
+    final localizations = AppLocalizations.of(context)!;
     final nameController = TextEditingController(text: _activeKennel?.name);
     final descriptionController =
         TextEditingController(text: _activeKennel?.description ?? '');
@@ -688,23 +696,23 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rediger kennel'),
+        title: Text(localizations.editKennel),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(
-                labelText: 'Kennelnavn',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: localizations.kennelNameLabel,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Beskrivelse',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: localizations.descriptionLabel,
+                border: const OutlineInputBorder(),
               ),
               maxLines: 2,
             ),
@@ -713,13 +721,13 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             onPressed: () async {
               if (nameController.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Navn er påkrevd')),
+                  SnackBar(content: Text(localizations.nameIsRequired)),
                 );
                 return;
               }
@@ -736,18 +744,18 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   Navigator.pop(context);
                   _loadData();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Kennel oppdatert!')),
+                    SnackBar(content: Text(localizations.kennelUpdated)),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Feil: $e')),
+                    SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                   );
                 }
               }
             },
-            child: const Text('Lagre'),
+            child: Text(localizations.save),
           ),
         ],
       ),
@@ -755,13 +763,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _showChangeRoleDialog(KennelMember member) {
+    final localizations = AppLocalizations.of(context)!;
     String selectedRole = member.role;
 
     showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text('Endre rolle for ${member.displayName ?? member.email}'),
+          title: Text(localizations.changeRoleFor(member.displayName ?? member.email)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -772,11 +781,11 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     RadioListTile<String>(
-                      title: const Text('Medlem'),
+                      title: Text(localizations.memberRole),
                       value: 'member',
                     ),
                     RadioListTile<String>(
-                      title: const Text('Administrator'),
+                      title: Text(localizations.administratorRole),
                       value: 'admin',
                     ),
                   ],
@@ -787,7 +796,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(localizations.cancel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -804,12 +813,12 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Feil: $e')),
+                      SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                     );
                   }
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(localizations.save),
             ),
           ],
         ),
@@ -818,16 +827,17 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _confirmRemoveMember(KennelMember member) {
+    final localizations = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Fjern medlem?'),
+        title: Text(localizations.removeMemberQuestion),
         content: Text(
-            'Er du sikker på at du vil fjerne ${member.displayName ?? member.email} fra kennelen?'),
+            localizations.confirmRemoveMember(member.displayName ?? member.email)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
@@ -839,18 +849,18 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   Navigator.pop(context);
                   _loadKennelDetails(_activeKennel!.id);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Medlem fjernet')),
+                    SnackBar(content: Text(localizations.memberRemoved)),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Feil: $e')),
+                    SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                   );
                 }
               }
             },
-            child: const Text('Fjern'),
+            child: Text(localizations.removeLabel),
           ),
         ],
       ),
@@ -858,16 +868,17 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _confirmLeaveKennel() {
+    final localizations = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Forlat kennel?'),
+        title: Text(localizations.leaveKennelQuestion),
         content: Text(
-            'Er du sikker på at du vil forlate ${_activeKennel?.name}? Du vil miste tilgang til all data.'),
+            localizations.confirmLeaveKennel(_activeKennel?.name ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning),
@@ -878,18 +889,18 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   Navigator.pop(context);
                   _loadData();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Du har forlatt kennelen')),
+                    SnackBar(content: Text(localizations.leftKennel)),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Feil: $e')),
+                    SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                   );
                 }
               }
             },
-            child: const Text('Forlat'),
+            child: Text(localizations.leaveButton),
           ),
         ],
       ),
@@ -897,16 +908,17 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _confirmDeleteKennel() {
+    final localizations = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett kennel?'),
+        title: Text(localizations.deleteKennelQuestion),
         content: Text(
-            'Er du HELT sikker på at du vil slette ${_activeKennel?.name}? Dette kan ikke angres!'),
+            localizations.confirmDeleteKennel(_activeKennel?.name ?? '')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
@@ -917,18 +929,18 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   Navigator.pop(context);
                   _loadData();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Kennel slettet')),
+                    SnackBar(content: Text(localizations.kennelDeleted)),
                   );
                 }
               } catch (e) {
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Feil: $e')),
+                    SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                   );
                 }
               }
             },
-            child: const Text('Slett'),
+            child: Text(localizations.delete),
           ),
         ],
       ),
@@ -941,14 +953,16 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
       _loadKennelDetails(_activeKennel!.id);
     } catch (e) {
       if (mounted) {
+        final localizations = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil: $e')),
+          SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
         );
       }
     }
   }
 
   void _showCreateInvitationDialog() {
+    final localizations = AppLocalizations.of(context)!;
     final emailController = TextEditingController();
     String selectedRole = 'member';
 
@@ -956,31 +970,31 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Inviter medlem'),
+          title: Text(localizations.inviteMember),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Du kan opprette en invitasjonskode som andre kan bruke for å bli med i kennelen.',
-                  style: TextStyle(fontSize: 14),
+                Text(
+                  localizations.invitationCodeDescription,
+                  style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'E-postadresse (valgfritt)',
-                    border: OutlineInputBorder(),
-                    hintText: 'bruker@eksempel.no',
-                    helperText: 'La stå tom for åpen invitasjon',
+                  decoration: InputDecoration(
+                    labelText: localizations.emailOptional,
+                    border: const OutlineInputBorder(),
+                    hintText: localizations.emailPlaceholder,
+                    helperText: localizations.leaveEmptyForOpen,
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                const Text(
-                  'Rolle',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                Text(
+                  localizations.roleLabel,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Container(
@@ -994,15 +1008,15 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                     child: Column(
                       children: [
                         RadioListTile<String>(
-                          title: const Text('Medlem'),
-                          subtitle: const Text('Kan se og redigere data'),
+                          title: Text(localizations.memberRole),
+                          subtitle: Text(localizations.canViewAndEdit),
                           value: 'member',
                           contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         ),
                         const Divider(height: 1),
                         RadioListTile<String>(
-                          title: const Text('Administrator'),
-                          subtitle: const Text('Kan også invitere medlemmer'),
+                          title: Text(localizations.administratorRole),
+                          subtitle: Text(localizations.canAlsoInvite),
                           value: 'admin',
                           contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         ),
@@ -1016,7 +1030,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(localizations.cancel),
             ),
             ElevatedButton.icon(
               icon: const Icon(Icons.send, size: 18),
@@ -1035,12 +1049,12 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 } catch (e) {
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Feil: $e')),
+                      SnackBar(content: Text(localizations.errorGeneric(e.toString()))),
                     );
                   }
                 }
               },
-              label: const Text('Opprett invitasjon'),
+              label: Text(localizations.createInvitation),
             ),
           ],
         ),
@@ -1049,6 +1063,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   void _showInvitationCreatedDialog(String code) {
+    final localizations = AppLocalizations.of(context)!;
     final kennelName = _activeKennel?.name ?? 'kennelen';
     
     showDialog(
@@ -1058,14 +1073,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
           children: [
             Icon(Icons.check_circle, color: AppColors.success),
             const SizedBox(width: AppSpacing.sm),
-            const Expanded(child: Text('Invitasjon opprettet!')),
+            Expanded(child: Text(localizations.invitationCreated)),
           ],
         ),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text('Del denne koden med personen du vil invitere:'),
+              Text(localizations.shareCodeMessage),
               const SizedBox(height: AppSpacing.lg),
               Container(
                 padding: const EdgeInsets.all(AppSpacing.lg),
@@ -1087,44 +1102,41 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                     ),
                     const SizedBox(height: AppSpacing.sm),
                     Text(
-                      'Gyldig i 7 dager',
+                      localizations.validFor7Days,
                       style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
-              const Text(
-                'Del invitasjonen:',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              Text(
+                localizations.shareInvitationLabel,
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: AppSpacing.md),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Kopier-knapp
                   _buildShareButton(
                     icon: Icons.copy,
-                    label: 'Kopier',
+                    label: localizations.copyLabel,
                     color: context.colors.textTertiary,
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: code));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Kode kopiert til utklippstavle')),
+                        SnackBar(content: Text(localizations.codeCopiedToClipboard)),
                       );
                     },
                   ),
-                  // E-post-knapp
                   _buildShareButton(
                     icon: Icons.email,
-                    label: 'E-post',
+                    label: localizations.emailButtonLabel,
                     color: AppColors.info,
                     onTap: () => _sendEmailInvitation(code, kennelName),
                   ),
-                  // Del-knapp
                   _buildShareButton(
                     icon: Icons.share,
-                    label: 'Del',
+                    label: localizations.shareButtonLabel,
                     color: AppColors.success,
                     onTap: () => _shareInvitation(code, kennelName),
                   ),
@@ -1136,7 +1148,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
         actions: [
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Ferdig'),
+            child: Text(localizations.finishedButton),
           ),
         ],
       ),
@@ -1178,20 +1190,9 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }
 
   Future<void> _sendEmailInvitation(String code, String kennelName) async {
-    final subject = Uri.encodeComponent('Invitasjon til $kennelName på Breedly');
-    final body = Uri.encodeComponent(
-      'Hei!\n\n'
-      'Du har blitt invitert til å bli med i $kennelName på Breedly-appen.\n\n'
-      'Din invitasjonskode er: $code\n\n'
-      'Slik blir du med:\n'
-      '1. Last ned Breedly-appen hvis du ikke har den\n'
-      '2. Logg inn eller opprett en konto\n'
-      '3. Gå til Innstillinger → Kennel-administrasjon\n'
-      '4. Trykk på "Bli med i kennel"\n'
-      '5. Skriv inn koden: $code\n\n'
-      'Koden er gyldig i 7 dager.\n\n'
-      'Velkommen!\n'
-    );
+    final localizations = AppLocalizations.of(context)!;
+    final subject = Uri.encodeComponent(localizations.invitationEmailSubject(kennelName));
+    final body = Uri.encodeComponent(localizations.invitationEmailBody(kennelName, code));
     
     final emailUri = Uri.parse('mailto:?subject=$subject&body=$body');
     
@@ -1201,35 +1202,32 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Kunne ikke åpne e-postklient')),
+            SnackBar(content: Text(localizations.couldNotOpenEmail)),
           );
         }
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil ved åpning av e-post: $e')),
+          SnackBar(content: Text(localizations.errorOpeningEmail(e.toString()))),
         );
       }
     }
   }
 
   Future<void> _shareInvitation(String code, String kennelName) async {
-    final message = 
-      'Du har blitt invitert til $kennelName på Breedly!\n\n'
-      '🐕 Invitasjonskode: $code\n\n'
-      'Åpne Breedly-appen, gå til Innstillinger → Kennel-administrasjon → "Bli med i kennel" og skriv inn koden.\n\n'
-      'Koden er gyldig i 7 dager.';
+    final localizations = AppLocalizations.of(context)!;
+    final message = localizations.invitationShareMessage(kennelName, code);
     
     try {
       await Share.share(
         message,
-        subject: 'Invitasjon til $kennelName på Breedly',
+        subject: localizations.invitationEmailSubject(kennelName),
       );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil ved deling: $e')),
+          SnackBar(content: Text(localizations.errorSharing(e.toString()))),
         );
       }
     }

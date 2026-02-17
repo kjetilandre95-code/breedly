@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class GalleryScreen extends StatefulWidget {
   final Litter litter;
@@ -20,9 +21,10 @@ class GalleryScreen extends StatefulWidget {
 class _GalleryScreenState extends State<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: '${widget.litter.damName} - Bildegalleri',
+        title: l10n.photoGalleryTitle(widget.litter.damName),
         context: context,
       ),
       body: SafeArea(
@@ -52,16 +54,16 @@ class _GalleryScreenState extends State<GalleryScreen> {
                       ),
                     ),
                     const SizedBox(height: AppSpacing.xxl),
-                    const Text(
-                      'Ingen bilder ennå',
-                      style: TextStyle(
+                    Text(
+                      l10n.noImagesYet,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      'Trykk på + for å legge til bilder',
+                      l10n.tapToAddPhotos,
                       style: TextStyle(
                         color: context.colors.textMuted,
                         fontSize: 15,
@@ -146,10 +148,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
   }
 
   void _showImageDetail(BuildContext context, GalleryImage image) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Bildedetaljer'),
+        title: Text(l10n.imageDetails),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -169,11 +172,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
-              Text('Dato: ${DateFormat('yyyy-MM-dd HH:mm').format(image.dateAdded)}'),
-              Text('Filstørrelse: ${(image.fileSize / 1024 / 1024).toStringAsFixed(2)} MB'),
+              Text(l10n.dateWithValue(DateFormat('yyyy-MM-dd HH:mm').format(image.dateAdded))),
+              Text(l10n.fileSizeLabel((image.fileSize / 1024 / 1024).toStringAsFixed(2))),
               if (image.description != null) ...[
                 const SizedBox(height: AppSpacing.sm),
-                Text('Beskrivelse: ${image.description}'),
+                Text(l10n.descriptionWithValue(image.description!)),
               ],
             ],
           ),
@@ -181,11 +184,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
         actions: [
           TextButton(
             onPressed: () => _editImageDescription(context, image),
-            child: const Text('Rediger'),
+            child: Text(l10n.edit),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Lukk'),
+            child: Text(l10n.close),
           ),
         ],
       ),
@@ -193,21 +196,22 @@ class _GalleryScreenState extends State<GalleryScreen> {
   }
 
   void _editImageDescription(BuildContext context, GalleryImage image) {
+    final l10n = AppLocalizations.of(context)!;
     final descriptionController = TextEditingController(text: image.description);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rediger bildenotater'),
+        title: Text(l10n.editImageNotes),
         content: TextField(
           controller: descriptionController,
-          decoration: const InputDecoration(labelText: 'Beskrivelse'),
+          decoration: InputDecoration(labelText: l10n.descriptionLabel),
           maxLines: 3,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -216,10 +220,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
               Navigator.pop(context);
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Bildenotater oppdatert')),
+                SnackBar(content: Text(l10n.imageNotesUpdated)),
               );
             },
-            child: const Text('Lagre'),
+            child: Text(l10n.save),
           ),
         ],
       ),
@@ -227,15 +231,16 @@ class _GalleryScreenState extends State<GalleryScreen> {
   }
 
   void _deleteImage(GalleryImage image) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett bilde'),
-        content: const Text('Er du sikker på at du vil slette dette bildet?'),
+        title: Text(l10n.deleteImage),
+        content: Text(l10n.confirmDeleteImage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -243,11 +248,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Bilde slettet')),
+                  SnackBar(content: Text(l10n.imageDeleted)),
                 );
               }
             },
-            child: const Text('Slett'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

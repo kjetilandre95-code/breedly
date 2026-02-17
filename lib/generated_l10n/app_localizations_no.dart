@@ -1305,14 +1305,14 @@ class AppLocalizationsNo extends AppLocalizations {
   String get groupFinal => 'Gruppefinale';
 
   @override
-  String get deleteMeasurement => 'Slett måling?';
+  String get deleteMeasurement => 'Slette måling?';
 
   @override
   String get confirmDeleteMeasurement =>
       'Er du sikker på at du vil slette denne målingen?';
 
   @override
-  String get deleteVaccine => 'Slett vaksine?';
+  String get deleteVaccine => 'Slette vaksine?';
 
   @override
   String confirmDeleteVaccine(String name) {
@@ -1509,11 +1509,11 @@ class AppLocalizationsNo extends AppLocalizations {
   String get temperatureMeasurementRegistered => 'Temperaturmåling registrert';
 
   @override
-  String get deleteMating => 'Slett parring';
+  String get deleteMating => 'Slett paring';
 
   @override
   String get confirmDeleteMating =>
-      'Er du sikker på at du vil slette denne parringen?';
+      'Er du sikker på at du vil slette denne paringen?';
 
   @override
   String get yearsOld => 'år';
@@ -1617,7 +1617,7 @@ class AppLocalizationsNo extends AppLocalizations {
   String get selectSire => 'Velg far';
 
   @override
-  String get commonTests => 'Vanlige tester';
+  String get commonTests => 'Vanlige tester:';
 
   @override
   String get testName => 'Testnavn';
@@ -2085,7 +2085,7 @@ class AppLocalizationsNo extends AppLocalizations {
   }
 
   @override
-  String errorSharing(Object error) {
+  String errorSharing(String error) {
     return 'Feil ved deling: $error';
   }
 
@@ -2607,4 +2607,2390 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get gen4MMMDam => 'Mormors mors mor';
+
+  @override
+  String get testPedigreeScanner => 'Test stamtavleskanner';
+
+  @override
+  String get scanResult => 'Skanneresultat';
+
+  @override
+  String totalDogsFound(int count) {
+    return 'Totalt funnet: $count hunder';
+  }
+
+  @override
+  String scanSuccessful(String value) {
+    return 'Vellykket: $value';
+  }
+
+  @override
+  String get scanConfidence => 'Konfidens';
+
+  @override
+  String get testInstructions => 'Testinstruksjoner';
+
+  @override
+  String get testingScannerInfo => 'Tester stamtavleskanner';
+
+  @override
+  String get scannerUsesInfo => 'Denne funksjonen bruker Google ML Kit til:';
+
+  @override
+  String get readTextFromImages => 'Lese tekst fra bilder (OCR)';
+
+  @override
+  String get findRegistrationNumbers => 'Finne registreringsnumre';
+
+  @override
+  String get identifyDogNames => 'Identifisere hundenavn';
+
+  @override
+  String get recognizeParents => 'Gjenkjenne foreldre (Far/Mor)';
+
+  @override
+  String get extractBirthDates => 'Hente ut fødselsdatoer';
+
+  @override
+  String get tipClearImage =>
+      'Tips: Bruk et tydelig bilde av en stamtavle for best resultat.';
+
+  @override
+  String get step1TakePhoto => 'Ta et bilde av en stamtavle';
+
+  @override
+  String get step2WaitProcessing => 'Vent mens ML Kit behandler bildet';
+
+  @override
+  String get step3SeeResults => 'Se resultater og nøyaktighet';
+
+  @override
+  String get step4EditData => 'Rediger data om nødvendig';
+
+  @override
+  String get step5SaveDogs => 'Lagre hund(er) i databasen';
+
+  @override
+  String get exampleDataRecognized => 'Eksempeldata som kan gjenkjennes';
+
+  @override
+  String get keywords => 'Nøkkelord';
+
+  @override
+  String get debugInfo => 'Feilsøkingsinformasjon';
+
+  @override
+  String get parents => 'Foreldre';
+
+  @override
+  String get grandparents => 'Besteforeldre';
+
+  @override
+  String dogsFound(int count) {
+    return '$count hunder funnet';
+  }
+
+  @override
+  String get dogAlreadyExists => 'Hunden finnes allerede';
+
+  @override
+  String get whatDoYouWantToDo => 'Hva vil du gjøre?';
+
+  @override
+  String get createNew => 'Opprett ny';
+
+  @override
+  String get useExisting => 'Bruk eksisterende';
+
+  @override
+  String get updateData => 'Oppdater data';
+
+  @override
+  String dogAddedWithPedigree(String name, int count) {
+    return '$name lagt til med stamtavle ($count hunder totalt)';
+  }
+
+  @override
+  String get dogUpdated => 'Hund oppdatert';
+
+  @override
+  String get dateOfDeathOptional => 'Dødsdato (valgfritt)';
+
+  @override
+  String get noneSelected => 'Ingen valgt';
+
+  @override
+  String get puppyAdded => 'Valp lagt til';
+
+  @override
+  String get puppyNameLabel => 'Valpens navn';
+
+  @override
+  String get birthWeightGrams => 'Fødselsvekt (gram)';
+
+  @override
+  String get birthNotes => 'Fødselsnotater (f.eks. assistanse nødvendig)';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get healthAndDocumentation => 'Helse og dokumentasjon';
+
+  @override
+  String get vaccinated => 'Vaksinert';
+
+  @override
+  String get dewormed => 'Ormekur';
+
+  @override
+  String get microchipped => 'Mikrochippet';
+
+  @override
+  String get savePuppy => 'Lagre valp';
+
+  @override
+  String get contracts => 'Kontrakter';
+
+  @override
+  String get purchaseContracts => 'Kjøpskontrakter';
+
+  @override
+  String get reservations => 'Reservasjoner';
+
+  @override
+  String get breedingContracts => 'Avlskontrakter';
+
+  @override
+  String get coOwnership => 'Sameie';
+
+  @override
+  String get fosterContracts => 'Fosterkontrakter';
+
+  @override
+  String get purchaseContractDeleted => 'Kjøpskontrakt slettet';
+
+  @override
+  String get reservationContractDeleted => 'Reservasjonskontrakt slettet';
+
+  @override
+  String get breedingContractDeleted => 'Avlskontrakt slettet';
+
+  @override
+  String get coOwnershipContractDeleted => 'Sameiekontrakt slettet';
+
+  @override
+  String get fosterContractDeleted => 'Fosterkontrakt slettet';
+
+  @override
+  String get selectSireAndDam => 'Velg far og mor';
+
+  @override
+  String get enterStudFee => 'Oppgi dekningsavgift';
+
+  @override
+  String errorGenerating(String error) {
+    return 'Feil ved generering: $error';
+  }
+
+  @override
+  String get contractGenerated => 'Kontrakt generert!';
+
+  @override
+  String get selectStud => 'Velg avlshann';
+
+  @override
+  String get studOwnerName => 'Hannhundens eier (navn)';
+
+  @override
+  String get selectDamForContract => 'Velg tispe';
+
+  @override
+  String get damOwnerName => 'Tispens eier (navn)';
+
+  @override
+  String get amountNok => 'Beløp (NOK)';
+
+  @override
+  String get paymentTermsHint => 'F.eks. \"Betaling ved paring\"';
+
+  @override
+  String get additionalTermsHint => 'Legg til spesielle vilkår...';
+
+  @override
+  String get searchBuyer => 'Søk kjøper...';
+
+  @override
+  String get removeFilter => 'Fjern filter';
+
+  @override
+  String get allLitters => 'Alle kull';
+
+  @override
+  String get reservationRemoved => 'Reservasjon fjernet';
+
+  @override
+  String get pleaseSelectPuppy => 'Vennligst velg en valp';
+
+  @override
+  String get deleteDog => 'Slett hund';
+
+  @override
+  String get addHeatDate => 'Legg til løpetid';
+
+  @override
+  String get createBreedingContract => 'Opprett kontrakt for paringstjenester';
+
+  @override
+  String get coOwnershipAgreement => 'Sameieavtale';
+
+  @override
+  String get createCoOwnershipAgreement => 'Opprett avtale for delt eierskap';
+
+  @override
+  String get fosterAgreement => 'Fosteravtale';
+
+  @override
+  String get createFosterAgreement => 'Opprett avtale for fosterhjem';
+
+  @override
+  String get heatDateAdded => 'Løpetidsdato lagt til';
+
+  @override
+  String get confirmDeleteHeatDate =>
+      'Er du sikker på at du vil slette denne løpetidsdatoen?';
+
+  @override
+  String get heatDateDeleted => 'Løpetidsdato slettet';
+
+  @override
+  String get addChampionship => 'Legg til championat';
+
+  @override
+  String get enterOtherTitle => 'Skriv inn annen tittel';
+
+  @override
+  String get selectFromList => 'Velg fra liste';
+
+  @override
+  String get titleAlreadyRegistered => 'Denne tittelen er allerede registrert';
+
+  @override
+  String get removeChampionship => 'Fjern championat';
+
+  @override
+  String confirmRemoveChampionship(String title) {
+    return 'Er du sikker på at du vil fjerne \"$title\"?';
+  }
+
+  @override
+  String get addMating => 'Legg til paring';
+
+  @override
+  String get externalDam => 'Ekstern tispe';
+
+  @override
+  String get matingAdded => 'Paring lagt til';
+
+  @override
+  String get editMating => 'Rediger paring';
+
+  @override
+  String get matingUpdated => 'Paring oppdatert';
+
+  @override
+  String get matingDeleted => 'Paring slettet';
+
+  @override
+  String healthTitle(String name) {
+    return 'Helse - $name';
+  }
+
+  @override
+  String get healthStatusTab => 'Helsestatus';
+
+  @override
+  String get vaccinesTab => 'Vaksiner';
+
+  @override
+  String get vetTab => 'Veterinær';
+
+  @override
+  String get treatmentsTab => 'Behandlinger';
+
+  @override
+  String get dnaTestsTab => 'DNA-tester';
+
+  @override
+  String get weightTab => 'Vekt';
+
+  @override
+  String get hormonesTab => 'Hormoner';
+
+  @override
+  String get addHealthInfo => 'Legg til helseinformasjon';
+
+  @override
+  String get healthInfoNotFound => 'Helseinformasjon ikke funnet';
+
+  @override
+  String get addVaccine => 'Legg til vaksine';
+
+  @override
+  String get deleteHealthInfo => 'Slette helseinformasjon?';
+
+  @override
+  String get offlineChangesLocal => 'Frakoblet – endringer lagret lokalt';
+
+  @override
+  String get registrationNumberColon => 'Registreringsnummer:';
+
+  @override
+  String get registrationNumberOptional => 'Registreringsnummer (valgfritt)';
+
+  @override
+  String get addPuppy => 'Legg til valp';
+
+  @override
+  String get birthTimeLabel => 'Fødselstidspunkt';
+
+  @override
+  String get birthTimeOptional => 'Fødselstidspunkt (valgfritt)';
+
+  @override
+  String get pleaseEnterColor => 'Vennligst skriv inn farge';
+
+  @override
+  String dogWasDeleted(String name) {
+    return '«$name» ble slettet';
+  }
+
+  @override
+  String couldNotDelete(String error) {
+    return 'Kunne ikke slette: $error';
+  }
+
+  @override
+  String confirmDeleteDogMessage(String name) {
+    return 'Er du sikker på at du vil slette «$name»?\n\nDette fjerner hunden og alle tilknyttede data. Handlingen kan ikke angres.';
+  }
+
+  @override
+  String get healthInformation => 'Helseopplysninger';
+
+  @override
+  String get noHealthInfoRegistered => 'Ingen helseopplysninger registrert';
+
+  @override
+  String addHealthInfoFor(String name) {
+    return 'Legg til helseopplysninger for $name';
+  }
+
+  @override
+  String get healthStatus => 'Helsestatus';
+
+  @override
+  String get remarks => 'Merknader';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Dato: $date';
+  }
+
+  @override
+  String get noVaccinesRegistered => 'Ingen vaksiner registrert';
+
+  @override
+  String addVaccinesFor(String name) {
+    return 'Legg til vaksiner for $name';
+  }
+
+  @override
+  String takenWithDate(String value) {
+    return 'Tatt: $value';
+  }
+
+  @override
+  String get overdueLabel => 'Forfalt';
+
+  @override
+  String get alertLabel => 'Varsel';
+
+  @override
+  String nextDoseWithDate(String value) {
+    return 'Neste dose: $value';
+  }
+
+  @override
+  String veterinarianWithName(String value) {
+    return 'Veterinær: $value';
+  }
+
+  @override
+  String get noProgesteroneMeasurements =>
+      'Ingen progesteronmålinger registrert';
+
+  @override
+  String addProgesteroneTracking(String name) {
+    return 'Legg til progesteronmålinger for å følge ${name}s syklus';
+  }
+
+  @override
+  String get confirmDeleteProgesterone =>
+      'Er du sikker på at du vil slette denne progesteronmålingen?';
+
+  @override
+  String get vetVisits => 'Veterinærbesøk';
+
+  @override
+  String get addVisit => 'Legg til besøk';
+
+  @override
+  String get noVetVisitsRegistered => 'Ingen veterinærbesøk registrert';
+
+  @override
+  String addVetVisitsFor(String name) {
+    return 'Legg til veterinærbesøk for $name';
+  }
+
+  @override
+  String get visitTypeRoutine => 'Rutinekontroll';
+
+  @override
+  String get visitTypeEmergency => 'Akutt';
+
+  @override
+  String get visitTypeSurgery => 'Operasjon';
+
+  @override
+  String get visitTypeVaccination => 'Vaksinering';
+
+  @override
+  String get visitTypeFollowup => 'Oppfølging';
+
+  @override
+  String get visitTypeOther => 'Annet';
+
+  @override
+  String reasonWithValue(String value) {
+    return 'Årsak: $value';
+  }
+
+  @override
+  String diagnosisWithValue(String value) {
+    return 'Diagnose: $value';
+  }
+
+  @override
+  String treatmentWithValue(String value) {
+    return 'Behandling: $value';
+  }
+
+  @override
+  String costWithValue(String value) {
+    return 'Kostnad: $value kr';
+  }
+
+  @override
+  String followUpWithDate(String value) {
+    return 'Oppfølging: $value';
+  }
+
+  @override
+  String get addTreatment => 'Legg til behandling';
+
+  @override
+  String get noTreatmentsRegistered => 'Ingen behandlinger registrert';
+
+  @override
+  String get addTreatmentsSubtitle =>
+      'Legg til ormebehandlinger, lopper/flått osv.';
+
+  @override
+  String get treatmentTypeDeworming => 'Ormekur';
+
+  @override
+  String get treatmentTypeFlea => 'Loppebehandling';
+
+  @override
+  String get treatmentTypeTick => 'Flåttbehandling';
+
+  @override
+  String get treatmentTypeMedication => 'Medisin';
+
+  @override
+  String get treatmentTypeSupplement => 'Kosttilskudd';
+
+  @override
+  String get treatmentTypeOther => 'Annet';
+
+  @override
+  String get registerNewDose => 'Registrer ny dose';
+
+  @override
+  String lastGivenWithDate(String value) {
+    return 'Sist gitt: $value';
+  }
+
+  @override
+  String dosageWithValue(String value) {
+    return 'Dosering: $value';
+  }
+
+  @override
+  String manufacturerWithValue(String value) {
+    return 'Produsent: $value';
+  }
+
+  @override
+  String nextWithDate(String value) {
+    return 'Neste: $value';
+  }
+
+  @override
+  String newDoseRegistered(String name) {
+    return 'Ny dose av $name registrert';
+  }
+
+  @override
+  String get noDnaTestsRegistered => 'Ingen DNA-tester registrert';
+
+  @override
+  String get addDnaTest => 'Legg til DNA-test';
+
+  @override
+  String addGeneticTestsFor(String name) {
+    return 'Legg til genetiske tester for $name';
+  }
+
+  @override
+  String testedWithDate(String value) {
+    return 'Testet: $value';
+  }
+
+  @override
+  String laboratoryWithValue(String value) {
+    return 'Laboratorium: $value';
+  }
+
+  @override
+  String certificateNoWithValue(String value) {
+    return 'Sertifikatnr: $value';
+  }
+
+  @override
+  String get weightHistory => 'Vekthistorikk';
+
+  @override
+  String get addWeight => 'Legg til vekt';
+
+  @override
+  String get noWeightRecords => 'Ingen vektregistreringer';
+
+  @override
+  String trackWeightFor(String name) {
+    return 'Følg ${name}s vektutvikling';
+  }
+
+  @override
+  String get currentWeight => 'Nåværende vekt';
+
+  @override
+  String get changeLabel => 'Endre';
+
+  @override
+  String get deleteWeightRecord => 'Slett vektregistrering?';
+
+  @override
+  String get confirmDeleteWeightRecord =>
+      'Er du sikker på at du vil slette denne registreringen?';
+
+  @override
+  String get confirmDeleteHealthInfo =>
+      'Er du sikker på at du vil slette disse helseopplysningene?';
+
+  @override
+  String get hdDateLabel => 'HD dato';
+
+  @override
+  String get adGrade0 => 'Grad 0 (Fri)';
+
+  @override
+  String get adGrade1 => 'Grad 1 (Svak)';
+
+  @override
+  String get adGrade2 => 'Grad 2 (Moderat)';
+
+  @override
+  String get adGrade3 => 'Grad 3 (Sterk)';
+
+  @override
+  String get selectAdStatus => 'Velg AD Status';
+
+  @override
+  String get noneRemoveSelection => 'Ingen (fjern valg)';
+
+  @override
+  String get adDateLabel => 'AD dato';
+
+  @override
+  String get patellaGrade0 => 'Grad 0 (Normal)';
+
+  @override
+  String get patellaGrade1 => 'Grad 1';
+
+  @override
+  String get patellaGrade2 => 'Grad 2';
+
+  @override
+  String get patellaGrade3 => 'Grad 3';
+
+  @override
+  String get selectPatellaStatus => 'Velg Patella Status';
+
+  @override
+  String get patellaDateLabel => 'Patella dato';
+
+  @override
+  String selectStatus(String label) {
+    return 'Velg $label';
+  }
+
+  @override
+  String get vaccineDialogTitle => 'Vaksin';
+
+  @override
+  String get vaccineNameHint => 'Vaksin navn (f.eks. DHPPL, Rabies)';
+
+  @override
+  String takenDateWithValue(String value) {
+    return 'Tatt dato: $value';
+  }
+
+  @override
+  String nextDateWithValue(String value) {
+    return 'Neste dato: $value';
+  }
+
+  @override
+  String get notSet => 'Ikke satt';
+
+  @override
+  String get enableReminder => 'Aktiver varsel';
+
+  @override
+  String get veterinarianOptional => 'Veterinær (valgfritt)';
+
+  @override
+  String get remarksOptional => 'Merknader (valgfritt)';
+
+  @override
+  String get pleaseEnterVaccineName => 'Vennligst angi vaksin navn';
+
+  @override
+  String get addProgesteroneMeasurement => 'Legg til progesteronmåling';
+
+  @override
+  String get editMeasurementTitle => 'Rediger måling';
+
+  @override
+  String get progesteroneValueLabel => 'Progesteronverdi (ng/mL) *';
+
+  @override
+  String get progesteroneHint => 'f.eks. 5.2';
+
+  @override
+  String get invalidProgesteroneValue =>
+      'Vennligst angi en gyldig progesteronverdi';
+
+  @override
+  String get newVetVisit => 'Nytt veterinærbesøk';
+
+  @override
+  String get editVisit => 'Rediger besøk';
+
+  @override
+  String get visitTypeLabel => 'Type besøk';
+
+  @override
+  String get reasonLabel => 'Årsak';
+
+  @override
+  String get diagnosisLabel => 'Diagnose';
+
+  @override
+  String get treatmentFieldLabel => 'Behandling';
+
+  @override
+  String get prescriptionLabel => 'Resept/medisin';
+
+  @override
+  String get veterinarianFieldLabel => 'Veterinær';
+
+  @override
+  String get clinicLabel => 'Klinikk';
+
+  @override
+  String get costKrLabel => 'Kostnad (kr)';
+
+  @override
+  String get newTreatment => 'Ny behandling';
+
+  @override
+  String get editTreatment => 'Rediger behandling';
+
+  @override
+  String get productNameLabel => 'Produktnavn*';
+
+  @override
+  String get dateGivenLabel => 'Dato gitt';
+
+  @override
+  String get dosageLabel => 'Dosering';
+
+  @override
+  String get manufacturerLabel => 'Produsent';
+
+  @override
+  String get batchNumberLabel => 'Batchnummer';
+
+  @override
+  String get intervalDaysLabel => 'Intervall (dager)';
+
+  @override
+  String get newDnaTest => 'Ny DNA-test';
+
+  @override
+  String get editDnaTest => 'Rediger DNA-test';
+
+  @override
+  String get testNameLabel => 'Testnavn*';
+
+  @override
+  String get testDateLabel => 'Testdato';
+
+  @override
+  String get registerWeight => 'Registrer vekt';
+
+  @override
+  String get editWeight => 'Rediger vekt';
+
+  @override
+  String get weightKgLabel => 'Vekt (kg)*';
+
+  @override
+  String get invalidWeight => 'Ugyldig vekt';
+
+  @override
+  String noMatchesForQuery(String query) {
+    return 'Ingen treff på \"$query\"';
+  }
+
+  @override
+  String get noBuyersForLitter => 'Ingen kjøpere for dette kullet';
+
+  @override
+  String get filterByLitter => 'Filtrer på kull';
+
+  @override
+  String get deliveredStatus => 'Levert';
+
+  @override
+  String get withReservationSection => 'Med reservasjon';
+
+  @override
+  String get interestedParties => 'Interessenter';
+
+  @override
+  String puppyLabelWithName(String name) {
+    return 'Valp: $name';
+  }
+
+  @override
+  String get subscription => 'Abonnement';
+
+  @override
+  String get manageSubscription => 'Administrer ditt Breedly-abonnement';
+
+  @override
+  String get promoCode => 'Kampanjekode';
+
+  @override
+  String get lifetimeAccess => 'Livstid';
+
+  @override
+  String subscriptionExpiresInfo(String source, String expiry) {
+    return '$source • Utløper: $expiry';
+  }
+
+  @override
+  String get activeStatus => 'Aktiv';
+
+  @override
+  String get purchasesRestored => 'Kjøp gjenopprettet.';
+
+  @override
+  String get restorePurchases => 'Gjenopprett kjøp';
+
+  @override
+  String get usingFreeVersion => 'Du bruker gratisversjonen';
+
+  @override
+  String get upgradeForUnlimited =>
+      'Oppgrader for ubegrenset tilgang til alle funksjoner.';
+
+  @override
+  String get upgradeToPremium => 'Oppgrader til Premium';
+
+  @override
+  String get premiumRestored => 'Premium gjenopprettet!';
+
+  @override
+  String get noPreviousPurchases => 'Ingen tidligere kjøp funnet.';
+
+  @override
+  String get developerAndTesting => 'Utvikler & Testing';
+
+  @override
+  String get testNewFeatures => 'Test nye funksjoner';
+
+  @override
+  String get pedigreeScannerSubtitleSettings =>
+      'Google ML Kit OCR - Skann stamtavler med AI';
+
+  @override
+  String get newBadge => 'NY';
+
+  @override
+  String get noCertCacibYet => 'Ingen Cert/Cacib ennå';
+
+  @override
+  String judgeStatsSummary(int showCount, int excellentCount, int ckCount) {
+    return '$showCount utstillinger • $excellentCount Excellent • $ckCount CK';
+  }
+
+  @override
+  String get shareResultCard => 'Del resultatkort';
+
+  @override
+  String groupJudgeWithName(String name) {
+    return 'Gruppedommer: $name';
+  }
+
+  @override
+  String bisJudgeWithName(String name) {
+    return 'BIS-dommer: $name';
+  }
+
+  @override
+  String get noPlacementWithQuality =>
+      'Ingen plassering eller sertifikater tilgjengelig med denne premiegraden';
+
+  @override
+  String get requiresHighlyPromising => 'Krever Særdeles lovende';
+
+  @override
+  String get qualifiesForBestPuppy =>
+      'Kvalifiserer for beste hannvalp/tispevalp';
+
+  @override
+  String get requiresExcellent => 'Krever Excellent';
+
+  @override
+  String get bestMalePuppy => 'Beste hannvalp';
+
+  @override
+  String get bestFemalePuppy => 'Beste tispevalp';
+
+  @override
+  String get qualifiedForBIRBIMPuppy => 'Kvalifisert for BIR/BIM Valp';
+
+  @override
+  String get requiresFirstWithHP => 'Krever 1. plass med HP for å delta';
+
+  @override
+  String get requiresBestPuppy => 'Krever å være beste hannvalp/tispevalp';
+
+  @override
+  String get requiresBHKBTKFirstNordic =>
+      'BHK/BTK 1 kreves for BIR/BIM i Norden';
+
+  @override
+  String get yesWon => 'Ja - Vant';
+
+  @override
+  String get groupJudge => 'Gruppedommer';
+
+  @override
+  String get bisJudge => 'BIS-dommer';
+
+  @override
+  String get resultSaved => 'Resultat lagret!';
+
+  @override
+  String get hpAward => 'HP (Hederspris / Hopeful Puppy)';
+
+  @override
+  String get birBimPuppy => 'BIR/BIM Valp';
+
+  @override
+  String get classAbbrev => 'Kl';
+
+  @override
+  String get bestMaleAbbrev => 'BHK';
+
+  @override
+  String get bestFemaleAbbrev => 'BTK';
+
+  @override
+  String get bestOfSexAbbrev => 'BH/BT';
+
+  @override
+  String get enterPrice => 'Angi pris';
+
+  @override
+  String get contractSaved => 'Kontrakt lagret';
+
+  @override
+  String errorSaving(String error) {
+    return 'Feil ved lagring: $error';
+  }
+
+  @override
+  String get buyerInformation => 'Kjøperinformasjon';
+
+  @override
+  String get contractDetails => 'Kontraktdetaljer';
+
+  @override
+  String get depositOptional => 'Depositum (valgfritt)';
+
+  @override
+  String get amountAlreadyPaidAsAdvance => 'Beløp allerede betalt som forskudd';
+
+  @override
+  String get contractNumberOptional => 'Kontraktnummer (valgfritt)';
+
+  @override
+  String get paymentTermsExampleHint => 'F.eks. Full betaling ved opphenting';
+
+  @override
+  String get deliveryLocationOptional => 'Overleveringssted (valgfritt)';
+
+  @override
+  String get deliveryLocationHint => 'F.eks. Oppdretters adresse';
+
+  @override
+  String get contractTerms => 'Kontraktvilkår';
+
+  @override
+  String get selectTermsToInclude =>
+      'Velg hvilke vilkår som skal inkluderes i kontrakten';
+
+  @override
+  String get termGeneral => 'Generelt';
+
+  @override
+  String get termGeneralSubtitle => 'Grunnleggende kjøps- og salgsvilkår';
+
+  @override
+  String get termHealth => 'Helse';
+
+  @override
+  String get termHealthSubtitle => 'Garanti om frisk valp og veterinærkontroll';
+
+  @override
+  String get termVaccinations => 'Vaksinasjoner og behandlinger';
+
+  @override
+  String get termVaccinationsSubtitle =>
+      'Vaksinert og avmasket iht. retningslinjer';
+
+  @override
+  String get termReturn => 'Tilbakelevering';
+
+  @override
+  String get termReturnSubtitle => 'Selger kontaktes først ved omplassering';
+
+  @override
+  String get termResponsibility => 'Ansvar';
+
+  @override
+  String get termResponsibilitySubtitle =>
+      'Kjøper overtar ansvar fra overlevering';
+
+  @override
+  String get termRegistration => 'Registrering';
+
+  @override
+  String get termRegistrationSubtitle => 'Valpen registreres på ny eier';
+
+  @override
+  String get returnClauseIncluded => 'Returklausul inkludert';
+
+  @override
+  String get documentation => 'Dokumentasjon';
+
+  @override
+  String get pedigreeDeliveredLabel => 'Stamtavle leveres';
+
+  @override
+  String get pedigreeDeliveredSubtitle =>
+      'Stamtavle følger med ved overlevering';
+
+  @override
+  String get vetCertificateAttached => 'Helseattest vedlagt';
+
+  @override
+  String get vetCertificateAttachedSubtitle => 'Veterinærattest på helsestatus';
+
+  @override
+  String get insuranceTransferred => 'Forsikring overføres';
+
+  @override
+  String get insuranceTransferredSubtitle =>
+      'Valpens forsikring overføres til kjøper';
+
+  @override
+  String get specialTermsOptional => 'Spesielle vilkår (valgfritt)';
+
+  @override
+  String get specialTermsHint =>
+      'Eventuelle spesielle avtaler mellom partene...';
+
+  @override
+  String get saveContract => 'Lagre kontrakt';
+
+  @override
+  String get downloadAsPdf => 'Last ned som PDF';
+
+  @override
+  String pdfSavedAt(String path) {
+    return 'PDF lagret:\n$path';
+  }
+
+  @override
+  String errorExporting(String error) {
+    return 'Feil ved eksport: $error';
+  }
+
+  @override
+  String get malePuppy => 'Hannvalp';
+
+  @override
+  String get femalePuppy => 'Tispevalp';
+
+  @override
+  String get coOwnershipContractCreated => 'Medeieravtale opprettet!';
+
+  @override
+  String get dog => 'Hund';
+
+  @override
+  String get ownershipShare => 'Eierandel';
+
+  @override
+  String get sharedResponsibility => 'Delt ansvar';
+
+  @override
+  String get rightsAndResponsibilities => 'Rettigheter og ansvar';
+
+  @override
+  String get additionalTermsOptional => 'Tilleggsvilkår (valgfritt)';
+
+  @override
+  String get additionalTermsHintText =>
+      'Skriv inn eventuelle tilleggsvilkår...';
+
+  @override
+  String get generateCoOwnershipContract => 'Generer medeieravtale';
+
+  @override
+  String get fosterContractCreated => 'Fôrvertsavtale opprettet!';
+
+  @override
+  String get contractPeriod => 'Avtaleperiode';
+
+  @override
+  String get hasDefiniteEndDate => 'Har bestemt sluttdato';
+
+  @override
+  String get selectDate => 'Velg dato';
+
+  @override
+  String get contractTermsSection => 'Vilkår';
+
+  @override
+  String get breedingTerms => 'Avlsvilkår';
+
+  @override
+  String get generateFosterContract => 'Generer fôrvertsavtale';
+
+  @override
+  String get reservationContractCreated => 'Reservasjonsavtale opprettet!';
+
+  @override
+  String get reservationContractUpdated => 'Reservasjonsavtale oppdatert!';
+
+  @override
+  String get prices => 'Priser';
+
+  @override
+  String get reservationFeeLabel => 'Reservasjonsgebyr (kr)';
+
+  @override
+  String get totalPriceForPuppy => 'Total pris for valpen (kr)';
+
+  @override
+  String get invalidAmount => 'Ugyldig beløp';
+
+  @override
+  String remainingAmount(String amount) {
+    return 'Restbeløp: kr $amount,-';
+  }
+
+  @override
+  String get remarksHint => 'Skriv inn eventuelle merknader...';
+
+  @override
+  String get generateReservationContract => 'Generer reservasjonsavtale';
+
+  @override
+  String get pdfDownloaded => 'PDF nedlastet';
+
+  @override
+  String dogHeatCycle(String dogName) {
+    return '$dogName - Løpetid';
+  }
+
+  @override
+  String dogExpectedHeat(String dogName) {
+    return '$dogName - Forventet løpetid';
+  }
+
+  @override
+  String dogGaveBirth(String dogName) {
+    return '$dogName fødte';
+  }
+
+  @override
+  String litterDeliveryEvent(String damName) {
+    return 'Levering: $damName kull';
+  }
+
+  @override
+  String get eightWeeksOld => '8 uker gammel';
+
+  @override
+  String get unknownDog => 'Ukjent';
+
+  @override
+  String puppyVaccination(String puppyName, String number) {
+    return '$puppyName - $number. vaksinering';
+  }
+
+  @override
+  String puppyDeworming(String puppyName, String number) {
+    return '$puppyName - $number. ormekur';
+  }
+
+  @override
+  String puppyMicrochip(String puppyName) {
+    return '$puppyName - ID-merking';
+  }
+
+  @override
+  String dogBirthdayAge(String dogName, String age) {
+    return '$dogName fyller $age år';
+  }
+
+  @override
+  String get expectedHeatCycles => 'Løpetid (forventet)';
+
+  @override
+  String get estimatedBirthDate => 'Estimert dato for fødsel';
+
+  @override
+  String get selectKennel => 'Velg kennel';
+
+  @override
+  String get memberSingular => 'medlem';
+
+  @override
+  String get membersPlural => 'medlemmer';
+
+  @override
+  String get membersSection => 'Medlemmer';
+
+  @override
+  String get youLabel => 'Deg';
+
+  @override
+  String get ownerRole => 'Eier';
+
+  @override
+  String get administratorRole => 'Administrator';
+
+  @override
+  String get memberRole => 'Medlem';
+
+  @override
+  String get removeLabel => 'Fjern';
+
+  @override
+  String get pendingInvitations => 'Ventende invitasjoner';
+
+  @override
+  String openInvitationExpires(String days) {
+    return 'Åpen invitasjon • Utløper om $days dager';
+  }
+
+  @override
+  String get codeCopiedToClipboard => 'Kode kopiert til utklippstavle';
+
+  @override
+  String get actionsSection => 'Handlinger';
+
+  @override
+  String get createInvitationCode => 'Opprett invitasjonskode';
+
+  @override
+  String get joinKennelLabel => 'Bli med i kennel';
+
+  @override
+  String get useInvitationCode => 'Bruk invitasjonskode';
+
+  @override
+  String get deleteKennelLabel => 'Slett kennel';
+
+  @override
+  String get kennelNameRequired => 'Kennelnavn *';
+
+  @override
+  String get nameIsRequired => 'Navn er påkrevd';
+
+  @override
+  String get createButton => 'Opprett';
+
+  @override
+  String get enterInvitationCodeMessage =>
+      'Skriv inn invitasjonskoden du har mottatt:';
+
+  @override
+  String get invitationCode => 'Invitasjonskode';
+
+  @override
+  String get invitationCodeHint => 'F.eks. ABC123';
+
+  @override
+  String get joinedKennelSuccess => 'Du er nå med i kennelen!';
+
+  @override
+  String get joinButton => 'Bli med';
+
+  @override
+  String get editKennel => 'Rediger kennel';
+
+  @override
+  String get kennelNameLabel => 'Kennelnavn';
+
+  @override
+  String get kennelUpdated => 'Kennel oppdatert!';
+
+  @override
+  String changeRoleFor(String name) {
+    return 'Endre rolle for $name';
+  }
+
+  @override
+  String get removeMemberQuestion => 'Fjern medlem?';
+
+  @override
+  String confirmRemoveMember(String name) {
+    return 'Er du sikker på at du vil fjerne $name fra kennelen?';
+  }
+
+  @override
+  String get memberRemoved => 'Medlem fjernet';
+
+  @override
+  String get leaveKennelQuestion => 'Forlat kennel?';
+
+  @override
+  String confirmLeaveKennel(String name) {
+    return 'Er du sikker på at du vil forlate $name? Du vil miste tilgang til all data.';
+  }
+
+  @override
+  String get leftKennel => 'Du har forlatt kennelen';
+
+  @override
+  String get leaveButton => 'Forlat';
+
+  @override
+  String get deleteKennelQuestion => 'Slett kennel?';
+
+  @override
+  String confirmDeleteKennel(String name) {
+    return 'Er du HELT sikker på at du vil slette $name? Dette kan ikke angres!';
+  }
+
+  @override
+  String get kennelDeleted => 'Kennel slettet';
+
+  @override
+  String get invitationCodeDescription =>
+      'Du kan opprette en invitasjonskode som andre kan bruke for å bli med i kennelen.';
+
+  @override
+  String get emailOptional => 'E-postadresse (valgfritt)';
+
+  @override
+  String get emailPlaceholder => 'bruker@eksempel.no';
+
+  @override
+  String get leaveEmptyForOpen => 'La stå tom for åpen invitasjon';
+
+  @override
+  String get roleLabel => 'Rolle';
+
+  @override
+  String get canViewAndEdit => 'Kan se og redigere data';
+
+  @override
+  String get canAlsoInvite => 'Kan også invitere medlemmer';
+
+  @override
+  String get createInvitation => 'Opprett invitasjon';
+
+  @override
+  String get invitationCreated => 'Invitasjon opprettet!';
+
+  @override
+  String get shareCodeMessage =>
+      'Del denne koden med personen du vil invitere:';
+
+  @override
+  String get validFor7Days => 'Gyldig i 7 dager';
+
+  @override
+  String get shareInvitationLabel => 'Del invitasjonen:';
+
+  @override
+  String get copyLabel => 'Kopier';
+
+  @override
+  String get emailButtonLabel => 'E-post';
+
+  @override
+  String get shareButtonLabel => 'Del';
+
+  @override
+  String get finishedButton => 'Ferdig';
+
+  @override
+  String invitationEmailSubject(String kennelName) {
+    return 'Invitasjon til $kennelName på Breedly';
+  }
+
+  @override
+  String invitationEmailBody(String kennelName, String code) {
+    return 'Hei!\n\nDu har blitt invitert til å bli med i $kennelName på Breedly-appen.\n\nDin invitasjonskode er: $code\n\nSlik blir du med:\n1. Last ned Breedly-appen hvis du ikke har den\n2. Logg inn eller opprett en konto\n3. Gå til Innstillinger → Kennel-administrasjon\n4. Trykk på \"Bli med i kennel\"\n5. Skriv inn koden: $code\n\nKoden er gyldig i 7 dager.\n\nVelkommen!\n';
+  }
+
+  @override
+  String get couldNotOpenEmail => 'Kunne ikke åpne e-postklient';
+
+  @override
+  String invitationShareMessage(String kennelName, String code) {
+    return 'Du har blitt invitert til $kennelName på Breedly!\n\n🐕 Invitasjonskode: $code\n\nÅpne Breedly-appen, gå til Innstillinger → Kennel-administrasjon → \"Bli med i kennel\" og skriv inn koden.\n\nKoden er gyldig i 7 dager.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Feil: $error';
+  }
+
+  @override
+  String get kennelCreatedSuccess => 'Kennel opprettet!';
+
+  @override
+  String get kennelProfile => 'Kennelprofil';
+
+  @override
+  String get kennelProfileSaved => 'Kennelprofil lagret';
+
+  @override
+  String get kennelInfo => 'Kennelinformasjon';
+
+  @override
+  String get kennelNameFieldLabel => 'Kennelnavn';
+
+  @override
+  String get kennelNameHint => 'F.eks. \"Nordlys Kennel\"';
+
+  @override
+  String get descriptionOptional => 'Beskrivelse (valgfritt)';
+
+  @override
+  String get kennelDescriptionHint => 'Fortell litt om din kennel...';
+
+  @override
+  String get breedsSection => 'Raser';
+
+  @override
+  String get selectBreedsForBreeding => 'Velg rasene du er oppdretter av';
+
+  @override
+  String get tapToSelectBreeds => 'Trykk for å velge raser...';
+
+  @override
+  String get breedSelectedSingular => 'rase valgt';
+
+  @override
+  String get breedsSelectedPlural => 'raser valgt';
+
+  @override
+  String get contactInfo => 'Kontaktinformasjon';
+
+  @override
+  String get phoneOptional => 'Telefon (valgfritt)';
+
+  @override
+  String get addressOptional => 'Adresse (valgfritt)';
+
+  @override
+  String get websiteOptional => 'Nettside (valgfritt)';
+
+  @override
+  String get saveKennelProfile => 'Lagre kennelprofil';
+
+  @override
+  String get selectBreeds => 'Velg raser';
+
+  @override
+  String nSelected(String count) {
+    return '$count valgt';
+  }
+
+  @override
+  String noBreedsFoundFor(String query) {
+    return 'Ingen raser funnet for \"$query\"';
+  }
+
+  @override
+  String get noImagesYet => 'Ingen bilder ennå';
+
+  @override
+  String get tapToAddPhotos => 'Trykk på + for å legge til bilder';
+
+  @override
+  String get imageDetails => 'Bildedetaljer';
+
+  @override
+  String fileSizeLabel(String size) {
+    return 'Filstørrelse: $size MB';
+  }
+
+  @override
+  String descriptionWithValue(String value) {
+    return 'Beskrivelse: $value';
+  }
+
+  @override
+  String get editImageNotes => 'Rediger bildenotater';
+
+  @override
+  String get descriptionLabel => 'Beskrivelse';
+
+  @override
+  String get imageNotesUpdated => 'Bildenotater oppdatert';
+
+  @override
+  String get deleteImage => 'Slett bilde';
+
+  @override
+  String get imageDeleted => 'Bilde slettet';
+
+  @override
+  String get searchPrompt => 'Søk etter hunder, kull, valper eller kjøpere';
+
+  @override
+  String get exportData => 'Eksporter data';
+
+  @override
+  String exportingItem(String item) {
+    return 'Eksporterer $item...';
+  }
+
+  @override
+  String get exportCompleted => 'Eksport fullført!';
+
+  @override
+  String exportError(String error) {
+    return 'Feil ved eksport: $error';
+  }
+
+  @override
+  String itemExported(String item) {
+    return '$item eksportert!';
+  }
+
+  @override
+  String get aboutExport => 'Om eksport';
+
+  @override
+  String get exportDescription =>
+      'Data eksporteres som CSV-filer som kan åpnes i Excel, Google Sheets eller andre regneark-programmer. Filene bruker UTF-8 med BOM for å støtte norske tegn.';
+
+  @override
+  String get exportAll => 'Eksporter alt';
+
+  @override
+  String get orExportIndividually => 'Eller eksporter enkeltvis';
+
+  @override
+  String get exportDogsDesc => 'Alle registrerte hunder med stamtavle-info';
+
+  @override
+  String get exportLittersDesc => 'Alle kull med foreldre og valpestatus';
+
+  @override
+  String get exportPuppiesDesc => 'Alle valper med detaljer og salgsstatus';
+
+  @override
+  String get exportExpensesDesc => 'Alle utgifter sortert etter dato';
+
+  @override
+  String get exportIncomeDesc => 'Alle inntekter sortert etter dato';
+
+  @override
+  String get exportFinancialSummaryDesc => 'Årlig oversikt over resultat';
+
+  @override
+  String get exportLitterStatsDesc => 'Statistikk per rase';
+
+  @override
+  String get allData => 'alle data';
+
+  @override
+  String get noContracts => 'Ingen kontrakter';
+
+  @override
+  String get createPurchaseContractForPuppy =>
+      'Opprett en kjøpekontrakt for denne valpen';
+
+  @override
+  String contractNumberLabel(String number) {
+    return 'Kontrakt nr. $number';
+  }
+
+  @override
+  String get statusDraft => 'Utkast';
+
+  @override
+  String get statusActive => 'Aktiv';
+
+  @override
+  String get statusCompleted => 'Fullført';
+
+  @override
+  String get statusCancelled => 'Kansellert';
+
+  @override
+  String get deleteContract => 'Slett kontrakt';
+
+  @override
+  String get contractDeleted => 'Kontrakt slettet';
+
+  @override
+  String get createdDate => 'Opprettet';
+
+  @override
+  String get purchasedDate => 'Kjøpt';
+
+  @override
+  String get termsLabel => 'Vilkår:';
+
+  @override
+  String get spayNeuterRequired => 'Kastrering/sterilisering påkrevd';
+
+  @override
+  String get newContract => 'Ny kontrakt';
+
+  @override
+  String get fullSalesContract => 'Full salgskontrakt for valpen';
+
+  @override
+  String get reserveWithDeposit => 'Reserver valpen med depositum';
+
+  @override
+  String get reservationAgreement => 'Reservasjonsavtale';
+
+  @override
+  String exportErrorGeneric(String error) {
+    return 'Feil ved eksport: $error';
+  }
+
+  @override
+  String photoGalleryTitle(String damName) {
+    return '$damName - Bildegalleri';
+  }
+
+  @override
+  String get editMenu => 'Rediger';
+
+  @override
+  String get deleteLitterMenu => 'Slett kull';
+
+  @override
+  String get tabPuppies => 'Valper';
+
+  @override
+  String get tabRegistration => 'Registrering';
+
+  @override
+  String get plannedLitterLabel => 'Planlagt kull';
+
+  @override
+  String get litterInfoLabel => 'Kullinfo';
+
+  @override
+  String get damLabel => 'Mor';
+
+  @override
+  String get sireLabel => 'Far';
+
+  @override
+  String get breedLabel => 'Rase';
+
+  @override
+  String get ageLabel => 'Alder';
+
+  @override
+  String get totalPuppiesLabel => 'Totalt valper';
+
+  @override
+  String get malesLabel => 'Hanner';
+
+  @override
+  String get femalesLabel => 'Tisper';
+
+  @override
+  String get matingDateLabel => 'Parringsdato';
+
+  @override
+  String get estimatedDueDateLabel => 'Estimert dato for fødsel';
+
+  @override
+  String get daysUntilWhelpingLabel => 'Dager til valping';
+
+  @override
+  String daysToEstimatedBirth(int days) {
+    return '$days dager til estimert fødsel';
+  }
+
+  @override
+  String get estimatedDatePassed => 'Estimert dato for fødsel har passert';
+
+  @override
+  String get setMatingDateToCalculate =>
+      'Sett parringsdato for å beregne termin';
+
+  @override
+  String get registerBirthButton => 'Registrer fødsel';
+
+  @override
+  String get planningToolsLabel => 'Planleggingsverktøy';
+
+  @override
+  String get temperatureLabel => 'Temperatur';
+
+  @override
+  String get progesteroneLabel => 'Progesteron';
+
+  @override
+  String get editLabel => 'Rediger';
+
+  @override
+  String get birthLabel => 'Fødsel';
+
+  @override
+  String matingDateColon(String date) {
+    return 'Parringsdato: $date';
+  }
+
+  @override
+  String get noMatingDateSet => 'Ingen parringsdato satt';
+
+  @override
+  String get setDateLabel => 'Sett dato';
+
+  @override
+  String estimatedBirthColon(String date) {
+    return 'Estimert fødsel: $date';
+  }
+
+  @override
+  String daysLeft(int days) {
+    return '$days dager igjen';
+  }
+
+  @override
+  String get selectMatingDateLabel => 'Velg parringsdato';
+
+  @override
+  String matingDateSetSnackbar(String matingDate, String dueDate) {
+    return 'Parringsdato satt til $matingDate. Estimert fødsel: $dueDate';
+  }
+
+  @override
+  String get couldNotFindDam => 'Kunne ikke finne tispen';
+
+  @override
+  String get registerBirthTitle => 'Registrer fødsel';
+
+  @override
+  String get litterBornConfirmText =>
+      'Kullet er nå født! Vil du oppdatere fødselsdatoen til i dag?';
+
+  @override
+  String get canThenAddPuppies => 'Du kan deretter legge til valpene manuelt.';
+
+  @override
+  String get cancelLabel => 'Avbryt';
+
+  @override
+  String get registerLabel => 'Registrer';
+
+  @override
+  String get birthRegisteredSnackbar =>
+      'Fødsel registrert! Du kan nå legge til valper.';
+
+  @override
+  String get noPuppiesYet => 'Ingen valper ennå';
+
+  @override
+  String get goToPuppiesTabHint => 'Gå til Valper-fanen for å legge til valper';
+
+  @override
+  String puppiesCount2(int count) {
+    return 'Valper ($count)';
+  }
+
+  @override
+  String get availableLabel => 'Ledig';
+
+  @override
+  String get reservedLabel => 'Reservert';
+
+  @override
+  String get soldLabel => 'Solgt';
+
+  @override
+  String get quickActionsLabel => 'Hurtighandlinger';
+
+  @override
+  String get weighingLabel => 'Veiing';
+
+  @override
+  String get newPuppyLabel => 'Ny valp';
+
+  @override
+  String get treatmentOverviewLabel => 'Behandlingsoversikt';
+
+  @override
+  String get vaccinatedLabel => 'Vaksinert';
+
+  @override
+  String get dewormedLabel => 'Avmasket';
+
+  @override
+  String get microchippedLabel => 'ID-merket';
+
+  @override
+  String dayUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'dager',
+      one: 'dag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weekUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'uker',
+      one: 'uke',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weeksAndDays(int weeks, String weekLabel, int days, String dayLabel) {
+    return '$weeks $weekLabel og $days $dayLabel';
+  }
+
+  @override
+  String get todayParens => '(i dag)';
+
+  @override
+  String get tomorrowParens => '(i morgen)';
+
+  @override
+  String get yesterdayParens => '(i går)';
+
+  @override
+  String get summaryLabel => 'Sammendrag';
+
+  @override
+  String get addPuppyLabel => 'Legg til valp';
+
+  @override
+  String get totalLabel => 'Totalt';
+
+  @override
+  String get puppyListLabel => 'Valpeliste';
+
+  @override
+  String get noPuppiesRegisteredYet => 'Ingen valper registrert ennå';
+
+  @override
+  String colorAge(String color, int weeks) {
+    return 'Farge: $color • Alder: $weeks uker';
+  }
+
+  @override
+  String get basicInfoLabel => 'Grunninfo';
+
+  @override
+  String get genderLabel => 'Kjønn';
+
+  @override
+  String get birthWeightLabel => 'Fødselsvekt';
+
+  @override
+  String get treatmentsLabel => 'Behandlinger';
+
+  @override
+  String get yesLabel => 'Ja';
+
+  @override
+  String get noLabel => 'Nei';
+
+  @override
+  String get buyerLabel => 'Kjøper';
+
+  @override
+  String get nameLabel => 'Navn';
+
+  @override
+  String get contactLabel => 'Kontakt';
+
+  @override
+  String get notesLabel => 'Notater';
+
+  @override
+  String get weightButton => 'Vekt';
+
+  @override
+  String get planButton => 'Plan';
+
+  @override
+  String get contractButton => 'Kontrakt';
+
+  @override
+  String get healthCertificateButton => 'Helseattest';
+
+  @override
+  String get shareButton => 'Del';
+
+  @override
+  String get temperatureRegistrationLabel => 'Temperaturregistrering';
+
+  @override
+  String get registerTempBeforeBirth =>
+      'Registrer temperatur på tispa før estimert fødsel';
+
+  @override
+  String get openTemperatureLogButton => 'Åpne temperaturlogg';
+
+  @override
+  String get puppyWeightLabel => 'Valpenes vekt';
+
+  @override
+  String get registerWeightForAll => 'Registrer vekt for alle valper';
+
+  @override
+  String get noPuppiesRegisteredShort => 'Ingen valper registrert';
+
+  @override
+  String get editPuppyTitle => 'Rediger valp';
+
+  @override
+  String get statusLabel => 'Status';
+
+  @override
+  String get birthWeightGramsLabel => 'Fødselsvekt (gram)';
+
+  @override
+  String get birthNoteLabel => 'Fødselsmerknad';
+
+  @override
+  String get buyerNameLabel => 'Kjøpernavn';
+
+  @override
+  String get buyerContactLabel => 'Kjøperkontakt';
+
+  @override
+  String get notesFieldLabel => 'Notater';
+
+  @override
+  String get saveLabel => 'Lagre';
+
+  @override
+  String get puppyUpdatedSnackbar => 'Valp oppdatert';
+
+  @override
+  String weightCurveTitle(String name) {
+    return '$name - Vektkurve';
+  }
+
+  @override
+  String get birthWeightNote => 'Fødselsvekt';
+
+  @override
+  String get daysSinceBirthAxis => 'Dager siden fødsel';
+
+  @override
+  String get gramAxis => 'Gram';
+
+  @override
+  String get noWeightOrBirthWeight =>
+      'Ingen vektmålinger eller fødselsvekt registrert';
+
+  @override
+  String get registeredMeasurements => 'Registrerte målinger:';
+
+  @override
+  String gramUnit(String weight) {
+    return '$weight gram';
+  }
+
+  @override
+  String dayDateLabel(int day, String date) {
+    return 'Dag $day - $date';
+  }
+
+  @override
+  String get weightMeasurementDeleted => 'Vektmåling slettet';
+
+  @override
+  String get addMeasurementButton => 'Legg til måling';
+
+  @override
+  String get closeButton => 'Lukk';
+
+  @override
+  String get addWeightMeasurementTitle => 'Legg til vektmåling';
+
+  @override
+  String get dateLabel => 'Dato';
+
+  @override
+  String get clockLabel => 'Klokkeslett';
+
+  @override
+  String get weightGramsLabel => 'Vekt (gram)';
+
+  @override
+  String get weightMeasurementAddedSnackbar => 'Vektmåling lagt til';
+
+  @override
+  String get registerWeightForAllTitle => 'Registrer vekt for alle valper';
+
+  @override
+  String get notesOptionalLabel => 'Notater (valgfritt)';
+
+  @override
+  String get saveAllLabel => 'Lagre alle';
+
+  @override
+  String weightMeasurementsSavedSnackbar(int count) {
+    return '$count vektmålinger lagret';
+  }
+
+  @override
+  String get editWeightMeasurementTitle => 'Rediger vektmåling';
+
+  @override
+  String get weightMeasurementUpdatedSnackbar => 'Vektmåling oppdatert';
+
+  @override
+  String treatmentPlanTitle(String name) {
+    return '$name - Behandlingsplan';
+  }
+
+  @override
+  String get dewormingLabel => 'Ormekur:';
+
+  @override
+  String get deworming1 => '1. ormekur (ca. 2 uker)';
+
+  @override
+  String get deworming2 => '2. ormekur (ca. 4 uker)';
+
+  @override
+  String get deworming3 => '3. ormekur (ca. 6 uker)';
+
+  @override
+  String get vaccinesLabel => 'Vaksiner:';
+
+  @override
+  String get vaccine1 => '1. vaksinering (8 uker)';
+
+  @override
+  String get vaccine2 => '2. vaksinering (12 uker)';
+
+  @override
+  String get vaccine3 => '3. vaksinering (16 uker)';
+
+  @override
+  String get otherLabel => 'Annet:';
+
+  @override
+  String get idMarkingLabel => 'ID-merking';
+
+  @override
+  String get idMarkingNumberLabel => 'ID-merkenummer';
+
+  @override
+  String get selectDateLabel => 'Velg dato';
+
+  @override
+  String get treatmentPlanUpdatedSnackbar =>
+      'Behandlingsplan oppdatert og varsler planlagt';
+
+  @override
+  String get pdfDownloadedTitle => 'PDF nedlastet';
+
+  @override
+  String pdfSavedSnackbar(String path) {
+    return 'PDF lagret:\n$path';
+  }
+
+  @override
+  String errorGeneratingPdf(String error) {
+    return 'Feil ved PDF-generering: $error';
+  }
+
+  @override
+  String get healthCertificateTitle => 'Helseattest';
+
+  @override
+  String generateHealthCertFor(String name) {
+    return 'Generer helseattest for $name';
+  }
+
+  @override
+  String get healthExaminationLabel => 'Helseundersøkelse';
+
+  @override
+  String get tapToAddNote => 'Trykk på et punkt for å legge til merknad';
+
+  @override
+  String get generalConditionLabel => 'Allmenntilstand';
+
+  @override
+  String get eyesLabel => 'Øyne';
+
+  @override
+  String get earsLabel => 'Ører';
+
+  @override
+  String get heartLabel => 'Hjerte';
+
+  @override
+  String get lungsLabel => 'Lunger';
+
+  @override
+  String get skinCoatLabel => 'Hud/pels';
+
+  @override
+  String get teethMouthLabel => 'Tenner/munn';
+
+  @override
+  String get abdomenLabel => 'Buk (abdomen)';
+
+  @override
+  String get limbsJointsLabel => 'Lemmer/ledd';
+
+  @override
+  String get vetInfoOptional => 'Veterinærinformasjon (valgfritt):';
+
+  @override
+  String get vetNameLabel => 'Veterinærens navn';
+
+  @override
+  String get phoneLabel => 'Telefon';
+
+  @override
+  String get generalNotesLabel => 'Generelle merknader';
+
+  @override
+  String get generatePdfButton => 'Generer PDF';
+
+  @override
+  String addNoteFor(String label) {
+    return 'Legg til merknad for $label...';
+  }
+
+  @override
+  String get healthCertificateDownloaded => 'Helseattest nedlastet';
+
+  @override
+  String healthCertSavedSnackbar(String path) {
+    return 'Helseattest lagret:\n$path';
+  }
+
+  @override
+  String errorGeneratingHealthCert(String error) {
+    return 'Feil ved generering av helseattest: $error';
+  }
+
+  @override
+  String get shareUpdateTitle => 'Del oppdatering';
+
+  @override
+  String shareUpdateAbout(String name) {
+    return 'Del oppdatering om $name med kjøper';
+  }
+
+  @override
+  String get includeInMessage => 'Inkluder i meldingen:';
+
+  @override
+  String get ageCheckbox => 'Alder';
+
+  @override
+  String get weightCheckbox => 'Vekt';
+
+  @override
+  String get treatmentsCheckbox => 'Behandlinger';
+
+  @override
+  String get customMessageOptional => 'Egen melding (valgfritt)';
+
+  @override
+  String get personalGreetingHint => 'Skriv en personlig hilsen...';
+
+  @override
+  String updateAbout(String name) {
+    return 'Oppdatering om $name';
+  }
+
+  @override
+  String get editLitterTitle => 'Rediger kull';
+
+  @override
+  String get damFemaleLabel => 'Mor (Tispe) *';
+
+  @override
+  String get sireMaleLabel => 'Far (Hannhund) *';
+
+  @override
+  String get puppyCountBasedOnRegistered =>
+      'Antall valper (basert på registrerte valper):';
+
+  @override
+  String get updatesAutomatically =>
+      'Disse tallene oppdateres automatisk når du legger til eller sletter valper.';
+
+  @override
+  String get damAndSireRequired => 'Mor og Far er påkrevd';
+
+  @override
+  String get litterUpdatedSnackbar => 'Kull oppdatert';
+
+  @override
+  String get deleteLitterTitle => 'Slett kull?';
+
+  @override
+  String confirmDeleteLitterText(String damName, String sireName) {
+    return 'Er du sikker på at du vil slette kullet fra $damName x $sireName?\n\nOBS: Dette vil også slette alle valper i kullet!';
+  }
+
+  @override
+  String get deleteLabel => 'Slett';
+
+  @override
+  String get litterDeletedSnackbar => 'Kull slettet';
+
+  @override
+  String get placedLabel => 'plassert';
+
+  @override
+  String get ownerRoleLabel => 'Eier';
+
+  @override
+  String get skipButton => 'Hopp over';
+
+  @override
+  String get getStartedButton => 'Kom i gang';
+
+  @override
+  String get onboardingWelcomeTitle => 'Velkommen til Breedly';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Din komplette løsning for oppdrettsadministrasjon. Hold oversikt over hunder, kull, kjøpere og mye mer.';
+
+  @override
+  String get onboardingDogsTitle => 'Administrer hundene dine';
+
+  @override
+  String get onboardingDogsDesc =>
+      'Legg til hunder med stamtavle, helseinformasjon, utstillingsresultater og bilder. Alt på ett sted.';
+
+  @override
+  String get onboardingLittersTitle => 'Spor kull og valper';
+
+  @override
+  String get onboardingLittersDesc =>
+      'Registrer kull, følg valpenes utvikling med vektlogg, og generer kontrakter for kjøpere.';
+
+  @override
+  String get onboardingCalendarTitle => 'Kalender og påminnelser';
+
+  @override
+  String get onboardingCalendarDesc =>
+      'Aldri glem viktige datoer. Få varsler om vaksinasjoner, veterinærbesøk og andre hendelser.';
+
+  @override
+  String get onboardingStatsTitle => 'Statistikk og rapporter';
+
+  @override
+  String get onboardingStatsDesc =>
+      'Få innsikt i ditt oppdrett med detaljert statistikk, finansoversikt og årsrapporter.';
+
+  @override
+  String get tabInfo => 'Info';
+
+  @override
+  String get veterinaryInfoOptional => 'Veterinærinformasjon (valgfritt):';
+
+  @override
+  String deleteLitterConfirmMessage(String damName, String sireName) {
+    return 'Er du sikker på at du vil slette kullet fra $damName x $sireName?\n\nOBS: Dette vil også slette alle valper i kullet!';
+  }
+
+  @override
+  String get couldNotGenerateImage => 'Kunne ikke generere bilde';
+
+  @override
+  String get contentSection => 'INNHOLD';
+
+  @override
+  String get detailsToggle => 'Detaljer';
+
+  @override
+  String get backgroundSection => 'BAKGRUNN';
+
+  @override
+  String get autoTheme => 'Auto';
+
+  @override
+  String get themeGoldBlack => 'Gull & Sort';
+
+  @override
+  String get themeNavyGold => 'Navy & Gull';
+
+  @override
+  String get themeTealAmber => 'Teal & Rav';
+
+  @override
+  String get themeSlateSilver => 'Skifer & Sølv';
+
+  @override
+  String get themeForestJade => 'Skog & Jade';
+
+  @override
+  String get themeIndigo => 'Indigo';
+
+  @override
+  String get themeClassic => 'Klassisk';
+
+  @override
+  String get patternSection => 'MØNSTER';
+
+  @override
+  String get patternNone => 'Ingen';
+
+  @override
+  String get patternGeometric => 'Geometrisk';
+
+  @override
+  String get patternCircles => 'Sirkler';
+
+  @override
+  String get patternLines => 'Linjer';
+
+  @override
+  String get patternDots => 'Prikker';
+
+  @override
+  String get patternWaves => 'Bølger';
+
+  @override
+  String get patternElegant => 'Elegant';
+
+  @override
+  String get fontTypeSection => 'SKRIFTTYPE';
+
+  @override
+  String get fontStandard => 'Standard';
+
+  @override
+  String get fontSerif => 'Serif';
+
+  @override
+  String get fontElegant => 'Elegant';
+
+  @override
+  String get fontModern => 'Moderne';
+
+  @override
+  String get fontClassic => 'Klassisk';
+
+  @override
+  String get fontHandwritten => 'Håndskrift';
+
+  @override
+  String get fontSizeSection => 'STØRRELSE';
+
+  @override
+  String get resultCardTitle => 'Resultatkort';
+
+  @override
+  String get removePhoto => 'Fjern bilde';
+
+  @override
+  String get addPhoto => 'Legg til bilde';
+
+  @override
+  String get selectFromGallery => 'Velg fra galleri';
+
+  @override
+  String breedJudgeWithName(String name) {
+    return 'Rasedommer: $name';
+  }
+
+  @override
+  String classPlacementAbbr(String placement) {
+    return 'Kl. $placement';
+  }
 }

@@ -93,8 +93,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           // Subscription Section
           _buildSectionCard(
-            title: 'Abonnement',
-            subtitle: 'Administrer ditt Breedly-abonnement',
+            title: localizations.subscription,
+            subtitle: localizations.manageSubscription,
             icon: Icons.workspace_premium_rounded,
             child: _buildSubscriptionSection(),
           ),
@@ -512,13 +512,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (subProvider.isPremium) {
       // Show active subscription info
+      final l10n = AppLocalizations.of(context)!;
       final source = subProvider.subscriptionSource == 'promo_code'
-          ? 'Kampanjekode'
-          : 'Abonnement';
+          ? l10n.promoCode
+          : l10n.subscription;
       final expiry = subProvider.expirationDate;
       final expiryText = expiry != null
           ? '${expiry.day}.${expiry.month}.${expiry.year}'
-          : 'Livstid';
+          : l10n.lifetimeAccess;
 
       return Column(
         children: [
@@ -559,7 +560,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       const SizedBox(height: AppSpacing.xxs),
                       Text(
-                        '$source • Utløper: $expiryText',
+                        l10n.subscriptionExpiresInfo(source, expiryText),
                         style: AppTypography.bodySmall.copyWith(
                           color: context.colors.textMuted,
                         ),
@@ -577,7 +578,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     borderRadius: AppRadius.smAll,
                   ),
                   child: Text(
-                    'Aktiv',
+                    l10n.activeStatus,
                     style: AppTypography.labelSmall.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
@@ -597,14 +598,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 await subProvider.restorePurchases();
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Kjøp gjenopprettet.'),
+                    SnackBar(
+                      content: Text(l10n.purchasesRestored),
                     ),
                   );
                 }
               },
               icon: const Icon(Icons.restore_rounded),
-              label: const Text('Gjenopprett kjøp'),
+              label: Text(l10n.restorePurchases),
               style: OutlinedButton.styleFrom(
                 foregroundColor: primaryColor,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
@@ -636,14 +637,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                'Du bruker gratisversjonen',
+                AppLocalizations.of(context)!.usingFreeVersion,
                 style: AppTypography.titleSmall.copyWith(
                   color: context.colors.textTertiary,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Oppgrader for ubegrenset tilgang til alle funksjoner.',
+                AppLocalizations.of(context)!.upgradeForUnlimited,
                 style: AppTypography.bodySmall.copyWith(
                   color: context.colors.textCaption,
                 ),
@@ -669,7 +670,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               );
             },
             icon: const Icon(Icons.workspace_premium_rounded),
-            label: const Text('Oppgrader til Premium'),
+            label: Text(AppLocalizations.of(context)!.upgradeToPremium),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.secondary,
               foregroundColor: Colors.white,
@@ -686,15 +687,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               await subProvider.restorePurchases();
               if (mounted) {
                 final msg = subProvider.isPremium
-                    ? 'Premium gjenopprettet!'
-                    : 'Ingen tidligere kjøp funnet.';
+                    ? AppLocalizations.of(context)!.premiumRestored
+                    : AppLocalizations.of(context)!.noPreviousPurchases;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(msg)),
                 );
               }
             },
             icon: const Icon(Icons.restore_rounded),
-            label: const Text('Gjenopprett kjøp'),
+            label: Text(AppLocalizations.of(context)!.restorePurchases),
             style: OutlinedButton.styleFrom(
               foregroundColor: primaryColor,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
@@ -1270,16 +1271,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Utvikler & Testing',
-                        style: TextStyle(
+                      Text(
+                        localizations.developerAndTesting,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.xxs),
                       Text(
-                        'Test nye funksjoner',
+                        localizations.testNewFeatures,
                         style: TextStyle(
                           fontSize: 12,
                           color: context.colors.textMuted,
@@ -1301,13 +1302,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               child: const Icon(Icons.document_scanner, color: AppColors.info, size: 20),
             ),
-            title: const Text(
-              'Test stamtavle-skanner',
-              style: TextStyle(fontWeight: FontWeight.w500),
+            title: Text(
+              localizations.testPedigreeScanner,
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            subtitle: const Text(
-              'Google ML Kit OCR - Skann stamtavler med AI',
-              style: TextStyle(fontSize: 12),
+            subtitle: Text(
+              localizations.pedigreeScannerSubtitleSettings,
+              style: const TextStyle(fontSize: 12),
             ),
             trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
@@ -1316,8 +1317,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 borderRadius: AppRadius.mdAll,
                 border: Border.all(color: Colors.green, width: 1),
               ),
-              child: const Text(
-                'NY',
+              child: Text(
+                localizations.newBadge,
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.bold,

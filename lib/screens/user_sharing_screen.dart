@@ -96,7 +96,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
       AppLogger.debug('Error sharing with user: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.errorSharing(e))),
+          SnackBar(content: Text(l10n.errorSharing(e.toString()))),
         );
       }
     } finally {
@@ -270,7 +270,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                               ),
                               title: Text(user['email'] ?? 'Unknown'),
                               subtitle: Text(
-                                user['role'] == 'owner' ? 'Eier' : l10n.collaborator,
+                                user['role'] == 'owner' ? l10n.ownerRoleLabel : l10n.collaborator,
                               ),
                               trailing: user['role'] != 'owner'
                                   ? IconButton(

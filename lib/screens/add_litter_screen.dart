@@ -209,7 +209,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: _isPlannedLitter ? l10n.planLitter : 'Legg til nytt kull',
+        title: _isPlannedLitter ? l10n.planLitter : l10n.addLitter,
         context: context,
       ),
       body: SafeArea(
@@ -323,7 +323,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                       );
                       _loadDogs();
                     },
-                    child: const Text('+ Legg til'),
+                    child: Text(l10n.addNewMaleShort),
                   ),
               ],
             ),
@@ -339,7 +339,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Ingen hunder registrert ennå',
+                          l10n.noDogsRegistered,
                           style: TextStyle(color: AppColors.error),
                         ),
                         const SizedBox(height: AppSpacing.sm),
@@ -436,7 +436,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                       );
                       _loadDogs();
                     },
-                    child: const Text('+ Legg til'),
+                    child: Text(l10n.addNewMaleShort),
                   ),
               ],
             ),
@@ -614,7 +614,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                             ),
                             if (_estimatedDueDate!.isAfter(DateTime.now()))
                               Text(
-                                '${_estimatedDueDate!.difference(DateTime.now()).inDays} dager til',
+                                l10n.daysUntilBirth(_estimatedDueDate!.difference(DateTime.now()).inDays),
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -1009,7 +1009,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Velg rase'),
+          Text(l10n.selectBreed),
           if (hasKennelBreeds)
             Padding(
               padding: const EdgeInsets.only(top: AppSpacing.xs),
@@ -1078,7 +1078,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
               controller: _searchController,
               onChanged: _filterBreeds,
               decoration: InputDecoration(
-                hintText: 'Søk rase...',
+                hintText: l10n.searchBreed,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: AppRadius.smAll,

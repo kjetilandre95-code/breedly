@@ -60,7 +60,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   // Event filter
   Set<CalendarEventType> _enabledEventTypes = CalendarEventType.values.toSet();
 
-  List<CalendarEvent> _getAllEvents() {
+  List<CalendarEvent> _getAllEvents(AppLocalizations l10n) {
     final events = <CalendarEvent>[];
 
     final dogBox = Hive.box<Dog>('dogs');
@@ -76,7 +76,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           events.add(
             CalendarEvent(
               id: 'heat_${dog.id}_$i',
-              title: '${dog.name} - Løpetid',
+              title: l10n.dogHeatCycle(dog.name),
               date: cycleDate,
               type: CalendarEventType.heatCycle,
               color: AppColors.female,
@@ -92,7 +92,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           events.add(
             CalendarEvent(
               id: 'expected_heat_${dog.id}',
-              title: '${dog.name} - Forventet løpetid',
+              title: l10n.dogExpectedHeat(dog.name),
               date: expectedHeat,
               type: CalendarEventType.expectedHeat,
               color: AppColors.female,
@@ -109,8 +109,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       events.add(
         CalendarEvent(
           id: 'birth_${litter.id}',
-          title: '${litter.damName} fødte',
-          subtitle: '${litter.numberOfPuppies} valper',
+          title: l10n.dogGaveBirth(litter.damName),
+          subtitle: l10n.puppiesCount(litter.numberOfPuppies),
           date: litter.dateOfBirth,
           type: CalendarEventType.birthday,
           color: AppColors.success,
@@ -123,8 +123,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       events.add(
         CalendarEvent(
           id: 'delivery_${litter.id}',
-          title: 'Levering: ${litter.damName} kull',
-          subtitle: '8 uker gammel',
+          title: l10n.litterDeliveryEvent(litter.damName),
+          subtitle: l10n.eightWeeksOld,
           date: deliveryDate,
           type: CalendarEventType.delivery,
           color: AppColors.warning,
@@ -143,7 +143,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           (p) => p.id == plan.puppyId,
           orElse: () => Puppy(
             id: '',
-            name: 'Ukjent',
+            name: l10n.unknownDog,
             gender: '',
             color: '',
             dateOfBirth: DateTime.now(),
@@ -157,7 +157,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'vaccine1_${plan.id}',
-                title: '${puppy.name} - 1. vaksinering',
+                title: l10n.puppyVaccination(puppy.name, '1'),
                 date: plan.vaccineDate1!,
                 type: CalendarEventType.treatment,
                 color: AppColors.accent1,
@@ -168,7 +168,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'vaccine2_${plan.id}',
-                title: '${puppy.name} - 2. vaksinering',
+                title: l10n.puppyVaccination(puppy.name, '2'),
                 date: plan.vaccineDate2!,
                 type: CalendarEventType.treatment,
                 color: AppColors.accent1,
@@ -181,7 +181,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'wormer1_${plan.id}',
-                title: '${puppy.name} - 1. ormekur',
+                title: l10n.puppyDeworming(puppy.name, '1'),
                 date: plan.wormerDate1!,
                 type: CalendarEventType.treatment,
                 color: AppColors.accent2,
@@ -192,7 +192,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'wormer2_${plan.id}',
-                title: '${puppy.name} - 2. ormekur',
+                title: l10n.puppyDeworming(puppy.name, '2'),
                 date: plan.wormerDate2!,
                 type: CalendarEventType.treatment,
                 color: AppColors.accent2,
@@ -205,7 +205,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'microchip_${plan.id}',
-                title: '${puppy.name} - ID-merking',
+                title: l10n.puppyMicrochip(puppy.name),
                 date: plan.microchipDate!,
                 type: CalendarEventType.treatment,
                 color: AppColors.accent5,
@@ -241,7 +241,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       events.add(
         CalendarEvent(
           id: 'birthday_${dog.id}_$age',
-          title: '${dog.name} fyller $age år',
+          title: l10n.dogBirthdayAge(dog.name, age.toString()),
           date: birthday,
           type: CalendarEventType.birthday,
           color: AppColors.accent3,
@@ -253,8 +253,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return events;
   }
 
-  List<CalendarEvent> _getEventsForDay(DateTime day) {
-    final allEvents = _getAllEvents();
+  List<CalendarEvent> _getEventsForDay(DateTime day, [AppLocalizations? l10n]) {
+    l10n ??= AppLocalizations.of(context)!;
+    final allEvents = _getAllEvents(l10n);
     return allEvents.where((event) {
       if (!_enabledEventTypes.contains(event.type)) return false;
       return isSameDay(event.date, day);
@@ -269,7 +270,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
     final theme = Theme.of(context);
     final selectedEvents = _selectedDay != null
-        ? _getEventsForDay(_selectedDay!)
+        ? _getEventsForDay(_selectedDay!, l10n)
         : [];
 
     return Scaffold(
@@ -310,7 +311,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             lastDay: DateTime.utc(2030, 12, 31),
             focusedDay: _focusedDay,
             calendarFormat: _calendarFormat,
-            eventLoader: _getEventsForDay,
+            eventLoader: (day) => _getEventsForDay(day, l10n),
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
@@ -466,15 +467,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
       case CalendarEventType.heatCycle:
         return l10n.heatCycles;
       case CalendarEventType.expectedHeat:
-        return '${l10n.heatCycles} (forventet)';
+        return l10n.expectedHeatCycles;
       case CalendarEventType.expectedBirth:
-        return 'Estimert dato for fødsel';
+        return l10n.estimatedBirthDate;
       case CalendarEventType.delivery:
         return l10n.deliveryDate;
       case CalendarEventType.treatment:
-        return 'Behandlinger';
+        return l10n.treatments;
       case CalendarEventType.birthday:
-        return 'Bursdager';
+        return l10n.birthdays;
     }
   }
 

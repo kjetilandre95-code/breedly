@@ -1473,7 +1473,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get confirmDeleteContract =>
-      'Är du säker på att du vill ta bort detta kontrakt?';
+      'Är du säker på att du vill radera detta kontrakt?';
 
   @override
   String get buyerInfoNotFound => 'Köparinformation hittades inte';
@@ -1623,7 +1623,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get selectSire => 'Välj fader';
 
   @override
-  String get commonTests => 'Vanliga tester';
+  String get commonTests => 'Vanliga tester:';
 
   @override
   String get testName => 'Testnamn';
@@ -2090,7 +2090,7 @@ class AppLocalizationsSv extends AppLocalizations {
   }
 
   @override
-  String errorSharing(Object error) {
+  String errorSharing(String error) {
     return 'Fel vid delning: $error';
   }
 
@@ -2610,4 +2610,2390 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get gen4MMMDam => 'M.MM\'s dam';
+
+  @override
+  String get testPedigreeScanner => 'Testa stamtavleskanner';
+
+  @override
+  String get scanResult => 'Skanningsresultat';
+
+  @override
+  String totalDogsFound(int count) {
+    return 'Totalt hittade: $count hundar';
+  }
+
+  @override
+  String scanSuccessful(String value) {
+    return 'Lyckad: $value';
+  }
+
+  @override
+  String get scanConfidence => 'Konfidens';
+
+  @override
+  String get testInstructions => 'Testinstruktioner';
+
+  @override
+  String get testingScannerInfo => 'Testar stamtavleskanner';
+
+  @override
+  String get scannerUsesInfo => 'Denna funktion använder Google ML Kit för:';
+
+  @override
+  String get readTextFromImages => 'Läsa text från bilder (OCR)';
+
+  @override
+  String get findRegistrationNumbers => 'Hitta registreringsnummer';
+
+  @override
+  String get identifyDogNames => 'Identifiera hundnamn';
+
+  @override
+  String get recognizeParents => 'Känna igen föräldrar (Far/Mor)';
+
+  @override
+  String get extractBirthDates => 'Hämta födelsedatum';
+
+  @override
+  String get tipClearImage =>
+      'Tips: Använd en tydlig bild av en stamtavla för bästa resultat.';
+
+  @override
+  String get step1TakePhoto => 'Ta ett foto av en stamtavla';
+
+  @override
+  String get step2WaitProcessing => 'Vänta medan ML Kit bearbetar bilden';
+
+  @override
+  String get step3SeeResults => 'Se resultat och noggrannhet';
+
+  @override
+  String get step4EditData => 'Redigera data vid behov';
+
+  @override
+  String get step5SaveDogs => 'Spara hund(ar) i databasen';
+
+  @override
+  String get exampleDataRecognized => 'Exempeldata som kan kännas igen';
+
+  @override
+  String get keywords => 'Nyckelord';
+
+  @override
+  String get debugInfo => 'Felsökningsinformation';
+
+  @override
+  String get parents => 'Föräldrar';
+
+  @override
+  String get grandparents => 'Morföräldrar/Farföräldrar';
+
+  @override
+  String dogsFound(int count) {
+    return '$count hundar hittade';
+  }
+
+  @override
+  String get dogAlreadyExists => 'Hunden finns redan';
+
+  @override
+  String get whatDoYouWantToDo => 'Vad vill du göra?';
+
+  @override
+  String get createNew => 'Skapa ny';
+
+  @override
+  String get useExisting => 'Använd befintlig';
+
+  @override
+  String get updateData => 'Uppdatera data';
+
+  @override
+  String dogAddedWithPedigree(String name, int count) {
+    return '$name tillagd med stamtavla ($count hundar totalt)';
+  }
+
+  @override
+  String get dogUpdated => 'Hund uppdaterad';
+
+  @override
+  String get dateOfDeathOptional => 'Dödsdatum (valfritt)';
+
+  @override
+  String get noneSelected => 'Inget valt';
+
+  @override
+  String get puppyAdded => 'Valp tillagd';
+
+  @override
+  String get puppyNameLabel => 'Valpens namn';
+
+  @override
+  String get birthWeightGrams => 'Födelsevikt (gram)';
+
+  @override
+  String get birthNotes => 'Födelseanteckningar (t.ex. assistans krävdes)';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get healthAndDocumentation => 'Hälsa och dokumentation';
+
+  @override
+  String get vaccinated => 'Vaccinerad';
+
+  @override
+  String get dewormed => 'Avmaskad';
+
+  @override
+  String get microchipped => 'Microchippad';
+
+  @override
+  String get savePuppy => 'Spara valp';
+
+  @override
+  String get contracts => 'Kontrakt';
+
+  @override
+  String get purchaseContracts => 'Köpekontrakt';
+
+  @override
+  String get reservations => 'Reservationer';
+
+  @override
+  String get breedingContracts => 'Avelskontrakt';
+
+  @override
+  String get coOwnership => 'Samägande';
+
+  @override
+  String get fosterContracts => 'Fosterkontrakt';
+
+  @override
+  String get purchaseContractDeleted => 'Köpekontrakt borttaget';
+
+  @override
+  String get reservationContractDeleted => 'Reservationskontrakt borttaget';
+
+  @override
+  String get breedingContractDeleted => 'Avelskontrakt borttaget';
+
+  @override
+  String get coOwnershipContractDeleted => 'Samägandekontrakt borttaget';
+
+  @override
+  String get fosterContractDeleted => 'Fosterkontrakt borttaget';
+
+  @override
+  String get selectSireAndDam => 'Välj far och mor';
+
+  @override
+  String get enterStudFee => 'Ange avelsavgift';
+
+  @override
+  String errorGenerating(String error) {
+    return 'Fel vid generering: $error';
+  }
+
+  @override
+  String get contractGenerated => 'Kontrakt genererat!';
+
+  @override
+  String get selectStud => 'Välj avelshane';
+
+  @override
+  String get studOwnerName => 'Avelshundens ägare (namn)';
+
+  @override
+  String get selectDamForContract => 'Välj tik';
+
+  @override
+  String get damOwnerName => 'Tikens ägare (namn)';
+
+  @override
+  String get amountNok => 'Belopp (NOK)';
+
+  @override
+  String get paymentTermsHint => 'T.ex. \"Betalning vid parning\"';
+
+  @override
+  String get additionalTermsHint => 'Lägg till specialvillkor...';
+
+  @override
+  String get searchBuyer => 'Sök köpare...';
+
+  @override
+  String get removeFilter => 'Ta bort filter';
+
+  @override
+  String get allLitters => 'Alla kullar';
+
+  @override
+  String get reservationRemoved => 'Reservation borttagen';
+
+  @override
+  String get pleaseSelectPuppy => 'Vänligen välj en valp';
+
+  @override
+  String get deleteDog => 'Ta bort hund';
+
+  @override
+  String get addHeatDate => 'Lägg till brunstdatum';
+
+  @override
+  String get createBreedingContract => 'Skapa kontrakt för parningstjänster';
+
+  @override
+  String get coOwnershipAgreement => 'Samägandeavtal';
+
+  @override
+  String get createCoOwnershipAgreement => 'Skapa avtal för delat ägande';
+
+  @override
+  String get fosterAgreement => 'Fosteravtal';
+
+  @override
+  String get createFosterAgreement => 'Skapa avtal för fosterhem';
+
+  @override
+  String get heatDateAdded => 'Brunstdatum tillagt';
+
+  @override
+  String get confirmDeleteHeatDate =>
+      'Är du säker på att du vill ta bort detta brunstdatum?';
+
+  @override
+  String get heatDateDeleted => 'Brunstdatum borttaget';
+
+  @override
+  String get addChampionship => 'Lägg till championat';
+
+  @override
+  String get enterOtherTitle => 'Ange annan titel';
+
+  @override
+  String get selectFromList => 'Välj från lista';
+
+  @override
+  String get titleAlreadyRegistered => 'Denna titel är redan registrerad';
+
+  @override
+  String get removeChampionship => 'Ta bort championat';
+
+  @override
+  String confirmRemoveChampionship(String title) {
+    return 'Är du säker på att du vill ta bort \"$title\"?';
+  }
+
+  @override
+  String get addMating => 'Lägg till parning';
+
+  @override
+  String get externalDam => 'Extern tik';
+
+  @override
+  String get matingAdded => 'Parning tillagd';
+
+  @override
+  String get editMating => 'Redigera parning';
+
+  @override
+  String get matingUpdated => 'Parning uppdaterad';
+
+  @override
+  String get matingDeleted => 'Parning borttagen';
+
+  @override
+  String healthTitle(String name) {
+    return 'Hälsa - $name';
+  }
+
+  @override
+  String get healthStatusTab => 'Hälsostatus';
+
+  @override
+  String get vaccinesTab => 'Vacciner';
+
+  @override
+  String get vetTab => 'Veterinär';
+
+  @override
+  String get treatmentsTab => 'Behandlingar';
+
+  @override
+  String get dnaTestsTab => 'DNA-tester';
+
+  @override
+  String get weightTab => 'Vikt';
+
+  @override
+  String get hormonesTab => 'Hormoner';
+
+  @override
+  String get addHealthInfo => 'Lägg till hälsoinformation';
+
+  @override
+  String get healthInfoNotFound => 'Hälsoinformation hittades inte';
+
+  @override
+  String get addVaccine => 'Lägg till vaccin';
+
+  @override
+  String get deleteHealthInfo => 'Ta bort hälsoinformation?';
+
+  @override
+  String get offlineChangesLocal => 'Offline – ändringar sparade lokalt';
+
+  @override
+  String get registrationNumberColon => 'Registreringsnummer:';
+
+  @override
+  String get registrationNumberOptional => 'Registreringsnummer (valfritt)';
+
+  @override
+  String get addPuppy => 'Lägg till valp';
+
+  @override
+  String get birthTimeLabel => 'Födelsetid';
+
+  @override
+  String get birthTimeOptional => 'Födselstid (valfritt)';
+
+  @override
+  String get pleaseEnterColor => 'Ange en färg';
+
+  @override
+  String dogWasDeleted(String name) {
+    return '«$name» har raderats';
+  }
+
+  @override
+  String couldNotDelete(String error) {
+    return 'Kunde inte radera: $error';
+  }
+
+  @override
+  String confirmDeleteDogMessage(String name) {
+    return 'Är du säker på att du vill radera «$name»?\n\nDetta tar bort hunden och all tillhörande data. Åtgärden kan inte ångras.';
+  }
+
+  @override
+  String get healthInformation => 'Hälsoinformation';
+
+  @override
+  String get noHealthInfoRegistered => 'Ingen hälsoinformation registrerad';
+
+  @override
+  String addHealthInfoFor(String name) {
+    return 'Lägg till hälsoinformation för $name';
+  }
+
+  @override
+  String get healthStatus => 'Hälsostatus';
+
+  @override
+  String get remarks => 'Anmärkningar';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Datum: $date';
+  }
+
+  @override
+  String get noVaccinesRegistered => 'Inga vacciner registrerade';
+
+  @override
+  String addVaccinesFor(String name) {
+    return 'Lägg till vacciner för $name';
+  }
+
+  @override
+  String takenWithDate(String value) {
+    return 'Tagen: $value';
+  }
+
+  @override
+  String get overdueLabel => 'Försenad';
+
+  @override
+  String get alertLabel => 'Varning';
+
+  @override
+  String nextDoseWithDate(String value) {
+    return 'Nästa dos: $value';
+  }
+
+  @override
+  String veterinarianWithName(String value) {
+    return 'Veterinär: $value';
+  }
+
+  @override
+  String get noProgesteroneMeasurements =>
+      'Inga progesteronmätningar registrerade';
+
+  @override
+  String addProgesteroneTracking(String name) {
+    return 'Lägg till progesteronmätningar för att följa ${name}s cykel';
+  }
+
+  @override
+  String get confirmDeleteProgesterone =>
+      'Är du säker på att du vill ta bort denna progesteronmätning?';
+
+  @override
+  String get vetVisits => 'Veterinärbesök';
+
+  @override
+  String get addVisit => 'Lägg till besök';
+
+  @override
+  String get noVetVisitsRegistered => 'Inga veterinärbesök registrerade';
+
+  @override
+  String addVetVisitsFor(String name) {
+    return 'Lägg till veterinärbesök för $name';
+  }
+
+  @override
+  String get visitTypeRoutine => 'Rutinkontroll';
+
+  @override
+  String get visitTypeEmergency => 'Akut';
+
+  @override
+  String get visitTypeSurgery => 'Operation';
+
+  @override
+  String get visitTypeVaccination => 'Vaccination';
+
+  @override
+  String get visitTypeFollowup => 'Uppföljning';
+
+  @override
+  String get visitTypeOther => 'Annat';
+
+  @override
+  String reasonWithValue(String value) {
+    return 'Orsak: $value';
+  }
+
+  @override
+  String diagnosisWithValue(String value) {
+    return 'Diagnos: $value';
+  }
+
+  @override
+  String treatmentWithValue(String value) {
+    return 'Behandling: $value';
+  }
+
+  @override
+  String costWithValue(String value) {
+    return 'Kostnad: $value kr';
+  }
+
+  @override
+  String followUpWithDate(String value) {
+    return 'Uppföljning: $value';
+  }
+
+  @override
+  String get addTreatment => 'Lägg till behandling';
+
+  @override
+  String get noTreatmentsRegistered => 'Inga behandlingar registrerade';
+
+  @override
+  String get addTreatmentsSubtitle =>
+      'Lägg till avmaskning, lopp-/fästingbehandling m.m.';
+
+  @override
+  String get treatmentTypeDeworming => 'Avmaskning';
+
+  @override
+  String get treatmentTypeFlea => 'Loppbehandling';
+
+  @override
+  String get treatmentTypeTick => 'Fästingbehandling';
+
+  @override
+  String get treatmentTypeMedication => 'Medicin';
+
+  @override
+  String get treatmentTypeSupplement => 'Kosttillskott';
+
+  @override
+  String get treatmentTypeOther => 'Annat';
+
+  @override
+  String get registerNewDose => 'Registrera ny dos';
+
+  @override
+  String lastGivenWithDate(String value) {
+    return 'Senast given: $value';
+  }
+
+  @override
+  String dosageWithValue(String value) {
+    return 'Dosering: $value';
+  }
+
+  @override
+  String manufacturerWithValue(String value) {
+    return 'Tillverkare: $value';
+  }
+
+  @override
+  String nextWithDate(String value) {
+    return 'Nästa: $value';
+  }
+
+  @override
+  String newDoseRegistered(String name) {
+    return 'Ny dos av $name registrerad';
+  }
+
+  @override
+  String get noDnaTestsRegistered => 'Inga DNA-tester registrerade';
+
+  @override
+  String get addDnaTest => 'Lägg till DNA-test';
+
+  @override
+  String addGeneticTestsFor(String name) {
+    return 'Lägg till genetiska tester för $name';
+  }
+
+  @override
+  String testedWithDate(String value) {
+    return 'Testad: $value';
+  }
+
+  @override
+  String laboratoryWithValue(String value) {
+    return 'Laboratorium: $value';
+  }
+
+  @override
+  String certificateNoWithValue(String value) {
+    return 'Certifikatnr: $value';
+  }
+
+  @override
+  String get weightHistory => 'Vikthistorik';
+
+  @override
+  String get addWeight => 'Lägg till vikt';
+
+  @override
+  String get noWeightRecords => 'Inga viktregistreringar';
+
+  @override
+  String trackWeightFor(String name) {
+    return 'Följ ${name}s viktutveckling';
+  }
+
+  @override
+  String get currentWeight => 'Nuvarande vikt';
+
+  @override
+  String get changeLabel => 'Ändra';
+
+  @override
+  String get deleteWeightRecord => 'Ta bort viktregistrering?';
+
+  @override
+  String get confirmDeleteWeightRecord =>
+      'Är du säker på att du vill ta bort denna registrering?';
+
+  @override
+  String get confirmDeleteHealthInfo =>
+      'Är du säker på att du vill ta bort denna hälsoinformation?';
+
+  @override
+  String get hdDateLabel => 'HD-datum';
+
+  @override
+  String get adGrade0 => 'Grad 0 (Fri)';
+
+  @override
+  String get adGrade1 => 'Grad 1 (Svag)';
+
+  @override
+  String get adGrade2 => 'Grad 2 (Måttlig)';
+
+  @override
+  String get adGrade3 => 'Grad 3 (Svår)';
+
+  @override
+  String get selectAdStatus => 'Välj AD-status';
+
+  @override
+  String get noneRemoveSelection => 'Ingen (ta bort val)';
+
+  @override
+  String get adDateLabel => 'AD-datum';
+
+  @override
+  String get patellaGrade0 => 'Grad 0 (Normal)';
+
+  @override
+  String get patellaGrade1 => 'Grad 1';
+
+  @override
+  String get patellaGrade2 => 'Grad 2';
+
+  @override
+  String get patellaGrade3 => 'Grad 3';
+
+  @override
+  String get selectPatellaStatus => 'Välj Patella-status';
+
+  @override
+  String get patellaDateLabel => 'Patella-datum';
+
+  @override
+  String selectStatus(String label) {
+    return 'Välj $label';
+  }
+
+  @override
+  String get vaccineDialogTitle => 'Vaccin';
+
+  @override
+  String get vaccineNameHint => 'Vaccinnamn (t.ex. DHPPL, Rabies)';
+
+  @override
+  String takenDateWithValue(String value) {
+    return 'Tagningsdatum: $value';
+  }
+
+  @override
+  String nextDateWithValue(String value) {
+    return 'Nästa datum: $value';
+  }
+
+  @override
+  String get notSet => 'Inte inställd';
+
+  @override
+  String get enableReminder => 'Aktivera påminnelse';
+
+  @override
+  String get veterinarianOptional => 'Veterinär (valfritt)';
+
+  @override
+  String get remarksOptional => 'Anmärkningar (valfritt)';
+
+  @override
+  String get pleaseEnterVaccineName => 'Ange vaccinnamn';
+
+  @override
+  String get addProgesteroneMeasurement => 'Lägg till progesteronmätning';
+
+  @override
+  String get editMeasurementTitle => 'Redigera mätning';
+
+  @override
+  String get progesteroneValueLabel => 'Progesteronvärde (ng/mL) *';
+
+  @override
+  String get progesteroneHint => 't.ex. 5.2';
+
+  @override
+  String get invalidProgesteroneValue => 'Ange ett giltigt progesteronvärde';
+
+  @override
+  String get newVetVisit => 'Nytt veterinärbesök';
+
+  @override
+  String get editVisit => 'Redigera besök';
+
+  @override
+  String get visitTypeLabel => 'Besökstyp';
+
+  @override
+  String get reasonLabel => 'Orsak';
+
+  @override
+  String get diagnosisLabel => 'Diagnos';
+
+  @override
+  String get treatmentFieldLabel => 'Behandling';
+
+  @override
+  String get prescriptionLabel => 'Recept/medicin';
+
+  @override
+  String get veterinarianFieldLabel => 'Veterinär';
+
+  @override
+  String get clinicLabel => 'Klinik';
+
+  @override
+  String get costKrLabel => 'Kostnad (kr)';
+
+  @override
+  String get newTreatment => 'Ny behandling';
+
+  @override
+  String get editTreatment => 'Redigera behandling';
+
+  @override
+  String get productNameLabel => 'Produktnamn*';
+
+  @override
+  String get dateGivenLabel => 'Datum givet';
+
+  @override
+  String get dosageLabel => 'Dosering';
+
+  @override
+  String get manufacturerLabel => 'Tillverkare';
+
+  @override
+  String get batchNumberLabel => 'Batchnummer';
+
+  @override
+  String get intervalDaysLabel => 'Intervall (dagar)';
+
+  @override
+  String get newDnaTest => 'Nytt DNA-test';
+
+  @override
+  String get editDnaTest => 'Redigera DNA-test';
+
+  @override
+  String get testNameLabel => 'Testnamn*';
+
+  @override
+  String get testDateLabel => 'Testdatum';
+
+  @override
+  String get registerWeight => 'Registrera vikt';
+
+  @override
+  String get editWeight => 'Redigera vikt';
+
+  @override
+  String get weightKgLabel => 'Vikt (kg)*';
+
+  @override
+  String get invalidWeight => 'Ogiltig vikt';
+
+  @override
+  String noMatchesForQuery(String query) {
+    return 'Inga träffar för \"$query\"';
+  }
+
+  @override
+  String get noBuyersForLitter => 'Inga köpare för denna kull';
+
+  @override
+  String get filterByLitter => 'Filtrera på kull';
+
+  @override
+  String get deliveredStatus => 'Levererad';
+
+  @override
+  String get withReservationSection => 'Med reservation';
+
+  @override
+  String get interestedParties => 'Intressenter';
+
+  @override
+  String puppyLabelWithName(String name) {
+    return 'Valp: $name';
+  }
+
+  @override
+  String get subscription => 'Prenumeration';
+
+  @override
+  String get manageSubscription => 'Hantera din Breedly-prenumeration';
+
+  @override
+  String get promoCode => 'Kampanjkod';
+
+  @override
+  String get lifetimeAccess => 'Livstid';
+
+  @override
+  String subscriptionExpiresInfo(String source, String expiry) {
+    return '$source • Går ut: $expiry';
+  }
+
+  @override
+  String get activeStatus => 'Aktiv';
+
+  @override
+  String get purchasesRestored => 'Köp återställda.';
+
+  @override
+  String get restorePurchases => 'Återställ köp';
+
+  @override
+  String get usingFreeVersion => 'Du använder gratisversionen';
+
+  @override
+  String get upgradeForUnlimited =>
+      'Uppgradera för obegränsad åtkomst till alla funktioner.';
+
+  @override
+  String get upgradeToPremium => 'Uppgradera till Premium';
+
+  @override
+  String get premiumRestored => 'Premium återställd!';
+
+  @override
+  String get noPreviousPurchases => 'Inga tidigare köp hittade.';
+
+  @override
+  String get developerAndTesting => 'Utvecklare & Testning';
+
+  @override
+  String get testNewFeatures => 'Testa nya funktioner';
+
+  @override
+  String get pedigreeScannerSubtitleSettings =>
+      'Google ML Kit OCR - Skanna stamtavlor med AI';
+
+  @override
+  String get newBadge => 'NY';
+
+  @override
+  String get noCertCacibYet => 'Inga Cert/Cacib ännu';
+
+  @override
+  String judgeStatsSummary(int showCount, int excellentCount, int ckCount) {
+    return '$showCount utställningar • $excellentCount Excellent • $ckCount CK';
+  }
+
+  @override
+  String get shareResultCard => 'Dela resultatkort';
+
+  @override
+  String groupJudgeWithName(String name) {
+    return 'Gruppdomare: $name';
+  }
+
+  @override
+  String bisJudgeWithName(String name) {
+    return 'BIS-domare: $name';
+  }
+
+  @override
+  String get noPlacementWithQuality =>
+      'Ingen placering eller certifikat tillgängligt med denna kvalitetsgrad';
+
+  @override
+  String get requiresHighlyPromising => 'Kräver Synnerligen lovande';
+
+  @override
+  String get qualifiesForBestPuppy => 'Kvalificerar för bästa hanvalp/tikvalp';
+
+  @override
+  String get requiresExcellent => 'Kräver Excellent';
+
+  @override
+  String get bestMalePuppy => 'Bästa hanvalp';
+
+  @override
+  String get bestFemalePuppy => 'Bästa tikvalp';
+
+  @override
+  String get qualifiedForBIRBIMPuppy => 'Kvalificerad för BIR/BIM Valp';
+
+  @override
+  String get requiresFirstWithHP => 'Kräver 1:a plats med HP för att delta';
+
+  @override
+  String get requiresBestPuppy => 'Kräver att vara bästa hanvalp/tikvalp';
+
+  @override
+  String get requiresBHKBTKFirstNordic =>
+      'BHK/BTK 1 krävs för BIR/BIM i Norden';
+
+  @override
+  String get yesWon => 'Ja - Vann';
+
+  @override
+  String get groupJudge => 'Gruppdomare';
+
+  @override
+  String get bisJudge => 'BIS-domare';
+
+  @override
+  String get resultSaved => 'Resultat sparat!';
+
+  @override
+  String get hpAward => 'HP (Hopeful Puppy)';
+
+  @override
+  String get birBimPuppy => 'BIR/BIM Valp';
+
+  @override
+  String get classAbbrev => 'Kl';
+
+  @override
+  String get bestMaleAbbrev => 'BHK';
+
+  @override
+  String get bestFemaleAbbrev => 'BTK';
+
+  @override
+  String get bestOfSexAbbrev => 'BH/BT';
+
+  @override
+  String get enterPrice => 'Ange pris';
+
+  @override
+  String get contractSaved => 'Kontrakt sparad';
+
+  @override
+  String errorSaving(String error) {
+    return 'Fel vid sparande: $error';
+  }
+
+  @override
+  String get buyerInformation => 'Köparinformation';
+
+  @override
+  String get contractDetails => 'Kontraktsdetaljer';
+
+  @override
+  String get depositOptional => 'Handpenning (valfritt)';
+
+  @override
+  String get amountAlreadyPaidAsAdvance => 'Belopp redan betalt som förskott';
+
+  @override
+  String get contractNumberOptional => 'Kontraktsnummer (valfritt)';
+
+  @override
+  String get paymentTermsExampleHint => 'T.ex. Full betalning vid hämtning';
+
+  @override
+  String get deliveryLocationOptional => 'Överlämningsplats (valfritt)';
+
+  @override
+  String get deliveryLocationHint => 'T.ex. Uppfödarens adress';
+
+  @override
+  String get contractTerms => 'Kontraktsvillkor';
+
+  @override
+  String get selectTermsToInclude =>
+      'Välj vilka villkor som ska inkluderas i kontraktet';
+
+  @override
+  String get termGeneral => 'Allmänt';
+
+  @override
+  String get termGeneralSubtitle =>
+      'Grundläggande köp- och försäljningsvillkor';
+
+  @override
+  String get termHealth => 'Hälsa';
+
+  @override
+  String get termHealthSubtitle =>
+      'Garanti om frisk valp och veterinärkontroll';
+
+  @override
+  String get termVaccinations => 'Vaccinationer och behandlingar';
+
+  @override
+  String get termVaccinationsSubtitle =>
+      'Vaccinerad och avmaskad enligt riktlinjer';
+
+  @override
+  String get termReturn => 'Återlämning';
+
+  @override
+  String get termReturnSubtitle => 'Säljaren kontaktas först vid omplacering';
+
+  @override
+  String get termResponsibility => 'Ansvar';
+
+  @override
+  String get termResponsibilitySubtitle =>
+      'Köparen tar över ansvaret vid överlämning';
+
+  @override
+  String get termRegistration => 'Registrering';
+
+  @override
+  String get termRegistrationSubtitle => 'Valpen registreras på ny ägare';
+
+  @override
+  String get returnClauseIncluded => 'Returklausul inkluderad';
+
+  @override
+  String get documentation => 'Dokumentation';
+
+  @override
+  String get pedigreeDeliveredLabel => 'Stamtavla levereras';
+
+  @override
+  String get pedigreeDeliveredSubtitle => 'Stamtavla medföljer vid överlämning';
+
+  @override
+  String get vetCertificateAttached => 'Hälsointyg bifogat';
+
+  @override
+  String get vetCertificateAttachedSubtitle => 'Veterinärintyg om hälsostatus';
+
+  @override
+  String get insuranceTransferred => 'Försäkring överförs';
+
+  @override
+  String get insuranceTransferredSubtitle =>
+      'Valpens försäkring överförs till köparen';
+
+  @override
+  String get specialTermsOptional => 'Särskilda villkor (valfritt)';
+
+  @override
+  String get specialTermsHint =>
+      'Eventuella speciella avtal mellan parterna...';
+
+  @override
+  String get saveContract => 'Spara kontrakt';
+
+  @override
+  String get downloadAsPdf => 'Ladda ner som PDF';
+
+  @override
+  String pdfSavedAt(String path) {
+    return 'PDF sparad:\n$path';
+  }
+
+  @override
+  String errorExporting(String error) {
+    return 'Fel vid export: $error';
+  }
+
+  @override
+  String get malePuppy => 'Hanvalp';
+
+  @override
+  String get femalePuppy => 'Tikvalp';
+
+  @override
+  String get coOwnershipContractCreated => 'Samäganderättsavtal skapat!';
+
+  @override
+  String get dog => 'Hund';
+
+  @override
+  String get ownershipShare => 'Ägarandel';
+
+  @override
+  String get sharedResponsibility => 'Delat ansvar';
+
+  @override
+  String get rightsAndResponsibilities => 'Rättigheter och ansvar';
+
+  @override
+  String get additionalTermsOptional => 'Tilläggsvillkor (valfritt)';
+
+  @override
+  String get additionalTermsHintText => 'Ange eventuella tilläggsvillkor...';
+
+  @override
+  String get generateCoOwnershipContract => 'Generera samäganderättsavtal';
+
+  @override
+  String get fosterContractCreated => 'Foderavtal skapat!';
+
+  @override
+  String get contractPeriod => 'Avtalsperiod';
+
+  @override
+  String get hasDefiniteEndDate => 'Har bestämt slutdatum';
+
+  @override
+  String get selectDate => 'Välj datum';
+
+  @override
+  String get contractTermsSection => 'Villkor';
+
+  @override
+  String get breedingTerms => 'Avelsvillkor';
+
+  @override
+  String get generateFosterContract => 'Generera foderavtal';
+
+  @override
+  String get reservationContractCreated => 'Reservationsavtal skapat!';
+
+  @override
+  String get reservationContractUpdated => 'Reservationsavtal uppdaterat!';
+
+  @override
+  String get prices => 'Priser';
+
+  @override
+  String get reservationFeeLabel => 'Reservationsavgift (kr)';
+
+  @override
+  String get totalPriceForPuppy => 'Totalpris för valpen (kr)';
+
+  @override
+  String get invalidAmount => 'Ogiltigt belopp';
+
+  @override
+  String remainingAmount(String amount) {
+    return 'Återstående: kr $amount,-';
+  }
+
+  @override
+  String get remarksHint => 'Ange eventuella anmärkningar...';
+
+  @override
+  String get generateReservationContract => 'Generera reservationsavtal';
+
+  @override
+  String get pdfDownloaded => 'PDF nedladdad';
+
+  @override
+  String dogHeatCycle(String dogName) {
+    return '$dogName - Löpning';
+  }
+
+  @override
+  String dogExpectedHeat(String dogName) {
+    return '$dogName - Förväntad löpning';
+  }
+
+  @override
+  String dogGaveBirth(String dogName) {
+    return '$dogName födde';
+  }
+
+  @override
+  String litterDeliveryEvent(String damName) {
+    return 'Leverans: $damName kull';
+  }
+
+  @override
+  String get eightWeeksOld => '8 veckor gammal';
+
+  @override
+  String get unknownDog => 'Okänd';
+
+  @override
+  String puppyVaccination(String puppyName, String number) {
+    return '$puppyName - Vaccination $number';
+  }
+
+  @override
+  String puppyDeworming(String puppyName, String number) {
+    return '$puppyName - Avmaskning $number';
+  }
+
+  @override
+  String puppyMicrochip(String puppyName) {
+    return '$puppyName - ID-märkning';
+  }
+
+  @override
+  String dogBirthdayAge(String dogName, String age) {
+    return '$dogName fyller $age år';
+  }
+
+  @override
+  String get expectedHeatCycles => 'Löpning (förväntad)';
+
+  @override
+  String get estimatedBirthDate => 'Beräknat födelsedatum';
+
+  @override
+  String get selectKennel => 'Välj kennel';
+
+  @override
+  String get memberSingular => 'medlem';
+
+  @override
+  String get membersPlural => 'medlemmar';
+
+  @override
+  String get membersSection => 'Medlemmar';
+
+  @override
+  String get youLabel => 'Du';
+
+  @override
+  String get ownerRole => 'Ägare';
+
+  @override
+  String get administratorRole => 'Administratör';
+
+  @override
+  String get memberRole => 'Medlem';
+
+  @override
+  String get removeLabel => 'Ta bort';
+
+  @override
+  String get pendingInvitations => 'Väntande inbjudningar';
+
+  @override
+  String openInvitationExpires(String days) {
+    return 'Öppen inbjudan • Går ut om $days dagar';
+  }
+
+  @override
+  String get codeCopiedToClipboard => 'Kod kopierad till urklipp';
+
+  @override
+  String get actionsSection => 'Åtgärder';
+
+  @override
+  String get createInvitationCode => 'Skapa inbjudningskod';
+
+  @override
+  String get joinKennelLabel => 'Gå med i kennel';
+
+  @override
+  String get useInvitationCode => 'Använd inbjudningskod';
+
+  @override
+  String get deleteKennelLabel => 'Radera kennel';
+
+  @override
+  String get kennelNameRequired => 'Kennelnamn *';
+
+  @override
+  String get nameIsRequired => 'Namn krävs';
+
+  @override
+  String get createButton => 'Skapa';
+
+  @override
+  String get enterInvitationCodeMessage => 'Ange inbjudningskoden du har fått:';
+
+  @override
+  String get invitationCode => 'Inbjudningskod';
+
+  @override
+  String get invitationCodeHint => 'T.ex. ABC123';
+
+  @override
+  String get joinedKennelSuccess => 'Du har gått med i kenneln!';
+
+  @override
+  String get joinButton => 'Gå med';
+
+  @override
+  String get editKennel => 'Redigera kennel';
+
+  @override
+  String get kennelNameLabel => 'Kennelnamn';
+
+  @override
+  String get kennelUpdated => 'Kennel uppdaterad!';
+
+  @override
+  String changeRoleFor(String name) {
+    return 'Ändra roll för $name';
+  }
+
+  @override
+  String get removeMemberQuestion => 'Ta bort medlem?';
+
+  @override
+  String confirmRemoveMember(String name) {
+    return 'Är du säker på att du vill ta bort $name från kenneln?';
+  }
+
+  @override
+  String get memberRemoved => 'Medlem borttagen';
+
+  @override
+  String get leaveKennelQuestion => 'Lämna kennel?';
+
+  @override
+  String confirmLeaveKennel(String name) {
+    return 'Är du säker på att du vill lämna $name? Du förlorar åtkomst till all data.';
+  }
+
+  @override
+  String get leftKennel => 'Du har lämnat kenneln';
+
+  @override
+  String get leaveButton => 'Lämna';
+
+  @override
+  String get deleteKennelQuestion => 'Radera kennel?';
+
+  @override
+  String confirmDeleteKennel(String name) {
+    return 'Är du HELT säker på att du vill radera $name? Detta kan inte ångras!';
+  }
+
+  @override
+  String get kennelDeleted => 'Kennel raderad';
+
+  @override
+  String get invitationCodeDescription =>
+      'Du kan skapa en inbjudningskod som andra kan använda för att gå med i kenneln.';
+
+  @override
+  String get emailOptional => 'E-postadress (valfritt)';
+
+  @override
+  String get emailPlaceholder => 'anvandare@exempel.se';
+
+  @override
+  String get leaveEmptyForOpen => 'Lämna tomt för öppen inbjudan';
+
+  @override
+  String get roleLabel => 'Roll';
+
+  @override
+  String get canViewAndEdit => 'Kan se och redigera data';
+
+  @override
+  String get canAlsoInvite => 'Kan även bjuda in medlemmar';
+
+  @override
+  String get createInvitation => 'Skapa inbjudan';
+
+  @override
+  String get invitationCreated => 'Inbjudan skapad!';
+
+  @override
+  String get shareCodeMessage =>
+      'Dela denna kod med personen du vill bjuda in:';
+
+  @override
+  String get validFor7Days => 'Giltig i 7 dagar';
+
+  @override
+  String get shareInvitationLabel => 'Dela inbjudan:';
+
+  @override
+  String get copyLabel => 'Kopiera';
+
+  @override
+  String get emailButtonLabel => 'E-post';
+
+  @override
+  String get shareButtonLabel => 'Dela';
+
+  @override
+  String get finishedButton => 'Klar';
+
+  @override
+  String invitationEmailSubject(String kennelName) {
+    return 'Inbjudan till $kennelName på Breedly';
+  }
+
+  @override
+  String invitationEmailBody(String kennelName, String code) {
+    return 'Hej!\n\nDu har bjudits in att gå med i $kennelName på Breedly-appen.\n\nDin inbjudningskod är: $code\n\nSå här går du med:\n1. Ladda ner Breedly-appen om du inte har den\n2. Logga in eller skapa ett konto\n3. Gå till Inställningar → Kennelhantering\n4. Tryck på \"Gå med i kennel\"\n5. Ange koden: $code\n\nKoden är giltig i 7 dagar.\n\nVälkommen!\n';
+  }
+
+  @override
+  String get couldNotOpenEmail => 'Kunde inte öppna e-postklient';
+
+  @override
+  String invitationShareMessage(String kennelName, String code) {
+    return 'Du har bjudits in till $kennelName på Breedly!\n\n🐕 Inbjudningskod: $code\n\nÖppna Breedly-appen, gå till Inställningar → Kennelhantering → \"Gå med i kennel\" och ange koden.\n\nKoden är giltig i 7 dagar.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Fel: $error';
+  }
+
+  @override
+  String get kennelCreatedSuccess => 'Kennel skapad!';
+
+  @override
+  String get kennelProfile => 'Kennelprofil';
+
+  @override
+  String get kennelProfileSaved => 'Kennelprofil sparad';
+
+  @override
+  String get kennelInfo => 'Kennelinformation';
+
+  @override
+  String get kennelNameFieldLabel => 'Kennelnamn';
+
+  @override
+  String get kennelNameHint => 'T.ex. \"Nordlys Kennel\"';
+
+  @override
+  String get descriptionOptional => 'Beskrivning (valfritt)';
+
+  @override
+  String get kennelDescriptionHint => 'Berätta lite om din kennel...';
+
+  @override
+  String get breedsSection => 'Raser';
+
+  @override
+  String get selectBreedsForBreeding => 'Välj raserna du föder upp';
+
+  @override
+  String get tapToSelectBreeds => 'Tryck för att välja raser...';
+
+  @override
+  String get breedSelectedSingular => 'ras vald';
+
+  @override
+  String get breedsSelectedPlural => 'raser valda';
+
+  @override
+  String get contactInfo => 'Kontaktinformation';
+
+  @override
+  String get phoneOptional => 'Telefon (valfritt)';
+
+  @override
+  String get addressOptional => 'Adress (valfritt)';
+
+  @override
+  String get websiteOptional => 'Webbplats (valfritt)';
+
+  @override
+  String get saveKennelProfile => 'Spara kennelprofil';
+
+  @override
+  String get selectBreeds => 'Välj raser';
+
+  @override
+  String nSelected(String count) {
+    return '$count valda';
+  }
+
+  @override
+  String noBreedsFoundFor(String query) {
+    return 'Inga raser hittade för \"$query\"';
+  }
+
+  @override
+  String get noImagesYet => 'Inga bilder ännu';
+
+  @override
+  String get tapToAddPhotos => 'Tryck på + för att lägga till bilder';
+
+  @override
+  String get imageDetails => 'Bilddetaljer';
+
+  @override
+  String fileSizeLabel(String size) {
+    return 'Filstorlek: $size MB';
+  }
+
+  @override
+  String descriptionWithValue(String value) {
+    return 'Beskrivning: $value';
+  }
+
+  @override
+  String get editImageNotes => 'Redigera bildanteckningar';
+
+  @override
+  String get descriptionLabel => 'Beskrivning';
+
+  @override
+  String get imageNotesUpdated => 'Bildanteckningar uppdaterade';
+
+  @override
+  String get deleteImage => 'Radera bild';
+
+  @override
+  String get imageDeleted => 'Bild raderad';
+
+  @override
+  String get searchPrompt => 'Sök efter hundar, kullar, valpar eller köpare';
+
+  @override
+  String get exportData => 'Exportera data';
+
+  @override
+  String exportingItem(String item) {
+    return 'Exporterar $item...';
+  }
+
+  @override
+  String get exportCompleted => 'Export klar!';
+
+  @override
+  String exportError(String error) {
+    return 'Exportfel: $error';
+  }
+
+  @override
+  String itemExported(String item) {
+    return '$item exporterad!';
+  }
+
+  @override
+  String get aboutExport => 'Om export';
+
+  @override
+  String get exportDescription =>
+      'Data exporteras som CSV-filer som kan öppnas i Excel, Google Sheets eller andra kalkylprogram. Filerna använder UTF-8 med BOM för att stödja specialtecken.';
+
+  @override
+  String get exportAll => 'Exportera allt';
+
+  @override
+  String get orExportIndividually => 'Eller exportera enskilt';
+
+  @override
+  String get exportDogsDesc => 'Alla registrerade hundar med stamtavleinfo';
+
+  @override
+  String get exportLittersDesc => 'Alla kullar med föräldrar och valpstatus';
+
+  @override
+  String get exportPuppiesDesc =>
+      'Alla valpar med detaljer och försäljningsstatus';
+
+  @override
+  String get exportExpensesDesc => 'Alla utgifter sorterade efter datum';
+
+  @override
+  String get exportIncomeDesc => 'Alla inkomster sorterade efter datum';
+
+  @override
+  String get exportFinancialSummaryDesc => 'Årlig översikt av resultat';
+
+  @override
+  String get exportLitterStatsDesc => 'Statistik per ras';
+
+  @override
+  String get allData => 'all data';
+
+  @override
+  String get noContracts => 'Inga kontrakt';
+
+  @override
+  String get createPurchaseContractForPuppy =>
+      'Skapa ett köpeavtal för denna valp';
+
+  @override
+  String contractNumberLabel(String number) {
+    return 'Kontrakt nr. $number';
+  }
+
+  @override
+  String get statusDraft => 'Utkast';
+
+  @override
+  String get statusActive => 'Aktiv';
+
+  @override
+  String get statusCompleted => 'Slutförd';
+
+  @override
+  String get statusCancelled => 'Avbruten';
+
+  @override
+  String get deleteContract => 'Radera kontrakt';
+
+  @override
+  String get contractDeleted => 'Kontrakt raderat';
+
+  @override
+  String get createdDate => 'Skapad';
+
+  @override
+  String get purchasedDate => 'Köpt';
+
+  @override
+  String get termsLabel => 'Villkor:';
+
+  @override
+  String get spayNeuterRequired => 'Kastrering/sterilisering krävs';
+
+  @override
+  String get newContract => 'Nytt kontrakt';
+
+  @override
+  String get fullSalesContract =>
+      'Fullständigt försäljningskontrakt för valpen';
+
+  @override
+  String get reserveWithDeposit => 'Reservera valpen med handpenning';
+
+  @override
+  String get reservationAgreement => 'Reservationsavtal';
+
+  @override
+  String exportErrorGeneric(String error) {
+    return 'Exportfel: $error';
+  }
+
+  @override
+  String photoGalleryTitle(String damName) {
+    return '$damName - Fotogalleri';
+  }
+
+  @override
+  String get editMenu => 'Redigera';
+
+  @override
+  String get deleteLitterMenu => 'Ta bort kull';
+
+  @override
+  String get tabPuppies => 'Valpar';
+
+  @override
+  String get tabRegistration => 'Registrering';
+
+  @override
+  String get plannedLitterLabel => 'Planerad kull';
+
+  @override
+  String get litterInfoLabel => 'Kullinfo';
+
+  @override
+  String get damLabel => 'Mor';
+
+  @override
+  String get sireLabel => 'Far';
+
+  @override
+  String get breedLabel => 'Ras';
+
+  @override
+  String get ageLabel => 'Ålder';
+
+  @override
+  String get totalPuppiesLabel => 'Totalt valpar';
+
+  @override
+  String get malesLabel => 'Hanar';
+
+  @override
+  String get femalesLabel => 'Tikar';
+
+  @override
+  String get matingDateLabel => 'Parningsdatum';
+
+  @override
+  String get estimatedDueDateLabel => 'Beräknat födelsedatum';
+
+  @override
+  String get daysUntilWhelpingLabel => 'Dagar till valpning';
+
+  @override
+  String daysToEstimatedBirth(int days) {
+    return '$days dagar till beräknad födsel';
+  }
+
+  @override
+  String get estimatedDatePassed => 'Beräknat födelsedatum har passerat';
+
+  @override
+  String get setMatingDateToCalculate =>
+      'Ange parningsdatum för att beräkna termin';
+
+  @override
+  String get registerBirthButton => 'Registrera födsel';
+
+  @override
+  String get planningToolsLabel => 'Planeringsverktyg';
+
+  @override
+  String get temperatureLabel => 'Temperatur';
+
+  @override
+  String get progesteroneLabel => 'Progesteron';
+
+  @override
+  String get editLabel => 'Redigera';
+
+  @override
+  String get birthLabel => 'Födsel';
+
+  @override
+  String matingDateColon(String date) {
+    return 'Parningsdatum: $date';
+  }
+
+  @override
+  String get noMatingDateSet => 'Inget parningsdatum angivet';
+
+  @override
+  String get setDateLabel => 'Ange datum';
+
+  @override
+  String estimatedBirthColon(String date) {
+    return 'Beräknad födsel: $date';
+  }
+
+  @override
+  String daysLeft(int days) {
+    return '$days dagar kvar';
+  }
+
+  @override
+  String get selectMatingDateLabel => 'Välj parningsdatum';
+
+  @override
+  String matingDateSetSnackbar(String matingDate, String dueDate) {
+    return 'Parningsdatum satt till $matingDate. Beräknad födsel: $dueDate';
+  }
+
+  @override
+  String get couldNotFindDam => 'Kunde inte hitta tiken';
+
+  @override
+  String get registerBirthTitle => 'Registrera födsel';
+
+  @override
+  String get litterBornConfirmText =>
+      'Kullen är nu född! Vill du uppdatera födelsedatumet till idag?';
+
+  @override
+  String get canThenAddPuppies => 'Du kan sedan lägga till valparna manuellt.';
+
+  @override
+  String get cancelLabel => 'Avbryt';
+
+  @override
+  String get registerLabel => 'Registrera';
+
+  @override
+  String get birthRegisteredSnackbar =>
+      'Födsel registrerad! Du kan nu lägga till valpar.';
+
+  @override
+  String get noPuppiesYet => 'Inga valpar ännu';
+
+  @override
+  String get goToPuppiesTabHint =>
+      'Gå till Valpar-fliken för att lägga till valpar';
+
+  @override
+  String puppiesCount2(int count) {
+    return 'Valpar ($count)';
+  }
+
+  @override
+  String get availableLabel => 'Ledig';
+
+  @override
+  String get reservedLabel => 'Reserverad';
+
+  @override
+  String get soldLabel => 'Såld';
+
+  @override
+  String get quickActionsLabel => 'Snabbåtgärder';
+
+  @override
+  String get weighingLabel => 'Vägning';
+
+  @override
+  String get newPuppyLabel => 'Ny valp';
+
+  @override
+  String get treatmentOverviewLabel => 'Behandlingsöversikt';
+
+  @override
+  String get vaccinatedLabel => 'Vaccinerad';
+
+  @override
+  String get dewormedLabel => 'Avmaskad';
+
+  @override
+  String get microchippedLabel => 'ID-märkt';
+
+  @override
+  String dayUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'dagar',
+      one: 'dag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weekUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'veckor',
+      one: 'vecka',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weeksAndDays(int weeks, String weekLabel, int days, String dayLabel) {
+    return '$weeks $weekLabel och $days $dayLabel';
+  }
+
+  @override
+  String get todayParens => '(idag)';
+
+  @override
+  String get tomorrowParens => '(imorgon)';
+
+  @override
+  String get yesterdayParens => '(igår)';
+
+  @override
+  String get summaryLabel => 'Sammanfattning';
+
+  @override
+  String get addPuppyLabel => 'Lägg till valp';
+
+  @override
+  String get totalLabel => 'Totalt';
+
+  @override
+  String get puppyListLabel => 'Valplista';
+
+  @override
+  String get noPuppiesRegisteredYet => 'Inga valpar registrerade ännu';
+
+  @override
+  String colorAge(String color, int weeks) {
+    return 'Färg: $color • Ålder: $weeks veckor';
+  }
+
+  @override
+  String get basicInfoLabel => 'Grundinfo';
+
+  @override
+  String get genderLabel => 'Kön';
+
+  @override
+  String get birthWeightLabel => 'Födelsevikt';
+
+  @override
+  String get treatmentsLabel => 'Behandlingar';
+
+  @override
+  String get yesLabel => 'Ja';
+
+  @override
+  String get noLabel => 'Nej';
+
+  @override
+  String get buyerLabel => 'Köpare';
+
+  @override
+  String get nameLabel => 'Namn';
+
+  @override
+  String get contactLabel => 'Kontakt';
+
+  @override
+  String get notesLabel => 'Anteckningar';
+
+  @override
+  String get weightButton => 'Vikt';
+
+  @override
+  String get planButton => 'Plan';
+
+  @override
+  String get contractButton => 'Kontrakt';
+
+  @override
+  String get healthCertificateButton => 'Hälsointyg';
+
+  @override
+  String get shareButton => 'Dela';
+
+  @override
+  String get temperatureRegistrationLabel => 'Temperaturregistrering';
+
+  @override
+  String get registerTempBeforeBirth =>
+      'Registrera temperatur på tiken före beräknad födsel';
+
+  @override
+  String get openTemperatureLogButton => 'Öppna temperaturlogg';
+
+  @override
+  String get puppyWeightLabel => 'Valparnas vikt';
+
+  @override
+  String get registerWeightForAll => 'Registrera vikt för alla valpar';
+
+  @override
+  String get noPuppiesRegisteredShort => 'Inga valpar registrerade';
+
+  @override
+  String get editPuppyTitle => 'Redigera valp';
+
+  @override
+  String get statusLabel => 'Status';
+
+  @override
+  String get birthWeightGramsLabel => 'Födelsevikt (gram)';
+
+  @override
+  String get birthNoteLabel => 'Födelseanteckning';
+
+  @override
+  String get buyerNameLabel => 'Köparens namn';
+
+  @override
+  String get buyerContactLabel => 'Köparens kontakt';
+
+  @override
+  String get notesFieldLabel => 'Anteckningar';
+
+  @override
+  String get saveLabel => 'Spara';
+
+  @override
+  String get puppyUpdatedSnackbar => 'Valp uppdaterad';
+
+  @override
+  String weightCurveTitle(String name) {
+    return '$name - Viktkurva';
+  }
+
+  @override
+  String get birthWeightNote => 'Födelsevikt';
+
+  @override
+  String get daysSinceBirthAxis => 'Dagar sedan födsel';
+
+  @override
+  String get gramAxis => 'Gram';
+
+  @override
+  String get noWeightOrBirthWeight =>
+      'Inga viktmätningar eller födelsevikt registrerade';
+
+  @override
+  String get registeredMeasurements => 'Registrerade mätningar:';
+
+  @override
+  String gramUnit(String weight) {
+    return '$weight gram';
+  }
+
+  @override
+  String dayDateLabel(int day, String date) {
+    return 'Dag $day - $date';
+  }
+
+  @override
+  String get weightMeasurementDeleted => 'Viktmätning borttagen';
+
+  @override
+  String get addMeasurementButton => 'Lägg till mätning';
+
+  @override
+  String get closeButton => 'Stäng';
+
+  @override
+  String get addWeightMeasurementTitle => 'Lägg till viktmätning';
+
+  @override
+  String get dateLabel => 'Datum';
+
+  @override
+  String get clockLabel => 'Tid';
+
+  @override
+  String get weightGramsLabel => 'Vikt (gram)';
+
+  @override
+  String get weightMeasurementAddedSnackbar => 'Viktmätning tillagd';
+
+  @override
+  String get registerWeightForAllTitle => 'Registrera vikt för alla valpar';
+
+  @override
+  String get notesOptionalLabel => 'Anteckningar (valfritt)';
+
+  @override
+  String get saveAllLabel => 'Spara alla';
+
+  @override
+  String weightMeasurementsSavedSnackbar(int count) {
+    return '$count viktmätningar sparade';
+  }
+
+  @override
+  String get editWeightMeasurementTitle => 'Redigera viktmätning';
+
+  @override
+  String get weightMeasurementUpdatedSnackbar => 'Viktmätning uppdaterad';
+
+  @override
+  String treatmentPlanTitle(String name) {
+    return '$name - Behandlingsplan';
+  }
+
+  @override
+  String get dewormingLabel => 'Avmaskning:';
+
+  @override
+  String get deworming1 => '1:a avmaskning (ca 2 veckor)';
+
+  @override
+  String get deworming2 => '2:a avmaskning (ca 4 veckor)';
+
+  @override
+  String get deworming3 => '3:e avmaskning (ca 6 veckor)';
+
+  @override
+  String get vaccinesLabel => 'Vacciner:';
+
+  @override
+  String get vaccine1 => '1:a vaccination (8 veckor)';
+
+  @override
+  String get vaccine2 => '2:a vaccination (12 veckor)';
+
+  @override
+  String get vaccine3 => '3:e vaccination (16 veckor)';
+
+  @override
+  String get otherLabel => 'Övrigt:';
+
+  @override
+  String get idMarkingLabel => 'ID-märkning';
+
+  @override
+  String get idMarkingNumberLabel => 'ID-märkningsnummer';
+
+  @override
+  String get selectDateLabel => 'Välj datum';
+
+  @override
+  String get treatmentPlanUpdatedSnackbar =>
+      'Behandlingsplan uppdaterad och påminnelser planerade';
+
+  @override
+  String get pdfDownloadedTitle => 'PDF nedladdad';
+
+  @override
+  String pdfSavedSnackbar(String path) {
+    return 'PDF sparad:\n$path';
+  }
+
+  @override
+  String errorGeneratingPdf(String error) {
+    return 'Fel vid PDF-generering: $error';
+  }
+
+  @override
+  String get healthCertificateTitle => 'Hälsointyg';
+
+  @override
+  String generateHealthCertFor(String name) {
+    return 'Generera hälsointyg för $name';
+  }
+
+  @override
+  String get healthExaminationLabel => 'Hälsoundersökning';
+
+  @override
+  String get tapToAddNote => 'Tryck på en punkt för att lägga till anteckning';
+
+  @override
+  String get generalConditionLabel => 'Allmäntillstånd';
+
+  @override
+  String get eyesLabel => 'Ögon';
+
+  @override
+  String get earsLabel => 'Öron';
+
+  @override
+  String get heartLabel => 'Hjärta';
+
+  @override
+  String get lungsLabel => 'Lungor';
+
+  @override
+  String get skinCoatLabel => 'Hud/päls';
+
+  @override
+  String get teethMouthLabel => 'Tänder/mun';
+
+  @override
+  String get abdomenLabel => 'Buk (abdomen)';
+
+  @override
+  String get limbsJointsLabel => 'Lemmar/leder';
+
+  @override
+  String get vetInfoOptional => 'Veterinärinformation (valfritt):';
+
+  @override
+  String get vetNameLabel => 'Veterinärens namn';
+
+  @override
+  String get phoneLabel => 'Telefon';
+
+  @override
+  String get generalNotesLabel => 'Allmänna anteckningar';
+
+  @override
+  String get generatePdfButton => 'Generera PDF';
+
+  @override
+  String addNoteFor(String label) {
+    return 'Lägg till anteckning för $label...';
+  }
+
+  @override
+  String get healthCertificateDownloaded => 'Hälsointyg nedladdat';
+
+  @override
+  String healthCertSavedSnackbar(String path) {
+    return 'Hälsointyg sparat:\n$path';
+  }
+
+  @override
+  String errorGeneratingHealthCert(String error) {
+    return 'Fel vid generering av hälsointyg: $error';
+  }
+
+  @override
+  String get shareUpdateTitle => 'Dela uppdatering';
+
+  @override
+  String shareUpdateAbout(String name) {
+    return 'Dela uppdatering om $name med köpare';
+  }
+
+  @override
+  String get includeInMessage => 'Inkludera i meddelandet:';
+
+  @override
+  String get ageCheckbox => 'Ålder';
+
+  @override
+  String get weightCheckbox => 'Vikt';
+
+  @override
+  String get treatmentsCheckbox => 'Behandlingar';
+
+  @override
+  String get customMessageOptional => 'Eget meddelande (valfritt)';
+
+  @override
+  String get personalGreetingHint => 'Skriv en personlig hälsning...';
+
+  @override
+  String updateAbout(String name) {
+    return 'Uppdatering om $name';
+  }
+
+  @override
+  String get editLitterTitle => 'Redigera kull';
+
+  @override
+  String get damFemaleLabel => 'Mor (Tik) *';
+
+  @override
+  String get sireMaleLabel => 'Far (Hanhund) *';
+
+  @override
+  String get puppyCountBasedOnRegistered =>
+      'Antal valpar (baserat på registrerade valpar):';
+
+  @override
+  String get updatesAutomatically =>
+      'Dessa siffror uppdateras automatiskt när du lägger till eller tar bort valpar.';
+
+  @override
+  String get damAndSireRequired => 'Mor och Far krävs';
+
+  @override
+  String get litterUpdatedSnackbar => 'Kull uppdaterad';
+
+  @override
+  String get deleteLitterTitle => 'Ta bort kull?';
+
+  @override
+  String confirmDeleteLitterText(String damName, String sireName) {
+    return 'Är du säker på att du vill ta bort kullen från $damName x $sireName?\n\nOBS: Detta tar även bort alla valpar i kullen!';
+  }
+
+  @override
+  String get deleteLabel => 'Ta bort';
+
+  @override
+  String get litterDeletedSnackbar => 'Kull borttagen';
+
+  @override
+  String get placedLabel => 'placerad';
+
+  @override
+  String get ownerRoleLabel => 'Ägare';
+
+  @override
+  String get skipButton => 'Hoppa över';
+
+  @override
+  String get getStartedButton => 'Kom igång';
+
+  @override
+  String get onboardingWelcomeTitle => 'Välkommen till Breedly';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Din kompletta lösning för uppfödningsadministration. Håll koll på hundar, kullar, köpare och mycket mer.';
+
+  @override
+  String get onboardingDogsTitle => 'Hantera dina hundar';
+
+  @override
+  String get onboardingDogsDesc =>
+      'Lägg till hundar med stamtavla, hälsoinformation, utställningsresultat och bilder. Allt på ett ställe.';
+
+  @override
+  String get onboardingLittersTitle => 'Spåra kullar och valpar';
+
+  @override
+  String get onboardingLittersDesc =>
+      'Registrera kullar, följ valparnas utveckling med viktlogg och generera kontrakt för köpare.';
+
+  @override
+  String get onboardingCalendarTitle => 'Kalender och påminnelser';
+
+  @override
+  String get onboardingCalendarDesc =>
+      'Glöm aldrig viktiga datum. Få påminnelser om vaccinationer, veterinärbesök och andra händelser.';
+
+  @override
+  String get onboardingStatsTitle => 'Statistik och rapporter';
+
+  @override
+  String get onboardingStatsDesc =>
+      'Få insikt i din uppfödning med detaljerad statistik, ekonomiöversikt och årsrapporter.';
+
+  @override
+  String get tabInfo => 'Info';
+
+  @override
+  String get veterinaryInfoOptional => 'Veterinärinformation (valfritt):';
+
+  @override
+  String deleteLitterConfirmMessage(String damName, String sireName) {
+    return 'Är du säker på att du vill radera kullen från $damName x $sireName?\n\nOBS: Detta raderar även alla valpar i kullen!';
+  }
+
+  @override
+  String get couldNotGenerateImage => 'Kunde inte generera bild';
+
+  @override
+  String get contentSection => 'INNEHÅLL';
+
+  @override
+  String get detailsToggle => 'Detaljer';
+
+  @override
+  String get backgroundSection => 'BAKGRUND';
+
+  @override
+  String get autoTheme => 'Auto';
+
+  @override
+  String get themeGoldBlack => 'Guld & Svart';
+
+  @override
+  String get themeNavyGold => 'Marinblå & Guld';
+
+  @override
+  String get themeTealAmber => 'Teal & Bärnsten';
+
+  @override
+  String get themeSlateSilver => 'Skiffer & Silver';
+
+  @override
+  String get themeForestJade => 'Skog & Jade';
+
+  @override
+  String get themeIndigo => 'Indigo';
+
+  @override
+  String get themeClassic => 'Klassisk';
+
+  @override
+  String get patternSection => 'MÖNSTER';
+
+  @override
+  String get patternNone => 'Ingen';
+
+  @override
+  String get patternGeometric => 'Geometrisk';
+
+  @override
+  String get patternCircles => 'Cirklar';
+
+  @override
+  String get patternLines => 'Linjer';
+
+  @override
+  String get patternDots => 'Prickar';
+
+  @override
+  String get patternWaves => 'Vågor';
+
+  @override
+  String get patternElegant => 'Elegant';
+
+  @override
+  String get fontTypeSection => 'TYPSNITT';
+
+  @override
+  String get fontStandard => 'Standard';
+
+  @override
+  String get fontSerif => 'Serif';
+
+  @override
+  String get fontElegant => 'Elegant';
+
+  @override
+  String get fontModern => 'Modern';
+
+  @override
+  String get fontClassic => 'Klassisk';
+
+  @override
+  String get fontHandwritten => 'Handskrift';
+
+  @override
+  String get fontSizeSection => 'STORLEK';
+
+  @override
+  String get resultCardTitle => 'Resultatkort';
+
+  @override
+  String get removePhoto => 'Ta bort foto';
+
+  @override
+  String get addPhoto => 'Lägg till foto';
+
+  @override
+  String get selectFromGallery => 'Välj från galleri';
+
+  @override
+  String breedJudgeWithName(String name) {
+    return 'Rasdomare: $name';
+  }
+
+  @override
+  String classPlacementAbbr(String placement) {
+    return 'Kl. $placement';
+  }
 }

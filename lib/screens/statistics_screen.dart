@@ -40,50 +40,44 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: localizations?.statisticsAndReports ?? 'Statistikk & Rapporter',
+        title: localizations.statisticsAndReports,
         context: context,
         actions: [
           PageInfoHelper.buildInfoButton(
             context,
-            title: localizations?.statistics ?? 'Statistikk',
-            description: localizations?.statisticsTip ?? 
-                'Her finner du detaljert statistikk og rapporter for din oppdrettsvirksomhet.',
+            title: localizations.statistics,
+            description: localizations.statisticsTip,
             features: [
               PageInfoItem(
                 icon: Icons.pets,
-                title: localizations?.litterStatistics ?? 'Kullstatistikk',
-                description: localizations?.litterStatisticsDesc ??
-                    'Gjennomsnittlig kullstørrelse, kjønnsfordeling og mer.',
+                title: localizations.litterStatistics,
+                description: localizations.litterStatisticsDesc,
                 color: AppColors.accent1,
               ),
               PageInfoItem(
                 icon: Icons.show_chart,
-                title: localizations?.weightDevelopment ?? 'Vektutvikling',
-                description: localizations?.weightDevelopmentDesc ??
-                    'Sammenlign vektutvikling mellom valper og kull.',
+                title: localizations.weightDevelopment,
+                description: localizations.weightDevelopmentDesc,
                 color: AppColors.success,
               ),
               PageInfoItem(
                 icon: Icons.attach_money,
-                title: localizations?.economyStats ?? 'Økonomi',
-                description: localizations?.economyStatsDesc ??
-                    'Inntektsrapporter per år og rase.',
+                title: localizations.economyStats,
+                description: localizations.economyStatsDesc,
                 color: AppColors.warning,
               ),
               PageInfoItem(
                 icon: Icons.science,
-                title: localizations?.breedingStatistics ?? 'Avlsstatistikk',
-                description: localizations?.breedingStatisticsDesc ??
-                    'Se hvilke foreldrekombinasjoner som gir best resultat.',
+                title: localizations.breedingStatistics,
+                description: localizations.breedingStatisticsDesc,
                 color: AppColors.accent5,
               ),
             ],
-            tip: localizations?.statisticsTip ??
-                'Statistikken oppdateres automatisk basert på dine registrerte data.',
+            tip: localizations.statisticsTip,
           ),
         ],
         bottom: TabBar(
@@ -94,10 +88,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
           indicatorWeight: 3,
           isScrollable: true,
           tabs: [
-            Tab(icon: const Icon(Icons.pets), text: localizations?.litters ?? 'Kull'),
-            Tab(icon: const Icon(Icons.show_chart), text: localizations?.weightDevelopment ?? 'Vekt'),
-            Tab(icon: const Icon(Icons.attach_money), text: localizations?.economyStats ?? 'Økonomi'),
-            Tab(icon: const Icon(Icons.science), text: localizations?.breedingStatistics ?? 'Avl'),
+            Tab(icon: const Icon(Icons.pets), text: localizations.litters),
+            Tab(icon: const Icon(Icons.show_chart), text: localizations.weightDevelopment),
+            Tab(icon: const Icon(Icons.attach_money), text: localizations.economyStats),
+            Tab(icon: const Icon(Icons.science), text: localizations.breedingStatistics),
           ],
         ),
       ),
@@ -115,15 +109,15 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
   // ============ KULLSTATISTIKK ============
   Widget _buildLitterStatisticsTab() {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final litterBox = Hive.box<Litter>('litters');
     final puppyBox = Hive.box<Puppy>('puppies');
     final litters = litterBox.values.toList();
 
     if (litters.isEmpty) {
       return _buildEmptyState(
-        localizations?.noLittersRegistered ?? 'Ingen kull registrert',
-        localizations?.registerFirstLitter ?? 'Legg til kull for å se statistikk',
+        localizations.noLittersRegistered,
+        localizations.registerFirstLitter,
         Icons.pets_outlined,
       );
     }
@@ -137,15 +131,15 @@ class _StatisticsScreenState extends State<StatisticsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Oversiktskort
-          _buildOverviewCard(localizations?.litterOverview ?? 'Kulloversikt', Icons.pets, AppColors.accent1, [
-            _StatItem(localizations?.totalLitters ?? 'Totalt kull', '${litters.length}'),
+          _buildOverviewCard(localizations.litterOverview, Icons.pets, AppColors.accent1, [
+            _StatItem(localizations.totalLitters, '${litters.length}'),
             _StatItem(
-              localizations?.averageLitterSize ?? 'Gjennomsnittlig kullstørrelse',
+              localizations.averageLitterSize,
               litterStats['avgLitterSize']?.toStringAsFixed(1) ?? '0',
             ),
-            _StatItem(localizations?.totalPuppies ?? 'Totalt valper', '${litterStats['totalPuppies']}'),
-            _StatItem(localizations?.largestLitter ?? 'Største kull', '${litterStats['largestLitter']} ${localizations?.puppies ?? 'valper'}'),
-            _StatItem(localizations?.smallestLitter ?? 'Minste kull', '${litterStats['smallestLitter']} ${localizations?.puppies ?? 'valper'}'),
+            _StatItem(localizations.totalPuppies, '${litterStats['totalPuppies']}'),
+            _StatItem(localizations.largestLitter, '${litterStats['largestLitter']} ${localizations.puppies}'),
+            _StatItem(localizations.smallestLitter, '${litterStats['smallestLitter']} ${localizations.puppies}'),
           ]),
 
           const SizedBox(height: AppSpacing.lg),
@@ -212,7 +206,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildGenderDistributionCard(Map<String, dynamic> stats) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final males = stats['totalMales'] as int;
     final females = stats['totalFemales'] as int;
     final total = males + females;
@@ -232,7 +226,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.pie_chart, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.genderDistribution ?? 'Kjønnsfordeling',
+                  localizations.genderDistribution,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -245,7 +239,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   sections: [
                     PieChartSectionData(
                       value: males.toDouble(),
-                      title: '${localizations?.males ?? 'Hanner'}\n$males',
+                      title: '${localizations.males}\n$males',
                       color: AppColors.male,
                       radius: 60,
                       titleStyle: const TextStyle(
@@ -257,7 +251,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     ),
                     PieChartSectionData(
                       value: females.toDouble(),
-                      title: '${localizations?.females ?? 'Tisper'}\n$females',
+                      title: '${localizations.females}\n$females',
                       color: AppColors.female,
                       radius: 60,
                       titleStyle: const TextStyle(
@@ -278,13 +272,13 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildLegendItem(
-                  localizations?.males ?? 'Hanner',
+                  localizations.males,
                   AppColors.male,
                   '${(males / total * 100).toStringAsFixed(1)}%',
                 ),
                 const SizedBox(width: AppSpacing.xxl),
                 _buildLegendItem(
-                  localizations?.females ?? 'Tisper',
+                  localizations.females,
                   AppColors.female,
                   '${(females / total * 100).toStringAsFixed(1)}%',
                 ),
@@ -314,11 +308,11 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     List<Litter> litters,
     Box<Puppy> puppyBox,
   ) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final breedStats = <String, List<int>>{};
 
     for (final litter in litters) {
-      final breed = litter.breed.isNotEmpty ? litter.breed : (localizations?.unknown ?? 'Ukjent');
+      final breed = litter.breed.isNotEmpty ? litter.breed : localizations.unknown;
       final puppyCount = puppyBox.values
           .where((p) => p.litterId == litter.id)
           .length;
@@ -351,7 +345,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.bar_chart, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.litterSizeByBreed ?? 'Kullstørrelse per rase',
+                  localizations.litterSizeByBreed,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -383,7 +377,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     SizedBox(
                       width: 80,
                       child: Text(
-                        '${localizations?.average ?? 'Snitt'}: ${avg.toStringAsFixed(1)}',
+                        '${localizations.average}: ${avg.toStringAsFixed(1)}',
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                     ),
@@ -398,7 +392,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildLittersPerYearChart(List<Litter> litters) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final yearCounts = <int, int>{};
 
     for (final litter in litters) {
@@ -426,7 +420,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.timeline, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.littersPerYear ?? 'Kull per år',
+                  localizations.littersPerYear,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -442,7 +436,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     touchTooltipData: BarTouchTooltipData(
                       getTooltipItem: (group, groupIndex, rod, rodIndex) {
                         return BarTooltipItem(
-                          '${sortedYears[groupIndex]}\n${rod.toY.toInt()} ${localizations?.litters ?? 'kull'}',
+                          '${sortedYears[groupIndex]}\n${rod.toY.toInt()} ${localizations.litters}',
                           const TextStyle(color: Colors.white),
                         );
                       },
@@ -522,7 +516,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
   // ============ VEKTSTATISTIKK ============
   Widget _buildWeightStatisticsTab() {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final litterBox = Hive.box<Litter>('litters');
     final puppyBox = Hive.box<Puppy>('puppies');
     final weightBox = Hive.box<PuppyWeightLog>('weight_logs');
@@ -531,8 +525,8 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     if (litters.isEmpty) {
       return _buildEmptyState(
-        localizations?.noDataAvailable ?? 'Ingen data tilgjengelig',
-        localizations?.registerWeightToSeeStats ?? 'Registrer vekt på valpene for å se statistikk',
+        localizations.noDataAvailable,
+        localizations.registerWeightToSeeStats,
         Icons.show_chart,
       );
     }
@@ -564,7 +558,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     Box<Puppy> puppyBox,
     Box<PuppyWeightLog> weightBox,
   ) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     // Finn kull med vektdata
     final littersWithWeight = litters.where((litter) {
       final puppies = puppyBox.values.where((p) => p.litterId == litter.id);
@@ -583,10 +577,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             children: [
               Icon(Icons.info_outline, size: 48, color: context.colors.textDisabled),
               const SizedBox(height: AppSpacing.md),
-              Text(localizations?.noWeightDataRegistered ?? 'Ingen vektdata registrert ennå'),
+              Text(localizations.noWeightDataRegistered),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                localizations?.registerWeightToCompare ?? 'Registrer vekt på valpene for å sammenligne',
+                localizations.registerWeightToCompare,
                 style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
@@ -609,7 +603,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.weightComparisonBetweenLitters ?? 'Vektsammenligning mellom kull',
+                  localizations.weightComparisonBetweenLitters,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -641,7 +635,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                       style: const TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      '${litter.breed} • ${puppies.length} ${localizations?.puppies ?? 'valper'}',
+                      '${litter.breed} • ${puppies.length} ${localizations.puppies}',
                       style: TextStyle(fontSize: 12, color: context.colors.textMuted),
                     ),
                     const SizedBox(height: AppSpacing.sm),
@@ -649,7 +643,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                       children: [
                         Expanded(
                           child: _buildWeightStat(
-                            localizations?.birthWeightAverage ?? 'Fødselsvekt (snitt)',
+                            localizations.birthWeightAverage,
                             avgBirthWeight > 0
                                 ? '${avgBirthWeight.toStringAsFixed(0)} g'
                                 : '-',
@@ -658,7 +652,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                         ),
                         Expanded(
                           child: _buildWeightStat(
-                            localizations?.latestWeightAverage ?? 'Siste vekt (snitt)',
+                            localizations.latestWeightAverage,
                             latestAvgWeight > 0
                                 ? '${latestAvgWeight.toStringAsFixed(0)} g'
                                 : '-',
@@ -724,7 +718,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     Box<Puppy> puppyBox,
     Box<PuppyWeightLog> weightBox,
   ) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     // Beregn gjennomsnittlig vektøkning per uke
     final weeklyGrowth = <int, List<double>>{};
 
@@ -759,14 +753,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.trending_up, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.averageWeightDevelopment ?? 'Gjennomsnittlig vektutvikling',
+                  localizations.averageWeightDevelopment,
                   style: AppTypography.headlineSmall,
                 ),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              localizations?.basedOnAllWeightMeasurements ?? 'Basert på alle registrerte vektmålinger',
+              localizations.basedOnAllWeightMeasurements,
               style: TextStyle(fontSize: 12, color: context.colors.textMuted),
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -781,7 +775,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   ),
                   titlesData: FlTitlesData(
                     bottomTitles: AxisTitles(
-                      axisNameWidget: Text(localizations?.week ?? 'Uke'),
+                      axisNameWidget: Text(localizations.week),
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
@@ -793,7 +787,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                       ),
                     ),
                     leftTitles: AxisTitles(
-                      axisNameWidget: Text(localizations?.gram ?? 'Gram'),
+                      axisNameWidget: Text(localizations.gram),
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 45,
@@ -842,7 +836,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildBirthWeightStatsCard(Box<Puppy> puppyBox) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final puppiesWithBirthWeight = puppyBox.values
         .where((p) => p.birthWeight != null && p.birthWeight! > 0)
         .toList();
@@ -886,7 +880,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.birthWeightStatistics ?? 'Fødselsvekt statistikk',
+                  localizations.birthWeightStatistics,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -896,7 +890,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               children: [
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.average ?? 'Snitt',
+                    localizations.average,
                     '${avg.toStringAsFixed(0)} g',
                     AppColors.accent1,
                   ),
@@ -904,7 +898,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.min ?? 'Min',
+                    localizations.min,
                     '${min.toStringAsFixed(0)} g',
                     AppColors.accent3,
                   ),
@@ -912,7 +906,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.max ?? 'Maks',
+                    localizations.max,
                     '${max.toStringAsFixed(0)} g',
                     AppColors.success,
                   ),
@@ -926,7 +920,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               children: [
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.malesAverage ?? 'Hanner (snitt)',
+                    localizations.malesAverage,
                     maleAvg > 0 ? '${maleAvg.toStringAsFixed(0)} g' : '-',
                     AppColors.male,
                   ),
@@ -934,7 +928,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.femalesAverage ?? 'Tisper (snitt)',
+                    localizations.femalesAverage,
                     femaleAvg > 0 ? '${femaleAvg.toStringAsFixed(0)} g' : '-',
                     AppColors.female,
                   ),
@@ -978,7 +972,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
   // ============ ØKONOMISTATISTIKK ============
   Widget _buildFinanceStatisticsTab() {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final contractBox = Hive.box<PurchaseContract>('purchase_contracts');
     final litterBox = Hive.box<Litter>('litters');
     final puppyBox = Hive.box<Puppy>('puppies');
@@ -987,8 +981,8 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     if (contracts.isEmpty) {
       return _buildEmptyState(
-        localizations?.noSalesDataAvailable ?? 'Ingen salgsdata tilgjengelig',
-        localizations?.createContractsToSeeStats ?? 'Opprett salgskontrakter for å se økonomistatistikk',
+        localizations.noSalesDataAvailable,
+        localizations.createContractsToSeeStats,
         Icons.attach_money,
       );
     }
@@ -1021,7 +1015,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildRevenueOverviewCard(List<PurchaseContract> contracts) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final totalRevenue = contracts.fold(0.0, (sum, c) => sum + c.price);
     final paidContracts = contracts.where((c) => c.status == 'Completed');
     final paidRevenue = paidContracts.fold(0.0, (sum, c) => sum + c.price);
@@ -1043,7 +1037,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.revenueOverview ?? 'Inntektsoversikt',
+                  localizations.revenueOverview,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -1064,7 +1058,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        localizations?.totalTurnover ?? 'Total omsetning',
+                        localizations.totalTurnover,
                         style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                       ),
                       Text(
@@ -1085,7 +1079,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               children: [
                 Expanded(
                   child: _buildFinanceStatBox(
-                    localizations?.paid ?? 'Betalt',
+                    localizations.paid,
                     formatter.format(paidRevenue),
                     AppColors.success,
                     Icons.check_circle,
@@ -1094,7 +1088,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildFinanceStatBox(
-                    localizations?.outstanding ?? 'Utestående',
+                    localizations.outstanding,
                     formatter.format(pendingRevenue),
                     AppColors.warning,
                     Icons.pending,
@@ -1104,7 +1098,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              '${contracts.length} ${localizations?.contractsTotal ?? 'kontrakter totalt'}',
+              '${contracts.length} ${localizations.contractsTotal}',
               style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
           ],
@@ -1154,7 +1148,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildRevenuePerYearCard(List<PurchaseContract> contracts) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final yearRevenue = <int, double>{};
 
     for (final contract in contracts) {
@@ -1188,7 +1182,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.revenuePerYear ?? 'Inntekt per år',
+                  localizations.revenuePerYear,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -1244,7 +1238,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     Box<Puppy> puppyBox,
     Box<Litter> litterBox,
   ) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final breedRevenue = <String, double>{};
 
     for (final contract in contracts) {
@@ -1255,7 +1249,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
         final litter = litterBox.values.firstWhere(
           (l) => l.id == puppy.litterId,
         );
-        final breed = litter.breed.isNotEmpty ? litter.breed : (localizations?.unknown ?? 'Ukjent');
+        final breed = litter.breed.isNotEmpty ? litter.breed : localizations.unknown;
         breedRevenue[breed] = (breedRevenue[breed] ?? 0) + contract.price;
       } catch (e) {
         // Skip if not found
@@ -1285,7 +1279,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.pets, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.revenuePerBreed ?? 'Inntekt per rase',
+                  localizations.revenuePerBreed,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -1313,7 +1307,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildAveragePriceCard(List<PurchaseContract> contracts) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final contractsWithPrice = contracts.where((c) => c.price > 0).toList();
 
     if (contractsWithPrice.isEmpty) {
@@ -1342,7 +1336,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.price_check, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.priceStatistics ?? 'Prisstatistikk',
+                  localizations.priceStatistics,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -1352,7 +1346,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               children: [
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.averagePrice ?? 'Snittpris',
+                    localizations.averagePrice,
                     formatter.format(avg),
                     AppColors.accent1,
                   ),
@@ -1360,7 +1354,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.lowest ?? 'Laveste',
+                    localizations.lowest,
                     formatter.format(min),
                     AppColors.accent3,
                   ),
@@ -1368,7 +1362,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
-                    localizations?.highest ?? 'Høyeste',
+                    localizations.highest,
                     formatter.format(max),
                     AppColors.success,
                   ),
@@ -1383,7 +1377,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
   // ============ AVLSSTATISTIKK ============
   Widget _buildBreedingStatisticsTab() {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     final litterBox = Hive.box<Litter>('litters');
     final puppyBox = Hive.box<Puppy>('puppies');
     final dogBox = Hive.box<Dog>('dogs');
@@ -1392,8 +1386,8 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     if (litters.isEmpty) {
       return _buildEmptyState(
-        localizations?.noBreedingDataAvailable ?? 'Ingen avlsdata tilgjengelig',
-        localizations?.registerLittersToSeeBreedingStats ?? 'Registrer kull for å se avlsstatistikk',
+        localizations.noBreedingDataAvailable,
+        localizations.registerLittersToSeeBreedingStats,
         Icons.science,
       );
     }
@@ -1421,7 +1415,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildBestCombinationsCard(List<Litter> litters, Box<Puppy> puppyBox) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     // Grupper kull etter foreldrekombinasjon
     final combinations = <String, List<_CombinationStats>>{};
 
@@ -1474,14 +1468,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.stars, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.bestParentCombinations ?? 'Beste foreldrekombinasjoner',
+                  localizations.bestParentCombinations,
                   style: AppTypography.headlineSmall,
                 ),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              localizations?.sortedByAverageLitterSize ?? 'Sortert etter gjennomsnittlig kullstørrelse',
+              localizations.sortedByAverageLitterSize,
               style: TextStyle(fontSize: 12, color: context.colors.textMuted),
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -1517,7 +1511,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                             borderRadius: AppRadius.mdAll,
                           ),
                           child: Text(
-                            '${combo.litterCount} ${localizations?.litters ?? 'kull'}',
+                            '${combo.litterCount} ${localizations.litters}',
                             style: TextStyle(
                               fontSize: 11,
                               color: Theme.of(context).primaryColor,
@@ -1536,14 +1530,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     Row(
                       children: [
                         _buildMiniStat(
-                          localizations?.avgLitterSize ?? 'Snitt kullstørrelse',
+                          localizations.avgLitterSize,
                           combo.avgLitterSize.toStringAsFixed(1),
                           Icons.pets,
                         ),
                         const SizedBox(width: AppSpacing.lg),
                         if (combo.avgBirthWeight > 0)
                           _buildMiniStat(
-                            localizations?.avgBirthWeight ?? 'Snitt fødselsvekt',
+                            localizations.avgBirthWeight,
                             '${combo.avgBirthWeight.toStringAsFixed(0)} g',
                             Icons.scale,
                           ),
@@ -1581,7 +1575,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     Box<Puppy> puppyBox,
     Box<Dog> dogBox,
   ) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     // Teller kull per avlshund
     final damStats = <String, int>{};
     final sireStats = <String, int>{};
@@ -1607,7 +1601,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.leaderboard, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.mostUsedBreedingDogs ?? 'Mest brukte avlshunder',
+                  localizations.mostUsedBreedingDogs,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -1625,7 +1619,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                           Icon(Icons.female, color: AppColors.female, size: 18),
                           const SizedBox(width: AppSpacing.xs),
                           Text(
-                            localizations?.females ?? 'Tisper',
+                            localizations.females,
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -1646,7 +1640,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                                     ),
                                   ),
                                   Text(
-                                    '${e.value} ${localizations?.litters ?? 'kull'}',
+                                    '${e.value} ${localizations.litters}',
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: context.colors.textMuted,
@@ -1669,7 +1663,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                           Icon(Icons.male, color: AppColors.male, size: 18),
                           const SizedBox(width: AppSpacing.xs),
                           Text(
-                            localizations?.males ?? 'Hanner',
+                            localizations.males,
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -1690,7 +1684,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                                     ),
                                   ),
                                   Text(
-                                    '${e.value} ${localizations?.litters ?? 'kull'}',
+                                    '${e.value} ${localizations.litters}',
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: context.colors.textMuted,
@@ -1712,7 +1706,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   }
 
   Widget _buildSuccessRateCard(List<Litter> litters, Box<Puppy> puppyBox) {
-    final localizations = AppLocalizations.of(context);
+    final localizations = AppLocalizations.of(context)!;
     int totalPuppies = 0;
     int soldPuppies = 0;
     int reservedPuppies = 0;
@@ -1745,7 +1739,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 Icon(Icons.emoji_events, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  localizations?.placementRate ?? 'Plasseringsrate',
+                  localizations.placementRate,
                   style: AppTypography.headlineSmall,
                 ),
               ],
@@ -1783,7 +1777,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                           ),
                         ),
                         Text(
-                          'plassert',
+                          localizations.placedLabel,
                           style: TextStyle(
                             fontSize: 12,
                             color: context.colors.textMuted,
@@ -1800,19 +1794,19 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildPlacementStat(
-                  localizations?.sold ?? 'Solgt',
+                  localizations.sold,
                   soldPuppies,
                   soldPercentage,
                   AppColors.success,
                 ),
                 _buildPlacementStat(
-                  localizations?.reserved ?? 'Reservert',
+                  localizations.reserved,
                   reservedPuppies,
                   reservedPercentage,
                   AppColors.warning,
                 ),
                 _buildPlacementStat(
-                  localizations?.available ?? 'Ledig',
+                  localizations.available,
                   totalPuppies - soldPuppies - reservedPuppies,
                   100 - placedPercentage,
                   AppColors.accent1,

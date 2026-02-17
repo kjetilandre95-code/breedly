@@ -148,7 +148,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get selectBreedTitle => 'Valitse rotu';
 
   @override
-  String get searchBreed => 'Etsi rotua...';
+  String get searchBreed => 'Hae rotua...';
 
   @override
   String get noBreeds => 'Ei rotuja löytynyt';
@@ -681,13 +681,13 @@ class AppLocalizationsFi extends AppLocalizations {
   String get createInviteCode => 'Luo kutsukoodi';
 
   @override
-  String get createNewKennel => 'Luo uusi kenneli';
+  String get createNewKennel => 'Luo uusi kennel';
 
   @override
   String get joinWithCode => 'Käytä kutsukoodia';
 
   @override
-  String get leaveKennel => 'Poistu kennelistä';
+  String get leaveKennel => 'Poistu kenneliltä';
 
   @override
   String get deleteKennel => 'Poista kenneli';
@@ -696,7 +696,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get nameRequired => 'Nimi vaaditaan';
 
   @override
-  String get mustBeLoggedIn => 'Sinun on oltava kirjautuneena sisään';
+  String get mustBeLoggedIn => 'Sinun täytyy olla kirjautuneena';
 
   @override
   String get kennelCreated => 'Kenneli luotu!';
@@ -1366,7 +1366,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get productNameRequired => 'Tuotenimi vaaditaan';
 
   @override
-  String get testNameRequired => 'Testin nimi vaaditaan';
+  String get testNameRequired => 'Testinimi vaaditaan';
 
   @override
   String get newBuyer => 'Uusi ostaja';
@@ -1620,7 +1620,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get selectSire => 'Valitse isä';
 
   @override
-  String get commonTests => 'Yleiset testit';
+  String get commonTests => 'Yleiset testit:';
 
   @override
   String get testName => 'Testin nimi';
@@ -2055,7 +2055,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get addTemperatureReading => 'Lisää lämpötilalukema';
 
   @override
-  String get dateAndTime => 'Päivämäärä ja aika';
+  String get dateAndTime => 'Päivä ja aika';
 
   @override
   String get temperatureCelsius => 'Lämpötila (°C)';
@@ -2088,7 +2088,7 @@ class AppLocalizationsFi extends AppLocalizations {
   }
 
   @override
-  String errorSharing(Object error) {
+  String errorSharing(String error) {
     return 'Virhe jakamisessa: $error';
   }
 
@@ -2611,4 +2611,2393 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get gen4MMMDam => 'M.MM\'s dam';
+
+  @override
+  String get testPedigreeScanner => 'Testaa sukutauluskanneri';
+
+  @override
+  String get scanResult => 'Skannauksen tulos';
+
+  @override
+  String totalDogsFound(int count) {
+    return 'Yhteensä löydetty: $count koiraa';
+  }
+
+  @override
+  String scanSuccessful(String value) {
+    return 'Onnistunut: $value';
+  }
+
+  @override
+  String get scanConfidence => 'Luotettavuus';
+
+  @override
+  String get testInstructions => 'Testiohjeet';
+
+  @override
+  String get testingScannerInfo => 'Sukutauluskannerin testaus';
+
+  @override
+  String get scannerUsesInfo => 'Tämä toiminto käyttää Google ML Kitiä:';
+
+  @override
+  String get readTextFromImages => 'Lue tekstiä kuvista (OCR)';
+
+  @override
+  String get findRegistrationNumbers => 'Etsi rekisterinumeroita';
+
+  @override
+  String get identifyDogNames => 'Tunnista koirien nimiä';
+
+  @override
+  String get recognizeParents => 'Tunnista vanhemmat (Isä/Emä)';
+
+  @override
+  String get extractBirthDates => 'Poimi syntymäpäivät';
+
+  @override
+  String get tipClearImage =>
+      'Vinkki: Käytä selvää kuvaa sukutaulusta parhaan tuloksen saamiseksi.';
+
+  @override
+  String get step1TakePhoto => 'Ota kuva sukutaulusta';
+
+  @override
+  String get step2WaitProcessing => 'Odota kun ML Kit käsittelee kuvan';
+
+  @override
+  String get step3SeeResults => 'Näe tulokset ja tarkkuus';
+
+  @override
+  String get step4EditData => 'Muokkaa tietoja tarvittaessa';
+
+  @override
+  String get step5SaveDogs => 'Tallenna koira(t) tietokantaan';
+
+  @override
+  String get exampleDataRecognized => 'Esimerkkidataa joka voidaan tunnistaa';
+
+  @override
+  String get keywords => 'Avainsanat';
+
+  @override
+  String get debugInfo => 'Virheenjäljitystiedot';
+
+  @override
+  String get parents => 'Vanhemmat';
+
+  @override
+  String get grandparents => 'Isovanhemmat';
+
+  @override
+  String dogsFound(int count) {
+    return '$count koiraa löydetty';
+  }
+
+  @override
+  String get dogAlreadyExists => 'Koira on jo olemassa';
+
+  @override
+  String get whatDoYouWantToDo => 'Mitä haluat tehdä?';
+
+  @override
+  String get createNew => 'Luo uusi';
+
+  @override
+  String get useExisting => 'Käytä olemassa olevaa';
+
+  @override
+  String get updateData => 'Päivitä tiedot';
+
+  @override
+  String dogAddedWithPedigree(String name, int count) {
+    return '$name lisätty sukutaululla ($count koiraa yhteensä)';
+  }
+
+  @override
+  String get dogUpdated => 'Koira päivitetty';
+
+  @override
+  String get dateOfDeathOptional => 'Kuolinpäivä (valinnainen)';
+
+  @override
+  String get noneSelected => 'Ei valittu';
+
+  @override
+  String get puppyAdded => 'Pentu lisätty';
+
+  @override
+  String get puppyNameLabel => 'Pennun nimi';
+
+  @override
+  String get birthWeightGrams => 'Syntymäpaino (grammaa)';
+
+  @override
+  String get birthNotes => 'Syntymämuistiinpanot (esim. avustus tarpeen)';
+
+  @override
+  String get status => 'Tila';
+
+  @override
+  String get healthAndDocumentation => 'Terveys ja dokumentaatio';
+
+  @override
+  String get vaccinated => 'Rokotettu';
+
+  @override
+  String get dewormed => 'Madotettu';
+
+  @override
+  String get microchipped => 'Mikrosirullinen';
+
+  @override
+  String get savePuppy => 'Tallenna pentu';
+
+  @override
+  String get contracts => 'Sopimukset';
+
+  @override
+  String get purchaseContracts => 'Kauppasopimukset';
+
+  @override
+  String get reservations => 'Varaukset';
+
+  @override
+  String get breedingContracts => 'Jalostussopimukset';
+
+  @override
+  String get coOwnership => 'Yhteisomistus';
+
+  @override
+  String get fosterContracts => 'Sijaiskotisopimukset';
+
+  @override
+  String get purchaseContractDeleted => 'Kauppasopimus poistettu';
+
+  @override
+  String get reservationContractDeleted => 'Varaussopimus poistettu';
+
+  @override
+  String get breedingContractDeleted => 'Jalostussopimus poistettu';
+
+  @override
+  String get coOwnershipContractDeleted => 'Yhteisomistussopimus poistettu';
+
+  @override
+  String get fosterContractDeleted => 'Sijaiskotisopimus poistettu';
+
+  @override
+  String get selectSireAndDam => 'Valitse isä ja emä';
+
+  @override
+  String get enterStudFee => 'Syötä astutusmaksu';
+
+  @override
+  String errorGenerating(String error) {
+    return 'Virhe luotaessa: $error';
+  }
+
+  @override
+  String get contractGenerated => 'Sopimus luotu!';
+
+  @override
+  String get selectStud => 'Valitse siitoskoira';
+
+  @override
+  String get studOwnerName => 'Siitoskoiran omistaja (nimi)';
+
+  @override
+  String get selectDamForContract => 'Valitse narttu';
+
+  @override
+  String get damOwnerName => 'Nartun omistaja (nimi)';
+
+  @override
+  String get amountNok => 'Summa (NOK)';
+
+  @override
+  String get paymentTermsHint => 'Esim. \"Maksu astutuksen yhteydessä\"';
+
+  @override
+  String get additionalTermsHint => 'Lisää erityisehtoja...';
+
+  @override
+  String get searchBuyer => 'Etsi ostajaa...';
+
+  @override
+  String get removeFilter => 'Poista suodatin';
+
+  @override
+  String get allLitters => 'Kaikki pentueet';
+
+  @override
+  String get reservationRemoved => 'Varaus poistettu';
+
+  @override
+  String get pleaseSelectPuppy => 'Valitse pentu';
+
+  @override
+  String get deleteDog => 'Poista koira';
+
+  @override
+  String get addHeatDate => 'Lisää kiimapäivä';
+
+  @override
+  String get createBreedingContract => 'Luo sopimus astutuspalveluista';
+
+  @override
+  String get coOwnershipAgreement => 'Yhteisomistussopimus';
+
+  @override
+  String get createCoOwnershipAgreement => 'Luo sopimus jaetusta omistuksesta';
+
+  @override
+  String get fosterAgreement => 'Sijaiskotisopimus';
+
+  @override
+  String get createFosterAgreement => 'Luo sopimus sijaiskodista';
+
+  @override
+  String get heatDateAdded => 'Kiimapäivä lisätty';
+
+  @override
+  String get confirmDeleteHeatDate =>
+      'Haluatko varmasti poistaa tämän kiimapäivän?';
+
+  @override
+  String get heatDateDeleted => 'Kiimapäivä poistettu';
+
+  @override
+  String get addChampionship => 'Lisää mestaruus';
+
+  @override
+  String get enterOtherTitle => 'Syötä muu titteli';
+
+  @override
+  String get selectFromList => 'Valitse listalta';
+
+  @override
+  String get titleAlreadyRegistered => 'Tämä titteli on jo rekisteröity';
+
+  @override
+  String get removeChampionship => 'Poista mestaruus';
+
+  @override
+  String confirmRemoveChampionship(String title) {
+    return 'Haluatko varmasti poistaa tittelin \"$title\"?';
+  }
+
+  @override
+  String get addMating => 'Lisää astutus';
+
+  @override
+  String get externalDam => 'Ulkopuolinen narttu';
+
+  @override
+  String get matingAdded => 'Astutus lisätty';
+
+  @override
+  String get editMating => 'Muokkaa astutusta';
+
+  @override
+  String get matingUpdated => 'Astutus päivitetty';
+
+  @override
+  String get matingDeleted => 'Astutus poistettu';
+
+  @override
+  String healthTitle(String name) {
+    return 'Terveys - $name';
+  }
+
+  @override
+  String get healthStatusTab => 'Terveydentila';
+
+  @override
+  String get vaccinesTab => 'Rokotukset';
+
+  @override
+  String get vetTab => 'Eläinlääkäri';
+
+  @override
+  String get treatmentsTab => 'Hoidot';
+
+  @override
+  String get dnaTestsTab => 'DNA-testit';
+
+  @override
+  String get weightTab => 'Paino';
+
+  @override
+  String get hormonesTab => 'Hormonit';
+
+  @override
+  String get addHealthInfo => 'Lisää terveystietoja';
+
+  @override
+  String get healthInfoNotFound => 'Terveystietoja ei löytynyt';
+
+  @override
+  String get addVaccine => 'Lisää rokote';
+
+  @override
+  String get deleteHealthInfo => 'Poista terveystiedot?';
+
+  @override
+  String get offlineChangesLocal =>
+      'Offline – muutokset tallennettu paikallisesti';
+
+  @override
+  String get registrationNumberColon => 'Rekisterinumero:';
+
+  @override
+  String get registrationNumberOptional => 'Rekisterinumero (valinnainen)';
+
+  @override
+  String get addPuppy => 'Lisää pentu';
+
+  @override
+  String get birthTimeLabel => 'Syntymäaika';
+
+  @override
+  String get birthTimeOptional => 'Syntymäaika (valinnainen)';
+
+  @override
+  String get pleaseEnterColor => 'Syötä väri';
+
+  @override
+  String dogWasDeleted(String name) {
+    return '«$name» poistettiin';
+  }
+
+  @override
+  String couldNotDelete(String error) {
+    return 'Poistaminen epäonnistui: $error';
+  }
+
+  @override
+  String confirmDeleteDogMessage(String name) {
+    return 'Haluatko varmasti poistaa «$name»?\n\nTämä poistaa koiran ja kaikki siihen liittyvät tiedot. Toimintoa ei voi kumota.';
+  }
+
+  @override
+  String get healthInformation => 'Terveystiedot';
+
+  @override
+  String get noHealthInfoRegistered => 'Ei terveystietoja rekisteröity';
+
+  @override
+  String addHealthInfoFor(String name) {
+    return 'Lisää terveystietoja kohteelle $name';
+  }
+
+  @override
+  String get healthStatus => 'Terveydentila';
+
+  @override
+  String get remarks => 'Huomautukset';
+
+  @override
+  String dateWithValue(String date) {
+    return 'Päivämäärä: $date';
+  }
+
+  @override
+  String get noVaccinesRegistered => 'Ei rokotuksia rekisteröity';
+
+  @override
+  String addVaccinesFor(String name) {
+    return 'Lisää rokotukset kohteelle $name';
+  }
+
+  @override
+  String takenWithDate(String value) {
+    return 'Annettu: $value';
+  }
+
+  @override
+  String get overdueLabel => 'Myöhässä';
+
+  @override
+  String get alertLabel => 'Hälytys';
+
+  @override
+  String nextDoseWithDate(String value) {
+    return 'Seuraava annos: $value';
+  }
+
+  @override
+  String veterinarianWithName(String value) {
+    return 'Eläinlääkäri: $value';
+  }
+
+  @override
+  String get noProgesteroneMeasurements =>
+      'Ei progesteronimittauksia rekisteröity';
+
+  @override
+  String addProgesteroneTracking(String name) {
+    return 'Lisää progesteronimittauksia seurataksesi ${name}n kiertoa';
+  }
+
+  @override
+  String get confirmDeleteProgesterone =>
+      'Haluatko varmasti poistaa tämän progesteronimittauksen?';
+
+  @override
+  String get vetVisits => 'Eläinlääkärikäynnit';
+
+  @override
+  String get addVisit => 'Lisää käynti';
+
+  @override
+  String get noVetVisitsRegistered => 'Ei eläinlääkärikäyntejä rekisteröity';
+
+  @override
+  String addVetVisitsFor(String name) {
+    return 'Lisää eläinlääkärikäynnit kohteelle $name';
+  }
+
+  @override
+  String get visitTypeRoutine => 'Rutiinitarkastus';
+
+  @override
+  String get visitTypeEmergency => 'Hätätapaus';
+
+  @override
+  String get visitTypeSurgery => 'Leikkaus';
+
+  @override
+  String get visitTypeVaccination => 'Rokotus';
+
+  @override
+  String get visitTypeFollowup => 'Seurantakäynti';
+
+  @override
+  String get visitTypeOther => 'Muu';
+
+  @override
+  String reasonWithValue(String value) {
+    return 'Syy: $value';
+  }
+
+  @override
+  String diagnosisWithValue(String value) {
+    return 'Diagnoosi: $value';
+  }
+
+  @override
+  String treatmentWithValue(String value) {
+    return 'Hoito: $value';
+  }
+
+  @override
+  String costWithValue(String value) {
+    return 'Kustannus: $value kr';
+  }
+
+  @override
+  String followUpWithDate(String value) {
+    return 'Seuranta: $value';
+  }
+
+  @override
+  String get addTreatment => 'Lisää hoito';
+
+  @override
+  String get noTreatmentsRegistered => 'Ei hoitoja rekisteröity';
+
+  @override
+  String get addTreatmentsSubtitle =>
+      'Lisää matokuurit, kirppu-/punkkihoidot jne.';
+
+  @override
+  String get treatmentTypeDeworming => 'Matokuuri';
+
+  @override
+  String get treatmentTypeFlea => 'Kirppuhoito';
+
+  @override
+  String get treatmentTypeTick => 'Punkkihoito';
+
+  @override
+  String get treatmentTypeMedication => 'Lääke';
+
+  @override
+  String get treatmentTypeSupplement => 'Ravintolisä';
+
+  @override
+  String get treatmentTypeOther => 'Muu';
+
+  @override
+  String get registerNewDose => 'Rekisteröi uusi annos';
+
+  @override
+  String lastGivenWithDate(String value) {
+    return 'Viimeksi annettu: $value';
+  }
+
+  @override
+  String dosageWithValue(String value) {
+    return 'Annostus: $value';
+  }
+
+  @override
+  String manufacturerWithValue(String value) {
+    return 'Valmistaja: $value';
+  }
+
+  @override
+  String nextWithDate(String value) {
+    return 'Seuraava: $value';
+  }
+
+  @override
+  String newDoseRegistered(String name) {
+    return 'Uusi annos $name rekisteröity';
+  }
+
+  @override
+  String get noDnaTestsRegistered => 'Ei DNA-testejä rekisteröity';
+
+  @override
+  String get addDnaTest => 'Lisää DNA-testi';
+
+  @override
+  String addGeneticTestsFor(String name) {
+    return 'Lisää geenitestit kohteelle $name';
+  }
+
+  @override
+  String testedWithDate(String value) {
+    return 'Testattu: $value';
+  }
+
+  @override
+  String laboratoryWithValue(String value) {
+    return 'Laboratorio: $value';
+  }
+
+  @override
+  String certificateNoWithValue(String value) {
+    return 'Todistusnro: $value';
+  }
+
+  @override
+  String get weightHistory => 'Painohistoria';
+
+  @override
+  String get addWeight => 'Lisää paino';
+
+  @override
+  String get noWeightRecords => 'Ei painorekisteröintejä';
+
+  @override
+  String trackWeightFor(String name) {
+    return 'Seuraa ${name}n painonkehitystä';
+  }
+
+  @override
+  String get currentWeight => 'Nykyinen paino';
+
+  @override
+  String get changeLabel => 'Muuta';
+
+  @override
+  String get deleteWeightRecord => 'Poista painorekisteröinti?';
+
+  @override
+  String get confirmDeleteWeightRecord =>
+      'Haluatko varmasti poistaa tämän rekisteröinnin?';
+
+  @override
+  String get confirmDeleteHealthInfo =>
+      'Haluatko varmasti poistaa nämä terveystiedot?';
+
+  @override
+  String get hdDateLabel => 'HD-päivä';
+
+  @override
+  String get adGrade0 => 'Aste 0 (Vapaa)';
+
+  @override
+  String get adGrade1 => 'Aste 1 (Lievä)';
+
+  @override
+  String get adGrade2 => 'Aste 2 (Kohtalainen)';
+
+  @override
+  String get adGrade3 => 'Aste 3 (Vakava)';
+
+  @override
+  String get selectAdStatus => 'Valitse AD-status';
+
+  @override
+  String get noneRemoveSelection => 'Ei mitään (poista valinta)';
+
+  @override
+  String get adDateLabel => 'AD-päivä';
+
+  @override
+  String get patellaGrade0 => 'Aste 0 (Normaali)';
+
+  @override
+  String get patellaGrade1 => 'Aste 1';
+
+  @override
+  String get patellaGrade2 => 'Aste 2';
+
+  @override
+  String get patellaGrade3 => 'Aste 3';
+
+  @override
+  String get selectPatellaStatus => 'Valitse Patella-status';
+
+  @override
+  String get patellaDateLabel => 'Patella-päivä';
+
+  @override
+  String selectStatus(String label) {
+    return 'Valitse $label';
+  }
+
+  @override
+  String get vaccineDialogTitle => 'Rokote';
+
+  @override
+  String get vaccineNameHint => 'Rokotteen nimi (esim. DHPPL, Rabies)';
+
+  @override
+  String takenDateWithValue(String value) {
+    return 'Annettu: $value';
+  }
+
+  @override
+  String nextDateWithValue(String value) {
+    return 'Seuraava päivä: $value';
+  }
+
+  @override
+  String get notSet => 'Ei asetettu';
+
+  @override
+  String get enableReminder => 'Ota muistutus käyttöön';
+
+  @override
+  String get veterinarianOptional => 'Eläinlääkäri (valinnainen)';
+
+  @override
+  String get remarksOptional => 'Huomautukset (valinnainen)';
+
+  @override
+  String get pleaseEnterVaccineName => 'Syötä rokotteen nimi';
+
+  @override
+  String get addProgesteroneMeasurement => 'Lisää progesteronimittaus';
+
+  @override
+  String get editMeasurementTitle => 'Muokkaa mittausta';
+
+  @override
+  String get progesteroneValueLabel => 'Progesteroniarvo (ng/mL) *';
+
+  @override
+  String get progesteroneHint => 'esim. 5.2';
+
+  @override
+  String get invalidProgesteroneValue => 'Syötä kelvollinen progesteroniarvo';
+
+  @override
+  String get newVetVisit => 'Uusi eläinlääkärikäynti';
+
+  @override
+  String get editVisit => 'Muokkaa käyntiä';
+
+  @override
+  String get visitTypeLabel => 'Käyntityyppi';
+
+  @override
+  String get reasonLabel => 'Syy';
+
+  @override
+  String get diagnosisLabel => 'Diagnoosi';
+
+  @override
+  String get treatmentFieldLabel => 'Hoito';
+
+  @override
+  String get prescriptionLabel => 'Resepti/lääke';
+
+  @override
+  String get veterinarianFieldLabel => 'Eläinlääkäri';
+
+  @override
+  String get clinicLabel => 'Klinikka';
+
+  @override
+  String get costKrLabel => 'Kustannus (kr)';
+
+  @override
+  String get newTreatment => 'Uusi hoito';
+
+  @override
+  String get editTreatment => 'Muokkaa hoitoa';
+
+  @override
+  String get productNameLabel => 'Tuotenimi*';
+
+  @override
+  String get dateGivenLabel => 'Antopäivä';
+
+  @override
+  String get dosageLabel => 'Annostus';
+
+  @override
+  String get manufacturerLabel => 'Valmistaja';
+
+  @override
+  String get batchNumberLabel => 'Eränumero';
+
+  @override
+  String get intervalDaysLabel => 'Väli (päivää)';
+
+  @override
+  String get newDnaTest => 'Uusi DNA-testi';
+
+  @override
+  String get editDnaTest => 'Muokkaa DNA-testiä';
+
+  @override
+  String get testNameLabel => 'Testinimi*';
+
+  @override
+  String get testDateLabel => 'Testipäivä';
+
+  @override
+  String get registerWeight => 'Rekisteröi paino';
+
+  @override
+  String get editWeight => 'Muokkaa painoa';
+
+  @override
+  String get weightKgLabel => 'Paino (kg)*';
+
+  @override
+  String get invalidWeight => 'Virheellinen paino';
+
+  @override
+  String noMatchesForQuery(String query) {
+    return 'Ei tuloksia haulle \"$query\"';
+  }
+
+  @override
+  String get noBuyersForLitter => 'Ei ostajia tälle pentueelle';
+
+  @override
+  String get filterByLitter => 'Suodata pentueen mukaan';
+
+  @override
+  String get deliveredStatus => 'Toimitettu';
+
+  @override
+  String get withReservationSection => 'Varauksella';
+
+  @override
+  String get interestedParties => 'Kiinnostuneet';
+
+  @override
+  String puppyLabelWithName(String name) {
+    return 'Pentu: $name';
+  }
+
+  @override
+  String get subscription => 'Tilaus';
+
+  @override
+  String get manageSubscription => 'Hallinnoi Breedly-tilaustasi';
+
+  @override
+  String get promoCode => 'Kampanjakoodi';
+
+  @override
+  String get lifetimeAccess => 'Elinikäinen';
+
+  @override
+  String subscriptionExpiresInfo(String source, String expiry) {
+    return '$source • Vanhenee: $expiry';
+  }
+
+  @override
+  String get activeStatus => 'Aktiivinen';
+
+  @override
+  String get purchasesRestored => 'Ostot palautettu.';
+
+  @override
+  String get restorePurchases => 'Palauta ostot';
+
+  @override
+  String get usingFreeVersion => 'Käytät ilmaisversiota';
+
+  @override
+  String get upgradeForUnlimited =>
+      'Päivitä rajattomaan pääsyyn kaikkiin ominaisuuksiin.';
+
+  @override
+  String get upgradeToPremium => 'Päivitä Premiumiin';
+
+  @override
+  String get premiumRestored => 'Premium palautettu!';
+
+  @override
+  String get noPreviousPurchases => 'Aiempia ostoja ei löytynyt.';
+
+  @override
+  String get developerAndTesting => 'Kehittäjä & Testaus';
+
+  @override
+  String get testNewFeatures => 'Testaa uusia ominaisuuksia';
+
+  @override
+  String get pedigreeScannerSubtitleSettings =>
+      'Google ML Kit OCR - Skannaa sukutauluja tekoälyllä';
+
+  @override
+  String get newBadge => 'UUSI';
+
+  @override
+  String get noCertCacibYet => 'Ei Cert/Cacib-sertifikaatteja vielä';
+
+  @override
+  String judgeStatsSummary(int showCount, int excellentCount, int ckCount) {
+    return '$showCount näyttelyä • $excellentCount Excellent • $ckCount CK';
+  }
+
+  @override
+  String get shareResultCard => 'Jaa tuloskortti';
+
+  @override
+  String groupJudgeWithName(String name) {
+    return 'Ryhmätuomari: $name';
+  }
+
+  @override
+  String bisJudgeWithName(String name) {
+    return 'BIS-tuomari: $name';
+  }
+
+  @override
+  String get noPlacementWithQuality =>
+      'Ei sijoitusta tai sertifikaatteja tällä laatuarvosanalla';
+
+  @override
+  String get requiresHighlyPromising => 'Vaatii Erittäin lupaava';
+
+  @override
+  String get qualifiesForBestPuppy =>
+      'Oikeuttaa parhaan urospentu/narttupentu -kilpailuun';
+
+  @override
+  String get requiresExcellent => 'Vaatii Excellent';
+
+  @override
+  String get bestMalePuppy => 'Paras urospentu';
+
+  @override
+  String get bestFemalePuppy => 'Paras narttupentu';
+
+  @override
+  String get qualifiedForBIRBIMPuppy => 'Oikeutettu BIR/BIM Pentu -kilpailuun';
+
+  @override
+  String get requiresFirstWithHP => 'Vaatii 1. sijan HP:llä osallistuakseen';
+
+  @override
+  String get requiresBestPuppy => 'Vaatii parhaan uros-/narttupennun tittelin';
+
+  @override
+  String get requiresBHKBTKFirstNordic =>
+      'BHK/BTK 1. sija vaaditaan BIR/BIM:iin Pohjoismaissa';
+
+  @override
+  String get yesWon => 'Kyllä - Voitti';
+
+  @override
+  String get groupJudge => 'Ryhmätuomari';
+
+  @override
+  String get bisJudge => 'BIS-tuomari';
+
+  @override
+  String get resultSaved => 'Tulos tallennettu!';
+
+  @override
+  String get hpAward => 'HP (Hopeful Puppy)';
+
+  @override
+  String get birBimPuppy => 'BIR/BIM Pentu';
+
+  @override
+  String get classAbbrev => 'Lk';
+
+  @override
+  String get bestMaleAbbrev => 'PU';
+
+  @override
+  String get bestFemaleAbbrev => 'PN';
+
+  @override
+  String get bestOfSexAbbrev => 'VSP';
+
+  @override
+  String get enterPrice => 'Syötä hinta';
+
+  @override
+  String get contractSaved => 'Sopimus tallennettu';
+
+  @override
+  String errorSaving(String error) {
+    return 'Virhe tallennuksessa: $error';
+  }
+
+  @override
+  String get buyerInformation => 'Ostajan tiedot';
+
+  @override
+  String get contractDetails => 'Sopimuksen tiedot';
+
+  @override
+  String get depositOptional => 'Käsiraha (valinnainen)';
+
+  @override
+  String get amountAlreadyPaidAsAdvance => 'Ennakkona jo maksettu summa';
+
+  @override
+  String get contractNumberOptional => 'Sopimusnumero (valinnainen)';
+
+  @override
+  String get paymentTermsExampleHint => 'Esim. Täysi maksu noudossa';
+
+  @override
+  String get deliveryLocationOptional => 'Luovutuspaikka (valinnainen)';
+
+  @override
+  String get deliveryLocationHint => 'Esim. Kasvattajan osoite';
+
+  @override
+  String get contractTerms => 'Sopimusehdot';
+
+  @override
+  String get selectTermsToInclude =>
+      'Valitse sopimukseen sisällytettävät ehdot';
+
+  @override
+  String get termGeneral => 'Yleistä';
+
+  @override
+  String get termGeneralSubtitle => 'Perusosto- ja myyntiehdot';
+
+  @override
+  String get termHealth => 'Terveys';
+
+  @override
+  String get termHealthSubtitle =>
+      'Takuu terveestä pennusta ja eläinlääkärintarkastus';
+
+  @override
+  String get termVaccinations => 'Rokotukset ja hoidot';
+
+  @override
+  String get termVaccinationsSubtitle =>
+      'Rokotettu ja madotettu ohjeiden mukaisesti';
+
+  @override
+  String get termReturn => 'Palautus';
+
+  @override
+  String get termReturnSubtitle =>
+      'Myyjään otettava yhteyttä ensin uudelleensijoituksessa';
+
+  @override
+  String get termResponsibility => 'Vastuu';
+
+  @override
+  String get termResponsibilitySubtitle => 'Ostaja ottaa vastuun luovutuksesta';
+
+  @override
+  String get termRegistration => 'Rekisteröinti';
+
+  @override
+  String get termRegistrationSubtitle =>
+      'Pentu rekisteröidään uudelle omistajalle';
+
+  @override
+  String get returnClauseIncluded => 'Palautuslauseke mukana';
+
+  @override
+  String get documentation => 'Dokumentaatio';
+
+  @override
+  String get pedigreeDeliveredLabel => 'Sukutaulu toimitetaan';
+
+  @override
+  String get pedigreeDeliveredSubtitle => 'Sukutaulu mukana luovutuksessa';
+
+  @override
+  String get vetCertificateAttached => 'Eläinlääkärintodistus liitetty';
+
+  @override
+  String get vetCertificateAttachedSubtitle =>
+      'Eläinlääkärintodistus terveydentilasta';
+
+  @override
+  String get insuranceTransferred => 'Vakuutus siirretään';
+
+  @override
+  String get insuranceTransferredSubtitle =>
+      'Pennun vakuutus siirretään ostajalle';
+
+  @override
+  String get specialTermsOptional => 'Erityisehdot (valinnainen)';
+
+  @override
+  String get specialTermsHint =>
+      'Mahdolliset osapuolten väliset erityissopimukset...';
+
+  @override
+  String get saveContract => 'Tallenna sopimus';
+
+  @override
+  String get downloadAsPdf => 'Lataa PDF-tiedostona';
+
+  @override
+  String pdfSavedAt(String path) {
+    return 'PDF tallennettu:\n$path';
+  }
+
+  @override
+  String errorExporting(String error) {
+    return 'Virhe viennissä: $error';
+  }
+
+  @override
+  String get malePuppy => 'Urospentu';
+
+  @override
+  String get femalePuppy => 'Narttupentu';
+
+  @override
+  String get coOwnershipContractCreated => 'Yhteisomistussopimus luotu!';
+
+  @override
+  String get dog => 'Koira';
+
+  @override
+  String get ownershipShare => 'Omistusosuus';
+
+  @override
+  String get sharedResponsibility => 'Jaettu vastuu';
+
+  @override
+  String get rightsAndResponsibilities => 'Oikeudet ja vastuut';
+
+  @override
+  String get additionalTermsOptional => 'Lisäehdot (valinnainen)';
+
+  @override
+  String get additionalTermsHintText => 'Syötä mahdolliset lisäehdot...';
+
+  @override
+  String get generateCoOwnershipContract => 'Luo yhteisomistussopimus';
+
+  @override
+  String get fosterContractCreated => 'Sijoitussopimus luotu!';
+
+  @override
+  String get contractPeriod => 'Sopimuskausi';
+
+  @override
+  String get hasDefiniteEndDate => 'On määrätty päättymispäivä';
+
+  @override
+  String get selectDate => 'Valitse päivä';
+
+  @override
+  String get contractTermsSection => 'Ehdot';
+
+  @override
+  String get breedingTerms => 'Jalostusehdot';
+
+  @override
+  String get generateFosterContract => 'Luo sijoitussopimus';
+
+  @override
+  String get reservationContractCreated => 'Varaussopimus luotu!';
+
+  @override
+  String get reservationContractUpdated => 'Varaussopimus päivitetty!';
+
+  @override
+  String get prices => 'Hinnat';
+
+  @override
+  String get reservationFeeLabel => 'Varausmaksu (kr)';
+
+  @override
+  String get totalPriceForPuppy => 'Pennun kokonaishinta (kr)';
+
+  @override
+  String get invalidAmount => 'Virheellinen summa';
+
+  @override
+  String remainingAmount(String amount) {
+    return 'Jäljellä: kr $amount,-';
+  }
+
+  @override
+  String get remarksHint => 'Syötä mahdolliset huomautukset...';
+
+  @override
+  String get generateReservationContract => 'Luo varaussopimus';
+
+  @override
+  String get pdfDownloaded => 'PDF ladattu';
+
+  @override
+  String dogHeatCycle(String dogName) {
+    return '$dogName - Juoksuaika';
+  }
+
+  @override
+  String dogExpectedHeat(String dogName) {
+    return '$dogName - Odotettu juoksuaika';
+  }
+
+  @override
+  String dogGaveBirth(String dogName) {
+    return '$dogName synnytti';
+  }
+
+  @override
+  String litterDeliveryEvent(String damName) {
+    return 'Luovutus: $damName pentue';
+  }
+
+  @override
+  String get eightWeeksOld => '8 viikkoa vanha';
+
+  @override
+  String get unknownDog => 'Tuntematon';
+
+  @override
+  String puppyVaccination(String puppyName, String number) {
+    return '$puppyName - Rokotus $number';
+  }
+
+  @override
+  String puppyDeworming(String puppyName, String number) {
+    return '$puppyName - Madotus $number';
+  }
+
+  @override
+  String puppyMicrochip(String puppyName) {
+    return '$puppyName - Mikrosiru';
+  }
+
+  @override
+  String dogBirthdayAge(String dogName, String age) {
+    return '$dogName täyttää $age vuotta';
+  }
+
+  @override
+  String get expectedHeatCycles => 'Juoksuaika (odotettu)';
+
+  @override
+  String get estimatedBirthDate => 'Arvioitu syntymäpäivä';
+
+  @override
+  String get selectKennel => 'Valitse kennel';
+
+  @override
+  String get memberSingular => 'jäsen';
+
+  @override
+  String get membersPlural => 'jäsentä';
+
+  @override
+  String get membersSection => 'Jäsenet';
+
+  @override
+  String get youLabel => 'Sinä';
+
+  @override
+  String get ownerRole => 'Omistaja';
+
+  @override
+  String get administratorRole => 'Ylläpitäjä';
+
+  @override
+  String get memberRole => 'Jäsen';
+
+  @override
+  String get removeLabel => 'Poista';
+
+  @override
+  String get pendingInvitations => 'Odottavat kutsut';
+
+  @override
+  String openInvitationExpires(String days) {
+    return 'Avoin kutsu • Vanhenee $days päivän kuluttua';
+  }
+
+  @override
+  String get codeCopiedToClipboard => 'Koodi kopioitu leikepöydälle';
+
+  @override
+  String get actionsSection => 'Toiminnot';
+
+  @override
+  String get createInvitationCode => 'Luo kutsukoodi';
+
+  @override
+  String get joinKennelLabel => 'Liity kenneliin';
+
+  @override
+  String get useInvitationCode => 'Käytä kutsukoodia';
+
+  @override
+  String get deleteKennelLabel => 'Poista kennel';
+
+  @override
+  String get kennelNameRequired => 'Kennelin nimi *';
+
+  @override
+  String get nameIsRequired => 'Nimi on pakollinen';
+
+  @override
+  String get createButton => 'Luo';
+
+  @override
+  String get enterInvitationCodeMessage => 'Syötä saamasi kutsukoodi:';
+
+  @override
+  String get invitationCode => 'Kutsukoodi';
+
+  @override
+  String get invitationCodeHint => 'Esim. ABC123';
+
+  @override
+  String get joinedKennelSuccess => 'Olet nyt kennelin jäsen!';
+
+  @override
+  String get joinButton => 'Liity';
+
+  @override
+  String get editKennel => 'Muokkaa kenneliä';
+
+  @override
+  String get kennelNameLabel => 'Kennelin nimi';
+
+  @override
+  String get kennelUpdated => 'Kennel päivitetty!';
+
+  @override
+  String changeRoleFor(String name) {
+    return 'Vaihda rooli: $name';
+  }
+
+  @override
+  String get removeMemberQuestion => 'Poista jäsen?';
+
+  @override
+  String confirmRemoveMember(String name) {
+    return 'Haluatko varmasti poistaa $name kennelistä?';
+  }
+
+  @override
+  String get memberRemoved => 'Jäsen poistettu';
+
+  @override
+  String get leaveKennelQuestion => 'Poistu kennelistä?';
+
+  @override
+  String confirmLeaveKennel(String name) {
+    return 'Haluatko varmasti poistua $name? Menetät pääsyn kaikkiin tietoihin.';
+  }
+
+  @override
+  String get leftKennel => 'Olet poistunut kennelistä';
+
+  @override
+  String get leaveButton => 'Poistu';
+
+  @override
+  String get deleteKennelQuestion => 'Poista kennel?';
+
+  @override
+  String confirmDeleteKennel(String name) {
+    return 'Oletko AIVAN varma että haluat poistaa $name? Tätä ei voi peruuttaa!';
+  }
+
+  @override
+  String get kennelDeleted => 'Kennel poistettu';
+
+  @override
+  String get invitationCodeDescription =>
+      'Voit luoda kutsukoodin, jolla muut voivat liittyä kenneliin.';
+
+  @override
+  String get emailOptional => 'Sähköpostiosoite (valinnainen)';
+
+  @override
+  String get emailPlaceholder => 'kayttaja@esimerkki.fi';
+
+  @override
+  String get leaveEmptyForOpen => 'Jätä tyhjäksi avoimelle kutsulle';
+
+  @override
+  String get roleLabel => 'Rooli';
+
+  @override
+  String get canViewAndEdit => 'Voi katsella ja muokata tietoja';
+
+  @override
+  String get canAlsoInvite => 'Voi myös kutsua jäseniä';
+
+  @override
+  String get createInvitation => 'Luo kutsu';
+
+  @override
+  String get invitationCreated => 'Kutsu luotu!';
+
+  @override
+  String get shareCodeMessage =>
+      'Jaa tämä koodi henkilölle jonka haluat kutsua:';
+
+  @override
+  String get validFor7Days => 'Voimassa 7 päivää';
+
+  @override
+  String get shareInvitationLabel => 'Jaa kutsu:';
+
+  @override
+  String get copyLabel => 'Kopioi';
+
+  @override
+  String get emailButtonLabel => 'Sähköposti';
+
+  @override
+  String get shareButtonLabel => 'Jaa';
+
+  @override
+  String get finishedButton => 'Valmis';
+
+  @override
+  String invitationEmailSubject(String kennelName) {
+    return 'Kutsu $kennelName Breedlyssä';
+  }
+
+  @override
+  String invitationEmailBody(String kennelName, String code) {
+    return 'Hei!\n\nSinut on kutsuttu liittymään $kennelName Breedly-sovelluksessa.\n\nKutsukoodisi on: $code\n\nNäin liityt:\n1. Lataa Breedly-sovellus jos sinulla ei ole sitä\n2. Kirjaudu sisään tai luo tili\n3. Mene Asetukset → Kennelin hallinta\n4. Paina \"Liity kenneliin\"\n5. Syötä koodi: $code\n\nKoodi on voimassa 7 päivää.\n\nTervetuloa!\n';
+  }
+
+  @override
+  String get couldNotOpenEmail => 'Sähköpostisovellusta ei voitu avata';
+
+  @override
+  String invitationShareMessage(String kennelName, String code) {
+    return 'Sinut on kutsuttu $kennelName Breedlyssä!\n\n🐕 Kutsukoodi: $code\n\nAvaa Breedly-sovellus, mene Asetukset → Kennelin hallinta → \"Liity kenneliin\" ja syötä koodi.\n\nKoodi on voimassa 7 päivää.';
+  }
+
+  @override
+  String errorGeneric(String error) {
+    return 'Virhe: $error';
+  }
+
+  @override
+  String get kennelCreatedSuccess => 'Kennel luotu!';
+
+  @override
+  String get kennelProfile => 'Kennelin profiili';
+
+  @override
+  String get kennelProfileSaved => 'Kennelin profiili tallennettu';
+
+  @override
+  String get kennelInfo => 'Kennelin tiedot';
+
+  @override
+  String get kennelNameFieldLabel => 'Kennelin nimi';
+
+  @override
+  String get kennelNameHint => 'Esim. \"Nordlys Kennel\"';
+
+  @override
+  String get descriptionOptional => 'Kuvaus (valinnainen)';
+
+  @override
+  String get kennelDescriptionHint => 'Kerro hieman kennelistäsi...';
+
+  @override
+  String get breedsSection => 'Rodut';
+
+  @override
+  String get selectBreedsForBreeding => 'Valitse kasvattamasi rodut';
+
+  @override
+  String get tapToSelectBreeds => 'Paina valitaksesi rotuja...';
+
+  @override
+  String get breedSelectedSingular => 'rotu valittu';
+
+  @override
+  String get breedsSelectedPlural => 'rotua valittu';
+
+  @override
+  String get contactInfo => 'Yhteystiedot';
+
+  @override
+  String get phoneOptional => 'Puhelin (valinnainen)';
+
+  @override
+  String get addressOptional => 'Osoite (valinnainen)';
+
+  @override
+  String get websiteOptional => 'Verkkosivu (valinnainen)';
+
+  @override
+  String get saveKennelProfile => 'Tallenna kennelin profiili';
+
+  @override
+  String get selectBreeds => 'Valitse rodut';
+
+  @override
+  String nSelected(String count) {
+    return '$count valittu';
+  }
+
+  @override
+  String noBreedsFoundFor(String query) {
+    return 'Rotuja ei löytynyt haulle \"$query\"';
+  }
+
+  @override
+  String get noImagesYet => 'Ei kuvia vielä';
+
+  @override
+  String get tapToAddPhotos => 'Paina + lisätäksesi kuvia';
+
+  @override
+  String get imageDetails => 'Kuvan tiedot';
+
+  @override
+  String fileSizeLabel(String size) {
+    return 'Tiedostokoko: $size MB';
+  }
+
+  @override
+  String descriptionWithValue(String value) {
+    return 'Kuvaus: $value';
+  }
+
+  @override
+  String get editImageNotes => 'Muokkaa kuvamuistiinpanoja';
+
+  @override
+  String get descriptionLabel => 'Kuvaus';
+
+  @override
+  String get imageNotesUpdated => 'Kuvamuistiinpanot päivitetty';
+
+  @override
+  String get deleteImage => 'Poista kuva';
+
+  @override
+  String get imageDeleted => 'Kuva poistettu';
+
+  @override
+  String get searchPrompt => 'Hae koiria, pentueita, pentuja tai ostajia';
+
+  @override
+  String get exportData => 'Vie tiedot';
+
+  @override
+  String exportingItem(String item) {
+    return 'Viedään $item...';
+  }
+
+  @override
+  String get exportCompleted => 'Vienti valmis!';
+
+  @override
+  String exportError(String error) {
+    return 'Vientivirhe: $error';
+  }
+
+  @override
+  String itemExported(String item) {
+    return '$item viety!';
+  }
+
+  @override
+  String get aboutExport => 'Tietoja viennistä';
+
+  @override
+  String get exportDescription =>
+      'Tiedot viedään CSV-tiedostoina, jotka voidaan avata Excelissä, Google Sheetsissä tai muissa taulukkolaskentaohjelmissa. Tiedostot käyttävät UTF-8 BOM-merkinnällä erikoismerkkien tukemiseksi.';
+
+  @override
+  String get exportAll => 'Vie kaikki';
+
+  @override
+  String get orExportIndividually => 'Tai vie yksittäin';
+
+  @override
+  String get exportDogsDesc => 'Kaikki rekisteröidyt koirat sukutaulutiedoilla';
+
+  @override
+  String get exportLittersDesc =>
+      'Kaikki pentueet vanhempien ja pentutilan kanssa';
+
+  @override
+  String get exportPuppiesDesc =>
+      'Kaikki pennut yksityiskohtien ja myyntistatuksen kanssa';
+
+  @override
+  String get exportExpensesDesc => 'Kaikki menot päivämäärän mukaan';
+
+  @override
+  String get exportIncomeDesc => 'Kaikki tulot päivämäärän mukaan';
+
+  @override
+  String get exportFinancialSummaryDesc => 'Vuosittainen tulosyhteenveto';
+
+  @override
+  String get exportLitterStatsDesc => 'Tilastot roduittain';
+
+  @override
+  String get allData => 'kaikki tiedot';
+
+  @override
+  String get noContracts => 'Ei sopimuksia';
+
+  @override
+  String get createPurchaseContractForPuppy => 'Luo ostosopimus tälle pennulle';
+
+  @override
+  String contractNumberLabel(String number) {
+    return 'Sopimus nro $number';
+  }
+
+  @override
+  String get statusDraft => 'Luonnos';
+
+  @override
+  String get statusActive => 'Aktiivinen';
+
+  @override
+  String get statusCompleted => 'Valmis';
+
+  @override
+  String get statusCancelled => 'Peruutettu';
+
+  @override
+  String get deleteContract => 'Poista sopimus';
+
+  @override
+  String get contractDeleted => 'Sopimus poistettu';
+
+  @override
+  String get createdDate => 'Luotu';
+
+  @override
+  String get purchasedDate => 'Ostettu';
+
+  @override
+  String get termsLabel => 'Ehdot:';
+
+  @override
+  String get spayNeuterRequired => 'Kastrointi/sterilointi vaadittu';
+
+  @override
+  String get newContract => 'Uusi sopimus';
+
+  @override
+  String get fullSalesContract => 'Täydellinen myyntisopimus pennulle';
+
+  @override
+  String get reserveWithDeposit => 'Varaa pentu käsirahalla';
+
+  @override
+  String get reservationAgreement => 'Varassopimus';
+
+  @override
+  String exportErrorGeneric(String error) {
+    return 'Vientivirhe: $error';
+  }
+
+  @override
+  String photoGalleryTitle(String damName) {
+    return '$damName - Kuvagalleria';
+  }
+
+  @override
+  String get editMenu => 'Muokkaa';
+
+  @override
+  String get deleteLitterMenu => 'Poista pentue';
+
+  @override
+  String get tabPuppies => 'Pennut';
+
+  @override
+  String get tabRegistration => 'Rekisteröinti';
+
+  @override
+  String get plannedLitterLabel => 'Suunniteltu pentue';
+
+  @override
+  String get litterInfoLabel => 'Pentuetiedot';
+
+  @override
+  String get damLabel => 'Emä';
+
+  @override
+  String get sireLabel => 'Isä';
+
+  @override
+  String get breedLabel => 'Rotu';
+
+  @override
+  String get ageLabel => 'Ikä';
+
+  @override
+  String get totalPuppiesLabel => 'Pentuja yhteensä';
+
+  @override
+  String get malesLabel => 'Urokset';
+
+  @override
+  String get femalesLabel => 'Naaraat';
+
+  @override
+  String get matingDateLabel => 'Astutuspäivä';
+
+  @override
+  String get estimatedDueDateLabel => 'Arvioitu syntymäpäivä';
+
+  @override
+  String get daysUntilWhelpingLabel => 'Päiviä penikointiin';
+
+  @override
+  String daysToEstimatedBirth(int days) {
+    return '$days päivää arvioituun syntymään';
+  }
+
+  @override
+  String get estimatedDatePassed => 'Arvioitu syntymäpäivä on ohitettu';
+
+  @override
+  String get setMatingDateToCalculate =>
+      'Aseta astutuspäivä laskeaksesi määräajan';
+
+  @override
+  String get registerBirthButton => 'Rekisteröi syntymä';
+
+  @override
+  String get planningToolsLabel => 'Suunnittelutyökalut';
+
+  @override
+  String get temperatureLabel => 'Lämpötila';
+
+  @override
+  String get progesteroneLabel => 'Progesteroni';
+
+  @override
+  String get editLabel => 'Muokkaa';
+
+  @override
+  String get birthLabel => 'Syntymä';
+
+  @override
+  String matingDateColon(String date) {
+    return 'Astutuspäivä: $date';
+  }
+
+  @override
+  String get noMatingDateSet => 'Astutuspäivää ei asetettu';
+
+  @override
+  String get setDateLabel => 'Aseta päivä';
+
+  @override
+  String estimatedBirthColon(String date) {
+    return 'Arvioitu syntymä: $date';
+  }
+
+  @override
+  String daysLeft(int days) {
+    return '$days päivää jäljellä';
+  }
+
+  @override
+  String get selectMatingDateLabel => 'Valitse astutuspäivä';
+
+  @override
+  String matingDateSetSnackbar(String matingDate, String dueDate) {
+    return 'Astutuspäivä asetettu: $matingDate. Arvioitu syntymä: $dueDate';
+  }
+
+  @override
+  String get couldNotFindDam => 'Emää ei löytynyt';
+
+  @override
+  String get registerBirthTitle => 'Rekisteröi syntymä';
+
+  @override
+  String get litterBornConfirmText =>
+      'Pentue on syntynyt! Haluatko päivittää syntymäpäivän tähän päivään?';
+
+  @override
+  String get canThenAddPuppies =>
+      'Voit sen jälkeen lisätä pennut manuaalisesti.';
+
+  @override
+  String get cancelLabel => 'Peruuta';
+
+  @override
+  String get registerLabel => 'Rekisteröi';
+
+  @override
+  String get birthRegisteredSnackbar =>
+      'Syntymä rekisteröity! Voit nyt lisätä pentuja.';
+
+  @override
+  String get noPuppiesYet => 'Ei pentuja vielä';
+
+  @override
+  String get goToPuppiesTabHint =>
+      'Siirry Pennut-välilehdelle lisätäksesi pentuja';
+
+  @override
+  String puppiesCount2(int count) {
+    return 'Pennut ($count)';
+  }
+
+  @override
+  String get availableLabel => 'Vapaa';
+
+  @override
+  String get reservedLabel => 'Varattu';
+
+  @override
+  String get soldLabel => 'Myyty';
+
+  @override
+  String get quickActionsLabel => 'Pikatoiminnot';
+
+  @override
+  String get weighingLabel => 'Punnitus';
+
+  @override
+  String get newPuppyLabel => 'Uusi pentu';
+
+  @override
+  String get treatmentOverviewLabel => 'Hoitoyhteenveto';
+
+  @override
+  String get vaccinatedLabel => 'Rokotettu';
+
+  @override
+  String get dewormedLabel => 'Matolääkitty';
+
+  @override
+  String get microchippedLabel => 'Mikrosirulla';
+
+  @override
+  String dayUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'päivää',
+      one: 'päivä',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weekUnit(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'viikkoa',
+      one: 'viikko',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String weeksAndDays(int weeks, String weekLabel, int days, String dayLabel) {
+    return '$weeks $weekLabel ja $days $dayLabel';
+  }
+
+  @override
+  String get todayParens => '(tänään)';
+
+  @override
+  String get tomorrowParens => '(huomenna)';
+
+  @override
+  String get yesterdayParens => '(eilen)';
+
+  @override
+  String get summaryLabel => 'Yhteenveto';
+
+  @override
+  String get addPuppyLabel => 'Lisää pentu';
+
+  @override
+  String get totalLabel => 'Yhteensä';
+
+  @override
+  String get puppyListLabel => 'Pentulista';
+
+  @override
+  String get noPuppiesRegisteredYet => 'Ei pentuja rekisteröity vielä';
+
+  @override
+  String colorAge(String color, int weeks) {
+    return 'Väri: $color • Ikä: $weeks viikkoa';
+  }
+
+  @override
+  String get basicInfoLabel => 'Perustiedot';
+
+  @override
+  String get genderLabel => 'Sukupuoli';
+
+  @override
+  String get birthWeightLabel => 'Syntymäpaino';
+
+  @override
+  String get treatmentsLabel => 'Hoidot';
+
+  @override
+  String get yesLabel => 'Kyllä';
+
+  @override
+  String get noLabel => 'Ei';
+
+  @override
+  String get buyerLabel => 'Ostaja';
+
+  @override
+  String get nameLabel => 'Nimi';
+
+  @override
+  String get contactLabel => 'Yhteystieto';
+
+  @override
+  String get notesLabel => 'Muistiinpanot';
+
+  @override
+  String get weightButton => 'Paino';
+
+  @override
+  String get planButton => 'Suunnitelma';
+
+  @override
+  String get contractButton => 'Sopimus';
+
+  @override
+  String get healthCertificateButton => 'Terveystodistus';
+
+  @override
+  String get shareButton => 'Jaa';
+
+  @override
+  String get temperatureRegistrationLabel => 'Lämpötilarekisteröinti';
+
+  @override
+  String get registerTempBeforeBirth =>
+      'Rekisteröi emän lämpötila ennen arvioitua syntymää';
+
+  @override
+  String get openTemperatureLogButton => 'Avaa lämpötilaloki';
+
+  @override
+  String get puppyWeightLabel => 'Pentujen paino';
+
+  @override
+  String get registerWeightForAll => 'Rekisteröi paino kaikille pennuille';
+
+  @override
+  String get noPuppiesRegisteredShort => 'Ei pentuja rekisteröity';
+
+  @override
+  String get editPuppyTitle => 'Muokkaa pentua';
+
+  @override
+  String get statusLabel => 'Tila';
+
+  @override
+  String get birthWeightGramsLabel => 'Syntymäpaino (grammaa)';
+
+  @override
+  String get birthNoteLabel => 'Syntymämerkintä';
+
+  @override
+  String get buyerNameLabel => 'Ostajan nimi';
+
+  @override
+  String get buyerContactLabel => 'Ostajan yhteystieto';
+
+  @override
+  String get notesFieldLabel => 'Muistiinpanot';
+
+  @override
+  String get saveLabel => 'Tallenna';
+
+  @override
+  String get puppyUpdatedSnackbar => 'Pentu päivitetty';
+
+  @override
+  String weightCurveTitle(String name) {
+    return '$name - Painokäyrä';
+  }
+
+  @override
+  String get birthWeightNote => 'Syntymäpaino';
+
+  @override
+  String get daysSinceBirthAxis => 'Päiviä syntymästä';
+
+  @override
+  String get gramAxis => 'Grammaa';
+
+  @override
+  String get noWeightOrBirthWeight =>
+      'Ei painomittauksia tai syntymäpainoa rekisteröity';
+
+  @override
+  String get registeredMeasurements => 'Rekisteröidyt mittaukset:';
+
+  @override
+  String gramUnit(String weight) {
+    return '$weight grammaa';
+  }
+
+  @override
+  String dayDateLabel(int day, String date) {
+    return 'Päivä $day - $date';
+  }
+
+  @override
+  String get weightMeasurementDeleted => 'Painomittaus poistettu';
+
+  @override
+  String get addMeasurementButton => 'Lisää mittaus';
+
+  @override
+  String get closeButton => 'Sulje';
+
+  @override
+  String get addWeightMeasurementTitle => 'Lisää painomittaus';
+
+  @override
+  String get dateLabel => 'Päivämäärä';
+
+  @override
+  String get clockLabel => 'Kellonaika';
+
+  @override
+  String get weightGramsLabel => 'Paino (grammaa)';
+
+  @override
+  String get weightMeasurementAddedSnackbar => 'Painomittaus lisätty';
+
+  @override
+  String get registerWeightForAllTitle => 'Rekisteröi paino kaikille pennuille';
+
+  @override
+  String get notesOptionalLabel => 'Muistiinpanot (valinnainen)';
+
+  @override
+  String get saveAllLabel => 'Tallenna kaikki';
+
+  @override
+  String weightMeasurementsSavedSnackbar(int count) {
+    return '$count painomittausta tallennettu';
+  }
+
+  @override
+  String get editWeightMeasurementTitle => 'Muokkaa painomittausta';
+
+  @override
+  String get weightMeasurementUpdatedSnackbar => 'Painomittaus päivitetty';
+
+  @override
+  String treatmentPlanTitle(String name) {
+    return '$name - Hoitosuunnitelma';
+  }
+
+  @override
+  String get dewormingLabel => 'Matolääkitys:';
+
+  @override
+  String get deworming1 => '1. matolääkitys (n. 2 viikkoa)';
+
+  @override
+  String get deworming2 => '2. matolääkitys (n. 4 viikkoa)';
+
+  @override
+  String get deworming3 => '3. matolääkitys (n. 6 viikkoa)';
+
+  @override
+  String get vaccinesLabel => 'Rokotukset:';
+
+  @override
+  String get vaccine1 => '1. rokotus (8 viikkoa)';
+
+  @override
+  String get vaccine2 => '2. rokotus (12 viikkoa)';
+
+  @override
+  String get vaccine3 => '3. rokotus (16 viikkoa)';
+
+  @override
+  String get otherLabel => 'Muu:';
+
+  @override
+  String get idMarkingLabel => 'Tunnistusmerkintä';
+
+  @override
+  String get idMarkingNumberLabel => 'Tunnistusmerkinnän numero';
+
+  @override
+  String get selectDateLabel => 'Valitse päivä';
+
+  @override
+  String get treatmentPlanUpdatedSnackbar =>
+      'Hoitosuunnitelma päivitetty ja muistutukset ajastettu';
+
+  @override
+  String get pdfDownloadedTitle => 'PDF ladattu';
+
+  @override
+  String pdfSavedSnackbar(String path) {
+    return 'PDF tallennettu:\n$path';
+  }
+
+  @override
+  String errorGeneratingPdf(String error) {
+    return 'Virhe PDF:n luomisessa: $error';
+  }
+
+  @override
+  String get healthCertificateTitle => 'Terveystodistus';
+
+  @override
+  String generateHealthCertFor(String name) {
+    return 'Luo terveystodistus: $name';
+  }
+
+  @override
+  String get healthExaminationLabel => 'Terveystarkastus';
+
+  @override
+  String get tapToAddNote => 'Napauta kohtaa lisätäksesi merkinnän';
+
+  @override
+  String get generalConditionLabel => 'Yleiskunto';
+
+  @override
+  String get eyesLabel => 'Silmät';
+
+  @override
+  String get earsLabel => 'Korvat';
+
+  @override
+  String get heartLabel => 'Sydän';
+
+  @override
+  String get lungsLabel => 'Keuhkot';
+
+  @override
+  String get skinCoatLabel => 'Iho/turkki';
+
+  @override
+  String get teethMouthLabel => 'Hampaat/suu';
+
+  @override
+  String get abdomenLabel => 'Vatsa (abdomen)';
+
+  @override
+  String get limbsJointsLabel => 'Raajat/nivelet';
+
+  @override
+  String get vetInfoOptional => 'Eläinlääkäritiedot (valinnainen):';
+
+  @override
+  String get vetNameLabel => 'Eläinlääkärin nimi';
+
+  @override
+  String get phoneLabel => 'Puhelin';
+
+  @override
+  String get generalNotesLabel => 'Yleiset muistiinpanot';
+
+  @override
+  String get generatePdfButton => 'Luo PDF';
+
+  @override
+  String addNoteFor(String label) {
+    return 'Lisää merkintä: $label...';
+  }
+
+  @override
+  String get healthCertificateDownloaded => 'Terveystodistus ladattu';
+
+  @override
+  String healthCertSavedSnackbar(String path) {
+    return 'Terveystodistus tallennettu:\n$path';
+  }
+
+  @override
+  String errorGeneratingHealthCert(String error) {
+    return 'Virhe terveystodistuksen luomisessa: $error';
+  }
+
+  @override
+  String get shareUpdateTitle => 'Jaa päivitys';
+
+  @override
+  String shareUpdateAbout(String name) {
+    return 'Jaa päivitys pennusta $name ostajalle';
+  }
+
+  @override
+  String get includeInMessage => 'Sisällytä viestiin:';
+
+  @override
+  String get ageCheckbox => 'Ikä';
+
+  @override
+  String get weightCheckbox => 'Paino';
+
+  @override
+  String get treatmentsCheckbox => 'Hoidot';
+
+  @override
+  String get customMessageOptional => 'Oma viesti (valinnainen)';
+
+  @override
+  String get personalGreetingHint => 'Kirjoita henkilökohtainen tervehdys...';
+
+  @override
+  String updateAbout(String name) {
+    return 'Päivitys pennusta $name';
+  }
+
+  @override
+  String get editLitterTitle => 'Muokkaa pentuetta';
+
+  @override
+  String get damFemaleLabel => 'Emä (Narttu) *';
+
+  @override
+  String get sireMaleLabel => 'Isä (Uros) *';
+
+  @override
+  String get puppyCountBasedOnRegistered =>
+      'Pentujen määrä (rekisteröityjen perusteella):';
+
+  @override
+  String get updatesAutomatically =>
+      'Nämä luvut päivittyvät automaattisesti kun lisäät tai poistat pentuja.';
+
+  @override
+  String get damAndSireRequired => 'Emä ja Isä vaaditaan';
+
+  @override
+  String get litterUpdatedSnackbar => 'Pentue päivitetty';
+
+  @override
+  String get deleteLitterTitle => 'Poista pentue?';
+
+  @override
+  String confirmDeleteLitterText(String damName, String sireName) {
+    return 'Haluatko varmasti poistaa pentueen $damName x $sireName?\n\nHUOM: Tämä poistaa myös kaikki pentueen pennut!';
+  }
+
+  @override
+  String get deleteLabel => 'Poista';
+
+  @override
+  String get litterDeletedSnackbar => 'Pentue poistettu';
+
+  @override
+  String get placedLabel => 'sijoitettu';
+
+  @override
+  String get ownerRoleLabel => 'Omistaja';
+
+  @override
+  String get skipButton => 'Ohita';
+
+  @override
+  String get getStartedButton => 'Aloita';
+
+  @override
+  String get onboardingWelcomeTitle => 'Tervetuloa Breedlyyn';
+
+  @override
+  String get onboardingWelcomeDesc =>
+      'Täydellinen ratkaisusi kasvattajan hallintaan. Seuraa koiria, pentueita, ostajia ja paljon muuta.';
+
+  @override
+  String get onboardingDogsTitle => 'Hallitse koiriasi';
+
+  @override
+  String get onboardingDogsDesc =>
+      'Lisää koiria sukutauluineen, terveystietoineen, näyttelytuloksineen ja kuvineen. Kaikki yhdessä paikassa.';
+
+  @override
+  String get onboardingLittersTitle => 'Seuraa pentueita ja pentuja';
+
+  @override
+  String get onboardingLittersDesc =>
+      'Rekisteröi pentueita, seuraa pentujen kehitystä painolokilla ja luo sopimuksia ostajille.';
+
+  @override
+  String get onboardingCalendarTitle => 'Kalenteri ja muistutukset';
+
+  @override
+  String get onboardingCalendarDesc =>
+      'Älä unohda tärkeitä päivämääriä. Saa muistutuksia rokotuksista, eläinlääkärikäynneistä ja muista tapahtumista.';
+
+  @override
+  String get onboardingStatsTitle => 'Tilastot ja raportit';
+
+  @override
+  String get onboardingStatsDesc =>
+      'Saa näkemyksiä kasvatukseesi yksityiskohtaisilla tilastoilla, talousyhteenvedoilla ja vuosiraporteilla.';
+
+  @override
+  String get tabInfo => 'Info';
+
+  @override
+  String get veterinaryInfoOptional => 'Eläinlääkäritiedot (valinnainen):';
+
+  @override
+  String deleteLitterConfirmMessage(String damName, String sireName) {
+    return 'Haluatko varmasti poistaa pentueen $damName x $sireName?\n\nHUOM: Tämä poistaa myös kaikki pentueen pennut!';
+  }
+
+  @override
+  String get couldNotGenerateImage => 'Kuvan luonti epäonnistui';
+
+  @override
+  String get contentSection => 'SISÄLTÖ';
+
+  @override
+  String get detailsToggle => 'Tiedot';
+
+  @override
+  String get backgroundSection => 'TAUSTA';
+
+  @override
+  String get autoTheme => 'Auto';
+
+  @override
+  String get themeGoldBlack => 'Kulta & Musta';
+
+  @override
+  String get themeNavyGold => 'Tummansininen & Kulta';
+
+  @override
+  String get themeTealAmber => 'Sinivihreä & Meripihka';
+
+  @override
+  String get themeSlateSilver => 'Liuske & Hopea';
+
+  @override
+  String get themeForestJade => 'Metsä & Jade';
+
+  @override
+  String get themeIndigo => 'Indigo';
+
+  @override
+  String get themeClassic => 'Klassinen';
+
+  @override
+  String get patternSection => 'KUVIO';
+
+  @override
+  String get patternNone => 'Ei mitään';
+
+  @override
+  String get patternGeometric => 'Geometrinen';
+
+  @override
+  String get patternCircles => 'Ympyrät';
+
+  @override
+  String get patternLines => 'Viivat';
+
+  @override
+  String get patternDots => 'Pisteet';
+
+  @override
+  String get patternWaves => 'Aallot';
+
+  @override
+  String get patternElegant => 'Elegantti';
+
+  @override
+  String get fontTypeSection => 'KIRJASINTYYPPI';
+
+  @override
+  String get fontStandard => 'Standardi';
+
+  @override
+  String get fontSerif => 'Serif';
+
+  @override
+  String get fontElegant => 'Elegantti';
+
+  @override
+  String get fontModern => 'Moderni';
+
+  @override
+  String get fontClassic => 'Klassinen';
+
+  @override
+  String get fontHandwritten => 'Käsiala';
+
+  @override
+  String get fontSizeSection => 'KOKO';
+
+  @override
+  String get resultCardTitle => 'Tuloskortti';
+
+  @override
+  String get removePhoto => 'Poista kuva';
+
+  @override
+  String get addPhoto => 'Lisää kuva';
+
+  @override
+  String get selectFromGallery => 'Valitse galleriasta';
+
+  @override
+  String breedJudgeWithName(String name) {
+    return 'Rotutuomari: $name';
+  }
+
+  @override
+  String classPlacementAbbr(String placement) {
+    return 'Lk. $placement';
+  }
 }

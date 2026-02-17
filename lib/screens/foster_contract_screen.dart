@@ -10,6 +10,7 @@ import '../services/pdf_contract_service.dart';
 import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class FosterContractScreen extends StatefulWidget {
   final Dog? preselectedDog;
@@ -129,9 +130,10 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
 
   Future<void> _generatePdf() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedDog == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Velg en hund')),
+        SnackBar(content: Text(l10n.selectDog)),
       );
       return;
     }
@@ -195,18 +197,18 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Fôrvertsavtale opprettet!')),
+          SnackBar(content: Text(l10n.fosterContractCreated)),
         );
         
         await Share.shareXFiles(
           [XFile(file.path)],
-          subject: 'Fôrvertsavtale - ${_selectedDog!.name}',
+          subject: '${l10n.fosterContract} - ${_selectedDog!.name}',
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil: $e')),
+          SnackBar(content: Text(l10n.genericError(e.toString()))),
         );
       }
     } finally {
@@ -218,9 +220,10 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fôrvertsavtale'),
+        title: Text(l10n.fosterContract),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -239,16 +242,16 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hund',
+                              l10n.dog,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Dog>(
                               isExpanded: true,
                               initialValue: _selectedDog,
-                              decoration: const InputDecoration(
-                                labelText: 'Velg hund',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.selectDog,
+                                border: const OutlineInputBorder(),
                               ),
                               items: _allDogs.map((dog) {
                                 return DropdownMenuItem(
@@ -263,7 +266,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                                 setState(() => _selectedDog = dog);
                               },
                               validator: (value) =>
-                                  value == null ? 'Påkrevd' : null,
+                                  value == null ? l10n.required : null,
                             ),
                           ],
                         ),
@@ -279,29 +282,29 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Eier',
+                              l10n.owner,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _ownerNameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Navn',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.name,
+                                border: const OutlineInputBorder(),
                               ),
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                             const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _ownerAddressController,
-                              decoration: const InputDecoration(
-                                labelText: 'Adresse',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.address,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 2,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                           ],
                         ),
@@ -317,29 +320,29 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Fôrvert',
+                              l10n.fosterParent,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _fosterNameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Navn',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.name,
+                                border: const OutlineInputBorder(),
                               ),
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                             const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _fosterAddressController,
-                              decoration: const InputDecoration(
-                                labelText: 'Adresse',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.address,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 2,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                           ],
                         ),
@@ -355,14 +358,14 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Avtaleperiode',
+                              l10n.contractPeriod,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             ListTile(
                               contentPadding: EdgeInsets.zero,
                               leading: const Icon(Icons.calendar_today),
-                              title: const Text('Startdato'),
+                              title: Text(l10n.startDate),
                               subtitle: Text(_dateFormat.format(_startDate)),
                               onTap: () => _selectDate(context, true),
                             ),
@@ -377,16 +380,16 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                                   }
                                 });
                               },
-                              title: const Text('Har bestemt sluttdato'),
+                              title: Text(l10n.hasDefiniteEndDate),
                             ),
                             if (_hasEndDate)
                               ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 leading: const Icon(Icons.calendar_today),
-                                title: const Text('Sluttdato'),
+                                title: Text(l10n.endDate),
                                 subtitle: Text(_endDate != null 
                                     ? _dateFormat.format(_endDate!) 
-                                    : 'Velg dato'),
+                                    : l10n.selectDate),
                                 onTap: () => _selectDate(context, false),
                               ),
                           ],
@@ -403,41 +406,41 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Vilkår',
+                              l10n.contractTermsSection,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _breedingTermsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Avlsvilkår',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.breedingTerms,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 3,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                             const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _expenseTermsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Utgiftsfordeling',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.expenseSharing,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 3,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                             const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _returnConditionsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Returvilkår',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.returnConditions,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 3,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                           ],
                         ),
@@ -453,16 +456,16 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Tilleggsvilkår',
+                              l10n.additionalTerms,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _additionalTermsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Tilleggsvilkår (valgfritt)',
-                                hintText: 'Skriv inn eventuelle tilleggsvilkår...',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.additionalTermsOptional,
+                                hintText: l10n.additionalTermsHintText,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 5,
                             ),
@@ -478,7 +481,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                       child: ElevatedButton.icon(
                         onPressed: _generatePdf,
                         icon: const Icon(Icons.picture_as_pdf),
-                        label: const Text('Generer fôrvertsavtale'),
+                        label: Text(l10n.generateFosterContract),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         ),

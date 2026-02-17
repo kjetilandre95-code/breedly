@@ -225,7 +225,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           ),
           const SizedBox(height: AppSpacing.lg),
           Text(
-            'Søk etter hunder, kull, valper eller kjøpere',
+            l10n.searchPrompt,
             style: TextStyle(
               fontSize: 16,
               color: context.colors.textMuted,

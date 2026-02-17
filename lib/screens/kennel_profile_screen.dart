@@ -6,6 +6,7 @@ import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class KennelProfileScreen extends StatefulWidget {
   const KennelProfileScreen({super.key});
@@ -101,8 +102,9 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
       }
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kennelprofil lagret')),
+          SnackBar(content: Text(l10n.kennelProfileSaved)),
         );
       }
     }
@@ -126,11 +128,12 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: context.colors.background,
       appBar: AppBar(
-        title: const Text('Kennelprofil'),
+        title: Text(l10n.kennelProfile),
         backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
@@ -139,7 +142,7 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: _saveProfile,
-            tooltip: 'Lagre',
+            tooltip: l10n.save,
           ),
         ],
       ),
@@ -176,9 +179,9 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                             ),
                           ),
                           const SizedBox(width: AppSpacing.lg),
-                          const Expanded(
+                          Expanded(
                             child: Text(
-                              'Kennelinformasjon',
+                              l10n.kennelInfo,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
@@ -191,8 +194,8 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                       TextFormField(
                         controller: _kennelNameController,
                         decoration: InputDecoration(
-                          labelText: 'Kennelnavn',
-                          hintText: 'F.eks. "Nordlys Kennel"',
+                          labelText: l10n.kennelNameFieldLabel,
+                          hintText: l10n.kennelNameHint,
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.mdAll,
                           ),
@@ -211,8 +214,8 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                         controller: _descriptionController,
                         maxLines: 3,
                         decoration: InputDecoration(
-                          labelText: 'Beskrivelse (valgfritt)',
-                          hintText: 'Fortell litt om din kennel...',
+                          labelText: l10n.descriptionOptional,
+                          hintText: l10n.kennelDescriptionHint,
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.mdAll,
                           ),
@@ -262,15 +265,15 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Raser',
-                                  style: TextStyle(
+                                Text(
+                                  l10n.breedsSection,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                   ),
                                 ),
                                 Text(
-                                  'Velg rasene du er oppdretter av',
+                                  l10n.selectBreedsForBreeding,
                                   style: TextStyle(
                                     color: context.colors.textCaption,
                                     fontSize: 13,
@@ -297,8 +300,8 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                               Expanded(
                                 child: Text(
                                   _selectedBreeds.isEmpty
-                                      ? 'Trykk for å velge raser...'
-                                      : '${_selectedBreeds.length} ${_selectedBreeds.length == 1 ? 'rase' : 'raser'} valgt',
+                                      ? l10n.tapToSelectBreeds
+                                      : '${_selectedBreeds.length} ${_selectedBreeds.length == 1 ? l10n.breedSelectedSingular : l10n.breedsSelectedPlural}',
                                   style: TextStyle(
                                     color: _selectedBreeds.isEmpty ? context.colors.textDisabled : context.colors.textPrimary,
                                   ),
@@ -361,9 +364,9 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                             ),
                           ),
                           const SizedBox(width: AppSpacing.lg),
-                          const Text(
-                            'Kontaktinformasjon',
-                            style: TextStyle(
+                          Text(
+                            l10n.contactInfo,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
@@ -375,7 +378,7 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                         controller: _contactEmailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          labelText: 'E-post (valgfritt)',
+                          labelText: l10n.emailOptional,
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.mdAll,
                           ),
@@ -394,7 +397,7 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                         controller: _contactPhoneController,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          labelText: 'Telefon (valgfritt)',
+                          labelText: l10n.phoneOptional,
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.mdAll,
                           ),
@@ -412,7 +415,7 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                       TextFormField(
                         controller: _addressController,
                         decoration: InputDecoration(
-                          labelText: 'Adresse (valgfritt)',
+                          labelText: l10n.addressOptional,
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.mdAll,
                           ),
@@ -431,7 +434,7 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                         controller: _websiteController,
                         keyboardType: TextInputType.url,
                         decoration: InputDecoration(
-                          labelText: 'Nettside (valgfritt)',
+                          labelText: l10n.websiteOptional,
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.mdAll,
                           ),
@@ -455,7 +458,7 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
               ElevatedButton.icon(
                 onPressed: _saveProfile,
                 icon: const Icon(Icons.save),
-                label: const Text('Lagre kennelprofil'),
+                label: Text(l10n.saveKennelProfile),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
@@ -523,8 +526,9 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Velg raser'),
+      title: Text(l10n.selectBreeds),
       content: SizedBox(
         width: double.maxFinite,
         height: MediaQuery.of(context).size.height * 0.5,
@@ -534,7 +538,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
               controller: _searchController,
               onChanged: _filterBreeds,
               decoration: InputDecoration(
-                hintText: 'Søk rase...',
+                hintText: l10n.searchBreed,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: AppRadius.smAll,
@@ -543,7 +547,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              '${_selected.length} valgt',
+              l10n.nSelected(_selected.length.toString()),
               style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -551,7 +555,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
               child: _filteredBreeds.isEmpty
                   ? Center(
                       child: Text(
-                        'Ingen raser funnet for "${_searchController.text}"',
+                        l10n.noBreedsFoundFor(_searchController.text),
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -583,7 +587,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
         ElevatedButton(
           onPressed: () {
@@ -593,7 +597,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          child: const Text('Bekreft', style: TextStyle(color: Colors.white)),
+          child: Text(l10n.confirm, style: const TextStyle(color: Colors.white)),
         ),
       ],
     );

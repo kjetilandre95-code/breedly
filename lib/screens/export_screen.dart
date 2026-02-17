@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:breedly/services/excel_export_service.dart';
 import 'package:breedly/utils/logger.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 /// Screen for exporting data to CSV/Excel
 class ExportScreen extends StatefulWidget {
@@ -17,45 +18,53 @@ class _ExportScreenState extends State<ExportScreen> {
   String? _currentExport;
 
   Future<void> _exportDogs() async {
-    await _doExport('hunder', () => _exportService.exportDogs());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.dogs, () => _exportService.exportDogs());
   }
 
   Future<void> _exportLitters() async {
-    await _doExport('kull', () => _exportService.exportLitters());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.litters, () => _exportService.exportLitters());
   }
 
   Future<void> _exportPuppies() async {
-    await _doExport('valper', () => _exportService.exportPuppies());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.puppies, () => _exportService.exportPuppies());
   }
 
   Future<void> _exportExpenses() async {
-    await _doExport('utgifter', () => _exportService.exportExpenses());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.expenses, () => _exportService.exportExpenses());
   }
 
   Future<void> _exportIncome() async {
-    await _doExport('inntekter', () => _exportService.exportIncome());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.income, () => _exportService.exportIncome());
   }
 
   Future<void> _exportFinancialSummary() async {
-    await _doExport('økonomisammendrag', () => _exportService.exportFinancialSummary());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.financialSummary, () => _exportService.exportFinancialSummary());
   }
 
   Future<void> _exportLitterStats() async {
-    await _doExport('kullstatistikk', () => _exportService.exportLitterStatistics());
+    final l10n = AppLocalizations.of(context)!;
+    await _doExport(l10n.litterStatistics, () => _exportService.exportLitterStatistics());
   }
 
   Future<void> _exportAll() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _isExporting = true;
-      _currentExport = 'alle data';
+      _currentExport = l10n.allData;
     });
 
     try {
       await _exportService.exportAllData();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Eksport fullført!'),
+          SnackBar(
+            content: Text(l10n.exportCompleted),
             backgroundColor: AppColors.success,
           ),
         );
@@ -65,7 +74,7 @@ class _ExportScreenState extends State<ExportScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Feil ved eksport: $e'),
+            content: Text(l10n.exportError(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -92,7 +101,7 @@ class _ExportScreenState extends State<ExportScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('$name eksportert!'),
+            content: Text(AppLocalizations.of(context)!.itemExported(name)),
             backgroundColor: AppColors.success,
           ),
         );
@@ -102,7 +111,7 @@ class _ExportScreenState extends State<ExportScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Feil ved eksport: $e'),
+            content: Text(AppLocalizations.of(context)!.exportError(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -120,10 +129,11 @@ class _ExportScreenState extends State<ExportScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Eksporter data'),
+        title: Text(l10n.exportData),
       ),
       body: _isExporting
           ? Center(
@@ -132,7 +142,7 @@ class _ExportScreenState extends State<ExportScreen> {
                 children: [
                   const CircularProgressIndicator(),
                   const SizedBox(height: AppSpacing.lg),
-                  Text('Eksporterer $_currentExport...'),
+                  Text(l10n.exportingItem(_currentExport ?? '')),
                 ],
               ),
             )
@@ -155,7 +165,7 @@ class _ExportScreenState extends State<ExportScreen> {
                             ),
                             const SizedBox(width: AppSpacing.sm),
                             Text(
-                              'Om eksport',
+                              l10n.aboutExport,
                               style: theme.textTheme.titleMedium?.copyWith(
                                 color: theme.colorScheme.onPrimaryContainer,
                                 fontWeight: FontWeight.bold,
@@ -165,7 +175,7 @@ class _ExportScreenState extends State<ExportScreen> {
                         ),
                         const SizedBox(height: AppSpacing.sm),
                         Text(
-                          'Data eksporteres som CSV-filer som kan åpnes i Excel, Google Sheets eller andre regneark-programmer. Filene bruker UTF-8 med BOM for å støtte norske tegn.',
+                          l10n.exportDescription,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.onPrimaryContainer,
                           ),
@@ -180,7 +190,7 @@ class _ExportScreenState extends State<ExportScreen> {
                 FilledButton.icon(
                   onPressed: _exportAll,
                   icon: const Icon(Icons.file_download),
-                  label: const Text('Eksporter alt'),
+                  label: Text(l10n.exportAll),
                   style: FilledButton.styleFrom(
                     minimumSize: const Size.fromHeight(56),
                   ),
@@ -194,7 +204,7 @@ class _ExportScreenState extends State<ExportScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                       child: Text(
-                        'Eller eksporter enkeltvis',
+                        l10n.orExportIndividually,
                         style: theme.textTheme.bodySmall,
                       ),
                     ),
@@ -206,46 +216,46 @@ class _ExportScreenState extends State<ExportScreen> {
                 // Individual exports
                 _ExportTile(
                   icon: Icons.pets,
-                  title: 'Hunder',
-                  subtitle: 'Alle registrerte hunder med stamtavle-info',
+                  title: l10n.dogs,
+                  subtitle: l10n.exportDogsDesc,
                   onTap: _exportDogs,
                 ),
                 _ExportTile(
                   icon: Icons.pets,
-                  title: 'Kull',
-                  subtitle: 'Alle kull med foreldre og valpestatus',
+                  title: l10n.litters,
+                  subtitle: l10n.exportLittersDesc,
                   onTap: _exportLitters,
                 ),
                 _ExportTile(
                   icon: Icons.favorite,
-                  title: 'Valper',
-                  subtitle: 'Alle valper med detaljer og salgsstatus',
+                  title: l10n.puppies,
+                  subtitle: l10n.exportPuppiesDesc,
                   onTap: _exportPuppies,
                 ),
                 const Divider(height: AppSpacing.xxxl),
                 _ExportTile(
                   icon: Icons.trending_down,
-                  title: 'Utgifter',
-                  subtitle: 'Alle utgifter sortert etter dato',
+                  title: l10n.expenses,
+                  subtitle: l10n.exportExpensesDesc,
                   onTap: _exportExpenses,
                 ),
                 _ExportTile(
                   icon: Icons.trending_up,
-                  title: 'Inntekter',
-                  subtitle: 'Alle inntekter sortert etter dato',
+                  title: l10n.income,
+                  subtitle: l10n.exportIncomeDesc,
                   onTap: _exportIncome,
                 ),
                 _ExportTile(
                   icon: Icons.summarize,
-                  title: 'Økonomisammendrag',
-                  subtitle: 'Årlig oversikt over resultat',
+                  title: l10n.financialSummary,
+                  subtitle: l10n.exportFinancialSummaryDesc,
                   onTap: _exportFinancialSummary,
                 ),
                 const Divider(height: AppSpacing.xxxl),
                 _ExportTile(
                   icon: Icons.analytics,
-                  title: 'Kullstatistikk',
-                  subtitle: 'Statistikk per rase',
+                  title: l10n.litterStatistics,
+                  subtitle: l10n.exportLitterStatsDesc,
                   onTap: _exportLitterStats,
                 ),
               ],

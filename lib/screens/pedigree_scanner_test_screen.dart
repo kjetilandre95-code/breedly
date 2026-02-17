@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/widgets/pedigree_scanner_widget.dart';
 import 'package:breedly/services/pedigree_scanner_service.dart';
 import 'package:breedly/utils/theme_colors.dart';
@@ -10,9 +11,10 @@ class PedigreeScannerTestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Test Stamtavle-skanner'),
+        title: Text(l10n.testPedigreeScanner),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -32,7 +34,7 @@ class PedigreeScannerTestScreen extends StatelessWidget {
                         Icon(Icons.info_outline, color: AppColors.info),
                         const SizedBox(width: AppSpacing.sm),
                         Text(
-                          'Testing av stamtavle-skanner',
+                          l10n.testingScannerInfo,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -42,20 +44,20 @@ class PedigreeScannerTestScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    const Text(
-                      'Denne funksjonen bruker Google ML Kit for å:',
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                    Text(
+                      l10n.scannerUsesInfo,
+                      style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    _buildBullet('Lese tekst fra bilder (OCR)'),
-                    _buildBullet('Finne registreringsnummer'),
-                    _buildBullet('Identifisere hundenavn'),
-                    _buildBullet('Gjenkjenne foreldre (Far/Mor)'),
-                    _buildBullet('Ekstrahere fødselsdatoer'),
+                    _buildBullet(l10n.readTextFromImages),
+                    _buildBullet(l10n.findRegistrationNumbers),
+                    _buildBullet(l10n.identifyDogNames),
+                    _buildBullet(l10n.recognizeParents),
+                    _buildBullet(l10n.extractBirthDates),
                     const SizedBox(height: AppSpacing.md),
-                    const Text(
-                      '💡 Tips: Bruk et tydelig bilde av en stamtavle for beste resultat.',
-                      style: TextStyle(
+                    Text(
+                      '💡 ${l10n.tipClearImage}',
+                      style: const TextStyle(
                         fontSize: 13,
                         fontStyle: FontStyle.italic,
                       ),
@@ -89,19 +91,19 @@ class PedigreeScannerTestScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Testinstruksjoner',
-                      style: TextStyle(
+                    Text(
+                      l10n.testInstructions,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    _buildStep('1', 'Ta et bilde av en stamtavle'),
-                    _buildStep('2', 'Vent mens ML Kit prosesserer bildet'),
-                    _buildStep('3', 'Se resultatene og nøyaktigheten'),
-                    _buildStep('4', 'Rediger data hvis nødvendig'),
-                    _buildStep('5', 'Lagre hunden(e) i databasen'),
+                    _buildStep('1', l10n.step1TakePhoto),
+                    _buildStep('2', l10n.step2WaitProcessing),
+                    _buildStep('3', l10n.step3SeeResults),
+                    _buildStep('4', l10n.step4EditData),
+                    _buildStep('5', l10n.step5SaveDogs),
                   ],
                 ),
               ),
@@ -121,20 +123,20 @@ class PedigreeScannerTestScreen extends StatelessWidget {
                       children: [
                         Icon(Icons.lightbulb_outline, color: AppColors.success),
                         const SizedBox(width: AppSpacing.sm),
-                        const Text(
-                          'Eksempel på data som kan gjenkjennes',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Text(
+                          l10n.exampleDataRecognized,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.md),
-                    const Text('Registreringsnummer:'),
+                    Text(l10n.registrationNumberColon),
                     const Text(
                       '  • N 12345/18\n  • NO 54321/2020\n  • DK 67890\n  • SE 123456',
                       style: TextStyle(fontFamily: 'monospace'),
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    const Text('Nøkkelord:'),
+                    Text(l10n.keywords),
                     const Text(
                       '  • Far: / Sire: / Father:\n  • Mor: / Dam: / Mother:\n  • Rase: / Breed:',
                       style: TextStyle(fontFamily: 'monospace'),
@@ -198,9 +200,10 @@ class PedigreeScanResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Skanneresultat'),
+        title: Text(l10n.scanResult),
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -219,7 +222,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Nøyaktighet: ${(result.confidence * 100).toStringAsFixed(0)}%',
+                    l10n.accuracyPercent('${(result.confidence * 100).toStringAsFixed(0)}%'),
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -228,7 +231,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    '${result.totalDogs} hunder funnet',
+                    l10n.dogsFound(result.totalDogs),
                     style: const TextStyle(fontSize: 14),
                   ),
                 ],
@@ -239,9 +242,9 @@ class PedigreeScanResultScreen extends StatelessWidget {
 
           // Main dog
           if (result.dog != null) ...[
-            const Text(
-              'Hovedhund',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.mainDog,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppSpacing.sm),
             _buildDogCard(context, result.dog!),
@@ -250,9 +253,9 @@ class PedigreeScanResultScreen extends StatelessWidget {
 
           // Parents
           if (result.parents.isNotEmpty) ...[
-            const Text(
-              'Foreldre',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.parents,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppSpacing.sm),
             ...result.parents.map((dog) => _buildDogCard(context, dog)),
@@ -261,9 +264,9 @@ class PedigreeScanResultScreen extends StatelessWidget {
 
           // Grandparents
           if (result.grandparents.isNotEmpty) ...[
-            const Text(
-              'Besteforeldre',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.grandparents,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: AppSpacing.sm),
             ...result.grandparents.map((dog) => _buildDogCard(context, dog)),
@@ -278,14 +281,14 @@ class PedigreeScanResultScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Debug-informasjon',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Text(
+                    l10n.debugInfo,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text('Totalt funnet: ${result.totalDogs} hunder'),
-                  Text('Confidence: ${result.confidence.toStringAsFixed(3)}'),
-                  Text('Vellykket: ${result.isSuccessful}'),
+                  Text(l10n.totalDogsFound(result.totalDogs)),
+                  Text('${l10n.scanConfidence}: ${result.confidence.toStringAsFixed(3)}'),
+                  Text(l10n.scanSuccessful('${result.isSuccessful}')),
                 ],
               ),
             ),
@@ -356,10 +359,10 @@ class PedigreeScanResultScreen extends StatelessWidget {
               const SizedBox(height: AppSpacing.sm),
             ],
             if (dog.registrationNumber != null)
-              _buildInfoRow(context, 'Reg.nr:', dog.registrationNumber!),
-            if (dog.breed != null) _buildInfoRow(context, 'Rase:', dog.breed!),
-            if (dog.birthDate != null) _buildInfoRow(context, 'Født:', dog.birthDate!),
-            if (dog.color != null) _buildInfoRow(context, 'Farge:', dog.color!),
+              _buildInfoRow(context, '${AppLocalizations.of(context)!.registrationNumber}:', dog.registrationNumber!),
+            if (dog.breed != null) _buildInfoRow(context, '${AppLocalizations.of(context)!.breed}:', dog.breed!),
+            if (dog.birthDate != null) _buildInfoRow(context, '${AppLocalizations.of(context)!.birthDate}:', dog.birthDate!),
+            if (dog.color != null) _buildInfoRow(context, '${AppLocalizations.of(context)!.color}:', dog.color!),
           ],
         ),
       ),

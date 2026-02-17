@@ -26,6 +26,7 @@ import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/share_service.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class LitterDetailScreen extends StatefulWidget {
   final Litter litter;
@@ -59,6 +60,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final l10n = AppLocalizations.of(context)!;
     
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
@@ -75,7 +77,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           PopupMenuButton(
             itemBuilder: (context) => [
               PopupMenuItem(
-                child: const Text('Rediger'),
+                child: Text(l10n.editMenu),
                 onTap: () {
                   Future.delayed(const Duration(milliseconds: 100), () {
                     if (context.mounted) {
@@ -85,7 +87,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 },
               ),
               PopupMenuItem(
-                child: const Text('Slett kull'),
+                child: Text(l10n.deleteLitterMenu),
                 onTap: () {
                   _deleteLitter(context);
                 },
@@ -99,11 +101,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           unselectedLabelColor: context.colors.textCaption,
           indicatorColor: primaryColor,
           indicatorWeight: 3,
-          tabs: const [
-            Tab(icon: Icon(Icons.info_outlined), text: 'Info'),
-            Tab(icon: Icon(Icons.pets_outlined), text: 'Valper'),
-            Tab(icon: Icon(Icons.assignment_outlined), text: 'Registrering'),
-            Tab(icon: Icon(Icons.image_outlined), text: 'Galleri'),
+          tabs: [
+            Tab(icon: const Icon(Icons.info_outlined), text: l10n.tabInfo),
+            Tab(icon: const Icon(Icons.pets_outlined), text: l10n.tabPuppies),
+            Tab(icon: const Icon(Icons.assignment_outlined), text: l10n.tabRegistration),
+            Tab(icon: const Icon(Icons.image_outlined), text: l10n.gallery),
           ],
         ),
       ),
@@ -170,40 +172,40 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       ),
                       const SizedBox(width: AppSpacing.sm),
                       Text(
-                        isPlannedLitter ? 'Planlagt kull' : 'Kullinfo',
+                        isPlannedLitter ? AppLocalizations.of(context)!.plannedLitterLabel : AppLocalizations.of(context)!.litterInfoLabel,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  _buildInfoRow('Mor', widget.litter.damName),
-                  _buildInfoRow('Far', widget.litter.sireName),
-                  _buildInfoRow('Rase', widget.litter.breed),
+                  _buildInfoRow(AppLocalizations.of(context)!.damLabel, widget.litter.damName),
+                  _buildInfoRow(AppLocalizations.of(context)!.sireLabel, widget.litter.sireName),
+                  _buildInfoRow(AppLocalizations.of(context)!.breedLabel, widget.litter.breed),
                   if (!isPlannedLitter) ...[
                     _buildInfoRow(
-                      'Fødselsdato',
+                      AppLocalizations.of(context)!.birthDateLabel,
                       _formatDateWithRelative(widget.litter.dateOfBirth),
                     ),
                     _buildInfoRow(
-                      'Alder',
+                      AppLocalizations.of(context)!.ageLabel,
                       _formatAge(
                         widget.litter.getAgeInWeeks(),
                         widget.litter.getAgeInDays(),
                       ),
                     ),
-                    _buildInfoRow('Status', widget.litter.getStatus()),
+                    _buildInfoRow(AppLocalizations.of(context)!.statusLabel, widget.litter.getStatus()),
                   ],
                   if (puppies.isNotEmpty && !isPlannedLitter) ...[
                     const SizedBox(height: AppSpacing.md),
                     const Divider(),
                     const SizedBox(height: AppSpacing.md),
-                    _buildInfoRow('Totalt valper', '${puppies.length}'),
+                    _buildInfoRow(AppLocalizations.of(context)!.totalPuppiesLabel, '${puppies.length}'),
                     _buildInfoRow(
-                      'Hanner',
+                      AppLocalizations.of(context)!.malesLabel,
                       '${puppies.where((p) => p.gender == "Male").length}',
                     ),
                     _buildInfoRow(
-                      'Tisper',
+                      AppLocalizations.of(context)!.femalesLabel,
                       '${puppies.where((p) => p.gender == "Female").length}',
                     ),
                   ],
@@ -212,7 +214,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     const Divider(),
                     const SizedBox(height: AppSpacing.md),
                     _buildInfoRow(
-                      'Parringsdato',
+                      AppLocalizations.of(context)!.matingDateLabel,
                       DateFormat(
                         'dd.MM.yyyy',
                       ).format(widget.litter.damMatingDate!),
@@ -221,7 +223,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   if (widget.litter.estimatedDueDate != null) ...[
                     const SizedBox(height: AppSpacing.sm),
                     _buildInfoRow(
-                      'Estimert dato for fødsel',
+                      AppLocalizations.of(context)!.estimatedDueDateLabel,
                       DateFormat(
                         'dd.MM.yyyy',
                       ).format(widget.litter.estimatedDueDate!),
@@ -232,7 +234,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     )) ...[
                       const SizedBox(height: AppSpacing.sm),
                       _buildHighlightedInfoRow(
-                        'Dager til valping',
+                        AppLocalizations.of(context)!.daysUntilWhelpingLabel,
                         '${widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays}',
                         Theme.of(context).primaryColor,
                       ),
@@ -297,7 +299,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Planlagt kull',
+                        AppLocalizations.of(context)!.plannedLitterLabel,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -308,9 +310,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       Text(
                         daysToGo != null
                             ? (daysToGo > 0
-                                ? '$daysToGo dager til estimert fødsel'
-                                : 'Estimert dato for fødsel har passert')
-                            : 'Sett parringsdato for å beregne termin',
+                                ? AppLocalizations.of(context)!.daysToEstimatedBirth(daysToGo)
+                                : AppLocalizations.of(context)!.estimatedDatePassed)
+                            : AppLocalizations.of(context)!.setMatingDateToCalculate,
                         style: TextStyle(
                           fontSize: 14,
                           color: context.colors.textMuted,
@@ -332,7 +334,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 ),
                 icon: const Icon(Icons.cake),
-                label: const Text('Registrer fødsel'),
+                label: Text(AppLocalizations.of(context)!.registerBirthButton),
               ),
             ),
           ],
@@ -355,9 +357,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   color: Theme.of(context).primaryColor,
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                const Text(
-                  'Planleggingsverktøy',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.planningToolsLabel,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -375,7 +377,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.thermostat,
-                    label: 'Temperatur',
+                    label: AppLocalizations.of(context)!.temperatureLabel,
                     color: Theme.of(context).primaryColor,
                     onTap: () => Navigator.push(
                       context,
@@ -390,7 +392,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.science,
-                    label: 'Progesteron',
+                    label: AppLocalizations.of(context)!.progesteroneLabel,
                     color: Theme.of(context).colorScheme.secondary,
                     onTap: () => _openProgesteroneMeasurements(),
                   ),
@@ -403,7 +405,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.edit_calendar,
-                    label: 'Rediger',
+                    label: AppLocalizations.of(context)!.editLabel,
                     color: Theme.of(context).primaryColor,
                     onTap: () => _editLitter(context),
                   ),
@@ -412,7 +414,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.cake,
-                    label: 'Fødsel',
+                    label: AppLocalizations.of(context)!.birthLabel,
                     color: Theme.of(context).colorScheme.secondary,
                     onTap: () => _registerBirth(),
                   ),
@@ -453,8 +455,8 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               Expanded(
                 child: Text(
                   hasMatingDate
-                      ? 'Parringsdato: ${DateFormat('dd.MM.yyyy').format(widget.litter.damMatingDate!)}'
-                      : 'Ingen parringsdato satt',
+                      ? AppLocalizations.of(context)!.matingDateColon(DateFormat('dd.MM.yyyy').format(widget.litter.damMatingDate!))
+                      : AppLocalizations.of(context)!.noMatingDateSet,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: primaryColor,
@@ -467,7 +469,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   hasMatingDate ? Icons.edit : Icons.add,
                   size: 16,
                 ),
-                label: Text(hasMatingDate ? 'Endre' : 'Sett dato'),
+                label: Text(hasMatingDate ? AppLocalizations.of(context)!.changeLabel : AppLocalizations.of(context)!.setDateLabel),
                 style: TextButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                 ),
@@ -481,7 +483,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Icon(Icons.child_care, color: Theme.of(context).primaryColor, size: 18),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  'Estimert fødsel: ${DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!)}',
+                  AppLocalizations.of(context)!.estimatedBirthColon(DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!)),
                   style: TextStyle(
                     color: context.colors.textTertiary,
                     fontWeight: FontWeight.w500,
@@ -495,7 +497,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 children: [
                   const SizedBox(width: 26),
                   Text(
-                    '${widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays} dager igjen',
+                    AppLocalizations.of(context)!.daysLeft(widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays),
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
@@ -520,7 +522,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       initialDate: initialDate.isAfter(now) ? now : initialDate,
       firstDate: now.subtract(const Duration(days: 120)),
       lastDate: now,
-      helpText: 'Velg parringsdato',
+      helpText: AppLocalizations.of(context)!.selectMatingDateLabel,
     );
 
     if (selectedDate != null) {
@@ -554,8 +556,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Parringsdato satt til ${DateFormat('dd.MM.yyyy').format(selectedDate)}. '
-              'Estimert fødsel: ${DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!)}',
+              AppLocalizations.of(context)!.matingDateSetSnackbar(
+                DateFormat('dd.MM.yyyy').format(selectedDate),
+                DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!),
+              ),
             ),
             backgroundColor: Theme.of(context).primaryColor,
           ),
@@ -583,7 +587,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Kunne ikke finne tispen')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.couldNotFindDam)),
       );
     }
   }
@@ -595,15 +599,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Registrer fødsel'),
+        title: Text(AppLocalizations.of(context)!.registerBirthTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Kullet er nå født! Vil du oppdatere fødselsdatoen til i dag?'),
+            Text(AppLocalizations.of(context)!.litterBornConfirmText),
             const SizedBox(height: AppSpacing.lg),
             Text(
-              'Du kan deretter legge til valpene manuelt.',
+              AppLocalizations.of(context)!.canThenAddPuppies,
               style: TextStyle(color: context.colors.textDisabled, fontSize: 13),
             ),
           ],
@@ -611,7 +615,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Avbryt'),
+            child: Text(AppLocalizations.of(context)!.cancelLabel),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -645,11 +649,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 navigator.pop();
                 setState(() {});
                 scaffoldMessenger.showSnackBar(
-                  const SnackBar(content: Text('Fødsel registrert! Du kan nå legge til valper.')),
+                  SnackBar(content: Text(AppLocalizations.of(context)!.birthRegisteredSnackbar)),
                 );
               }
             },
-            child: const Text('Registrer'),
+            child: Text(AppLocalizations.of(context)!.registerLabel),
           ),
         ],
       ),
@@ -676,12 +680,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Ingen valper ennå',
+                      AppLocalizations.of(context)!.noPuppiesYet,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      'Gå til Valper-fanen for å legge til valper',
+                      AppLocalizations.of(context)!.goToPuppiesTabHint,
                       style: TextStyle(color: context.colors.textCaption, fontSize: 12),
                     ),
                   ],
@@ -704,7 +708,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Icon(Icons.pets, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  'Valper ($total)',
+                  AppLocalizations.of(context)!.puppiesCount2(total),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -728,9 +732,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMiniStatusBox('Ledig', available, AppColors.info),
-                _buildMiniStatusBox('Reservert', reserved, AppColors.reserved),
-                _buildMiniStatusBox('Solgt', sold, AppColors.success),
+                _buildMiniStatusBox(AppLocalizations.of(context)!.availableLabel, available, AppColors.info),
+                _buildMiniStatusBox(AppLocalizations.of(context)!.reservedLabel, reserved, AppColors.reserved),
+                _buildMiniStatusBox(AppLocalizations.of(context)!.soldLabel, sold, AppColors.success),
               ],
             ),
           ],
@@ -776,7 +780,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  'Hurtighandlinger',
+                  AppLocalizations.of(context)!.quickActionsLabel,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -789,7 +793,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.thermostat,
-                    label: 'Temperatur',
+                    label: AppLocalizations.of(context)!.temperatureLabel,
                     color: Theme.of(context).primaryColor,
                     onTap: widget.litter.damMatingDate != null
                         ? () {
@@ -809,7 +813,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.scale,
-                    label: 'Veiing',
+                    label: AppLocalizations.of(context)!.weighingLabel,
                     color: Theme.of(context).colorScheme.secondary,
                     onTap: () => _showBulkWeightDialog(context),
                   ),
@@ -818,7 +822,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.add,
-                    label: 'Ny valp',
+                    label: AppLocalizations.of(context)!.newPuppyLabel,
                     color: AppColors.success,
                     onTap: () => _showAddPuppyDialog(),
                   ),
@@ -895,7 +899,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
-                  'Behandlingsoversikt',
+                  AppLocalizations.of(context)!.treatmentOverviewLabel,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -904,21 +908,21 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             ),
             const SizedBox(height: AppSpacing.lg),
             _buildTreatmentProgressRow(
-              'Vaksinert',
+              AppLocalizations.of(context)!.vaccinatedLabel,
               totalVaccinated,
               total,
               AppColors.success,
             ),
             const SizedBox(height: AppSpacing.sm),
             _buildTreatmentProgressRow(
-              'Avmasket',
+              AppLocalizations.of(context)!.dewormedLabel,
               totalDewormed,
               total,
               AppColors.warning,
             ),
             const SizedBox(height: AppSpacing.sm),
             _buildTreatmentProgressRow(
-              'ID-merket',
+              AppLocalizations.of(context)!.microchippedLabel,
               totalMicrochipped,
               total,
               AppColors.info,
@@ -970,25 +974,27 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     final today = DateTime(now.year, now.month, now.day);
     final dateOnly = DateTime(date.year, date.month, date.day);
     final diff = dateOnly.difference(today).inDays;
+    final l10n = AppLocalizations.of(context)!;
 
     final formatted = DateFormat('dd.MM.yyyy').format(date);
 
-    if (diff == 0) return '$formatted (i dag)';
-    if (diff == 1) return '$formatted (i morgen)';
-    if (diff == -1) return '$formatted (i går)';
+    if (diff == 0) return '$formatted ${l10n.todayParens}';
+    if (diff == 1) return '$formatted ${l10n.tomorrowParens}';
+    if (diff == -1) return '$formatted ${l10n.yesterdayParens}';
 
     return formatted;
   }
 
   String _formatAge(int weeks, int days) {
+    final l10n = AppLocalizations.of(context)!;
     if (weeks == 0) {
-      return '$days ${days == 1 ? "dag" : "dager"}';
+      return '$days ${l10n.dayUnit(days)}';
     }
     final remainingDays = days % 7;
     if (remainingDays == 0) {
-      return '$weeks ${weeks == 1 ? "uke" : "uker"}';
+      return '$weeks ${l10n.weekUnit(weeks)}';
     }
-    return '$weeks ${weeks == 1 ? "uke" : "uker"} og $remainingDays ${remainingDays == 1 ? "dag" : "dager"}';
+    return l10n.weeksAndDays(weeks, l10n.weekUnit(weeks), remainingDays, l10n.dayUnit(remainingDays));
   }
 
   Widget _buildHighlightedInfoRow(String label, String value, Color color) {
@@ -1044,7 +1050,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Sammendrag',
+                        AppLocalizations.of(context)!.summaryLabel,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       Builder(
@@ -1053,7 +1059,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                           return ElevatedButton.icon(
                             onPressed: () => _showAddPuppyDialog(),
                             icon: const Icon(Icons.add, size: 18),
-                            label: const Text('Legg til valp'),
+                            label: Text(AppLocalizations.of(context)!.addPuppyLabel),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primaryColor,
                               foregroundColor: Colors.white,
@@ -1072,19 +1078,19 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       _buildSummaryBoxWithIcon(
-                        'Totalt',
+                        AppLocalizations.of(context)!.totalLabel,
                         '${widget.litter.getTotalPuppiesCountFromPuppies()}',
                         AppColors.info,
                         Icons.pets,
                       ),
                       _buildSummaryBoxWithIcon(
-                        'Hanner',
+                        AppLocalizations.of(context)!.malesLabel,
                         '${widget.litter.getActualMalesCountFromPuppies()}',
                         AppColors.male,
                         Icons.male,
                       ),
                       _buildSummaryBoxWithIcon(
-                        'Tisper',
+                        AppLocalizations.of(context)!.femalesLabel,
                         '${widget.litter.getActualFemalesCountFromPuppies()}',
                         AppColors.female,
                         Icons.female,
@@ -1098,7 +1104,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           const SizedBox(height: AppSpacing.xl),
 
           // Puppies List
-          Text('Valpeliste', style: Theme.of(context).textTheme.titleLarge),
+          Text(AppLocalizations.of(context)!.puppyListLabel, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.sm),
           ValueListenableBuilder(
             valueListenable: Hive.box<Puppy>('puppies').listenable(),
@@ -1125,7 +1131,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         ),
                         const SizedBox(height: AppSpacing.md),
                         Text(
-                          'Ingen valper registrert ennå',
+                          AppLocalizations.of(context)!.noPuppiesRegisteredYet,
                           style: TextStyle(color: context.colors.textCaption),
                         ),
                       ],
@@ -1188,7 +1194,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                     ),
                                   ),
                                   Text(
-                                    'Farge: ${puppy.color} • Alder: ${puppy.getAgeInWeeks()} uker',
+                                    AppLocalizations.of(context)!.colorAge(puppy.color, puppy.getAgeInWeeks()),
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: context.colors.textCaption,
@@ -1229,59 +1235,59 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildDetailSection('Grunninfo', [
+                                _buildDetailSection(AppLocalizations.of(context)!.basicInfoLabel, [
                                   UIHelpers.buildDetailRow(
-                                    'Kjønn',
+                                    AppLocalizations.of(context)!.genderLabel,
                                     AppTranslations.translateGender(
                                       puppy.gender,
                                     ),
                                   ),
                                   UIHelpers.buildDetailRow(
-                                    'Fødselsdato',
+                                    AppLocalizations.of(context)!.birthDateLabel,
                                     DateFormat(
                                       'yyyy-MM-dd',
                                     ).format(puppy.dateOfBirth),
                                   ),
                                   if (puppy.birthTime != null)
                                     UIHelpers.buildDetailRow(
-                                      'Fødselsidspunkt',
+                                      AppLocalizations.of(context)!.birthTimeLabel,
                                       DateFormat(
                                         'HH:mm',
                                       ).format(puppy.birthTime!),
                                     ),
                                   if (puppy.birthWeight != null)
                                     UIHelpers.buildDetailRow(
-                                      'Fødselsvekt',
+                                      AppLocalizations.of(context)!.birthWeightLabel,
                                       '${puppy.birthWeight?.toStringAsFixed(0)} g',
                                     ),
                                 ]),
                                 const SizedBox(height: AppSpacing.lg),
-                                _buildDetailSection('Behandlinger', [
+                                _buildDetailSection(AppLocalizations.of(context)!.treatmentsLabel, [
                                   UIHelpers.buildDetailRow(
-                                    'Vaksinert',
-                                    puppy.vaccinated ? '✓ Ja' : '✗ Nei',
+                                    AppLocalizations.of(context)!.vaccinatedLabel,
+                                    puppy.vaccinated ? '✓ ${AppLocalizations.of(context)!.yesLabel}' : '✗ ${AppLocalizations.of(context)!.noLabel}',
                                   ),
                                   UIHelpers.buildDetailRow(
-                                    'Avmasket',
-                                    puppy.dewormed ? '✓ Ja' : '✗ Nei',
+                                    AppLocalizations.of(context)!.dewormedLabel,
+                                    puppy.dewormed ? '✓ ${AppLocalizations.of(context)!.yesLabel}' : '✗ ${AppLocalizations.of(context)!.noLabel}',
                                   ),
                                   UIHelpers.buildDetailRow(
-                                    'Microchippet',
-                                    puppy.microchipped ? '✓ Ja' : '✗ Nei',
+                                    AppLocalizations.of(context)!.microchippedLabel,
+                                    puppy.microchipped ? '✓ ${AppLocalizations.of(context)!.yesLabel}' : '✗ ${AppLocalizations.of(context)!.noLabel}',
                                   ),
                                 ]),
                                 const SizedBox(height: AppSpacing.lg),
                                 if (puppy.buyerName != null &&
                                     puppy.buyerName!.isNotEmpty) ...[
-                                  _buildDetailSection('Kjøper', [
+                                  _buildDetailSection(AppLocalizations.of(context)!.buyerLabel, [
                                     UIHelpers.buildDetailRow(
-                                      'Navn',
+                                      AppLocalizations.of(context)!.nameLabel,
                                       puppy.buyerName!,
                                     ),
                                     if (puppy.buyerContact != null &&
                                         puppy.buyerContact!.isNotEmpty)
                                       UIHelpers.buildDetailRow(
-                                        'Kontakt',
+                                        AppLocalizations.of(context)!.contactLabel,
                                         puppy.buyerContact!,
                                       ),
                                   ]),
@@ -1289,7 +1295,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                 ],
                                 if (puppy.notes != null &&
                                     puppy.notes!.isNotEmpty) ...[
-                                  _buildDetailSection('Notater', [
+                                  _buildDetailSection(AppLocalizations.of(context)!.notesLabel, [
                                     Text(
                                       puppy.notes!,
                                       style: const TextStyle(fontSize: 13),
@@ -1309,9 +1315,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           Icons.show_chart,
                                           size: 18,
                                         ),
-                                        label: const FittedBox(
+                                        label: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text('Vekt'),
+                                          child: Text(AppLocalizations.of(context)!.weightButton),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: context.colors.surface,
@@ -1337,9 +1343,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           Icons.assignment,
                                           size: 18,
                                         ),
-                                        label: const FittedBox(
+                                        label: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text('Plan'),
+                                          child: Text(AppLocalizations.of(context)!.planButton),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: context.colors.surface,
@@ -1373,9 +1379,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           Icons.receipt,
                                           size: 18,
                                         ),
-                                        label: const FittedBox(
+                                        label: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text('Kontrakt'),
+                                          child: Text(AppLocalizations.of(context)!.contractButton),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: context.colors.surface,
@@ -1430,9 +1436,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           _showHealthCertificateDialog(context, puppy);
                                         },
                                         icon: const Icon(Icons.medical_services, size: 18),
-                                        label: const FittedBox(
+                                        label: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text('Helseattest'),
+                                          child: Text(AppLocalizations.of(context)!.healthCertificateButton),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: AppColors.success.withValues(alpha: ThemeOpacity.low(context)),
@@ -1455,9 +1461,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           _editPuppy(context, puppy);
                                         },
                                         icon: const Icon(Icons.edit, size: 18),
-                                        label: const FittedBox(
+                                        label: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text('Rediger'),
+                                          child: Text(AppLocalizations.of(context)!.editLabel),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: context.colors.surface,
@@ -1480,9 +1486,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           _sharePuppyUpdate(context, puppy);
                                         },
                                         icon: const Icon(Icons.share, size: 18),
-                                        label: const FittedBox(
+                                        label: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text('Del'),
+                                          child: Text(AppLocalizations.of(context)!.shareButton),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: AppColors.info.withValues(alpha: ThemeOpacity.low(context)),
@@ -1528,12 +1534,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Temperaturregistrering',
+                      AppLocalizations.of(context)!.temperatureRegistrationLabel,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      'Registrer temperatur på tispa før estimert fødsel',
+                      AppLocalizations.of(context)!.registerTempBeforeBirth,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     const SizedBox(height: AppSpacing.lg),
@@ -1551,7 +1557,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                           );
                         },
                         icon: const Icon(Icons.thermostat),
-                        label: const Text('Åpne temperaturlogg'),
+                        label: Text(AppLocalizations.of(context)!.openTemperatureLogButton),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                           foregroundColor: Colors.white,
@@ -1565,7 +1571,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           const SizedBox(height: AppSpacing.xl),
 
           // Puppies Weight Tracking
-          Text('Valpenes vekt', style: Theme.of(context).textTheme.titleLarge),
+          Text(AppLocalizations.of(context)!.puppyWeightLabel, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.md),
           SizedBox(
             width: double.infinity,
@@ -1574,7 +1580,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 _showBulkWeightDialog(context);
               },
               icon: const Icon(Icons.add_circle_outline),
-              label: const Text('Registrer vekt for alle valper'),
+              label: Text(AppLocalizations.of(context)!.registerWeightForAll),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
@@ -1598,7 +1604,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ),
                   child: Center(
                     child: Text(
-                      'Ingen valper registrert',
+                      AppLocalizations.of(context)!.noPuppiesRegisteredShort,
                       style: TextStyle(color: context.colors.textCaption),
                     ),
                   ),
@@ -1785,20 +1791,20 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Rediger valp'),
+          title: Text(AppLocalizations.of(context)!.editPuppyTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 DropdownButtonFormField<String>(
                   initialValue: selectedStatus,
-                  decoration: const InputDecoration(labelText: 'Status'),
-                  items: const [
-                    DropdownMenuItem(value: 'Available', child: Text('Ledig')),
-                    DropdownMenuItem(value: 'Sold', child: Text('Solgt')),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.statusLabel),
+                  items: [
+                    DropdownMenuItem(value: 'Available', child: Text(AppLocalizations.of(context)!.availableLabel)),
+                    DropdownMenuItem(value: 'Sold', child: Text(AppLocalizations.of(context)!.soldLabel)),
                     DropdownMenuItem(
                       value: 'Reserved',
-                      child: Text('Reservert'),
+                      child: Text(AppLocalizations.of(context)!.reservedLabel),
                     ),
                   ],
                   onChanged: (value) {
@@ -1808,8 +1814,8 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: birthWeightController,
-                  decoration: const InputDecoration(
-                    labelText: 'Fødselsvekt (gram)',
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.birthWeightGramsLabel,
                   ),
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
@@ -1818,14 +1824,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: birthNotesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Fødselsmerknad',
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.birthNoteLabel,
                   ),
                   maxLines: 2,
                 ),
                 const SizedBox(height: AppSpacing.md),
                 CheckboxListTile(
-                  title: const Text('Vaksinert'),
+                  title: Text(AppLocalizations.of(context)!.vaccinatedLabel),
                   value: vaccinated,
                   onChanged: (value) {
                     setState(() => vaccinated = value ?? false);
@@ -1833,7 +1839,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   contentPadding: EdgeInsets.zero,
                 ),
                 CheckboxListTile(
-                  title: const Text('Avmasket'),
+                  title: Text(AppLocalizations.of(context)!.dewormedLabel),
                   value: dewormed,
                   onChanged: (value) {
                     setState(() => dewormed = value ?? false);
@@ -1841,7 +1847,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   contentPadding: EdgeInsets.zero,
                 ),
                 CheckboxListTile(
-                  title: const Text('Microchippet'),
+                  title: Text(AppLocalizations.of(context)!.microchippedLabel),
                   value: microchipped,
                   onChanged: (value) {
                     setState(() => microchipped = value ?? false);
@@ -1851,15 +1857,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: buyerNameController,
-                  decoration: const InputDecoration(labelText: 'Kjøpernavn'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.buyerNameLabel),
                 ),
                 TextFormField(
                   controller: buyerContactController,
-                  decoration: const InputDecoration(labelText: 'Kjøperkontakt'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.buyerContactLabel),
                 ),
                 TextFormField(
                   controller: notesController,
-                  decoration: const InputDecoration(labelText: 'Notater'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.notesFieldLabel),
                   maxLines: 3,
                 ),
               ],
@@ -1868,7 +1874,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(AppLocalizations.of(context)!.cancelLabel),
             ),
             TextButton(
               onPressed: () {
@@ -1887,9 +1893,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 Navigator.pop(context);
                 ScaffoldMessenger.of(
                   context,
-                ).showSnackBar(const SnackBar(content: Text('Valp oppdatert')));
+                ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.puppyUpdatedSnackbar)));
               },
-              child: const Text('Lagre'),
+              child: Text(AppLocalizations.of(context)!.saveLabel),
             ),
           ],
         ),
@@ -1919,7 +1925,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('${puppy.name} - Vektkurve'),
+        title: Text(AppLocalizations.of(context)!.weightCurveTitle(puppy.name)),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -1987,9 +1993,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                 return const Text('');
                               },
                             ),
-                            axisNameWidget: const Text(
-                              'Dager siden fødsel',
-                              style: TextStyle(
+                            axisNameWidget: Text(
+                              AppLocalizations.of(context)!.daysSinceBirthAxis,
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -2012,9 +2018,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                 );
                               },
                             ),
-                            axisNameWidget: const Text(
-                              'Gram',
-                              style: TextStyle(
+                            axisNameWidget: Text(
+                              AppLocalizations.of(context)!.gramAxis,
+                              style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -2067,10 +2073,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ),
                 ),
               if (displayLogs.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(AppSpacing.lg),
+                Padding(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Text(
-                    'Ingen vektmålinger eller fødselssvekt registrert',
+                    AppLocalizations.of(context)!.noWeightOrBirthWeight,
                   ),
                 )
               else
@@ -2083,9 +2089,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Registrerte målinger:',
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.registeredMeasurements,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
@@ -2118,14 +2124,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${log.weight.toStringAsFixed(0)} gram',
+                                            AppLocalizations.of(context)!.gramUnit(log.weight.toStringAsFixed(0)),
                                             style: const TextStyle(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 12,
                                             ),
                                           ),
                                           Text(
-                                            'Dag $days - ${DateFormat('dd.MM.yyyy').format(log.logDate)}',
+                                            AppLocalizations.of(context)!.dayDateLabel(days, DateFormat('dd.MM.yyyy').format(log.logDate)),
                                             style: TextStyle(
                                               fontSize: 10,
                                               color: context.colors.textDisabled,
@@ -2197,9 +2203,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                                 ScaffoldMessenger.of(
                                                   context,
                                                 ).showSnackBar(
-                                                  const SnackBar(
+                                                  SnackBar(
                                                     content: Text(
-                                                      'Vektmåling slettet',
+                                                      AppLocalizations.of(context)!.weightMeasurementDeleted,
                                                     ),
                                                   ),
                                                 );
@@ -2229,11 +2235,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               Navigator.pop(context);
               _addWeightLog(context, puppy);
             },
-            child: const Text('Legg til måling'),
+            child: Text(AppLocalizations.of(context)!.addMeasurementButton),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Lukk'),
+            child: Text(AppLocalizations.of(context)!.closeButton),
           ),
         ],
       ),
@@ -2249,13 +2255,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Legg til vektmåling'),
+          title: Text(AppLocalizations.of(context)!.addWeightMeasurementTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  title: const Text('Dato'),
+                  title: Text(AppLocalizations.of(context)!.dateLabel),
                   subtitle: Text(DateFormat('yyyy-MM-dd').format(selectedDate)),
                   onTap: () async {
                     final picked = await showDatePicker(
@@ -2278,7 +2284,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   },
                 ),
                 ListTile(
-                  title: const Text('Klokkeslett'),
+                  title: Text(AppLocalizations.of(context)!.clockLabel),
                   subtitle: Text(DateFormat('HH:mm').format(selectedDate)),
                   onTap: () async {
                     final picked = await showTimePicker(
@@ -2300,7 +2306,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Vekt (gram)'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.weightGramsLabel),
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
@@ -2308,7 +2314,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Notater'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.notesFieldLabel),
                   controller: notesController,
                   maxLines: 2,
                 ),
@@ -2318,7 +2324,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(AppLocalizations.of(context)!.cancelLabel),
             ),
             TextButton(
               onPressed: () async {
@@ -2349,11 +2355,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Vektmåling lagt til')),
+                    SnackBar(content: Text(AppLocalizations.of(context)!.weightMeasurementAddedSnackbar)),
                   );
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(AppLocalizations.of(context)!.saveLabel),
             ),
           ],
         ),
@@ -2379,13 +2385,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Registrer vekt for alle valper'),
+          title: Text(AppLocalizations.of(context)!.registerWeightForAllTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  title: const Text('Dato'),
+                  title: Text(AppLocalizations.of(context)!.dateLabel),
                   subtitle: Text(DateFormat('yyyy-MM-dd').format(selectedDate)),
                   onTap: () async {
                     final picked = await showDatePicker(
@@ -2408,7 +2414,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   },
                 ),
                 ListTile(
-                  title: const Text('Klokkeslett'),
+                  title: Text(AppLocalizations.of(context)!.clockLabel),
                   subtitle: Text(DateFormat('HH:mm').format(selectedDate)),
                   onTap: () async {
                     final picked = await showTimePicker(
@@ -2447,9 +2453,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                           ),
                           const SizedBox(height: AppSpacing.sm),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Vekt (gram)',
-                              border: OutlineInputBorder(),
+                            decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context)!.weightGramsLabel,
+                              border: const OutlineInputBorder(),
                             ),
                             keyboardType: const TextInputType.numberWithOptions(
                               decimal: true,
@@ -2458,9 +2464,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                           ),
                           const SizedBox(height: AppSpacing.sm),
                           TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Notater (valgfritt)',
-                              border: OutlineInputBorder(),
+                            decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context)!.notesOptionalLabel,
+                              border: const OutlineInputBorder(),
                             ),
                             controller: notesControllers[puppy.id],
                             maxLines: 1,
@@ -2484,7 +2490,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   controller.dispose();
                 }
               },
-              child: const Text('Avbryt'),
+              child: Text(AppLocalizations.of(context)!.cancelLabel),
             ),
             TextButton(
               onPressed: () async {
@@ -2537,11 +2543,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
                 if (context.mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('$savedCount vektmålinger lagret')),
+                    SnackBar(content: Text(AppLocalizations.of(context)!.weightMeasurementsSavedSnackbar(savedCount))),
                   );
                 }
               },
-              child: const Text('Lagre alle'),
+              child: Text(AppLocalizations.of(context)!.saveAllLabel),
             ),
           ],
         ),
@@ -2558,13 +2564,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: const Text('Rediger vektmåling'),
+          title: Text(AppLocalizations.of(context)!.editWeightMeasurementTitle),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  title: const Text('Dato'),
+                  title: Text(AppLocalizations.of(context)!.dateLabel),
                   subtitle: Text(DateFormat('yyyy-MM-dd').format(selectedDate)),
                   onTap: () async {
                     final picked = await showDatePicker(
@@ -2587,7 +2593,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   },
                 ),
                 ListTile(
-                  title: const Text('Klokkeslett'),
+                  title: Text(AppLocalizations.of(context)!.clockLabel),
                   subtitle: Text(DateFormat('HH:mm').format(selectedDate)),
                   onTap: () async {
                     final picked = await showTimePicker(
@@ -2609,7 +2615,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Vekt (gram)'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.weightGramsLabel),
                   keyboardType: const TextInputType.numberWithOptions(
                     decimal: true,
                   ),
@@ -2617,7 +2623,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 const SizedBox(height: AppSpacing.md),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Notater'),
+                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.notesFieldLabel),
                   controller: notesController,
                   maxLines: 2,
                 ),
@@ -2627,7 +2633,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(AppLocalizations.of(context)!.cancelLabel),
             ),
             TextButton(
               onPressed: () async {
@@ -2654,12 +2660,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Vektmåling oppdatert')),
+                    SnackBar(content: Text(AppLocalizations.of(context)!.weightMeasurementUpdatedSnackbar)),
                   );
                   _showWeightChart(context, puppy);
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(AppLocalizations.of(context)!.saveLabel),
             ),
           ],
         ),
@@ -2705,7 +2711,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, dialogSetState) => AlertDialog(
-          title: Text('${puppy.name} - Behandlingsplan'),
+          title: Text(AppLocalizations.of(context)!.treatmentPlanTitle(puppy.name)),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -2714,15 +2720,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 // Ormekur Section
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                  child: const Text(
-                    'Ormekur:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  child: Text(
+                    AppLocalizations.of(context)!.dewormingLabel,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
                 _buildTreatmentTile(
                   context,
                   'ormekur 1',
-                  '1. ormekur (ca. 2 uker)',
+                  AppLocalizations.of(context)!.deworming1,
                   wormerDate1,
                   wormerDone1,
                   (date) => dialogSetState(() => wormerDate1 = date),
@@ -2731,7 +2737,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 _buildTreatmentTile(
                   context,
                   'ormekur 2',
-                  '2. ormekur (ca. 4 uker)',
+                  AppLocalizations.of(context)!.deworming2,
                   wormerDate2,
                   wormerDone2,
                   (date) => dialogSetState(() => wormerDate2 = date),
@@ -2740,7 +2746,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 _buildTreatmentTile(
                   context,
                   'ormekur 3',
-                  '3. ormekur (ca. 6 uker)',
+                  AppLocalizations.of(context)!.deworming3,
                   wormerDate3,
                   wormerDone3,
                   (date) => dialogSetState(() => wormerDate3 = date),
@@ -2751,15 +2757,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 // Vaksiner Section
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                  child: const Text(
-                    'Vaksiner:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  child: Text(
+                    AppLocalizations.of(context)!.vaccinesLabel,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
                 _buildTreatmentTile(
                   context,
                   'vaksin 1',
-                  '1. vaksinering (8 uker)',
+                  AppLocalizations.of(context)!.vaccine1,
                   vaccineDate1,
                   vaccineDone1,
                   (date) => dialogSetState(() => vaccineDate1 = date),
@@ -2768,7 +2774,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 _buildTreatmentTile(
                   context,
                   'vaksin 2',
-                  '2. vaksinering (12 uker)',
+                  AppLocalizations.of(context)!.vaccine2,
                   vaccineDate2,
                   vaccineDone2,
                   (date) => dialogSetState(() => vaccineDate2 = date),
@@ -2777,7 +2783,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 _buildTreatmentTile(
                   context,
                   'vaksin 3',
-                  '3. vaksinering (16 uker)',
+                  AppLocalizations.of(context)!.vaccine3,
                   vaccineDate3,
                   vaccineDone3,
                   (date) => dialogSetState(() => vaccineDate3 = date),
@@ -2788,15 +2794,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 // Annet Section
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                  child: const Text(
-                    'Annet:',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  child: Text(
+                    AppLocalizations.of(context)!.otherLabel,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
                 _buildTreatmentTile(
                   context,
                   'microchip',
-                  'ID-merking',
+                  AppLocalizations.of(context)!.idMarkingLabel,
                   microchipDate,
                   microchipDone,
                   (date) => dialogSetState(() => microchipDate = date),
@@ -2807,7 +2813,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                     child: TextField(
                       decoration: InputDecoration(
-                        labelText: 'ID-merkenummer',
+                        labelText: AppLocalizations.of(context)!.idMarkingNumberLabel,
                         border: OutlineInputBorder(
                           borderRadius: AppRadius.lgAll,
                         ),
@@ -2822,7 +2828,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(AppLocalizations.of(context)!.cancelLabel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -2903,15 +2909,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text(
-                        'Behandlingsplan oppdatert og varsler planlagt',
+                        AppLocalizations.of(context)!.treatmentPlanUpdatedSnackbar,
                       ),
                     ),
                   );
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(AppLocalizations.of(context)!.saveLabel),
             ),
           ],
         ),
@@ -2962,7 +2968,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               child: Text(
                 selectedDate != null
                     ? DateFormat('dd.MM.yyyy').format(selectedDate)
-                    : 'Velg dato',
+                    : AppLocalizations.of(context)!.selectDateLabel,
                 style: TextStyle(
                   color: selectedDate != null ? context.colors.textPrimary : context.colors.textCaption,
                 ),
@@ -2998,7 +3004,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
       // Show download notification in status bar with file path
       await NotificationService().showDownloadNotification(
-        title: 'PDF nedlastet',
+        title: AppLocalizations.of(context)!.pdfDownloadedTitle,
         fileName: 'valp_${puppy.name}.pdf',
         filePath: file.path,
       );
@@ -3006,7 +3012,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('PDF lagret:\n${file.path}'),
+            content: Text(AppLocalizations.of(context)!.pdfSavedSnackbar(file.path)),
             duration: const Duration(seconds: 4),
           ),
         );
@@ -3015,7 +3021,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       if (context.mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('Feil ved PDF-generering: $e')));
+        ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.errorGeneratingPdf(e.toString()))));
       }
     }
   }
@@ -3028,15 +3034,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     
     // Helsesjekk-verdier med merknader
     final healthChecks = <String, Map<String, dynamic>>{
-      'generalHealth': {'ok': true, 'note': '', 'label': 'Allmenntilstand'},
-      'eyes': {'ok': true, 'note': '', 'label': 'Øyne'},
-      'ears': {'ok': true, 'note': '', 'label': 'Ører'},
-      'heart': {'ok': true, 'note': '', 'label': 'Hjerte'},
-      'lungs': {'ok': true, 'note': '', 'label': 'Lunger'},
-      'skin': {'ok': true, 'note': '', 'label': 'Hud/pels'},
-      'teeth': {'ok': true, 'note': '', 'label': 'Tenner/munn'},
-      'abdomen': {'ok': true, 'note': '', 'label': 'Buk (abdomen)'},
-      'limbs': {'ok': true, 'note': '', 'label': 'Lemmer/ledd'},
+      'generalHealth': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.generalConditionLabel},
+      'eyes': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.eyesLabel},
+      'ears': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.earsLabel},
+      'heart': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.heartLabel},
+      'lungs': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.lungsLabel},
+      'skin': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.skinCoatLabel},
+      'teeth': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.teethMouthLabel},
+      'abdomen': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.abdomenLabel},
+      'limbs': {'ok': true, 'note': '', 'label': AppLocalizations.of(context)!.limbsJointsLabel},
     };
     
     // Controllers for notes
@@ -3053,7 +3059,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           children: [
             Icon(Icons.medical_services, color: AppColors.success),
             const SizedBox(width: AppSpacing.sm),
-            const Expanded(child: Text('Helseattest')),
+            Expanded(child: Text(AppLocalizations.of(context)!.healthCertificateTitle)),
           ],
         ),
         content: SizedBox(
@@ -3064,7 +3070,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Generer helseattest for ${puppy.name}',
+                AppLocalizations.of(context)!.generateHealthCertFor(puppy.name),
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -3086,7 +3092,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         const SizedBox(width: AppSpacing.sm),
                         Expanded(
                           child: Text(
-                            'Helseundersøkelse',
+                            AppLocalizations.of(context)!.healthExaminationLabel,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: AppColors.success,
@@ -3097,7 +3103,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      'Trykk på et punkt for å legge til merknad',
+                      AppLocalizations.of(context)!.tapToAddNote,
                       style: TextStyle(fontSize: 11, color: context.colors.textCaption),
                     ),
                     const SizedBox(height: AppSpacing.md),
@@ -3120,7 +3126,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               const SizedBox(height: AppSpacing.lg),
               
               Text(
-                'Veterinærinformasjon (valgfritt):',
+                AppLocalizations.of(context)!.veterinaryInfoOptional,
                 style: TextStyle(
                   fontSize: 12,
                   color: context.colors.textDisabled,
@@ -3129,30 +3135,30 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               const SizedBox(height: AppSpacing.sm),
               TextField(
                 controller: vetNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Veterinærens navn',
-                  prefixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.vetNameLabel,
+                  prefixIcon: const Icon(Icons.person),
+                  border: const OutlineInputBorder(),
                   isDense: true,
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: vetClinicController,
-                decoration: const InputDecoration(
-                  labelText: 'Klinikk',
-                  prefixIcon: Icon(Icons.local_hospital),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.clinicLabel,
+                  prefixIcon: const Icon(Icons.local_hospital),
+                  border: const OutlineInputBorder(),
                   isDense: true,
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: vetPhoneController,
-                decoration: const InputDecoration(
-                  labelText: 'Telefon',
-                  prefixIcon: Icon(Icons.phone),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.phoneLabel,
+                  prefixIcon: const Icon(Icons.phone),
+                  border: const OutlineInputBorder(),
                   isDense: true,
                 ),
                 keyboardType: TextInputType.phone,
@@ -3160,10 +3166,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: notesController,
-                decoration: const InputDecoration(
-                  labelText: 'Generelle merknader',
-                  prefixIcon: Icon(Icons.note),
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.generalNotesLabel,
+                  prefixIcon: const Icon(Icons.note),
+                  border: const OutlineInputBorder(),
                   isDense: true,
                 ),
                 maxLines: 2,
@@ -3175,7 +3181,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(AppLocalizations.of(context)!.cancelLabel),
           ),
           ElevatedButton.icon(
             onPressed: () {
@@ -3203,7 +3209,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               );
             },
             icon: const Icon(Icons.picture_as_pdf),
-            label: const Text('Generer PDF'),
+            label: Text(AppLocalizations.of(context)!.generatePdfButton),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.success,
               foregroundColor: Colors.white,
@@ -3261,7 +3267,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             child: TextField(
               controller: noteController,
               decoration: InputDecoration(
-                hintText: 'Legg til merknad for $label...',
+                hintText: AppLocalizations.of(context)!.addNoteFor(label),
                 hintStyle: TextStyle(fontSize: 12, color: context.colors.textDisabled),
                 border: OutlineInputBorder(
                   borderRadius: AppRadius.mdAll,
@@ -3348,7 +3354,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
       // Show download notification
       await NotificationService().showDownloadNotification(
-        title: 'Helseattest nedlastet',
+        title: AppLocalizations.of(context)!.healthCertificateDownloaded,
         fileName: 'helseattest_${puppy.name}.pdf',
         filePath: file.path,
       );
@@ -3356,7 +3362,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Helseattest lagret:\n${file.path}'),
+            content: Text(AppLocalizations.of(context)!.healthCertSavedSnackbar(file.path)),
             duration: const Duration(seconds: 4),
             backgroundColor: AppColors.success,
           ),
@@ -3366,7 +3372,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Feil ved generering av helseattest: $e'),
+            content: Text(AppLocalizations.of(context)!.errorGeneratingHealthCert(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -3388,7 +3394,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             children: [
               const Icon(Icons.share, color: AppColors.info),
               const SizedBox(width: AppSpacing.sm),
-              const Text('Del oppdatering'),
+              Text(AppLocalizations.of(context)!.shareUpdateTitle),
             ],
           ),
           content: SingleChildScrollView(
@@ -3397,30 +3403,30 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Del oppdatering om ${puppy.name} med kjøper',
+                  AppLocalizations.of(context)!.shareUpdateAbout(puppy.name),
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
-                  'Inkluder i meldingen:',
+                  AppLocalizations.of(context)!.includeInMessage,
                   style: TextStyle(fontSize: 12, color: context.colors.textDisabled),
                 ),
                 CheckboxListTile(
-                  title: const Text('Alder'),
+                  title: Text(AppLocalizations.of(context)!.ageCheckbox),
                   value: includeAge,
                   onChanged: (v) => setState(() => includeAge = v ?? true),
                   contentPadding: EdgeInsets.zero,
                   dense: true,
                 ),
                 CheckboxListTile(
-                  title: const Text('Vekt'),
+                  title: Text(AppLocalizations.of(context)!.weightCheckbox),
                   value: includeWeight,
                   onChanged: (v) => setState(() => includeWeight = v ?? true),
                   contentPadding: EdgeInsets.zero,
                   dense: true,
                 ),
                 CheckboxListTile(
-                  title: const Text('Behandlinger'),
+                  title: Text(AppLocalizations.of(context)!.treatmentsCheckbox),
                   value: includeTreatments,
                   onChanged: (v) => setState(() => includeTreatments = v ?? true),
                   contentPadding: EdgeInsets.zero,
@@ -3429,10 +3435,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: messageController,
-                  decoration: const InputDecoration(
-                    labelText: 'Egen melding (valgfritt)',
-                    hintText: 'Skriv en personlig hilsen...',
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.customMessageOptional,
+                    hintText: AppLocalizations.of(context)!.personalGreetingHint,
+                    border: const OutlineInputBorder(),
                   ),
                   maxLines: 3,
                 ),
@@ -3442,7 +3448,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(AppLocalizations.of(context)!.cancelLabel),
             ),
             ElevatedButton.icon(
               onPressed: () {
@@ -3464,11 +3470,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   context,
                   message: message,
                   phoneNumber: puppy.buyerContact,
-                  subject: 'Oppdatering om ${puppy.name}',
+                  subject: AppLocalizations.of(context)!.updateAbout(puppy.name),
                 );
               },
               icon: const Icon(Icons.send),
-              label: const Text('Del'),
+              label: Text(AppLocalizations.of(context)!.shareButtonLabel),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.info,
                 foregroundColor: Colors.white,
@@ -3494,31 +3500,31 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rediger kull'),
+        title: Text(AppLocalizations.of(context)!.editLitterTitle),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
                 controller: damController,
-                decoration: const InputDecoration(labelText: 'Mor (Tispe) *'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.damFemaleLabel),
               ),
               const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: sireController,
-                decoration: const InputDecoration(
-                  labelText: 'Far (Hannhund) *',
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.sireMaleLabel,
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: breedController,
-                decoration: const InputDecoration(labelText: 'Rase'),
+                decoration: InputDecoration(labelText: AppLocalizations.of(context)!.breedLabel),
               ),
               const SizedBox(height: AppSpacing.xl),
-              const Text(
-                'Antall valper (basert på registrerte valper):',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Text(
+                AppLocalizations.of(context)!.puppyCountBasedOnRegistered,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: AppSpacing.md),
               Row(
@@ -3526,7 +3532,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   Expanded(
                     child: Column(
                       children: [
-                        const Text('Hanner'),
+                        Text(AppLocalizations.of(context)!.malesLabel),
                         const SizedBox(height: AppSpacing.sm),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -3548,7 +3554,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   Expanded(
                     child: Column(
                       children: [
-                        const Text('Tisper'),
+                        Text(AppLocalizations.of(context)!.femalesLabel),
                         const SizedBox(height: AppSpacing.sm),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -3575,9 +3581,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   color: AppColors.info.withValues(alpha: ThemeOpacity.low(context)),
                   borderRadius: AppRadius.xsAll,
                 ),
-                child: const Text(
-                  'Disse tallene oppdateres automatisk når du legger til eller sletter valper.',
-                  style: TextStyle(fontSize: 12),
+                child: Text(
+                  AppLocalizations.of(context)!.updatesAutomatically,
+                  style: const TextStyle(fontSize: 12),
                 ),
               ),
             ],
@@ -3586,13 +3592,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(AppLocalizations.of(context)!.cancelLabel),
           ),
           TextButton(
             onPressed: () {
               if (damController.text.isEmpty || sireController.text.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Mor og Far er påkrevd')),
+                  SnackBar(content: Text(AppLocalizations.of(context)!.damAndSireRequired)),
                 );
                 return;
               }
@@ -3605,9 +3611,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               Navigator.pop(context);
               ScaffoldMessenger.of(
                 context,
-              ).showSnackBar(const SnackBar(content: Text('Kull oppdatert')));
+              ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.litterUpdatedSnackbar)));
             },
-            child: const Text('Lagre'),
+            child: Text(AppLocalizations.of(context)!.saveLabel),
           ),
         ],
       ),
@@ -3618,14 +3624,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett kull?'),
+        title: Text(AppLocalizations.of(context)!.deleteLitterTitle),
         content: Text(
-          'Er du sikker på at du vil slette kullet fra ${widget.litter.damName} x ${widget.litter.sireName}?\n\nOBS: Dette vil også slette alle valper i kullet!',
+          AppLocalizations.of(context)!.deleteLitterConfirmMessage(widget.litter.damName, widget.litter.sireName),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(AppLocalizations.of(context)!.cancelLabel),
           ),
           TextButton(
             onPressed: () async {
@@ -3673,10 +3679,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
                 ScaffoldMessenger.of(
                   context,
-                ).showSnackBar(const SnackBar(content: Text('Kull slettet')));
+                ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.litterDeletedSnackbar)));
               }
             },
-            child: const Text('Slett'),
+            child: Text(AppLocalizations.of(context)!.deleteLabel),
           ),
         ],
       ),

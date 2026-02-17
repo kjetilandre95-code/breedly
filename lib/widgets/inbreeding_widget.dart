@@ -583,9 +583,9 @@ class _InbreedingComparisonScreenState
             ),
           ),
           if (_options.isEmpty && _selectedFemaleId != null)
-            const Expanded(
+            Expanded(
               child: Center(
-                child: Text('Ingen hannhunder registrert'),
+                child: Text(l10n.noMalesRegistered),
               ),
             )
           else

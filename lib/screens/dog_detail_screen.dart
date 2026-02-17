@@ -20,6 +20,7 @@ import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/utils/logger.dart';
 import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 /// Extra bottom padding for the list to clear FABs / bottom navigation.
 const _kListBottomPadding = 88.0;
@@ -36,6 +37,7 @@ class DogDetailScreen extends StatefulWidget {
 class _DogDetailScreenState extends State<DogDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final dogBox = Hive.box<Dog>('dogs');
     final dam = widget.dog.damId != null
         ? dogBox.values.firstWhere((d) => d.id == widget.dog.damId, orElse: () => Dog(
@@ -66,7 +68,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.account_tree_rounded),
-            tooltip: 'Stamtavle',
+            tooltip: l10n.pedigree,
             onPressed: () {
               Navigator.push(
                 context,
@@ -78,7 +80,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.edit_rounded),
-            tooltip: 'Rediger',
+            tooltip: l10n.edit,
             onPressed: () async {
               final result = await Navigator.push(
                 context,
@@ -93,7 +95,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.delete_outline, color: AppColors.error),
-            tooltip: 'Slett hund',
+            tooltip: l10n.deleteDog,
             onPressed: _confirmDeleteDog,
           ),
         ],
@@ -189,7 +191,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                         IconButton(
                           icon: const Icon(Icons.add),
                           onPressed: () => _showAddHeatCycleDialog(),
-                          tooltip: 'Legg til løpetidsdato',
+                          tooltip: l10n.addHeatDate,
                         ),
                       ],
                     ),
@@ -481,8 +483,8 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       leading: const Icon(Icons.pets),
-                      title: const Text('Avlskontrakt'),
-                      subtitle: const Text('Opprett kontrakt for paringstjenester'),
+                      title: Text(l10n.breedingContract),
+                      subtitle: Text(l10n.createBreedingContract),
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () {
                         Navigator.push(
@@ -499,8 +501,8 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.people),
-                    title: const Text('Medeieravtale'),
-                    subtitle: const Text('Opprett avtale om delt eierskap'),
+                    title: Text(l10n.coOwnershipAgreement),
+                    subtitle: Text(l10n.createCoOwnershipAgreement),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       Navigator.push(
@@ -517,8 +519,8 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.home_outlined),
-                    title: const Text('Fôrvertsavtale'),
-                    subtitle: const Text('Opprett avtale om fôrvertskap'),
+                    title: Text(l10n.fosterAgreement),
+                    subtitle: Text(l10n.createFosterAgreement),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
                       Navigator.push(
@@ -644,6 +646,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
 
   void _showAddHeatCycleDialog() async {
     if (!mounted) return;
+    final l10n = AppLocalizations.of(context)!;
     
     final picked = await showDatePicker(
       context: context,
@@ -676,25 +679,25 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
         setState(() {});
         
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Løpetidsdato lagt til')),
+          SnackBar(content: Text(l10n.heatDateAdded)),
         );
       }
     }
   }
 
   void _confirmDeleteDog() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Slett hund'),
+        title: Text(l10n.deleteDog),
         content: Text(
-          'Er du sikker på at du vil slette «${widget.dog.name}»?\n\n'
-          'Dette fjerner hunden og alle tilknyttede data. Handlingen kan ikke angres.',
+          l10n.confirmDeleteDogMessage(widget.dog.name),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
@@ -702,7 +705,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               Navigator.pop(ctx); // Close dialog
               await _deleteDog();
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.white)),
+            child: Text(l10n.delete, style: const TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -711,6 +714,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
 
   Future<void> _deleteDog() async {
     final dog = widget.dog;
+    final l10n = AppLocalizations.of(context)!;
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
 
@@ -734,7 +738,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
 
       messenger.showSnackBar(
         SnackBar(
-          content: Text('«${dog.name}» ble slettet'),
+          content: Text(l10n.dogWasDeleted(dog.name)),
           backgroundColor: AppColors.success,
         ),
       );
@@ -744,7 +748,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Kunne ikke slette: $e'),
+          content: Text(l10n.couldNotDelete(e.toString())),
           backgroundColor: AppColors.error,
         ),
       );
@@ -752,15 +756,16 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
   }
 
   void _deleteHeatCycle(int index) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett løpetidsdato'),
-        content: const Text('Er du sikker på at du vil slette denne løpetidsdatoen?'),
+        title: Text(l10n.deleteHeatCycle),
+        content: Text(l10n.deleteHeatCycleConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -791,12 +796,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   setState(() {});
                   
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Løpetidsdato slettet')),
+                    SnackBar(content: Text(l10n.heatDateDeleted)),
                   );
                 }
               }
             },
-            child: const Text('Slett'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -823,6 +828,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
   }
 
   List<Widget> _buildHeatCycleWidgets() {
+    final l10n = AppLocalizations.of(context)!;
     final widgets = <Widget>[];
 
     // Show estimated next heat cycle
@@ -928,7 +934,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               IconButton(
                 icon: const Icon(Icons.delete, size: 20),
                 onPressed: () => _deleteHeatCycle(index),
-                tooltip: 'Slett løpetid',
+                tooltip: l10n.deleteHeatCycle,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               ),
@@ -1447,9 +1453,11 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
 
     showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Legg til championat'),
+          title: Text(l10n.addChampionship),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -1491,7 +1499,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                       setDialogState(() => useCustom = true);
                     },
                     icon: const Icon(Icons.add),
-                    label: const Text('Skriv inn annen tittel'),
+                    label: Text(l10n.enterOtherTitle),
                   ),
                 ],
                 if (useCustom || available.isEmpty) ...[
@@ -1515,7 +1523,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                         setDialogState(() => useCustom = false);
                       },
                       icon: const Icon(Icons.list),
-                      label: const Text('Velg fra liste'),
+                      label: Text(l10n.selectFromList),
                     ),
                   ],
                 ],
@@ -1525,7 +1533,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -1561,34 +1569,36 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     }
                   } else {
                     scaffoldMessenger.showSnackBar(
-                      const SnackBar(content: Text('Denne tittelen er allerede registrert')),
+                      SnackBar(content: Text(l10n.titleAlreadyRegistered)),
                     );
                   }
                 }
               },
-              child: const Text('Legg til'),
+              child: Text(l10n.add),
             ),
           ],
         ),
-      ),
+      );
+      },
     );
   }
 
   Future<void> _removeChampionship(String championship) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Fjern championat'),
-        content: Text('Er du sikker på at du vil fjerne "$championship"?'),
+        title: Text(l10n.removeChampionship),
+        content: Text(l10n.confirmRemoveChampionship(championship)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('Fjern'),
+            child: Text(l10n.remove),
           ),
         ],
       ),
@@ -1621,6 +1631,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
   }
 
   Widget _buildMatingsCard() {
+    final l10n = AppLocalizations.of(context)!;
     final matingsBox = Hive.box<Mating>('matings');
     final matings = matingsBox.values
         .where((m) => m.sireId == widget.dog.id)
@@ -1660,7 +1671,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                 IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: () => _showAddMatingDialog(),
-                  tooltip: 'Legg til parring',
+                  tooltip: l10n.addMating,
                 ),
               ],
             ),
@@ -1732,7 +1743,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                               IconButton(
                                 icon: const Icon(Icons.edit, size: 20),
                                 onPressed: () => _showEditMatingDialog(mating),
-                                tooltip: 'Rediger parring',
+                                tooltip: l10n.editMating,
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                               ),
@@ -1740,7 +1751,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                               IconButton(
                                 icon: const Icon(Icons.delete, size: 20),
                                 onPressed: () => _deleteMating(mating),
-                                tooltip: 'Slett parring',
+                                tooltip: l10n.deleteMating,
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                               ),
@@ -1769,9 +1780,11 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
 
     await showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Legg til parring'),
+          title: Text(l10n.addMating),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -1790,9 +1803,9 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     hintText: 'Velg tispe',
                   ),
                   items: [
-                    const DropdownMenuItem<Dog>(
+                    DropdownMenuItem<Dog>(
                       value: null,
-                      child: Text('Ekstern tispe'),
+                      child: Text(l10n.externalDam),
                     ),
                     ...females.map((dog) => DropdownMenuItem<Dog>(
                           value: dog,
@@ -1879,7 +1892,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -1911,16 +1924,17 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   if (mounted) {
                     setState(() {});
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Parring lagt til')),
+                      SnackBar(content: Text(l10n.matingAdded)),
                     );
                   }
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(l10n.save),
             ),
           ],
         ),
-      ),
+      );
+      },
     );
   }
 
@@ -1940,9 +1954,11 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
 
     await showDialog(
       context: context,
-      builder: (context) => StatefulBuilder(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('Rediger parring'),
+          title: Text(l10n.editMating),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -1961,9 +1977,9 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     hintText: 'Velg tispe',
                   ),
                   items: [
-                    const DropdownMenuItem<Dog?>(
+                    DropdownMenuItem<Dog?>(
                       value: null,
-                      child: Text('Ekstern tispe'),
+                      child: Text(l10n.externalDam),
                     ),
                     ...females.map((dog) => DropdownMenuItem<Dog?>(
                           value: dog,
@@ -2048,7 +2064,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(l10n.cancel),
             ),
             TextButton(
               onPressed: () async {
@@ -2075,29 +2091,31 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   if (mounted) {
                     setState(() {});
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Parring oppdatert')),
+                      SnackBar(content: Text(l10n.matingUpdated)),
                     );
                   }
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(l10n.save),
             ),
           ],
         ),
-      ),
+      );
+      },
     );
   }
 
   void _deleteMating(Mating mating) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett parring'),
-        content: const Text('Er du sikker på at du vil slette denne parringen?'),
+        title: Text(l10n.deleteMating),
+        content: Text(l10n.confirmDeleteMating),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -2117,12 +2135,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                 if (mounted) {
                   setState(() {});
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Parring slettet')),
+                    SnackBar(content: Text(l10n.matingDeleted)),
                   );
                 }
               }
             },
-            child: const Text('Slett'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

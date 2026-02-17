@@ -201,11 +201,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                   _buildChip(result.showClass, AppColors.info),
                   _buildChip(result.quality, _getQualityColor(result.quality)),
                   if (result.classPlacement != null)
-                    _buildChip('Kl: ${result.classPlacement}', AppColors.accent2),
+                    _buildChip('${AppLocalizations.of(context)?.classAbbrev ?? 'Kl'}: ${result.classPlacement}', AppColors.accent2),
                   if (result.hasCK)
                     _buildChip('CK', AppColors.success, icon: Icons.check_circle),
                   if (result.bestOfSexPlacement != null)
-                    _buildChip('BH/BT: ${result.bestOfSexPlacement}', AppColors.accent1),
+                    _buildChip('${AppLocalizations.of(context)?.bestOfSexAbbrev ?? 'BH/BT'}: ${result.bestOfSexPlacement}', AppColors.accent1),
                   if (result.placement != null)
                     _buildChip(result.placement!, _getPlacementColor(result.placement!)),
                   if (result.certificates != null)
@@ -655,7 +655,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
               const Divider(height: AppSpacing.xxl),
               Center(
                 child: Text(
-                  'Ingen Cert/Cacib ennå',
+                  AppLocalizations.of(context)?.noCertCacibYet ?? 'Ingen Cert/Cacib ennå',
                   style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
@@ -921,7 +921,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                           ),
                         ),
                         Text(
-                          '${judge.showCount} utstilling${judge.showCount != 1 ? 'er' : ''} • ${judge.excellentCount} Excellent • ${judge.ckCount} CK',
+                          AppLocalizations.of(context)?.judgeStatsSummary(judge.showCount, judge.excellentCount, judge.ckCount) ?? '${judge.showCount} utstillinger • ${judge.excellentCount} Excellent • ${judge.ckCount} CK',
                           style: TextStyle(
                             color: context.colors.textMuted,
                             fontSize: 13,
@@ -1229,7 +1229,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                       ),
                       IconButton(
                         icon: Icon(Icons.share_outlined, color: AppColors.info),
-                        tooltip: 'Del resultatkort',
+                        tooltip: AppLocalizations.of(context)?.shareResultCard ?? 'Del resultatkort',
                         onPressed: () {
                           final nav = Navigator.of(context, rootNavigator: true);
                           Navigator.pop(context);
@@ -1282,11 +1282,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                       _buildChip(result.showClass, AppColors.info),
                       _buildChip(result.quality, _getQualityColor(result.quality)),
                       if (result.classPlacement != null)
-                        _buildChip('Kl: ${result.classPlacement}', AppColors.accent2),
+                        _buildChip('${AppLocalizations.of(context)?.classAbbrev ?? 'Kl'}: ${result.classPlacement}', AppColors.accent2),
                       if (result.hasCK)
                         _buildChip('CK', AppColors.success, icon: Icons.check_circle),
                       if (result.bestOfSexPlacement != null)
-                        _buildChip('${widget.dog.gender == 'Male' ? 'BHK' : 'BTK'}: ${result.bestOfSexPlacement}', AppColors.accent1),
+                        _buildChip('${widget.dog.gender == 'Male' ? (AppLocalizations.of(context)?.bestMaleAbbrev ?? 'BHK') : (AppLocalizations.of(context)?.bestFemaleAbbrev ?? 'BTK')}: ${result.bestOfSexPlacement}', AppColors.accent1),
                       if (result.placement != null)
                         _buildChip(result.placement!, _getPlacementColor(result.placement!)),
                       if (result.certificates != null)
@@ -1294,11 +1294,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                       if (result.groupResult != null)
                         _buildChip(result.groupResult!, AppColors.warning, icon: Icons.groups),
                       if (result.groupJudge != null && result.groupJudge!.isNotEmpty)
-                        _buildChip('Gruppedommer: ${result.groupJudge!}', AppColors.accent3, icon: Icons.person_outline),
+                        _buildChip(AppLocalizations.of(context)?.groupJudgeWithName(result.groupJudge!) ?? 'Gruppedommer: ${result.groupJudge!}', AppColors.accent3, icon: Icons.person_outline),
                       if (result.bisResult != null)
                         _buildChip(result.bisResult!, AppColors.warning, icon: Icons.emoji_events),
                       if (result.bisJudge != null && result.bisJudge!.isNotEmpty)
-                        _buildChip('BIS-dommer: ${result.bisJudge!}', AppColors.warning, icon: Icons.person_outline),
+                        _buildChip(AppLocalizations.of(context)?.bisJudgeWithName(result.bisJudge!) ?? 'BIS-dommer: ${result.bisJudge!}', AppColors.warning, icon: Icons.person_outline),
                     ],
                   ),
                   if (result.critique != null && result.critique!.isNotEmpty) ...[
@@ -1855,11 +1855,11 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     isExpanded: true,
                     initialValue: _selectedCountry,
                     decoration: InputDecoration(
-                      labelText: 'Land',
+                      labelText: localizations?.country ?? 'Land',
                       border: const OutlineInputBorder(),
                       helperText: _isNordicCountry 
-                          ? 'CK-systemet er tilgjengelig' 
-                          : 'CK er kun tilgjengelig i Norden',
+                          ? (localizations?.ckSystemAvailable ?? 'CK-systemet er tilgjengelig')
+                          : (localizations?.ckOnlyNordic ?? 'CK er kun tilgjengelig i Norden'),
                     ),
                     items: _countries.map((country) => DropdownMenuItem(
                       value: country,
@@ -1927,7 +1927,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       labelText: '${localizations?.quality ?? 'Premiegrad'} *',
                       border: const OutlineInputBorder(),
                       helperText: _isQualityLocking 
-                          ? 'Ingen plassering eller sertifikater tilgjengelig med denne premiegraden' 
+                          ? (localizations?.noPlacementWithQuality ?? 'Ingen plassering eller sertifikater tilgjengelig med denne premiegraden')
                           : null,
                       helperStyle: TextStyle(color: AppColors.warning),
                     ),
@@ -1995,19 +1995,19 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       ),
                       child: CheckboxListTile(
                         title: Text(
-                          'HP (Hederspris / Hopeful Puppy)',
+                          localizations?.hpAward ?? 'HP (Hederspris / Hopeful Puppy)',
                           style: TextStyle(
                             color: _quality == 'Særdeles lovende' ? null : context.colors.textDisabled,
                           ),
                         ),
                         subtitle: _quality != 'Særdeles lovende'
                             ? Text(
-                                'Krever Særdeles lovende',
+                                localizations?.requiresHighlyPromising ?? 'Krever Særdeles lovende',
                                 style: TextStyle(color: context.colors.textDisabled, fontSize: 12),
                               )
-                            : const Text(
-                                'Kvalifiserer for beste hannvalp/tispevalp',
-                                style: TextStyle(fontSize: 12),
+                            : Text(
+                                localizations?.qualifiesForBestPuppy ?? 'Kvalifiserer for beste hannvalp/tispevalp',
+                                style: const TextStyle(fontSize: 12),
                               ),
                         value: _hasCK, // Gjenbruker _hasCK for HP
                         onChanged: _quality == 'Særdeles lovende'
@@ -2041,7 +2041,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       ),
                       subtitle: !_isCKAvailable
                           ? Text(
-                              'Krever Excellent',
+                              localizations?.requiresExcellent ?? 'Krever Excellent',
                               style: TextStyle(color: context.colors.textDisabled, fontSize: 12),
                             )
                           : null,
@@ -2064,22 +2064,22 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     decoration: InputDecoration(
                       labelText: _isPuppyClass
                           ? (widget.dogGender == 'Male' 
-                              ? 'Beste hannvalp'
-                              : 'Beste tispevalp')
+                              ? (localizations?.bestMalePuppy ?? 'Beste hannvalp')
+                              : (localizations?.bestFemalePuppy ?? 'Beste tispevalp'))
                           : (widget.dogGender == 'Male' 
                               ? (localizations?.bestMalePlacement ?? 'Plassering beste hannhund (BHK)')
                               : (localizations?.bestFemalePlacement ?? 'Plassering beste tispe (BTK)')),
                       border: const OutlineInputBorder(),
                       helperText: _isPuppyClass
-                          ? (_hasCK && _classPlacement == '1' ? 'Kvalifisert for BIR/BIM Valp' : 'Krever 1. plass med HP for å delta')
+                          ? (_hasCK && _classPlacement == '1' ? (localizations?.qualifiedForBIRBIMPuppy ?? 'Kvalifisert for BIR/BIM Valp') : (localizations?.requiresFirstWithHP ?? 'Krever 1. plass med HP for å delta'))
                           : (_isNordicCountry && _bestOfSexPlacement != '1'
-                              ? 'BHK/BTK 1 kreves for BIR/BIM i Norden'
+                              ? (localizations?.requiresBHKBTKFirstNordic ?? 'BHK/BTK 1 kreves for BIR/BIM i Norden')
                               : null),
                     ),
                     items: _isPuppyClass
                         ? [
                             DropdownMenuItem(value: null, child: Text(localizations?.unplaced ?? 'Ingen')),
-                            const DropdownMenuItem(value: '1', child: Text('Ja - Vant')),
+                            DropdownMenuItem(value: '1', child: Text(localizations?.yesWon ?? 'Ja - Vant')),
                           ]
                         : [
                             DropdownMenuItem(value: null, child: Text(localizations?.unplaced ?? 'Ingen')),
@@ -2108,11 +2108,11 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     isExpanded: true,
                     initialValue: _placement,
                     decoration: InputDecoration(
-                      labelText: _isPuppyClass ? 'BIR/BIM Valp' : 'BIR/BIM',
+                      labelText: _isPuppyClass ? (localizations?.birBimPuppy ?? 'BIR/BIM Valp') : 'BIR/BIM',
                       border: const OutlineInputBorder(),
                       helperText: _isPuppyClass
-                          ? (_bestOfSexPlacement != '1' ? 'Krever å være beste hannvalp/tispevalp' : null)
-                          : (!_isBIRBIMAvailable ? 'Krever BHK/BTK 1. plass i Norden' : null),
+                          ? (_bestOfSexPlacement != '1' ? (localizations?.requiresBestPuppy ?? 'Krever å være beste hannvalp/tispevalp') : null)
+                          : (!_isBIRBIMAvailable ? (localizations?.requiresBHKBTKFirstNordic ?? 'Krever BHK/BTK 1. plass i Norden') : null),
                       helperStyle: TextStyle(color: AppColors.warning),
                     ),
                     items: [
@@ -2282,7 +2282,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                           TextFormField(
                             controller: _groupJudgeController,
                             decoration: InputDecoration(
-                              labelText: 'Gruppedommer',
+                              labelText: localizations?.groupJudge ?? 'Gruppedommer',
                               border: const OutlineInputBorder(),
                               filled: true,
                               fillColor: context.colors.surface,
@@ -2343,7 +2343,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                           TextFormField(
                             controller: _bisJudgeController,
                             decoration: InputDecoration(
-                              labelText: 'BIS-dommer',
+                              labelText: localizations?.bisJudge ?? 'BIS-dommer',
                               border: const OutlineInputBorder(),
                               filled: true,
                               fillColor: context.colors.surface,
@@ -2462,10 +2462,11 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
     }
 
     if (mounted) {
-      // Capture scaffold/navigator before popping (context becomes invalid after pop)
+      // Capture scaffold/navigator/localizations before popping (context becomes invalid after pop)
       Dog? shareDog;
       ScaffoldMessengerState? scaffoldMessenger;
       NavigatorState? navigator;
+      final localizations = AppLocalizations.of(context);
       if (widget.existingResult == null) {
         try {
           final dogsBox = Hive.box<Dog>('dogs');
@@ -2483,9 +2484,9 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
         final dog = shareDog;
         scaffoldMessenger.showSnackBar(
           SnackBar(
-            content: const Text('Resultat lagret!'),
+            content: Text(localizations?.resultSaved ?? 'Resultat lagret!'),
             action: SnackBarAction(
-              label: 'Del resultatkort',
+              label: localizations?.shareResultCard ?? 'Del resultatkort',
               onPressed: () {
                 navigator!.push(
                   MaterialPageRoute(
