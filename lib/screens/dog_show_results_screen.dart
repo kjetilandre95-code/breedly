@@ -8,11 +8,22 @@ import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/services/feed_service.dart';
+import 'package:breedly/services/kennel_service.dart';
+import 'package:breedly/models/feed_post.dart';
+import 'package:breedly/models/kennel.dart';
 import 'package:breedly/utils/logger.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:breedly/widgets/show_result_card.dart';
+import 'package:breedly/services/show_data_service.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'dart:io';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DogShowResultsScreen extends StatefulWidget {
   final Dog dog;
@@ -24,18 +35,62 @@ class DogShowResultsScreen extends StatefulWidget {
 }
 
 class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
+  // Filter state
+  int? _filterYear;
+  String? _filterShowType;
+  String? _filterJudge;
+  String? _filterQuality;
+
+  List<int> _getAvailableYears() {
+    final box = Hive.box<ShowResult>('show_results');
+    final years = box.values
+        .where((r) => r.dogId == widget.dog.id)
+        .map((r) => r.date.year)
+        .toSet()
+        .toList()
+      ..sort((a, b) => b.compareTo(a));
+    return years;
+  }
+
+  List<ShowResult> _applyFilters(List<ShowResult> results) {
+    return results.where((r) {
+      if (_filterYear != null && r.date.year != _filterYear) return false;
+      if (_filterShowType != null && r.showType != _filterShowType) return false;
+      if (_filterJudge != null && r.judge != _filterJudge) return false;
+      if (_filterQuality != null && r.quality != _filterQuality) return false;
+      return true;
+    }).toList();
+  }
+
+  bool get _hasActiveFilters =>
+      _filterYear != null || _filterShowType != null || _filterJudge != null || _filterQuality != null;
+
+  void _clearFilters() {
+    setState(() {
+      _filterYear = null;
+      _filterShowType = null;
+      _filterJudge = null;
+      _filterQuality = null;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     final primaryColor = Theme.of(context).primaryColor;
     
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBarBuilder.buildAppBar(
           title: '${localizations?.exhibitions ?? 'Utstillinger'} - ${widget.dog.name}',
           context: context,
           actions: [
+            // PDF Export button
+            IconButton(
+              icon: const Icon(Icons.picture_as_pdf_outlined),
+              tooltip: 'Eksporter utstillings-CV',
+              onPressed: () => _exportShowCV(context),
+            ),
             PageInfoHelper.buildInfoButton(
               context,
               title: localizations?.exhibitionResults ?? 'Utstillingsresultater',
@@ -71,6 +126,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             tabs: [
               Tab(text: localizations?.results ?? 'Resultater'),
               Tab(text: localizations?.statistics ?? 'Statistikk'),
+              Tab(text: 'Titler'),
             ],
           ),
         ),
@@ -79,6 +135,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             children: [
               _buildResultsTab(),
               _buildStatisticsTab(),
+              _buildTitleProgressionTab(),
             ],
           ),
         ),
@@ -96,12 +153,12 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     return ValueListenableBuilder(
       valueListenable: Hive.box<ShowResult>('show_results').listenable(),
       builder: (context, Box<ShowResult> box, _) {
-        final results = box.values
+        final allResults = box.values
             .where((r) => r.dogId == widget.dog.id)
             .toList()
           ..sort((a, b) => b.date.compareTo(a.date));
 
-        if (results.isEmpty) {
+        if (allResults.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -137,15 +194,179 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
           );
         }
 
-        return ListView.builder(
-          padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 80),
-          itemCount: results.length,
-          itemBuilder: (context, index) {
-            final result = results[index];
-            return _buildResultCard(result);
-          },
+        final results = _applyFilters(allResults);
+
+        return Column(
+          children: [
+            // Filter bar
+            _buildFilterBar(allResults),
+            // Results list
+            Expanded(
+              child: results.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.filter_list_off, size: 48, color: context.colors.textDisabled),
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            'Ingen resultater matcher filteret',
+                            style: TextStyle(color: context.colors.textMuted),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          TextButton(
+                            onPressed: _clearFilters,
+                            child: const Text('Fjern filter'),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.sm, bottom: 80),
+                      itemCount: results.length,
+                      itemBuilder: (context, index) => _buildResultCard(results[index]),
+                    ),
+            ),
+          ],
         );
       },
+    );
+  }
+
+  Widget _buildFilterBar(List<ShowResult> allResults) {
+    final years = _getAvailableYears();
+    final judges = allResults
+        .where((r) => r.judge != null && r.judge!.isNotEmpty)
+        .map((r) => r.judge!)
+        .toSet()
+        .toList()
+      ..sort();
+    final showTypes = allResults
+        .where((r) => r.showType != null)
+        .map((r) => r.showType!)
+        .toSet()
+        .toList()
+      ..sort();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+      decoration: BoxDecoration(
+        color: _hasActiveFilters
+            ? Theme.of(context).primaryColor.withValues(alpha: 0.08)
+            : Colors.transparent,
+        border: Border(
+          bottom: BorderSide(color: context.colors.divider),
+        ),
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            Icon(Icons.filter_list, size: 18, color: context.colors.textMuted),
+            const SizedBox(width: AppSpacing.sm),
+            // Year filter
+            _buildFilterDropdown<int?>(
+              label: _filterYear?.toString() ?? 'År',
+              isActive: _filterYear != null,
+              items: [null, ...years],
+              itemLabel: (v) => v?.toString() ?? 'Alle år',
+              onSelected: (v) => setState(() => _filterYear = v),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            // Show type filter
+            if (showTypes.isNotEmpty)
+              _buildFilterDropdown<String?>(
+                label: _filterShowType ?? 'Type',
+                isActive: _filterShowType != null,
+                items: [null, ...showTypes],
+                itemLabel: (v) => v ?? 'Alle typer',
+                onSelected: (v) => setState(() => _filterShowType = v),
+              ),
+            const SizedBox(width: AppSpacing.sm),
+            // Judge filter
+            if (judges.isNotEmpty)
+              _buildFilterDropdown<String?>(
+                label: _filterJudge ?? 'Dommer',
+                isActive: _filterJudge != null,
+                items: [null, ...judges],
+                itemLabel: (v) => v ?? 'Alle dommere',
+                onSelected: (v) => setState(() => _filterJudge = v),
+              ),
+            if (_hasActiveFilters) ...[
+              const SizedBox(width: AppSpacing.sm),
+              GestureDetector(
+                onTap: _clearFilters,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.15),
+                    borderRadius: AppRadius.lgAll,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.close, size: 14, color: AppColors.error),
+                      const SizedBox(width: 4),
+                      Text('Nullstill', style: TextStyle(fontSize: 12, color: AppColors.error, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFilterDropdown<T>({
+    required String label,
+    required bool isActive,
+    required List<T> items,
+    required String Function(T) itemLabel,
+    required void Function(T) onSelected,
+  }) {
+    return PopupMenuButton<T>(
+      onSelected: onSelected,
+      itemBuilder: (context) => items.map((item) {
+        return PopupMenuItem<T>(
+          value: item,
+          child: Text(itemLabel(item)),
+        );
+      }).toList(),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: isActive
+              ? Theme.of(context).primaryColor.withValues(alpha: 0.15)
+              : context.colors.neutral200,
+          borderRadius: AppRadius.lgAll,
+          border: Border.all(
+            color: isActive
+                ? Theme.of(context).primaryColor.withValues(alpha: 0.4)
+                : context.colors.divider,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label.length > 15 ? '${label.substring(0, 15)}...' : label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                color: isActive ? Theme.of(context).primaryColor : context.colors.textMuted,
+              ),
+            ),
+            const SizedBox(width: 4),
+            Icon(
+              Icons.arrow_drop_down,
+              size: 16,
+              color: isActive ? Theme.of(context).primaryColor : context.colors.textMuted,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -1171,6 +1392,661 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     );
   }
 
+  // ──── TITLE PROGRESSION TAB ────
+
+  Widget _buildTitleProgressionTab() {
+    return ValueListenableBuilder(
+      valueListenable: Hive.box<ShowResult>('show_results').listenable(),
+      builder: (context, Box<ShowResult> box, _) {
+        final results = box.values
+            .where((r) => r.dogId == widget.dog.id)
+            .toList();
+
+        if (results.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.military_tech_outlined, size: 64, color: context.colors.textDisabled),
+                const SizedBox(height: AppSpacing.lg),
+                Text('Ingen resultater ennå', style: TextStyle(color: context.colors.textMuted)),
+              ],
+            ),
+          );
+        }
+
+        final progression = ShowDataService().getTitleProgression(results, dogDateOfBirth: widget.dog.dateOfBirth, dogBreed: widget.dog.breed, tilleggskravCompleted: widget.dog.tilleggskravCompleted);
+        results.sort((a, b) => a.date.compareTo(b.date));
+
+        return SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title progress cards
+              ...progression.titles.where((t) => !t.isInformational).map((title) => _buildTitleCard(title)),
+              const SizedBox(height: AppSpacing.lg),
+              // Informational stats
+              ...progression.titles.where((t) => t.isInformational).map((title) => _buildInfoStatCard(title)),
+              const SizedBox(height: AppSpacing.xxl),
+              // Trend graph
+              _buildTrendGraph(results),
+              const SizedBox(height: AppSpacing.lg),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTitleCard(TitleProgress title) {
+    final primaryColor = Theme.of(context).primaryColor;
+    final isComplete = title.isComplete;
+
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadius.mdAll,
+        side: isComplete
+            ? BorderSide(color: AppColors.success, width: 2)
+            : BorderSide.none,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: BoxDecoration(
+                    color: isComplete
+                        ? AppColors.success.withValues(alpha: 0.15)
+                        : primaryColor.withValues(alpha: 0.15),
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: Icon(
+                    isComplete ? Icons.emoji_events : Icons.military_tech_outlined,
+                    color: isComplete ? AppColors.success : primaryColor,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            title.titleName,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: isComplete ? AppColors.success : null,
+                            ),
+                          ),
+                          if (isComplete) ...[
+                            const SizedBox(width: AppSpacing.sm),
+                            Icon(Icons.check_circle, color: AppColors.success, size: 20),
+                          ],
+                        ],
+                      ),
+                      Text(
+                        title.fullName,
+                        style: TextStyle(
+                          color: context.colors.textMuted,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${title.current}/${title.required}',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: isComplete ? AppColors.success : primaryColor,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            // Progress bar
+            ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: LinearProgressIndicator(
+                value: title.progress,
+                backgroundColor: context.colors.neutral200,
+                valueColor: AlwaysStoppedAnimation(
+                  isComplete ? AppColors.success : primaryColor,
+                ),
+                minHeight: 10,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              isComplete
+                  ? '✓ Tittel oppnådd!'
+                  : '${title.remaining} gjenstår — ${title.description}',
+              style: TextStyle(
+                color: isComplete ? AppColors.success : context.colors.textMuted,
+                fontSize: 12,
+                fontWeight: isComplete ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+            // Prerequisite warning
+            if (title.prerequisite != null) ...[
+              const SizedBox(height: AppSpacing.xs),
+              Row(
+                children: [
+                  Icon(Icons.lock_outline, size: 14, color: AppColors.warning),
+                  const SizedBox(width: 4),
+                  Text(
+                    title.prerequisite!,
+                    style: TextStyle(fontSize: 11, color: AppColors.warning, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ],
+            // Notes / warnings
+            if (title.notes != null && title.notes!.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.xs),
+              ...title.notes!.map((note) => Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline, size: 13, color: AppColors.warning),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        note,
+                        style: TextStyle(fontSize: 11, color: AppColors.warning),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+            ],
+            // Tilleggskrav section
+            if (title.tilleggskrav != null) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                decoration: BoxDecoration(
+                  color: title.tilleggskravCompleted
+                      ? AppColors.success.withValues(alpha: 0.08)
+                      : Colors.orange.withValues(alpha: 0.08),
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(
+                    color: title.tilleggskravCompleted
+                        ? AppColors.success.withValues(alpha: 0.3)
+                        : Colors.orange.withValues(alpha: 0.3),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          title.tilleggskravCompleted
+                              ? Icons.check_circle
+                              : Icons.assignment_outlined,
+                          size: 16,
+                          color: title.tilleggskravCompleted
+                              ? AppColors.success
+                              : Colors.orange[800],
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            'Tilleggskrav (${title.tilleggskrav!.kravType})',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: title.tilleggskravCompleted
+                                  ? AppColors.success
+                                  : Colors.orange[800],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 28,
+                          child: Switch.adaptive(
+                            value: title.tilleggskravCompleted,
+                            activeTrackColor: AppColors.success.withValues(alpha: 0.5),
+                            activeThumbColor: AppColors.success,
+                            onChanged: (value) async {
+                              widget.dog.tilleggskravCompleted = value;
+                              await widget.dog.save();
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      title.tilleggskrav!.description,
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: title.tilleggskravCompleted
+                            ? AppColors.success
+                            : Colors.orange[900],
+                        decoration: title.tilleggskravCompleted
+                            ? TextDecoration.lineThrough
+                            : null,
+                      ),
+                    ),
+                    if (title.tilleggskravCompleted) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        '✓ Tilleggskrav oppfylt',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.success,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+            // Detail counts
+            if (title.detailCounts != null && title.detailCounts!.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: 4,
+                children: title.detailCounts!.entries.map((e) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: context.colors.neutral200,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${e.key}: ${e.value}',
+                      style: TextStyle(fontSize: 10, color: context.colors.textCaption),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoStatCard(TitleProgress title) {
+    return Card(
+      elevation: 1,
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.smAll),
+      child: ListTile(
+        leading: Icon(Icons.info_outline, color: Theme.of(context).primaryColor),
+        title: Text(title.titleName, style: const TextStyle(fontWeight: FontWeight.w600)),
+        subtitle: Text(title.description),
+        trailing: Text(
+          title.current.toString(),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ──── TREND GRAPH ────
+
+  Widget _buildTrendGraph(List<ShowResult> sortedResults) {
+    final primaryColor = Theme.of(context).primaryColor;
+
+    // Group by month: calculate a "score" per show
+    // Excellent=4, VeryGood=3, Good=2, Sufficient=1, +2 for CK, +3 for BIR, +2 for BIM
+    int scoreResult(ShowResult r) {
+      int s = 0;
+      switch (r.quality) {
+        case 'Excellent':
+        case 'Særdeles lovende':
+          s = 4;
+          break;
+        case 'Very Good':
+        case 'Meget lovende':
+          s = 3;
+          break;
+        case 'Good':
+        case 'Lovende':
+          s = 2;
+          break;
+        case 'Sufficient':
+          s = 1;
+          break;
+        default:
+          s = 0;
+      }
+      if (r.gotCK) s += 2;
+      if (r.placement == 'BIR' || r.placement == 'BIR Valp') s += 3;
+      if (r.placement == 'BIM' || r.placement == 'BIM Valp') s += 2;
+      if (r.groupResult != null) s += 2;
+      if (r.bisResult != null) s += 3;
+      return s;
+    }
+
+    if (sortedResults.length < 2) {
+      return Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.show_chart, color: primaryColor),
+                  const SizedBox(width: AppSpacing.sm),
+                  const Text('Resultattrend', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                'Minst 2 resultater kreves for å vise trend',
+                style: TextStyle(color: context.colors.textMuted),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final spots = sortedResults.asMap().entries.map((entry) {
+      return FlSpot(entry.key.toDouble(), scoreResult(entry.value).toDouble());
+    }).toList();
+
+    final dateFormat = DateFormat('dd.MM.yy');
+
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.show_chart, color: primaryColor),
+                const SizedBox(width: AppSpacing.sm),
+                const Text('Resultattrend', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              'Score basert på premiegrad, CK, BIR/BIM, gruppe og BIS',
+              style: TextStyle(color: context.colors.textMuted, fontSize: 11),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            SizedBox(
+              height: 200,
+              child: LineChart(
+                LineChartData(
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: false,
+                    horizontalInterval: 2,
+                    getDrawingHorizontalLine: (value) => FlLine(
+                      color: context.colors.divider,
+                      strokeWidth: 1,
+                    ),
+                  ),
+                  titlesData: FlTitlesData(
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 28,
+                        interval: 2,
+                        getTitlesWidget: (value, meta) => Text(
+                          value.toInt().toString(),
+                          style: TextStyle(fontSize: 10, color: context.colors.textCaption),
+                        ),
+                      ),
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 36,
+                        interval: (sortedResults.length / 5).ceil().toDouble().clamp(1, double.infinity),
+                        getTitlesWidget: (value, meta) {
+                          final idx = value.toInt();
+                          if (idx < 0 || idx >= sortedResults.length) return const SizedBox();
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Transform.rotate(
+                              angle: -0.5,
+                              child: Text(
+                                dateFormat.format(sortedResults[idx].date),
+                                style: TextStyle(fontSize: 9, color: context.colors.textCaption),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  borderData: FlBorderData(show: false),
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: spots,
+                      isCurved: true,
+                      curveSmoothness: 0.3,
+                      color: primaryColor,
+                      barWidth: 3,
+                      dotData: FlDotData(
+                        show: true,
+                        getDotPainter: (spot, percent, bar, index) => FlDotCirclePainter(
+                          radius: 4,
+                          color: primaryColor,
+                          strokeWidth: 2,
+                          strokeColor: Colors.white,
+                        ),
+                      ),
+                      belowBarData: BarAreaData(
+                        show: true,
+                        color: primaryColor.withValues(alpha: 0.15),
+                      ),
+                    ),
+                  ],
+                  lineTouchData: LineTouchData(
+                    touchTooltipData: LineTouchTooltipData(
+                      getTooltipItems: (spots) => spots.map((spot) {
+                        final idx = spot.spotIndex;
+                        if (idx < 0 || idx >= sortedResults.length) return null;
+                        final r = sortedResults[idx];
+                        return LineTooltipItem(
+                          '${r.showName}\n${dateFormat.format(r.date)}\nScore: ${spot.y.toInt()}',
+                          TextStyle(color: Colors.white, fontSize: 11),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ──── PDF EXPORT ────
+
+  Future<void> _exportShowCV(BuildContext context) async {
+    final box = Hive.box<ShowResult>('show_results');
+    final results = box.values
+        .where((r) => r.dogId == widget.dog.id)
+        .toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+
+    if (results.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Ingen resultater å eksportere')),
+      );
+      return;
+    }
+
+    final dateFormat = DateFormat('dd.MM.yyyy');
+    final stats = ShowStatistics.fromResults(results);
+    final progression = ShowDataService().getTitleProgression(results, dogDateOfBirth: widget.dog.dateOfBirth, dogBreed: widget.dog.breed, tilleggskravCompleted: widget.dog.tilleggskravCompleted);
+    final dog = widget.dog;
+
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        margin: const pw.EdgeInsets.all(40),
+        build: (context) => [
+          // Header
+          pw.Center(
+            child: pw.Text(
+              'Utstillings-CV',
+              style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold),
+            ),
+          ),
+          pw.SizedBox(height: 8),
+          pw.Center(
+            child: pw.Text(
+              dog.name,
+              style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold),
+            ),
+          ),
+          pw.SizedBox(height: 4),
+          pw.Center(
+            child: pw.Text(
+              '${dog.breed} • ${dog.gender == 'Male' ? 'Hann' : 'Tispe'} • Født: ${dateFormat.format(dog.dateOfBirth)}',
+              style: const pw.TextStyle(fontSize: 12),
+            ),
+          ),
+          if (dog.registrationNumber != null && dog.registrationNumber!.isNotEmpty)
+            pw.Center(
+              child: pw.Text(
+                'Reg.nr: ${dog.registrationNumber}',
+                style: const pw.TextStyle(fontSize: 11),
+              ),
+            ),
+          pw.SizedBox(height: 16),
+          pw.Divider(),
+          pw.SizedBox(height: 12),
+
+          // Statistics summary
+          pw.Text('Statistikk', style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 8),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceEvenly,
+            children: [
+              _pdfStatBox('Utstillinger', stats.totalShows.toString()),
+              _pdfStatBox('CK', stats.ckCount.toString()),
+              _pdfStatBox('BIR', stats.birCount.toString()),
+              _pdfStatBox('BIM', stats.bimCount.toString()),
+              _pdfStatBox('Cert', stats.certCount.toString()),
+              _pdfStatBox('Cacib', stats.cacibCount.toString()),
+            ],
+          ),
+          pw.SizedBox(height: 12),
+
+          // Title progress
+          ...progression.titles.where((t) => !t.isInformational).map((title) {
+            return pw.Padding(
+              padding: const pw.EdgeInsets.only(bottom: 4),
+              child: pw.Row(
+                children: [
+                  pw.Text('${title.titleName}: ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 11)),
+                  pw.Text(
+                    title.isComplete
+                        ? 'Oppnådd ✓'
+                        : '${title.current}/${title.required} (${title.remaining} gjenstår)',
+                    style: const pw.TextStyle(fontSize: 11),
+                  ),
+                ],
+              ),
+            );
+          }),
+
+          pw.SizedBox(height: 16),
+          pw.Divider(),
+          pw.SizedBox(height: 12),
+
+          // Results table
+          pw.Text('Alle resultater (${results.length})', style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 8),
+          pw.TableHelper.fromTextArray(
+            headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 9),
+            cellStyle: const pw.TextStyle(fontSize: 8),
+            headerDecoration: const pw.BoxDecoration(color: PdfColors.grey300),
+            cellHeight: 22,
+            headerHeight: 26,
+            headers: ['Dato', 'Utstilling', 'Klasse', 'Premiegrad', 'CK', 'Plassering', 'Cert', 'Dommer'],
+            data: results.map((r) => [
+              dateFormat.format(r.date),
+              r.showName,
+              r.showClass,
+              r.quality,
+              r.gotCK ? 'CK' : '',
+              r.placement ?? '',
+              (r.certificates ?? []).join(', '),
+              r.judge ?? '',
+            ]).toList(),
+          ),
+        ],
+      ),
+    );
+
+    final messenger = ScaffoldMessenger.of(context);
+
+    try {
+      final tempDir = await getTemporaryDirectory();
+      final file = File('${tempDir.path}/utstillings_cv_${dog.name.replaceAll(' ', '_')}.pdf');
+      await file.writeAsBytes(await pdf.save());
+
+      if (!mounted) return;
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'Utstillings-CV for ${dog.name}',
+      );
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text('Feil ved eksport: $e')),
+      );
+    }
+  }
+
+  pw.Widget _pdfStatBox(String label, String value) {
+    return pw.Container(
+      padding: const pw.EdgeInsets.all(8),
+      decoration: pw.BoxDecoration(
+        border: pw.Border.all(color: PdfColors.grey400),
+        borderRadius: pw.BorderRadius.circular(4),
+      ),
+      child: pw.Column(
+        children: [
+          pw.Text(value, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+          pw.Text(label, style: const pw.TextStyle(fontSize: 9)),
+        ],
+      ),
+    );
+  }
+
   void _showAddResultDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -1805,14 +2681,12 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   
-                  // Utstillingsnavn
-                  TextFormField(
+                  // Utstillingsnavn (med autocomplete)
+                  _buildAutocompleteField(
                     controller: _showNameController,
-                    decoration: InputDecoration(
-                      labelText: '${localizations?.showName ?? 'Utstillingsnavn'} *',
-                      hintText: localizations?.showNameHint ?? 'f.eks. NKK Drammen',
-                      border: const OutlineInputBorder(),
-                    ),
+                    label: '${localizations?.showName ?? 'Utstillingsnavn'} *',
+                    hint: localizations?.showNameHint ?? 'f.eks. NKK Drammen',
+                    optionsFuture: ShowDataService().getShowNames(),
                     validator: (value) => value?.isEmpty ?? true ? (localizations?.required ?? 'Påkrevd') : null,
                   ),
                   const SizedBox(height: AppSpacing.lg),
@@ -1879,13 +2753,12 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   
-                  // Dommer
-                  TextFormField(
+                  // Dommer (med autocomplete)
+                  _buildAutocompleteField(
                     controller: _judgeController,
-                    decoration: InputDecoration(
-                      labelText: localizations?.judge ?? 'Dommer',
-                      border: const OutlineInputBorder(),
-                    ),
+                    label: localizations?.judge ?? 'Dommer',
+                    hint: 'f.eks. Hans Hansen',
+                    optionsFuture: ShowDataService().getJudgeNames(),
                   ),
                   const SizedBox(height: AppSpacing.lg),
                   
@@ -2279,15 +3152,13 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                             },
                           ),
                           const SizedBox(height: AppSpacing.md),
-                          TextFormField(
+                          _buildAutocompleteField(
                             controller: _groupJudgeController,
-                            decoration: InputDecoration(
-                              labelText: localizations?.groupJudge ?? 'Gruppedommer',
-                              border: const OutlineInputBorder(),
-                              filled: true,
-                              fillColor: context.colors.surface,
-                              prefixIcon: const Icon(Icons.person_outline),
-                            ),
+                            label: localizations?.groupJudge ?? 'Gruppedommer',
+                            hint: '',
+                            optionsFuture: ShowDataService().getJudgeNames(),
+                            filled: true,
+                            prefixIcon: const Icon(Icons.person_outline),
                           ),
                         ],
                       ),
@@ -2340,15 +3211,13 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                             onChanged: (value) => setState(() => _bisResult = value),
                           ),
                           const SizedBox(height: AppSpacing.md),
-                          TextFormField(
+                          _buildAutocompleteField(
                             controller: _bisJudgeController,
-                            decoration: InputDecoration(
-                              labelText: localizations?.bisJudge ?? 'BIS-dommer',
-                              border: const OutlineInputBorder(),
-                              filled: true,
-                              fillColor: context.colors.surface,
-                              prefixIcon: const Icon(Icons.person_outline),
-                            ),
+                            label: localizations?.bisJudge ?? 'BIS-dommer',
+                            hint: '',
+                            optionsFuture: ShowDataService().getJudgeNames(),
+                            filled: true,
+                            prefixIcon: const Icon(Icons.person_outline),
                           ),
                         ],
                       ),
@@ -2407,18 +3276,279 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
     );
   }
 
+  Widget _buildAutocompleteField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required Future<List<String>> optionsFuture,
+    String? Function(String?)? validator,
+    bool filled = false,
+    Widget? prefixIcon,
+  }) {
+    return FutureBuilder<List<String>>(
+      future: optionsFuture,
+      builder: (context, snapshot) {
+        final options = snapshot.data ?? [];
+        return Autocomplete<String>(
+          optionsBuilder: (textEditingValue) {
+            if (textEditingValue.text.isEmpty) return const Iterable<String>.empty();
+            final query = textEditingValue.text.toLowerCase();
+
+            // 1. Exact substring matches first
+            final exactMatches = options
+                .where((o) => o.toLowerCase().contains(query))
+                .toList();
+
+            // 2. Fuzzy matches (only if query is 3+ chars and few exact matches)
+            if (query.length >= 3 && exactMatches.length < 5) {
+              final fuzzyMatches = ShowDataService.findSimilarNames(
+                textEditingValue.text,
+                options,
+                threshold: 0.6,
+              );
+              // Add fuzzy results that aren't already in exact matches
+              for (final match in fuzzyMatches) {
+                if (!exactMatches.contains(match.name)) {
+                  exactMatches.add(match.name);
+                }
+              }
+            }
+
+            return exactMatches.take(10);
+          },
+          initialValue: controller.value,
+          onSelected: (selection) {
+            controller.text = selection;
+          },
+          fieldViewBuilder: (context, textController, focusNode, onFieldSubmitted) {
+            // Sync with our controller
+            textController.text = controller.text;
+            textController.addListener(() {
+              if (controller.text != textController.text) {
+                controller.text = textController.text;
+              }
+            });
+            return TextFormField(
+              controller: textController,
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                labelText: label,
+                hintText: hint.isEmpty ? null : hint,
+                border: const OutlineInputBorder(),
+                filled: filled,
+                fillColor: filled ? context.colors.surface : null,
+                prefixIcon: prefixIcon,
+                suffixIcon: options.isNotEmpty
+                    ? Icon(Icons.arrow_drop_down, color: context.colors.textCaption)
+                    : null,
+              ),
+              validator: validator,
+              onFieldSubmitted: (_) => onFieldSubmitted(),
+            );
+          },
+          optionsViewBuilder: (context, onSelected, filteredOptions) {
+            final query = controller.text;
+
+            return Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                elevation: 4,
+                borderRadius: AppRadius.smAll,
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 250, maxWidth: 400),
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: filteredOptions.length,
+                    itemBuilder: (context, index) {
+                      final option = filteredOptions.elementAt(index);
+                      // Check if this is a fuzzy match (not an exact substring match)
+                      final isFuzzyOnly = query.isNotEmpty &&
+                          !option.toLowerCase().contains(query.toLowerCase());
+
+                      return ListTile(
+                        dense: true,
+                        title: Text(
+                          option,
+                          style: isFuzzyOnly
+                              ? TextStyle(fontStyle: FontStyle.italic, color: Colors.orange[800])
+                              : null,
+                        ),
+                        trailing: isFuzzyOnly
+                            ? Tooltip(
+                                message: 'Lignende navn – mente du dette?',
+                                child: Icon(Icons.help_outline, size: 16, color: Colors.orange[600]),
+                              )
+                            : null,
+                        onTap: () => onSelected(option),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  /// Show a dialog when a similar name is found, letting the user choose
+  /// the existing name or confirm their new spelling.
+  Future<String?> _showSimilarNameDialog(String newName, List<SimilarNameMatch> matches, String fieldLabel) async {
+    return showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.compare_arrows, color: Colors.orange[700]),
+            const SizedBox(width: 8),
+            const Expanded(child: Text('Lignende navn funnet', style: TextStyle(fontSize: 16))),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text.rich(
+              TextSpan(
+                text: 'Du skrev ',
+                children: [
+                  TextSpan(
+                    text: '"$newName"',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const TextSpan(text: ', men det finnes lignende navn.\nMente du ett av disse?'),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            ...matches.take(5).map((m) {
+              final pct = (m.similarity * 100).round();
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 44),
+                    alignment: Alignment.centerLeft,
+                    side: BorderSide(color: Colors.green.withValues(alpha: 0.5)),
+                  ),
+                  onPressed: () => Navigator.of(ctx).pop(m.name),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.check_circle_outline, size: 18, color: Colors.green),
+                      const SizedBox(width: 8),
+                      Expanded(child: Text(m.name, style: const TextStyle(fontWeight: FontWeight.w500))),
+                      Text('$pct%', style: TextStyle(fontSize: 12, color: context.colors.textCaption)),
+                    ],
+                  ),
+                ),
+              );
+            }),
+            const Divider(height: 24),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 44),
+                alignment: Alignment.centerLeft,
+                side: BorderSide(color: Colors.orange.withValues(alpha: 0.5)),
+              ),
+              onPressed: () => Navigator.of(ctx).pop(newName),
+              child: Row(
+                children: [
+                  Icon(Icons.add_circle_outline, size: 18, color: Colors.orange[700]),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Behold "$newName" (ny stavemåte)',
+                      style: TextStyle(fontWeight: FontWeight.w500, color: Colors.orange[800]),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(null),
+            child: const Text('Avbryt'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Check a name against the existing list and show dialog if similar names exist.
+  /// Returns the chosen name (original, existing match, or null if cancelled).
+  Future<String?> _checkAndResolveName(String name, List<String> existingNames, String fieldLabel) async {
+    if (name.trim().isEmpty) return name;
+    final trimmed = name.trim();
+
+    // If it's an exact match (case-insensitive), no need to check
+    if (existingNames.any((e) => e.toLowerCase() == trimmed.toLowerCase())) {
+      return trimmed;
+    }
+
+    // Find similar names
+    final matches = ShowDataService.findSimilarNames(trimmed, existingNames, threshold: 0.75);
+
+    // Filter out exact normalized matches (those are handled automatically by addJudgeName)
+    final fuzzyOnly = matches.where((m) => !m.isExactNormalized).toList();
+
+    if (fuzzyOnly.isEmpty) return trimmed;
+
+    // Show dialog
+    return _showSimilarNameDialog(trimmed, fuzzyOnly, fieldLabel);
+  }
+
   Future<void> _saveResult() async {
     if (!_formKey.currentState!.validate()) return;
 
     final box = Hive.box<ShowResult>('show_results');
     
     // Hent verdier fra controllers
-    final showName = _showNameController.text.trim();
-    final judge = _judgeController.text.trim().isEmpty ? null : _judgeController.text.trim();
+    var showName = _showNameController.text.trim();
+    var judge = _judgeController.text.trim().isEmpty ? null : _judgeController.text.trim();
     final critique = _critiqueController.text.trim().isEmpty ? null : _critiqueController.text.trim();
     final notes = _notesController.text.trim().isEmpty ? null : _notesController.text.trim();
-    final groupJudge = _groupJudgeController.text.trim().isEmpty ? null : _groupJudgeController.text.trim();
-    final bisJudge = _bisJudgeController.text.trim().isEmpty ? null : _bisJudgeController.text.trim();
+    var groupJudge = _groupJudgeController.text.trim().isEmpty ? null : _groupJudgeController.text.trim();
+    var bisJudge = _bisJudgeController.text.trim().isEmpty ? null : _bisJudgeController.text.trim();
+
+    // ── Check for similar names and let user resolve duplicates ──
+    final judgeNames = await ShowDataService().getJudgeNames();
+    final showNames = await ShowDataService().getShowNames();
+
+    // Check judge name
+    if (judge != null && judge.isNotEmpty) {
+      final resolved = await _checkAndResolveName(judge, judgeNames, 'Dommer');
+      if (resolved == null) return; // User cancelled
+      judge = resolved;
+      _judgeController.text = resolved;
+    }
+
+    // Check group judge name
+    if (groupJudge != null && groupJudge.isNotEmpty) {
+      final resolved = await _checkAndResolveName(groupJudge, judgeNames, 'Gruppedommer');
+      if (resolved == null) return;
+      groupJudge = resolved;
+      _groupJudgeController.text = resolved;
+    }
+
+    // Check BIS judge name
+    if (bisJudge != null && bisJudge.isNotEmpty) {
+      final resolved = await _checkAndResolveName(bisJudge, judgeNames, 'BIS-dommer');
+      if (resolved == null) return;
+      bisJudge = resolved;
+      _bisJudgeController.text = resolved;
+    }
+
+    // Check show name
+    if (showName.isNotEmpty) {
+      final resolved = await _checkAndResolveName(showName, showNames, 'Utstillingsnavn');
+      if (resolved == null) return;
+      showName = resolved;
+      _showNameController.text = resolved;
+    }
     
     final result = ShowResult(
       id: widget.existingResult?.id ?? const Uuid().v4(),
@@ -2461,6 +3591,24 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
       AppLogger.debug('Error syncing show result: $e');
     }
 
+    // Save judge and show names to shared database for autocomplete
+    try {
+      if (showName.isNotEmpty) {
+        ShowDataService().addShowName(showName);
+      }
+      if (judge != null && judge.isNotEmpty) {
+        ShowDataService().addJudgeName(judge);
+      }
+      if (groupJudge != null && groupJudge.isNotEmpty) {
+        ShowDataService().addJudgeName(groupJudge);
+      }
+      if (bisJudge != null && bisJudge.isNotEmpty) {
+        ShowDataService().addJudgeName(bisJudge);
+      }
+    } catch (e) {
+      AppLogger.debug('Error saving to shared DB: $e');
+    }
+
     if (mounted) {
       // Capture scaffold/navigator/localizations before popping (context becomes invalid after pop)
       Dog? shareDog;
@@ -2479,29 +3627,346 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
       Navigator.pop(context);
       widget.onSaved();
 
-      // Prompt to share result card (only for new results)
+      // Prompt to share to Breedly feed (only for new results)
       if (shareDog != null && scaffoldMessenger != null && navigator != null) {
         final dog = shareDog;
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-            content: Text(localizations?.resultSaved ?? 'Resultat lagret!'),
-            action: SnackBarAction(
-              label: localizations?.shareResultCard ?? 'Del resultatkort',
-              onPressed: () {
-                navigator!.push(
-                  MaterialPageRoute(
-                    builder: (_) => ShowResultCardScreen(
-                      result: result,
-                      dog: dog,
-                    ),
-                  ),
-                );
-              },
-            ),
-            duration: const Duration(seconds: 5),
-          ),
-        );
+        _showShareToFeedDialog(navigator, scaffoldMessenger, localizations, result, dog);
       }
     }
+  }
+
+  void _showShareToFeedDialog(
+    NavigatorState navigator,
+    ScaffoldMessengerState messenger,
+    AppLocalizations? l10n,
+    ShowResult result,
+    Dog dog,
+  ) {
+    // Show the share dialog using the navigator's overlay context
+    navigator.push(
+      PageRouteBuilder(
+        opaque: false,
+        barrierDismissible: true,
+        barrierColor: Colors.black54,
+        pageBuilder: (context, animation1, animation2) {
+          return _ShareToFeedDialogPage(
+            result: result,
+            dog: dog,
+            l10n: l10n,
+            onShared: () {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(l10n?.feedPostPublished ?? 'Delt på Breedly!'),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
+            },
+            onSkipped: () {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(l10n?.resultSaved ?? 'Resultat lagret!'),
+                  action: SnackBarAction(
+                    label: l10n?.shareResultCard ?? 'Del resultatkort',
+                    onPressed: () {
+                      navigator.push(
+                        MaterialPageRoute(
+                          builder: (_) => ShowResultCardScreen(
+                            result: result,
+                            dog: dog,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  duration: const Duration(seconds: 5),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// Dialog page for sharing a show result to the Breedly feed
+class _ShareToFeedDialogPage extends StatefulWidget {
+  final ShowResult result;
+  final Dog dog;
+  final AppLocalizations? l10n;
+  final VoidCallback onShared;
+  final VoidCallback onSkipped;
+
+  const _ShareToFeedDialogPage({
+    required this.result,
+    required this.dog,
+    required this.l10n,
+    required this.onShared,
+    required this.onSkipped,
+  });
+
+  @override
+  State<_ShareToFeedDialogPage> createState() => _ShareToFeedDialogPageState();
+}
+
+class _ShareToFeedDialogPageState extends State<_ShareToFeedDialogPage> {
+  String _visibility = 'public';
+  bool _isPublishing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = widget.l10n;
+    final theme = Theme.of(context);
+    final result = widget.result;
+
+    // Build result summary
+    final parts = <String>[];
+    parts.add(result.quality);
+    if (result.hasCK) parts.add('CK');
+    if (result.certificates != null) parts.addAll(result.certificates!);
+    if (result.placement != null) parts.add(result.placement!);
+    if (result.groupResult != null) parts.add(result.groupResult!);
+    if (result.bisResult != null) parts.add(result.bisResult!);
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Material(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 400),
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                Row(
+                  children: [
+                    Icon(Icons.newspaper_rounded, color: AppColors.primary),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        l10n?.feedShareTitle ?? 'Del på Breedly?',
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Preview
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: context.colors.surfaceVariant,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${widget.dog.name} – ${result.showName}',
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 4,
+                        children: parts.map((part) {
+                          final isCert = part == 'CERT' || part == 'CACIB' || part == 'CK';
+                          return Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: isCert
+                                  ? AppColors.primary.withValues(alpha: 0.15)
+                                  : context.colors.surface,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text(
+                              part,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                fontWeight: isCert ? FontWeight.bold : FontWeight.normal,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Visibility selector
+                Text(
+                  l10n?.feedVisibility ?? 'Synlighet',
+                  style: theme.textTheme.labelLarge,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _VisibilityOption(
+                        icon: Icons.public,
+                        label: l10n?.feedPublic ?? 'Alle',
+                        isSelected: _visibility == 'public',
+                        onTap: () => setState(() => _visibility = 'public'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _VisibilityOption(
+                        icon: Icons.lock_outline,
+                        label: l10n?.feedFollowersOnly ?? 'Kun følgere',
+                        isSelected: _visibility == 'followersOnly',
+                        onTap: () => setState(() => _visibility = 'followersOnly'),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: _isPublishing
+                          ? null
+                          : () {
+                              Navigator.pop(context);
+                              widget.onSkipped();
+                            },
+                      child: Text(l10n?.feedSkip ?? 'Hopp over'),
+                    ),
+                    const SizedBox(width: 8),
+                    FilledButton.icon(
+                      onPressed: _isPublishing ? null : _publishToFeed,
+                      icon: _isPublishing
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Icon(Icons.send, size: 18),
+                      label: Text(l10n?.feedPublish ?? 'Del'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _publishToFeed() async {
+    setState(() => _isPublishing = true);
+
+    try {
+      final userId = AuthService().currentUserId ?? '';
+      final kennelId = KennelService().activeKennelId ?? userId;
+
+      // Get kennel name
+      String kennelName = 'Ukjent kennel';
+      try {
+        final kennelBox = Hive.box<Kennel>('kennel');
+        final kennel = kennelBox.values.firstOrNull;
+        if (kennel != null) kennelName = kennel.name;
+      } catch (_) {}
+
+      final post = FeedPost.fromShowResult(
+        id: const Uuid().v4(),
+        authorId: userId,
+        kennelId: kennelId,
+        kennelName: kennelName,
+        breed: widget.dog.breed,
+        dogName: widget.dog.name,
+        showName: widget.result.showName,
+        showDate: widget.result.date,
+        quality: widget.result.quality,
+        showClass: widget.result.showClass,
+        placement: widget.result.placement,
+        certificates: widget.result.certificates,
+        judge: widget.result.judge,
+        groupResult: widget.result.groupResult,
+        bisResult: widget.result.bisResult,
+        hasCK: widget.result.hasCK,
+        visibility: _visibility,
+      );
+
+      await FeedService().publishPost(post);
+
+      if (mounted) {
+        Navigator.pop(context);
+        widget.onShared();
+      }
+    } catch (e) {
+      AppLogger.error('Failed to publish to feed', e);
+      setState(() => _isPublishing = false);
+    }
+  }
+}
+
+class _VisibilityOption extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _VisibilityOption({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? AppColors.primary.withValues(alpha: 0.1)
+              : context.colors.surfaceVariant,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isSelected ? AppColors.primary : context.colors.divider,
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? AppColors.primary : context.colors.textCaption,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: isSelected ? AppColors.primary : context.colors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

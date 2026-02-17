@@ -212,6 +212,9 @@ class AppLocalizationsNo extends AppLocalizations {
   String get upcomingEvents => 'Kommende hendelser';
 
   @override
+  String get attentionNeeded => 'Trenger oppmerksomhet';
+
+  @override
   String get newDog => 'Ny hund';
 
   @override
@@ -597,6 +600,9 @@ class AppLocalizationsNo extends AppLocalizations {
   String matingWindow(String dogName) {
     return 'Parringsvindu: $dogName';
   }
+
+  @override
+  String get matingWindows => 'Parringsvindu';
 
   @override
   String dueDate(String dogName) {
@@ -5153,4 +5159,95 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get msgLookingForward => 'Vi gleder oss til å se deg!';
+
+  @override
+  String get feedTitle => 'Nyheter';
+
+  @override
+  String get feedFollowing => 'Følger';
+
+  @override
+  String get feedAll => 'Alle';
+
+  @override
+  String get feedNoFollowing => 'Ingen nyheter fra kenneler du følger ennå';
+
+  @override
+  String get feedNoNews => 'Ingen nyheter ennå';
+
+  @override
+  String get feedSearchKennels => 'Søk etter kenneler å følge';
+
+  @override
+  String get feedDeleteConfirm =>
+      'Er du sikker på at du vil slette dette innlegget?';
+
+  @override
+  String get feedShowResults => 'Utstillingsresultater';
+
+  @override
+  String get feedChampionTitles => 'Championtitler';
+
+  @override
+  String get feedLitterAnnouncements => 'Kullkunngjøringer';
+
+  @override
+  String get feedPuppiesAvailable => 'Valper tilgjengelig';
+
+  @override
+  String feedMinutesAgo(int minutes) {
+    return '$minutes min siden';
+  }
+
+  @override
+  String feedHoursAgo(int hours) {
+    return '${hours}t siden';
+  }
+
+  @override
+  String feedDaysAgo(int days) {
+    return '${days}d siden';
+  }
+
+  @override
+  String get feedFollowersOnly => 'Kun følgere';
+
+  @override
+  String get feedSearchKennelsTitle => 'Finn kenneler';
+
+  @override
+  String get feedSearchKennelsHint => 'Søk etter kennelnavn...';
+
+  @override
+  String get feedSearchKennelsPrompt => 'Søk etter kenneler etter navn';
+
+  @override
+  String get feedFollowers => 'følgere';
+
+  @override
+  String get feedFollow => 'Følg';
+
+  @override
+  String get feedUnfollow => 'Slutt å følge';
+
+  @override
+  String get feedShareTitle => 'Del på Breedly?';
+
+  @override
+  String get feedPostPublished => 'Delt på Breedly!';
+
+  @override
+  String get feedVisibility => 'Synlighet';
+
+  @override
+  String get feedPublic => 'Alle';
+
+  @override
+  String get feedSkip => 'Hopp over';
+
+  @override
+  String get feedPublish => 'Del';
+
+  @override
+  String get seeAll => 'Se alle';
 }

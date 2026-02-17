@@ -506,6 +506,12 @@ abstract class AppLocalizations {
   /// **'Upcoming events'**
   String get upcomingEvents;
 
+  /// Label for action cards section on dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get attentionNeeded;
+
   /// Button label for adding new dog
   ///
   /// In en, this message translates to:
@@ -1243,6 +1249,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mating window: {dogName}'**
   String matingWindow(String dogName);
+
+  /// Filter label for mating window events
+  ///
+  /// In en, this message translates to:
+  /// **'Mating windows'**
+  String get matingWindows;
 
   /// Event title for due date
   ///
@@ -9511,6 +9523,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We look forward to seeing you!'**
   String get msgLookingForward;
+
+  /// Feed screen title
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get feedTitle;
+
+  /// Feed tab for followed kennels
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get feedFollowing;
+
+  /// Feed tab for all posts
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get feedAll;
+
+  /// Empty state for following feed
+  ///
+  /// In en, this message translates to:
+  /// **'No news from kennels you follow yet'**
+  String get feedNoFollowing;
+
+  /// Empty state for all feed
+  ///
+  /// In en, this message translates to:
+  /// **'No news yet'**
+  String get feedNoNews;
+
+  /// Hint for kennel search
+  ///
+  /// In en, this message translates to:
+  /// **'Search for kennels to follow'**
+  String get feedSearchKennels;
+
+  /// Delete feed post confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this post?'**
+  String get feedDeleteConfirm;
+
+  /// Filter option for show results
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get feedShowResults;
+
+  /// Filter option for champion titles
+  ///
+  /// In en, this message translates to:
+  /// **'Champion titles'**
+  String get feedChampionTitles;
+
+  /// Filter option for litter announcements
+  ///
+  /// In en, this message translates to:
+  /// **'Litter announcements'**
+  String get feedLitterAnnouncements;
+
+  /// Filter option for available puppies
+  ///
+  /// In en, this message translates to:
+  /// **'Puppies available'**
+  String get feedPuppiesAvailable;
+
+  /// Time ago in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min ago'**
+  String feedMinutesAgo(int minutes);
+
+  /// Time ago in hours
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String feedHoursAgo(int hours);
+
+  /// Time ago in days
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String feedDaysAgo(int days);
+
+  /// Visibility label for followers-only posts
+  ///
+  /// In en, this message translates to:
+  /// **'Followers only'**
+  String get feedFollowersOnly;
+
+  /// Kennel search sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Find kennels'**
+  String get feedSearchKennelsTitle;
+
+  /// Kennel search placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search kennel name...'**
+  String get feedSearchKennelsHint;
+
+  /// Prompt before searching
+  ///
+  /// In en, this message translates to:
+  /// **'Search for kennels by name'**
+  String get feedSearchKennelsPrompt;
+
+  /// Followers count label
+  ///
+  /// In en, this message translates to:
+  /// **'followers'**
+  String get feedFollowers;
+
+  /// Follow button text
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get feedFollow;
+
+  /// Unfollow button text
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow'**
+  String get feedUnfollow;
+
+  /// Share to feed dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Share on Breedly?'**
+  String get feedShareTitle;
+
+  /// Success message after sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Shared on Breedly!'**
+  String get feedPostPublished;
+
+  /// Visibility selector label
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get feedVisibility;
+
+  /// Public visibility option
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone'**
+  String get feedPublic;
+
+  /// Skip sharing button
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get feedSkip;
+
+  /// Publish to feed button
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get feedPublish;
+
+  /// See all link text
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAll;
 }
 
 class _AppLocalizationsDelegate

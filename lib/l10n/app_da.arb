@@ -265,6 +265,7 @@
     "description": "Label for statistics section"
   },
   "upcomingEvents": "Kommende begivenheder",
+  "attentionNeeded": "Kræver opmærksomhed",
   "@upcomingEvents": {
     "description": "Label for upcoming events section"
   },
@@ -773,6 +774,7 @@
       "dogName": {"type": "String"}
     }
   },
+  "matingWindows": "Parringsvinduer",
   "dueDate": "Termin: {dogName}",
   "@dueDate": {
     "description": "Event title for due date",
@@ -3472,5 +3474,33 @@
   "msgBlanketWithHomeScent": "Tæppe med hjemmeduft",
   "msgWaterForTrip": "Vand til turen",
   "msgAddress": "Adresse: {address}",
-  "msgLookingForward": "Vi glæder os til at se dig!"
+  "msgLookingForward": "Vi glæder os til at se dig!",
+  "feedTitle": "Nyheder",
+  "feedFollowing": "Følger",
+  "feedAll": "Alle",
+  "feedNoFollowing": "Ingen nyheder fra kenneler du følger endnu",
+  "feedNoNews": "Ingen nyheder endnu",
+  "feedSearchKennels": "Søg efter kenneler at følge",
+  "feedDeleteConfirm": "Er du sikker på at du vil slette dette opslaget?",
+  "feedShowResults": "Udstillingsresultater",
+  "feedChampionTitles": "Championtitler",
+  "feedLitterAnnouncements": "Kuldmeddelelser",
+  "feedPuppiesAvailable": "Hvalpe tilgængelige",
+  "feedMinutesAgo": "{minutes} min siden",
+  "feedHoursAgo": "{hours}t siden",
+  "feedDaysAgo": "{days}d siden",
+  "feedFollowersOnly": "Kun følgere",
+  "feedSearchKennelsTitle": "Find kenneler",
+  "feedSearchKennelsHint": "Søg efter kennelnavn...",
+  "feedSearchKennelsPrompt": "Søg efter kenneler efter navn",
+  "feedFollowers": "følgere",
+  "feedFollow": "Følg",
+  "feedUnfollow": "Stop med at følge",
+  "feedShareTitle": "Del på Breedly?",
+  "feedPostPublished": "Delt på Breedly!",
+  "feedVisibility": "Synlighed",
+  "feedPublic": "Alle",
+  "feedSkip": "Spring over",
+  "feedPublish": "Del",
+  "seeAll": "Se alle"
 }

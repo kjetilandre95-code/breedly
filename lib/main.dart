@@ -253,6 +253,7 @@ class _AuthenticatedHome extends StatefulWidget {
 
 class _AuthenticatedHomeState extends State<_AuthenticatedHome> {
   bool? _onboardingCompleted;
+  bool _paywallDismissed = false;
 
   @override
   void initState() {
@@ -305,12 +306,17 @@ class _AuthenticatedHomeState extends State<_AuthenticatedHome> {
     }
 
     // Show paywall if user is not premium (allowDismiss for now until RevenueCat products are live)
-    if (subProvider.isFreeUser) {
+    if (subProvider.isFreeUser && !_paywallDismissed) {
       return PaywallScreen(
         allowDismiss: true,
         onSubscribed: () {
           // Rebuild to show main navigation
           setState(() {});
+        },
+        onDismissed: () {
+          setState(() {
+            _paywallDismissed = true;
+          });
         },
       );
     }

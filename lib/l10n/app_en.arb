@@ -268,6 +268,10 @@
   "@upcomingEvents": {
     "description": "Label for upcoming events section"
   },
+  "attentionNeeded": "Needs attention",
+  "@attentionNeeded": {
+    "description": "Label for action cards section on dashboard"
+  },
   "newDog": "New dog",
   "@newDog": {
     "description": "Button label for adding new dog"
@@ -785,6 +789,8 @@
       "dogName": {"type": "String"}
     }
   },
+  "matingWindows": "Mating windows",
+  "@matingWindows": { "description": "Filter label for mating window events" },
   "dueDate": "Due date: {dogName}",
   "@dueDate": {
     "description": "Event title for due date",
@@ -4471,5 +4477,61 @@
     }
   },
   "msgLookingForward": "We look forward to seeing you!",
-  "@msgLookingForward": { "description": "Closing line for delivery reminder" }
+  "@msgLookingForward": { "description": "Closing line for delivery reminder" },
+  "feedTitle": "News",
+  "@feedTitle": { "description": "Feed screen title" },
+  "feedFollowing": "Following",
+  "@feedFollowing": { "description": "Feed tab for followed kennels" },
+  "feedAll": "All",
+  "@feedAll": { "description": "Feed tab for all posts" },
+  "feedNoFollowing": "No news from kennels you follow yet",
+  "@feedNoFollowing": { "description": "Empty state for following feed" },
+  "feedNoNews": "No news yet",
+  "@feedNoNews": { "description": "Empty state for all feed" },
+  "feedSearchKennels": "Search for kennels to follow",
+  "@feedSearchKennels": { "description": "Hint for kennel search" },
+  "feedDeleteConfirm": "Are you sure you want to delete this post?",
+  "@feedDeleteConfirm": { "description": "Delete feed post confirmation" },
+  "feedShowResults": "Show results",
+  "@feedShowResults": { "description": "Filter option for show results" },
+  "feedChampionTitles": "Champion titles",
+  "@feedChampionTitles": { "description": "Filter option for champion titles" },
+  "feedLitterAnnouncements": "Litter announcements",
+  "@feedLitterAnnouncements": { "description": "Filter option for litter announcements" },
+  "feedPuppiesAvailable": "Puppies available",
+  "@feedPuppiesAvailable": { "description": "Filter option for available puppies" },
+  "feedMinutesAgo": "{minutes} min ago",
+  "@feedMinutesAgo": { "description": "Time ago in minutes", "placeholders": { "minutes": { "type": "int" } } },
+  "feedHoursAgo": "{hours}h ago",
+  "@feedHoursAgo": { "description": "Time ago in hours", "placeholders": { "hours": { "type": "int" } } },
+  "feedDaysAgo": "{days}d ago",
+  "@feedDaysAgo": { "description": "Time ago in days", "placeholders": { "days": { "type": "int" } } },
+  "feedFollowersOnly": "Followers only",
+  "@feedFollowersOnly": { "description": "Visibility label for followers-only posts" },
+  "feedSearchKennelsTitle": "Find kennels",
+  "@feedSearchKennelsTitle": { "description": "Kennel search sheet title" },
+  "feedSearchKennelsHint": "Search kennel name...",
+  "@feedSearchKennelsHint": { "description": "Kennel search placeholder" },
+  "feedSearchKennelsPrompt": "Search for kennels by name",
+  "@feedSearchKennelsPrompt": { "description": "Prompt before searching" },
+  "feedFollowers": "followers",
+  "@feedFollowers": { "description": "Followers count label" },
+  "feedFollow": "Follow",
+  "@feedFollow": { "description": "Follow button text" },
+  "feedUnfollow": "Unfollow",
+  "@feedUnfollow": { "description": "Unfollow button text" },
+  "feedShareTitle": "Share on Breedly?",
+  "@feedShareTitle": { "description": "Share to feed dialog title" },
+  "feedPostPublished": "Shared on Breedly!",
+  "@feedPostPublished": { "description": "Success message after sharing" },
+  "feedVisibility": "Visibility",
+  "@feedVisibility": { "description": "Visibility selector label" },
+  "feedPublic": "Everyone",
+  "@feedPublic": { "description": "Public visibility option" },
+  "feedSkip": "Skip",
+  "@feedSkip": { "description": "Skip sharing button" },
+  "feedPublish": "Share",
+  "@feedPublish": { "description": "Publish to feed button" },
+  "seeAll": "See all",
+  "@seeAll": { "description": "See all link text" }
 }

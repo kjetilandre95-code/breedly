@@ -212,6 +212,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get upcomingEvents => 'Upcoming events';
 
   @override
+  String get attentionNeeded => 'Needs attention';
+
+  @override
   String get newDog => 'New dog';
 
   @override
@@ -596,6 +599,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String matingWindow(String dogName) {
     return 'Mating window: $dogName';
   }
+
+  @override
+  String get matingWindows => 'Mating windows';
 
   @override
   String dueDate(String dogName) {
@@ -5152,4 +5158,94 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get msgLookingForward => 'We look forward to seeing you!';
+
+  @override
+  String get feedTitle => 'News';
+
+  @override
+  String get feedFollowing => 'Following';
+
+  @override
+  String get feedAll => 'All';
+
+  @override
+  String get feedNoFollowing => 'No news from kennels you follow yet';
+
+  @override
+  String get feedNoNews => 'No news yet';
+
+  @override
+  String get feedSearchKennels => 'Search for kennels to follow';
+
+  @override
+  String get feedDeleteConfirm => 'Are you sure you want to delete this post?';
+
+  @override
+  String get feedShowResults => 'Show results';
+
+  @override
+  String get feedChampionTitles => 'Champion titles';
+
+  @override
+  String get feedLitterAnnouncements => 'Litter announcements';
+
+  @override
+  String get feedPuppiesAvailable => 'Puppies available';
+
+  @override
+  String feedMinutesAgo(int minutes) {
+    return '$minutes min ago';
+  }
+
+  @override
+  String feedHoursAgo(int hours) {
+    return '${hours}h ago';
+  }
+
+  @override
+  String feedDaysAgo(int days) {
+    return '${days}d ago';
+  }
+
+  @override
+  String get feedFollowersOnly => 'Followers only';
+
+  @override
+  String get feedSearchKennelsTitle => 'Find kennels';
+
+  @override
+  String get feedSearchKennelsHint => 'Search kennel name...';
+
+  @override
+  String get feedSearchKennelsPrompt => 'Search for kennels by name';
+
+  @override
+  String get feedFollowers => 'followers';
+
+  @override
+  String get feedFollow => 'Follow';
+
+  @override
+  String get feedUnfollow => 'Unfollow';
+
+  @override
+  String get feedShareTitle => 'Share on Breedly?';
+
+  @override
+  String get feedPostPublished => 'Shared on Breedly!';
+
+  @override
+  String get feedVisibility => 'Visibility';
+
+  @override
+  String get feedPublic => 'Everyone';
+
+  @override
+  String get feedSkip => 'Skip';
+
+  @override
+  String get feedPublish => 'Share';
+
+  @override
+  String get seeAll => 'See all';
 }

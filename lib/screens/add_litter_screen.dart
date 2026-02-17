@@ -18,6 +18,10 @@ import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
+import 'package:breedly/services/feed_service.dart';
+import 'package:breedly/services/kennel_service.dart';
+import 'package:breedly/models/feed_post.dart';
+import 'package:breedly/models/kennel.dart';
 import 'package:breedly/utils/logger.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 
@@ -149,9 +153,133 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
               : l10n.litterAdded)),
         );
 
-        Navigator.pop(context);
+        // Offer to share to feed (only for actual births, not planned)
+        if (!_isPlannedLitter) {
+          _showShareLitterToFeedDialog(litter);
+        } else {
+          Navigator.pop(context);
+        }
       }
     }
+  }
+
+  void _showShareLitterToFeedDialog(Litter litter) async {
+    final l10n = AppLocalizations.of(context)!;
+
+    final shouldShare = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.newspaper_rounded, color: AppColors.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(l10n.feedShareTitle),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: context.colors.surfaceVariant,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.pets, color: AppColors.success),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          litter.breed,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${litter.numberOfPuppies} ${l10n.puppies} '
+                          '($_actualMalesCount ♂, $_actualFemalesCount ♀)',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              l10n.feedVisibility,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, null),
+            child: Text(l10n.feedSkip),
+          ),
+          OutlinedButton.icon(
+            onPressed: () => Navigator.pop(context, 'followersOnly'),
+            icon: const Icon(Icons.lock_outline, size: 16),
+            label: Text(l10n.feedFollowersOnly),
+          ),
+          FilledButton.icon(
+            onPressed: () => Navigator.pop(context, 'public'),
+            icon: const Icon(Icons.public, size: 16),
+            label: Text(l10n.feedPublish),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldShare != null && mounted) {
+      try {
+        final userId = AuthService().currentUserId ?? '';
+        final kennelId = KennelService().activeKennelId ?? userId;
+
+        String kennelName = 'Ukjent kennel';
+        try {
+          final kennelBox = Hive.box<Kennel>('kennel');
+          final kennel = kennelBox.values.firstOrNull;
+          if (kennel != null) kennelName = kennel.name;
+        } catch (_) {}
+
+        final post = FeedPost.fromLitterAnnouncement(
+          id: IdGenerator.generateId(),
+          authorId: userId,
+          kennelId: kennelId,
+          kennelName: kennelName,
+          breed: litter.breed,
+          damName: litter.damName,
+          sireName: litter.sireName,
+          puppyCount: litter.numberOfPuppies,
+          maleCount: _actualMalesCount,
+          femaleCount: _actualFemalesCount,
+          dateOfBirth: litter.dateOfBirth,
+          visibility: shouldShare,
+        );
+
+        await FeedService().publishPost(post);
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.feedPostPublished),
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+      } catch (e) {
+        AppLogger.error('Failed to share litter to feed', e);
+      }
+    }
+
+    if (mounted) Navigator.pop(context);
   }
 
   void _generatePuppies(Litter litter) {

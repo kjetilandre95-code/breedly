@@ -52,6 +52,9 @@ class Dog extends HiveObject {
   @HiveField(15)
   bool isPedigreeOnly = false; // True for dogs that only exist in pedigrees
 
+  @HiveField(16)
+  bool tilleggskravCompleted = false; // NKK tilleggskrav for NO UCH fulfilled
+
   Dog({
     required this.id,
     required this.name,
@@ -69,6 +72,7 @@ class Dog extends HiveObject {
     this.championships = const [],
     this.deathDate,
     this.isPedigreeOnly = false,
+    this.tilleggskravCompleted = false,
   });
 
   int getAgeInYears() {
@@ -135,6 +139,7 @@ class Dog extends HiveObject {
       'championships': championships,
       'deathDate': deathDate?.toIso8601String(),
       'isPedigreeOnly': isPedigreeOnly,
+      'tilleggskravCompleted': tilleggskravCompleted,
     };
   }
 
@@ -164,6 +169,7 @@ class Dog extends HiveObject {
           ? DateTime.parse(json['deathDate']) 
           : null,
       isPedigreeOnly: json['isPedigreeOnly'] ?? false,
+      tilleggskravCompleted: json['tilleggskravCompleted'] ?? false,
     );
   }
 }

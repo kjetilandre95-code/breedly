@@ -212,6 +212,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String get upcomingEvents => 'Tulevat tapahtumat';
 
   @override
+  String get attentionNeeded => 'Vaatii huomiota';
+
+  @override
   String get newDog => 'Uusi koira';
 
   @override
@@ -599,6 +602,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String matingWindow(String dogName) {
     return 'Astutusikkuna: $dogName';
   }
+
+  @override
+  String get matingWindows => 'Paritusikkunat';
 
   @override
   String dueDate(String dogName) {
@@ -5159,4 +5165,94 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get msgLookingForward => 'Odotamme innolla tapaamista!';
+
+  @override
+  String get feedTitle => 'Uutiset';
+
+  @override
+  String get feedFollowing => 'Seurattavat';
+
+  @override
+  String get feedAll => 'Kaikki';
+
+  @override
+  String get feedNoFollowing => 'Ei uutisia seuraamiltasi kenneleiltä vielä';
+
+  @override
+  String get feedNoNews => 'Ei uutisia vielä';
+
+  @override
+  String get feedSearchKennels => 'Hae kenneleitä seurattavaksi';
+
+  @override
+  String get feedDeleteConfirm => 'Haluatko varmasti poistaa tämän julkaisun?';
+
+  @override
+  String get feedShowResults => 'Näyttelytulokset';
+
+  @override
+  String get feedChampionTitles => 'Muotovaliotittelit';
+
+  @override
+  String get feedLitterAnnouncements => 'Pentue-ilmoitukset';
+
+  @override
+  String get feedPuppiesAvailable => 'Pentuja saatavilla';
+
+  @override
+  String feedMinutesAgo(int minutes) {
+    return '$minutes min sitten';
+  }
+
+  @override
+  String feedHoursAgo(int hours) {
+    return '${hours}t sitten';
+  }
+
+  @override
+  String feedDaysAgo(int days) {
+    return '${days}pv sitten';
+  }
+
+  @override
+  String get feedFollowersOnly => 'Vain seuraajat';
+
+  @override
+  String get feedSearchKennelsTitle => 'Etsi kenneleitä';
+
+  @override
+  String get feedSearchKennelsHint => 'Hae kennelin nimellä...';
+
+  @override
+  String get feedSearchKennelsPrompt => 'Hae kenneleitä nimellä';
+
+  @override
+  String get feedFollowers => 'seuraajaa';
+
+  @override
+  String get feedFollow => 'Seuraa';
+
+  @override
+  String get feedUnfollow => 'Lopeta seuraaminen';
+
+  @override
+  String get feedShareTitle => 'Jaa Breedlyssä?';
+
+  @override
+  String get feedPostPublished => 'Jaettu Breedlyssä!';
+
+  @override
+  String get feedVisibility => 'Näkyvyys';
+
+  @override
+  String get feedPublic => 'Kaikki';
+
+  @override
+  String get feedSkip => 'Ohita';
+
+  @override
+  String get feedPublish => 'Jaa';
+
+  @override
+  String get seeAll => 'Katso kaikki';
 }

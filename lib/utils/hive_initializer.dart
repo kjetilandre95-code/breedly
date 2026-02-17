@@ -28,6 +28,7 @@ import 'package:breedly/models/reservation_contract.dart';
 import 'package:breedly/models/kennel.dart';
 import 'package:breedly/models/kennel_member.dart';
 import 'package:breedly/models/kennel_invitation.dart';
+import 'package:breedly/models/feed_post.dart';
 
 /// Initialiserer alle Hive adapters og åpner bokser
 Future<void> initializeHive() async {
@@ -62,6 +63,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(KennelAdapter());
   Hive.registerAdapter(KennelMemberAdapter());
   Hive.registerAdapter(KennelInvitationAdapter());
+  Hive.registerAdapter(FeedPostAdapter());
 
   // Open all boxes
   await Hive.openBox<Litter>('litters');
@@ -91,4 +93,5 @@ Future<void> initializeHive() async {
   await Hive.openBox<FosterContract>('foster_contracts');
   await Hive.openBox<ReservationContract>('reservation_contracts');
   await Hive.openBox<Kennel>('kennel');
+  await Hive.openBox<FeedPost>('feed_posts');
 }

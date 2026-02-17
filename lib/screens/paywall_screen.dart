@@ -9,12 +9,16 @@ class PaywallScreen extends StatefulWidget {
   /// Called when the user successfully subscribes or redeems a promo code
   final VoidCallback? onSubscribed;
 
+  /// Called when the user dismisses/skips the paywall
+  final VoidCallback? onDismissed;
+
   /// Whether to show a close/skip button (false = mandatory paywall)
   final bool allowDismiss;
 
   const PaywallScreen({
     super.key,
     this.onSubscribed,
+    this.onDismissed,
     this.allowDismiss = false,
   });
 
@@ -54,7 +58,13 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     top: AppSpacing.sm,
                   ),
                   child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () {
+                      if (widget.onDismissed != null) {
+                        widget.onDismissed!();
+                      } else {
+                        Navigator.of(context).pop();
+                      }
+                    },
                     icon: Icon(
                       Icons.close_rounded,
                       color: isDark

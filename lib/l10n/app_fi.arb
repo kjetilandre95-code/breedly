@@ -67,6 +67,7 @@
   "overview": "Yleiskatsaus",
   "statistics": "Tilastot",
   "upcomingEvents": "Tulevat tapahtumat",
+  "attentionNeeded": "Vaatii huomiota",
   "newDog": "Uusi koira",
   "kennel": "Kenneli",
   "all": "Kaikki",
@@ -231,6 +232,7 @@
       "dogName": {"type": "String"}
     }
   },
+  "matingWindows": "Paritusikkunat",
   "dueDate": "Laskettu aika: {dogName}",
   "@dueDate": {
     "placeholders": {
@@ -1786,5 +1788,33 @@
   "msgBlanketWithHomeScent": "Peitto kodin tuoksulla",
   "msgWaterForTrip": "Vettä matkalle",
   "msgAddress": "Osoite: {address}",
-  "msgLookingForward": "Odotamme innolla tapaamista!"
+  "msgLookingForward": "Odotamme innolla tapaamista!",
+  "feedTitle": "Uutiset",
+  "feedFollowing": "Seurattavat",
+  "feedAll": "Kaikki",
+  "feedNoFollowing": "Ei uutisia seuraamiltasi kenneleiltä vielä",
+  "feedNoNews": "Ei uutisia vielä",
+  "feedSearchKennels": "Hae kenneleitä seurattavaksi",
+  "feedDeleteConfirm": "Haluatko varmasti poistaa tämän julkaisun?",
+  "feedShowResults": "Näyttelytulokset",
+  "feedChampionTitles": "Muotovaliotittelit",
+  "feedLitterAnnouncements": "Pentue-ilmoitukset",
+  "feedPuppiesAvailable": "Pentuja saatavilla",
+  "feedMinutesAgo": "{minutes} min sitten",
+  "feedHoursAgo": "{hours}t sitten",
+  "feedDaysAgo": "{days}pv sitten",
+  "feedFollowersOnly": "Vain seuraajat",
+  "feedSearchKennelsTitle": "Etsi kenneleitä",
+  "feedSearchKennelsHint": "Hae kennelin nimellä...",
+  "feedSearchKennelsPrompt": "Hae kenneleitä nimellä",
+  "feedFollowers": "seuraajaa",
+  "feedFollow": "Seuraa",
+  "feedUnfollow": "Lopeta seuraaminen",
+  "feedShareTitle": "Jaa Breedlyssä?",
+  "feedPostPublished": "Jaettu Breedlyssä!",
+  "feedVisibility": "Näkyvyys",
+  "feedPublic": "Kaikki",
+  "feedSkip": "Ohita",
+  "feedPublish": "Jaa",
+  "seeAll": "Katso kaikki"
 }

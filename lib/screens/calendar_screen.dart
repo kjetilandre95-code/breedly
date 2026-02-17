@@ -6,6 +6,7 @@ import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/treatment_plan.dart';
 import 'package:breedly/models/puppy.dart';
+import 'package:breedly/models/vaccine.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +16,11 @@ import 'package:breedly/utils/theme_colors.dart';
 enum CalendarEventType {
   heatCycle, // Løpetid
   expectedHeat, // Forventet løpetid
+  matingWindow, // Parringsvindu (beregnet fra løpetid)
   expectedBirth, // Forventet fødsel
   delivery, // Leveringsdato
   treatment, // Behandling (vaksinering, ormekur)
+  vaccine, // Vaksine for voksen hund
   birthday, // Hundens bursdag
 }
 
@@ -216,6 +219,77 @@ class _CalendarScreenState extends State<CalendarScreen> {
       }
     } catch (e) {
       // Treatment plan box might not exist
+    }
+
+    // Mating window (optimal days 10-14 after expected heat)
+    for (final dog in dogBox.values) {
+      if (dog.gender == 'Female' && dog.heatCycles.isNotEmpty) {
+        final lastCycle = dog.heatCycles.reduce((a, b) => a.isAfter(b) ? a : b);
+        final expectedHeat = lastCycle.add(const Duration(days: 180));
+        if (expectedHeat.isAfter(DateTime.now())) {
+          // Mating window: days 10-14 after heat start
+          for (int day = 10; day <= 14; day++) {
+            final matingDay = expectedHeat.add(Duration(days: day));
+            events.add(
+              CalendarEvent(
+                id: 'mating_${dog.id}_day$day',
+                title: l10n.matingWindow(dog.name),
+                subtitle: '${l10n.msgDaySingular} $day',
+                date: matingDay,
+                type: CalendarEventType.matingWindow,
+                color: AppColors.accent4,
+                dogId: dog.id,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    // Expected birth date from litters with estimatedDueDate
+    for (final litter in litterBox.values) {
+      if (litter.estimatedDueDate != null &&
+          litter.estimatedDueDate!.isAfter(DateTime.now().subtract(const Duration(days: 7)))) {
+        events.add(
+          CalendarEvent(
+            id: 'expected_birth_${litter.id}',
+            title: l10n.estimatedBirthColon(litter.damName),
+            date: litter.estimatedDueDate!,
+            type: CalendarEventType.expectedBirth,
+            color: AppColors.accent5,
+            litterId: litter.id,
+          ),
+        );
+      }
+    }
+
+    // Vaccine reminders for adult dogs
+    try {
+      final vaccineBox = Hive.box<Vaccine>('vaccines');
+      for (final vaccine in vaccineBox.values) {
+        if (vaccine.nextDueDate != null && vaccine.reminderEnabled) {
+          // Find dog name
+          final dog = dogBox.values.where((d) => d.id == vaccine.dogId).firstOrNull;
+          final dogName = dog?.name ?? l10n.unknownDog;
+
+          // Show vaccine due date
+          events.add(
+            CalendarEvent(
+              id: 'vaccine_due_${vaccine.id}',
+              title: '${vaccine.name} – $dogName',
+              subtitle: vaccine.isOverdue()
+                  ? l10n.overdueLabel
+                  : null,
+              date: vaccine.nextDueDate!,
+              type: CalendarEventType.vaccine,
+              color: vaccine.isOverdue() ? AppColors.error : AppColors.accent1,
+              dogId: vaccine.dogId,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Vaccine box might not exist
     }
 
     // Dog birthdays
@@ -468,12 +542,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
         return l10n.heatCycles;
       case CalendarEventType.expectedHeat:
         return l10n.expectedHeatCycles;
+      case CalendarEventType.matingWindow:
+        return l10n.matingWindows;
       case CalendarEventType.expectedBirth:
         return l10n.estimatedBirthDate;
       case CalendarEventType.delivery:
         return l10n.deliveryDate;
       case CalendarEventType.treatment:
         return l10n.treatments;
+      case CalendarEventType.vaccine:
+        return l10n.vaccinesTab;
       case CalendarEventType.birthday:
         return l10n.birthdays;
     }
@@ -485,11 +563,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
         return AppColors.female;
       case CalendarEventType.expectedHeat:
         return AppColors.female;
+      case CalendarEventType.matingWindow:
+        return AppColors.accent4;
       case CalendarEventType.expectedBirth:
         return AppColors.accent5;
       case CalendarEventType.delivery:
         return AppColors.warning;
       case CalendarEventType.treatment:
+        return AppColors.accent1;
+      case CalendarEventType.vaccine:
         return AppColors.accent1;
       case CalendarEventType.birthday:
         return AppColors.accent3;
@@ -508,12 +590,16 @@ class _EventCard extends StatelessWidget {
       case CalendarEventType.heatCycle:
       case CalendarEventType.expectedHeat:
         return Icons.favorite;
+      case CalendarEventType.matingWindow:
+        return Icons.favorite_border;
       case CalendarEventType.expectedBirth:
         return Icons.pets;
       case CalendarEventType.delivery:
         return Icons.local_shipping;
       case CalendarEventType.treatment:
         return Icons.medical_services;
+      case CalendarEventType.vaccine:
+        return Icons.vaccines;
       case CalendarEventType.birthday:
         return Icons.cake;
     }

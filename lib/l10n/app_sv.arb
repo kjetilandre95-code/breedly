@@ -67,6 +67,7 @@
   "overview": "Översikt",
   "statistics": "Statistik",
   "upcomingEvents": "Kommande händelser",
+  "attentionNeeded": "Behöver uppmärksamhet",
   "newDog": "Ny hund",
   "kennel": "Kennel",
   "all": "Alla",
@@ -231,6 +232,7 @@
       "dogName": {"type": "String"}
     }
   },
+  "matingWindows": "Parningsfönster",
   "dueDate": "Beräknad födsel: {dogName}",
   "@dueDate": {
     "placeholders": {
@@ -1788,5 +1790,33 @@
   "msgBlanketWithHomeScent": "Filt med hemdoft",
   "msgWaterForTrip": "Vatten till resan",
   "msgAddress": "Adress: {address}",
-  "msgLookingForward": "Vi ser fram emot att träffa dig!"
+  "msgLookingForward": "Vi ser fram emot att träffa dig!",
+  "feedTitle": "Nyheter",
+  "feedFollowing": "Följer",
+  "feedAll": "Alla",
+  "feedNoFollowing": "Inga nyheter från kennlar du följer ännu",
+  "feedNoNews": "Inga nyheter ännu",
+  "feedSearchKennels": "Sök efter kennlar att följa",
+  "feedDeleteConfirm": "Är du säker på att du vill ta bort det här inlägget?",
+  "feedShowResults": "Utställningsresultat",
+  "feedChampionTitles": "Championtitlar",
+  "feedLitterAnnouncements": "Kullmeddelanden",
+  "feedPuppiesAvailable": "Valpar tillgängliga",
+  "feedMinutesAgo": "{minutes} min sedan",
+  "feedHoursAgo": "{hours}t sedan",
+  "feedDaysAgo": "{days}d sedan",
+  "feedFollowersOnly": "Bara följare",
+  "feedSearchKennelsTitle": "Hitta kennlar",
+  "feedSearchKennelsHint": "Sök kennelnamn...",
+  "feedSearchKennelsPrompt": "Sök efter kennlar efter namn",
+  "feedFollowers": "följare",
+  "feedFollow": "Följ",
+  "feedUnfollow": "Sluta följa",
+  "feedShareTitle": "Dela på Breedly?",
+  "feedPostPublished": "Delat på Breedly!",
+  "feedVisibility": "Synlighet",
+  "feedPublic": "Alla",
+  "feedSkip": "Hoppa över",
+  "feedPublish": "Dela",
+  "seeAll": "Se alla"
 }
