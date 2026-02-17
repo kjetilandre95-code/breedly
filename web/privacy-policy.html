@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personvernerklæring — Breedly</title>
+  <style>
+    :root {
+      --primary: #6B4EFF;
+      --bg: #FAFAFA;
+      --card: #FFFFFF;
+      --text: #1A1A2E;
+      --muted: #6B7280;
+      --border: #E5E7EB;
+      --accent: #F0EDFF;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0;
+    }
+    .header {
+      background: linear-gradient(135deg, var(--primary), #8B6FFF);
+      color: white;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .header h1 { font-size: 28px; margin-bottom: 8px; }
+    .header p { opacity: 0.9; font-size: 14px; }
+    .lang-switch {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .lang-switch a {
+      color: white;
+      text-decoration: none;
+      padding: 6px 16px;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 20px;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    .lang-switch a:hover, .lang-switch a.active {
+      background: rgba(255,255,255,0.2);
+      border-color: white;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
+    h3 { font-size: 15px; margin: 16px 0 8px; }
+    p, li { font-size: 14px; color: #374151; }
+    ul { padding-left: 20px; margin: 8px 0; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    th { background: var(--accent); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .contact-box {
+      background: var(--accent);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .contact-box p { margin: 4px 0; }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 8px;
+    }
+    .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }
+    .hidden { display: none; }
+    @media (max-width: 480px) {
+      .section { padding: 16px; }
+      table { font-size: 12px; }
+      th, td { padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🐾 Breedly</h1>
+    <p id="header-subtitle">Personvernerklæring</p>
+    <div class="lang-switch">
+      <a href="#" id="btn-no" class="active" onclick="switchLang('no'); return false;">🇳🇴 Norsk</a>
+      <a href="#" id="btn-en" onclick="switchLang('en'); return false;">🇬🇧 English</a>
+    </div>
+  </div>
+
+  <!-- ===== NORSK ===== -->
+  <div class="container" id="lang-no">
+    <div class="section">
+      <h2>1. Introduksjon</h2>
+      <p>Denne personvernerklæringen beskriver hvordan Breedly («vi», «oss», «appen») samler inn, bruker og beskytter dine personopplysninger. Breedly er en app for hundeoppdrett og kullhåndtering utviklet av Kjetil Skalstad.</p>
+      <p style="margin-top:8px">Ved å bruke appen godtar du behandlingen av data som beskrevet i denne erklæringen.</p>
+      <p style="margin-top:8px"><strong>Sist oppdatert:</strong> 17. februar 2026</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Behandlingsansvarlig</h2>
+      <div class="contact-box">
+        <p><strong>Kjetil Skalstad</strong></p>
+        <p>Bakkeløkka 9, 3340 Åmot, Norge</p>
+        <p>E-post: <a href="mailto:kjetilandre95@gmail.com">kjetilandre95@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. Hvilke data samler vi inn?</h2>
+
+      <h3>3.1 Kontoopplysninger</h3>
+      <p>Når du oppretter en konto, lagrer vi:</p>
+      <ul>
+        <li>E-postadresse</li>
+        <li>Visningsnavn</li>
+        <li>Profilbilde-URL (ved Google-innlogging)</li>
+      </ul>
+
+      <h3>3.2 Oppdrettsdata</h3>
+      <p>Data du legger inn selv om dine hunder og kull:</p>
+      <ul>
+        <li>Hundeinformasjon (navn, rase, farge, fødselsdato, registreringsnummer)</li>
+        <li>Helsedata (vaksiner, veterinærbesøk, DNA-tester, medisiner, vekt)</li>
+        <li>Kulldata (valper, vektlogg, temperaturmålinger, behandlingsplaner)</li>
+        <li>Utstillingsresultater og championater</li>
+        <li>Kontrakter (kjøp, avl, medeierskap, fôrvertskap, reservasjon)</li>
+        <li>Økonomi (inntekter og utgifter)</li>
+      </ul>
+
+      <h3>3.3 Kjøperopplysninger</h3>
+      <p>Kontaktinfo du registrerer om valpekjøpere:</p>
+      <ul>
+        <li>Navn, e-post, telefon, adresse</li>
+        <li>Preferanser og ventelisteposisjon</li>
+      </ul>
+
+      <h3>3.4 Kennelprofil</h3>
+      <ul>
+        <li>Kennelnavn, kontakt-e-post, telefon, adresse, nettside</li>
+      </ul>
+
+      <h3>3.5 Bilder</h3>
+      <ul>
+        <li>Bilder av hunder lagres <strong>kun lokalt på enheten din</strong></li>
+        <li>Stamtavlebilder kan sendes til Google Gemini AI for tekstgjenkjenning (OCR) — disse lagres ikke permanent</li>
+      </ul>
+
+      <h3>3.6 Automatisk innsamlede data</h3>
+      <ul>
+        <li>Firebase Analytics samler inn standard app-bruksdata (appåpninger, enhetstype, OS-versjon)</li>
+        <li>Vi sporer <strong>ingen</strong> egendefinerte brukerevents</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>4. Hvordan bruker vi dataene?</h2>
+      <table>
+        <tr><th>Formål</th><th>Rettslig grunnlag</th></tr>
+        <tr><td>Levere appens kjernefunksjonalitet</td><td>Avtale (GDPR art. 6(1)(b))</td></tr>
+        <tr><td>Synkronisere data på tvers av enheter</td><td>Avtale</td></tr>
+        <tr><td>Håndtere abonnement og kjøp</td><td>Avtale</td></tr>
+        <tr><td>Sende lokale påminnelser (vaksiner, ormekur, levering)</td><td>Avtale</td></tr>
+        <tr><td>Forbedre appen (aggregert bruksstatistikk)</td><td>Berettiget interesse (GDPR art. 6(1)(f))</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>5. Tredjepartstjenester</h2>
+      <p>Vi bruker følgende tredjepartstjenester for å drifte appen:</p>
+      <table>
+        <tr><th>Tjeneste</th><th>Formål</th><th>Data delt</th></tr>
+        <tr><td>Google Firebase<br><span style="font-size:11px;color:#6B7280">Auth, Firestore, Analytics</span></td><td>Autentisering, datalagring, statistikk</td><td>Kontoinfo, oppdrettsdata, app-bruk</td></tr>
+        <tr><td>Google Gemini AI<br><span style="font-size:11px;color:#6B7280">Via Cloud Functions</span></td><td>Stamtavleskanning (OCR)</td><td>Bilder av stamtavler (ikke lagret)</td></tr>
+        <tr><td>Google Sign-In</td><td>Innlogging</td><td>Google-kontoinformasjon</td></tr>
+        <tr><td>RevenueCat</td><td>Abonnementshåndtering</td><td>Bruker-ID, kjøpshistorikk, plattform</td></tr>
+      </table>
+      <p style="margin-top:12px">Vi bruker <strong>ingen</strong> reklametjenester, sporingsteknologi eller tredjeparts-analyseverktøy utover Firebase Analytics.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Datalagring og sikkerhet</h2>
+      <ul>
+        <li><strong>Lokal lagring:</strong> App-data lagres lokalt på enheten din via Hive-databasen og er tilgjengelig offline.</li>
+        <li><strong>Skylagring:</strong> Ved innlogging synkroniseres data til Google Firebase (servere i EU/EØS via Google Cloud).</li>
+        <li><strong>Kryptering:</strong> All dataoverføring skjer via HTTPS/TLS. Firebase bruker kryptering i ro.</li>
+        <li><strong>Bilder:</strong> Lagres kun lokalt — ikke i skyen.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>7. Deling av data</h2>
+      <ul>
+        <li><strong>Flerbrukerfunksjon:</strong> Du kan dele oppdrettsdata med andre brukere via kennelgrupper. Kun brukere du inviterer får tilgang.</li>
+        <li><strong>Deling av oppdateringer:</strong> Du kan velge å dele valpeoppdateringer via SMS eller e-post. Innholdet genereres lokalt og sendes via enhetens meldingsapper.</li>
+        <li><strong>PDF-eksport:</strong> Genererte kontrakter og helsesertifikater lagres lokalt.</li>
+        <li>Vi selger <strong>aldri</strong> dine data til tredjeparter.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>8. Dine rettigheter (GDPR)</h2>
+      <p>Som bruker har du følgende rettigheter:</p>
+      <ul>
+        <li><strong>Innsyn:</strong> Rett til å se hvilke data vi har om deg</li>
+        <li><strong>Retting:</strong> Rett til å korrigere uriktige opplysninger</li>
+        <li><strong>Sletting:</strong> Rett til å slette kontoen din og all tilhørende data. Du kan slette kontoen direkte i appen under Innstillinger → Slett konto.</li>
+        <li><strong>Dataportabilitet:</strong> Rett til å eksportere dine data</li>
+        <li><strong>Begrensning:</strong> Rett til å begrense behandlingen</li>
+        <li><strong>Innsigelse:</strong> Rett til å motsette deg behandling basert på berettiget interesse</li>
+      </ul>
+      <p style="margin-top:12px">For å utøve dine rettigheter, kontakt oss på <a href="mailto:kjetilandre95@gmail.com">kjetilandre95@gmail.com</a>.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Barns personvern</h2>
+      <p>Breedly er ikke rettet mot barn under 16 år. Vi samler ikke bevisst inn personopplysninger fra barn. Dersom vi blir kjent med at vi har samlet inn data fra et barn under 16 år, vil vi slette denne informasjonen.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Tillatelser</h2>
+      <table>
+        <tr><th>Tillatelse</th><th>Formål</th></tr>
+        <tr><td>Internett</td><td>Synkronisering med Firebase, abonnementshåndtering</td></tr>
+        <tr><td>Kamera</td><td>Ta bilder av hunder og stamtavler</td></tr>
+        <tr><td>Bildegalleri</td><td>Velge bilder fra enheten</td></tr>
+        <tr><td>Varsler</td><td>Lokale påminnelser om vaksiner, ormekur og levering</td></tr>
+        <tr><td>Fillagring</td><td>Lagre eksporterte PDF-filer</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>11. Endringer i personvernerklæringen</h2>
+      <p>Vi kan oppdatere denne erklæringen fra tid til annen. Ved vesentlige endringer vil vi varsle brukere i appen. Den gjeldende versjonen er alltid tilgjengelig via appen og denne nettsiden.</p>
+    </div>
+
+    <div class="section">
+      <h2>12. Kontakt oss</h2>
+      <p>Har du spørsmål om personvern eller behandling av dine data?</p>
+      <div class="contact-box">
+        <p><strong>Kjetil Skalstad</strong></p>
+        <p>📧 <a href="mailto:kjetilandre95@gmail.com">kjetilandre95@gmail.com</a></p>
+        <p>📍 Bakkeløkka 9, 3340 Åmot, Norge</p>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:#6B7280">Du kan også klage til Datatilsynet dersom du mener vi behandler dine personopplysninger i strid med personvernregelverket: <a href="https://www.datatilsynet.no" target="_blank">www.datatilsynet.no</a></p>
+    </div>
+  </div>
+
+  <!-- ===== ENGLISH ===== -->
+  <div class="container hidden" id="lang-en">
+    <div class="section">
+      <h2>1. Introduction</h2>
+      <p>This privacy policy describes how Breedly ("we", "us", "the app") collects, uses, and protects your personal data. Breedly is a dog breeding management app developed by Kjetil Skalstad.</p>
+      <p style="margin-top:8px">By using the app, you agree to the data processing described in this policy.</p>
+      <p style="margin-top:8px"><strong>Last updated:</strong> February 17, 2026</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Data Controller</h2>
+      <div class="contact-box">
+        <p><strong>Kjetil Skalstad</strong></p>
+        <p>Bakkeløkka 9, 3340 Åmot, Norway</p>
+        <p>Email: <a href="mailto:kjetilandre95@gmail.com">kjetilandre95@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. What Data Do We Collect?</h2>
+
+      <h3>3.1 Account Information</h3>
+      <p>When you create an account, we store:</p>
+      <ul>
+        <li>Email address</li>
+        <li>Display name</li>
+        <li>Profile photo URL (when using Google Sign-In)</li>
+      </ul>
+
+      <h3>3.2 Breeding Data</h3>
+      <p>Data you enter about your dogs and litters:</p>
+      <ul>
+        <li>Dog information (name, breed, color, date of birth, registration number)</li>
+        <li>Health data (vaccines, vet visits, DNA tests, medications, weight)</li>
+        <li>Litter data (puppies, weight logs, temperature measurements, treatment plans)</li>
+        <li>Show results and championships</li>
+        <li>Contracts (purchase, breeding, co-ownership, foster, reservation)</li>
+        <li>Finances (income and expenses)</li>
+      </ul>
+
+      <h3>3.3 Buyer Information</h3>
+      <p>Contact information you register about puppy buyers:</p>
+      <ul>
+        <li>Name, email, phone, address</li>
+        <li>Preferences and waitlist position</li>
+      </ul>
+
+      <h3>3.4 Kennel Profile</h3>
+      <ul>
+        <li>Kennel name, contact email, phone, address, website</li>
+      </ul>
+
+      <h3>3.5 Images</h3>
+      <ul>
+        <li>Photos of dogs are stored <strong>only locally on your device</strong></li>
+        <li>Pedigree images may be sent to Google Gemini AI for text recognition (OCR) — these are not stored permanently</li>
+      </ul>
+
+      <h3>3.6 Automatically Collected Data</h3>
+      <ul>
+        <li>Firebase Analytics collects standard app usage data (app opens, device type, OS version)</li>
+        <li>We track <strong>no</strong> custom user events</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>4. How Do We Use Your Data?</h2>
+      <table>
+        <tr><th>Purpose</th><th>Legal Basis</th></tr>
+        <tr><td>Deliver core app functionality</td><td>Contract (GDPR Art. 6(1)(b))</td></tr>
+        <tr><td>Sync data across devices</td><td>Contract</td></tr>
+        <tr><td>Manage subscriptions and purchases</td><td>Contract</td></tr>
+        <tr><td>Send local reminders (vaccines, deworming, delivery)</td><td>Contract</td></tr>
+        <tr><td>Improve the app (aggregated usage statistics)</td><td>Legitimate interest (GDPR Art. 6(1)(f))</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>5. Third-Party Services</h2>
+      <p>We use the following third-party services to operate the app:</p>
+      <table>
+        <tr><th>Service</th><th>Purpose</th><th>Data Shared</th></tr>
+        <tr><td>Google Firebase<br><span style="font-size:11px;color:#6B7280">Auth, Firestore, Analytics</span></td><td>Authentication, data storage, statistics</td><td>Account info, breeding data, app usage</td></tr>
+        <tr><td>Google Gemini AI<br><span style="font-size:11px;color:#6B7280">Via Cloud Functions</span></td><td>Pedigree scanning (OCR)</td><td>Pedigree images (not stored)</td></tr>
+        <tr><td>Google Sign-In</td><td>Authentication</td><td>Google account information</td></tr>
+        <tr><td>RevenueCat</td><td>Subscription management</td><td>User ID, purchase history, platform</td></tr>
+      </table>
+      <p style="margin-top:12px">We use <strong>no</strong> advertising services, tracking technologies, or third-party analytics tools beyond Firebase Analytics.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Data Storage and Security</h2>
+      <ul>
+        <li><strong>Local storage:</strong> App data is stored locally on your device via the Hive database and is available offline.</li>
+        <li><strong>Cloud storage:</strong> When logged in, data is synced to Google Firebase (servers in the EU/EEA via Google Cloud).</li>
+        <li><strong>Encryption:</strong> All data transfers use HTTPS/TLS. Firebase uses encryption at rest.</li>
+        <li><strong>Images:</strong> Stored locally only — not in the cloud.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>7. Data Sharing</h2>
+      <ul>
+        <li><strong>Multi-user feature:</strong> You can share breeding data with other users via kennel groups. Only users you invite will have access.</li>
+        <li><strong>Sharing updates:</strong> You can choose to share puppy updates via SMS or email. Content is generated locally and sent through your device's messaging apps.</li>
+        <li><strong>PDF export:</strong> Generated contracts and health certificates are stored locally.</li>
+        <li>We <strong>never</strong> sell your data to third parties.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>8. Your Rights (GDPR)</h2>
+      <p>As a user, you have the following rights:</p>
+      <ul>
+        <li><strong>Access:</strong> Right to see what data we hold about you</li>
+        <li><strong>Rectification:</strong> Right to correct inaccurate information</li>
+        <li><strong>Erasure:</strong> Right to delete your account and all associated data. You can delete your account directly in the app under Settings → Delete Account.</li>
+        <li><strong>Data portability:</strong> Right to export your data</li>
+        <li><strong>Restriction:</strong> Right to restrict processing</li>
+        <li><strong>Objection:</strong> Right to object to processing based on legitimate interest</li>
+      </ul>
+      <p style="margin-top:12px">To exercise your rights, contact us at <a href="mailto:kjetilandre95@gmail.com">kjetilandre95@gmail.com</a>.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Children's Privacy</h2>
+      <p>Breedly is not directed at children under 16. We do not knowingly collect personal information from children. If we become aware that we have collected data from a child under 16, we will delete this information.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Permissions</h2>
+      <table>
+        <tr><th>Permission</th><th>Purpose</th></tr>
+        <tr><td>Internet</td><td>Sync with Firebase, subscription management</td></tr>
+        <tr><td>Camera</td><td>Take photos of dogs and pedigrees</td></tr>
+        <tr><td>Photo gallery</td><td>Select images from device</td></tr>
+        <tr><td>Notifications</td><td>Local reminders for vaccines, deworming, and delivery</td></tr>
+        <tr><td>File storage</td><td>Save exported PDF files</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>11. Changes to This Policy</h2>
+      <p>We may update this policy from time to time. For significant changes, we will notify users in the app. The current version is always available through the app and this website.</p>
+    </div>
+
+    <div class="section">
+      <h2>12. Contact Us</h2>
+      <p>Have questions about privacy or the processing of your data?</p>
+      <div class="contact-box">
+        <p><strong>Kjetil Skalstad</strong></p>
+        <p>📧 <a href="mailto:kjetilandre95@gmail.com">kjetilandre95@gmail.com</a></p>
+        <p>📍 Bakkeløkka 9, 3340 Åmot, Norway</p>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:#6B7280">You may also file a complaint with the Norwegian Data Protection Authority: <a href="https://www.datatilsynet.no" target="_blank">www.datatilsynet.no</a></p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 Breedly. All rights reserved.</p>
+  </div>
+
+  <script>
+    function switchLang(lang) {
+      document.getElementById('lang-no').classList.toggle('hidden', lang !== 'no');
+      document.getElementById('lang-en').classList.toggle('hidden', lang !== 'en');
+      document.getElementById('btn-no').classList.toggle('active', lang === 'no');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('header-subtitle').textContent =
+        lang === 'no' ? 'Personvernerklæring' : 'Privacy Policy';
+      document.documentElement.lang = lang === 'no' ? 'no' : 'en';
+    }
+  </script>
+</body>
+</html>

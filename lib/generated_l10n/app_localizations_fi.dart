@@ -5000,4 +5000,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String classPlacementAbbr(String placement) {
     return 'Lk. $placement';
   }
+
+  @override
+  String get privacyPolicy => 'Tietosuojakäytäntö';
+
+  @override
+  String get privacyPolicyDescription => 'Lue, miten käsittelemme tietojasi';
 }

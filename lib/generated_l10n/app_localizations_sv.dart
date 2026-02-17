@@ -4996,4 +4996,11 @@ class AppLocalizationsSv extends AppLocalizations {
   String classPlacementAbbr(String placement) {
     return 'Kl. $placement';
   }
+
+  @override
+  String get privacyPolicy => 'Integritetspolicy';
+
+  @override
+  String get privacyPolicyDescription =>
+      'Läs om hur vi hanterar dina uppgifter';
 }

@@ -4295,5 +4295,9 @@
   "breedJudgeWithName": "Breed judge: {name}",
   "@breedJudgeWithName": { "description": "Breed judge label with name", "placeholders": { "name": { "type": "String" } } },
   "classPlacementAbbr": "Cl. {placement}",
-  "@classPlacementAbbr": { "description": "Abbreviated class placement", "placeholders": { "placement": { "type": "String" } } }
+  "@classPlacementAbbr": { "description": "Abbreviated class placement", "placeholders": { "placement": { "type": "String" } } },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": { "description": "Privacy policy title" },
+  "privacyPolicyDescription": "Read about how we handle your data",
+  "@privacyPolicyDescription": { "description": "Privacy policy description" }
 }

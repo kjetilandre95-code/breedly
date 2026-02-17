@@ -2981,6 +2981,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
   }
 
   Future<void> _exportPuppyPDF(BuildContext context, Puppy puppy) async {
+    final pdfDownloadedTitle = AppLocalizations.of(context)!.pdfDownloadedTitle;
     try {
       final pdf = await PDFGenerator.generatePuppyPackage(puppy, widget.litter);
 
@@ -3004,7 +3005,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
       // Show download notification in status bar with file path
       await NotificationService().showDownloadNotification(
-        title: AppLocalizations.of(context)!.pdfDownloadedTitle,
+        title: pdfDownloadedTitle,
         fileName: 'valp_${puppy.name}.pdf',
         filePath: file.path,
       );
@@ -3314,6 +3315,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     bool limbsOk = true,
     Map<String, String>? healthCheckNotes,
   }) async {
+    final healthCertTitle = AppLocalizations.of(context)!.healthCertificateDownloaded;
     try {
       final pdf = await PDFGenerator.generateHealthCertificate(
         puppy,
@@ -3354,7 +3356,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
       // Show download notification
       await NotificationService().showDownloadNotification(
-        title: AppLocalizations.of(context)!.healthCertificateDownloaded,
+        title: healthCertTitle,
         fileName: 'helseattest_${puppy.name}.pdf',
         filePath: file.path,
       );

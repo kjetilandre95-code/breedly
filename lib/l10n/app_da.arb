@@ -3431,5 +3431,7 @@
   "addPhoto": "Tilføj billede",
   "selectFromGallery": "Vælg fra galleri",
   "breedJudgeWithName": "Racedommer: {name}",
-  "classPlacementAbbr": "Kl. {placement}"
+  "classPlacementAbbr": "Kl. {placement}",
+  "privacyPolicy": "Privatlivspolitik",
+  "privacyPolicyDescription": "Læs om hvordan vi håndterer dine data"
 }

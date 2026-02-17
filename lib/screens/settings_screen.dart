@@ -21,6 +21,7 @@ import 'package:breedly/services/reminder_manager.dart';
 import 'package:breedly/screens/statistics_screen.dart';
 import 'package:breedly/screens/annual_report_screen.dart';
 import 'package:breedly/screens/pedigree_scanner_test_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -1165,6 +1166,48 @@ class _SettingsScreenState extends State<SettingsScreen> {
             localizations.welcomeMessage,
             style: AppTypography.bodySmall.copyWith(
               color: context.colors.textMuted,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const Divider(height: 1),
+          const SizedBox(height: AppSpacing.md),
+          InkWell(
+            onTap: () {
+              launchUrl(
+                Uri.parse('https://breedly.app/privacy-policy'),
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            borderRadius: AppRadius.mdAll,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              child: Row(
+                children: [
+                  Icon(Icons.privacy_tip_outlined, size: 18, color: context.colors.textMuted),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          localizations.privacyPolicy,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: context.colors.textPrimary,
+                          ),
+                        ),
+                        Text(
+                          localizations.privacyPolicyDescription,
+                          style: AppTypography.bodySmall.copyWith(
+                            color: context.colors.textMuted,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.open_in_new, size: 16, color: context.colors.textMuted),
+                ],
+              ),
             ),
           ),
         ],

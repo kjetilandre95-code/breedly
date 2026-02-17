@@ -4993,4 +4993,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String classPlacementAbbr(String placement) {
     return 'Cl. $placement';
   }
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get privacyPolicyDescription => 'Read about how we handle your data';
 }

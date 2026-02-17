@@ -4988,4 +4988,11 @@ class AppLocalizationsDa extends AppLocalizations {
   String classPlacementAbbr(String placement) {
     return 'Kl. $placement';
   }
+
+  @override
+  String get privacyPolicy => 'Privatlivspolitik';
+
+  @override
+  String get privacyPolicyDescription =>
+      'Læs om hvordan vi håndterer dine data';
 }

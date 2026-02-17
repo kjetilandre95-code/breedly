@@ -1745,5 +1745,7 @@
   "addPhoto": "Lisää kuva",
   "selectFromGallery": "Valitse galleriasta",
   "breedJudgeWithName": "Rotutuomari: {name}",
-  "classPlacementAbbr": "Lk. {placement}"
+  "classPlacementAbbr": "Lk. {placement}",
+  "privacyPolicy": "Tietosuojakäytäntö",
+  "privacyPolicyDescription": "Lue, miten käsittelemme tietojasi"
 }

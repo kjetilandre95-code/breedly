@@ -9265,6 +9265,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cl. {placement}'**
   String classPlacementAbbr(String placement);
+
+  /// Privacy policy title
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// Privacy policy description
+  ///
+  /// In en, this message translates to:
+  /// **'Read about how we handle your data'**
+  String get privacyPolicyDescription;
 }
 
 class _AppLocalizationsDelegate

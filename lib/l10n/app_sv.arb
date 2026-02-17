@@ -1747,5 +1747,7 @@
   "addPhoto": "Lägg till foto",
   "selectFromGallery": "Välj från galleri",
   "breedJudgeWithName": "Rasdomare: {name}",
-  "classPlacementAbbr": "Kl. {placement}"
+  "classPlacementAbbr": "Kl. {placement}",
+  "privacyPolicy": "Integritetspolicy",
+  "privacyPolicyDescription": "Läs om hur vi hanterar dina uppgifter"
 }
