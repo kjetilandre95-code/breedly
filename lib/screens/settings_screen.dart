@@ -1174,7 +1174,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           InkWell(
             onTap: () {
               launchUrl(
-                Uri.parse('https://breedly.app/privacy-policy'),
+                Uri.parse('https://littermate-f0eb9.web.app/privacy-policy.html'),
                 mode: LaunchMode.externalApplication,
               );
             },
