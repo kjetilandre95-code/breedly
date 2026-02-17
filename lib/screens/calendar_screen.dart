@@ -9,6 +9,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 /// Calendar event types
 enum CalendarEventType {
@@ -78,7 +79,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               title: '${dog.name} - Løpetid',
               date: cycleDate,
               type: CalendarEventType.heatCycle,
-              color: Colors.pink,
+              color: AppColors.female,
               dogId: dog.id,
             ),
           );
@@ -94,7 +95,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               title: '${dog.name} - Forventet løpetid',
               date: expectedHeat,
               type: CalendarEventType.expectedHeat,
-              color: Colors.pink.shade200,
+              color: AppColors.female,
               dogId: dog.id,
             ),
           );
@@ -112,7 +113,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           subtitle: '${litter.numberOfPuppies} valper',
           date: litter.dateOfBirth,
           type: CalendarEventType.birthday,
-          color: Colors.green,
+          color: AppColors.success,
           litterId: litter.id,
         ),
       );
@@ -126,7 +127,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           subtitle: '8 uker gammel',
           date: deliveryDate,
           type: CalendarEventType.delivery,
-          color: Colors.orange,
+          color: AppColors.warning,
           litterId: litter.id,
         ),
       );
@@ -159,7 +160,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 title: '${puppy.name} - 1. vaksinering',
                 date: plan.vaccineDate1!,
                 type: CalendarEventType.treatment,
-                color: Colors.blue,
+                color: AppColors.accent1,
               ),
             );
           }
@@ -170,7 +171,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 title: '${puppy.name} - 2. vaksinering',
                 date: plan.vaccineDate2!,
                 type: CalendarEventType.treatment,
-                color: Colors.blue,
+                color: AppColors.accent1,
               ),
             );
           }
@@ -183,7 +184,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 title: '${puppy.name} - 1. ormekur',
                 date: plan.wormerDate1!,
                 type: CalendarEventType.treatment,
-                color: Colors.teal,
+                color: AppColors.accent2,
               ),
             );
           }
@@ -194,7 +195,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 title: '${puppy.name} - 2. ormekur',
                 date: plan.wormerDate2!,
                 type: CalendarEventType.treatment,
-                color: Colors.teal,
+                color: AppColors.accent2,
               ),
             );
           }
@@ -207,7 +208,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 title: '${puppy.name} - ID-merking',
                 date: plan.microchipDate!,
                 type: CalendarEventType.treatment,
-                color: Colors.indigo,
+                color: AppColors.accent5,
               ),
             );
           }
@@ -243,7 +244,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           title: '${dog.name} fyller $age år',
           date: birthday,
           type: CalendarEventType.birthday,
-          color: Colors.amber,
+          color: AppColors.accent3,
           dogId: dog.id,
         ),
       );
@@ -276,15 +277,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
         title: Text(
           l10n.calendar,
           style: AppTypography.headlineLarge.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
@@ -335,7 +336,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 shape: BoxShape.circle,
               ),
               markerDecoration: const BoxDecoration(color: Colors.transparent),
-              cellMargin: const EdgeInsets.all(4),
+              cellMargin: const EdgeInsets.all(AppSpacing.xs),
               outsideDaysVisible: false,
             ),
             rowHeight: 48,
@@ -364,7 +365,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             headerStyle: HeaderStyle(
               formatButtonDecoration: BoxDecoration(
                 border: Border.all(color: AppColors.primary),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
               ),
               formatButtonTextStyle: TextStyle(color: AppColors.primary),
             ),
@@ -382,7 +383,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         Icon(
                           Icons.event_available,
                           size: 48,
-                          color: AppColors.neutral400,
+                          color: context.colors.textDisabled,
                         ),
                         const SizedBox(height: AppSpacing.md),
                         Text(
@@ -390,7 +391,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               ? l10n.noUpcomingEvents
                               : l10n.noUpcomingEvents,
                           style: theme.textTheme.bodyLarge?.copyWith(
-                            color: AppColors.neutral600,
+                            color: context.colors.textMuted,
                           ),
                         ),
                       ],
@@ -480,17 +481,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Color _getEventTypeColor(CalendarEventType type) {
     switch (type) {
       case CalendarEventType.heatCycle:
-        return Colors.pink;
+        return AppColors.female;
       case CalendarEventType.expectedHeat:
-        return Colors.pink.shade200;
+        return AppColors.female;
       case CalendarEventType.expectedBirth:
-        return Colors.purple;
+        return AppColors.accent5;
       case CalendarEventType.delivery:
-        return Colors.orange;
+        return AppColors.warning;
       case CalendarEventType.treatment:
-        return Colors.blue;
+        return AppColors.accent1;
       case CalendarEventType.birthday:
-        return Colors.amber;
+        return AppColors.accent3;
     }
   }
 }
@@ -529,7 +530,7 @@ class _EventCard extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             color: event.color.withValues(alpha: ThemeOpacity.high(context)),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.smAll,
           ),
           child: Icon(_getEventIcon(), color: event.color),
         ),
@@ -543,14 +544,14 @@ class _EventCard extends StatelessWidget {
             ? Text(
                 event.subtitle!,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.neutral600,
+                  color: context.colors.textMuted,
                 ),
               )
             : null,
         trailing: Text(
           dateFormat.format(event.date),
           style: theme.textTheme.bodySmall?.copyWith(
-            color: AppColors.neutral500,
+            color: context.colors.textCaption,
           ),
         ),
       ),

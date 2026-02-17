@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:breedly/services/excel_export_service.dart';
 import 'package:breedly/utils/logger.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 /// Screen for exporting data to CSV/Excel
 class ExportScreen extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ExportScreenState extends State<ExportScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Eksport fullført!'),
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.success,
           ),
         );
       }
@@ -65,7 +66,7 @@ class _ExportScreenState extends State<ExportScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Feil ved eksport: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -92,7 +93,7 @@ class _ExportScreenState extends State<ExportScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('$name eksportert!'),
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.success,
           ),
         );
       }
@@ -102,7 +103,7 @@ class _ExportScreenState extends State<ExportScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Feil ved eksport: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -130,19 +131,19 @@ class _ExportScreenState extends State<ExportScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const CircularProgressIndicator(),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   Text('Eksporterer $_currentExport...'),
                 ],
               ),
             )
           : ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
                 // Info card
                 Card(
                   color: theme.colorScheme.primaryContainer,
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -152,7 +153,7 @@ class _ExportScreenState extends State<ExportScreen> {
                               Icons.info_outline,
                               color: theme.colorScheme.onPrimaryContainer,
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: AppSpacing.sm),
                             Text(
                               'Om eksport',
                               style: theme.textTheme.titleMedium?.copyWith(
@@ -162,7 +163,7 @@ class _ExportScreenState extends State<ExportScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         Text(
                           'Data eksporteres som CSV-filer som kan åpnes i Excel, Google Sheets eller andre regneark-programmer. Filene bruker UTF-8 med BOM for å støtte norske tegn.',
                           style: theme.textTheme.bodyMedium?.copyWith(
@@ -173,7 +174,7 @@ class _ExportScreenState extends State<ExportScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xxl),
 
                 // Export all button
                 FilledButton.icon(
@@ -184,14 +185,14 @@ class _ExportScreenState extends State<ExportScreen> {
                     minimumSize: const Size.fromHeight(56),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xxl),
 
                 // Divider
                 Row(
                   children: [
                     const Expanded(child: Divider()),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                       child: Text(
                         'Eller eksporter enkeltvis',
                         style: theme.textTheme.bodySmall,
@@ -200,7 +201,7 @@ class _ExportScreenState extends State<ExportScreen> {
                     const Expanded(child: Divider()),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
 
                 // Individual exports
                 _ExportTile(
@@ -221,7 +222,7 @@ class _ExportScreenState extends State<ExportScreen> {
                   subtitle: 'Alle valper med detaljer og salgsstatus',
                   onTap: _exportPuppies,
                 ),
-                const Divider(height: 32),
+                const Divider(height: AppSpacing.xxxl),
                 _ExportTile(
                   icon: Icons.trending_down,
                   title: 'Utgifter',
@@ -240,7 +241,7 @@ class _ExportScreenState extends State<ExportScreen> {
                   subtitle: 'Årlig oversikt over resultat',
                   onTap: _exportFinancialSummary,
                 ),
-                const Divider(height: 32),
+                const Divider(height: AppSpacing.xxxl),
                 _ExportTile(
                   icon: Icons.analytics,
                   title: 'Kullstatistikk',

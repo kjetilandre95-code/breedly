@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/services/pedigree_scanner_service.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 /// Widget for scanning pedigree documents
 class PedigreeScannerWidget extends StatefulWidget {
@@ -36,7 +37,7 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(l10n.noImageSelected),
-            backgroundColor: Colors.orange,
+            backgroundColor: AppColors.warning,
           ),
         );
       } else if (result.dog == null && result.parents.isEmpty) {
@@ -44,7 +45,7 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result.rawText ?? l10n.couldNotReadPedigree),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
             duration: const Duration(seconds: 5),
           ),
         );
@@ -73,14 +74,14 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(l10n.noImageSelected),
-            backgroundColor: Colors.orange,
+            backgroundColor: AppColors.warning,
           ),
         );
       } else if (result.dog == null && result.parents.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(result.rawText ?? l10n.couldNotReadPedigree),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
             duration: const Duration(seconds: 5),
           ),
         );
@@ -98,46 +99,46 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.blue[200]!),
+        color: AppColors.info.withValues(alpha: 0.08),
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.document_scanner, color: Colors.blue[700]),
-              const SizedBox(width: 8),
+              Icon(Icons.document_scanner, color: AppColors.info),
+              const SizedBox(width: AppSpacing.sm),
               Text(
                 l10n.scanPedigree,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue[900],
+                  color: context.colors.textPrimary,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.scanPedigreeSubtitle,
             style: TextStyle(
               fontSize: 13,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           if (_isScanning)
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   children: [
                     const CircularProgressIndicator(),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(l10n.processingImage),
                   ],
                 ),
@@ -152,12 +153,12 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
                     icon: const Icon(Icons.camera_alt),
                     label: Text(l10n.takePhoto),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: AppColors.info,
                       foregroundColor: Colors.white,
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: OutlinedButton.icon(
                     onPressed: _scanFromGallery,
@@ -167,7 +168,7 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
                 ),
               ],
             ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           _buildHelpText(),
         ],
       ),
@@ -184,7 +185,7 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
       ),
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -192,12 +193,12 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
               _buildTip(l10n.tipHoldCameraOver),
               _buildTip(l10n.tipAvoidShadows),
               _buildTip(l10n.tipPedigreeReadable),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 '💡 ${l10n.tipEditAfterScanning}',
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.blue[700],
+                  color: AppColors.info,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -210,11 +211,11 @@ class _PedigreeScannerWidgetState extends State<PedigreeScannerWidget> {
 
   Widget _buildTip(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
       child: Row(
         children: [
-          Icon(Icons.check_circle, size: 14, color: Colors.green[600]),
-          const SizedBox(width: 8),
+          Icon(Icons.check_circle, size: 14, color: AppColors.success),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(child: Text(text, style: const TextStyle(fontSize: 12))),
         ],
       ),
@@ -358,9 +359,9 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
               constraints: const BoxConstraints(maxHeight: 200),
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.grey[300]!),
+                color: context.colors.neutral100,
+                borderRadius: AppRadius.smAll,
+                border: Border.all(color: context.colors.divider),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -369,14 +370,14 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
                     padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
                     child: Row(
                       children: [
-                        Icon(Icons.text_snippet, size: 16, color: Colors.grey[600]),
+                        Icon(Icons.text_snippet, size: 16, color: context.colors.textMuted),
                         const SizedBox(width: 6),
                         Text(
                           l10n.rawOcrTextTitle,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
-                            color: Colors.grey[700],
+                            color: context.colors.textTertiary,
                           ),
                         ),
                       ],
@@ -406,17 +407,17 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
+                        Icon(Icons.search_off, size: 64, color: context.colors.textDisabled),
                         const SizedBox(height: 16),
                         Text(
                           l10n.noDogsFoundInScan,
-                          style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                          style: TextStyle(fontSize: 16, color: context.colors.textMuted),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           l10n.tapToAddManually,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+                          style: TextStyle(fontSize: 13, color: context.colors.textCaption),
                         ),
                       ],
                     ),
@@ -476,13 +477,13 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
               children: [
                 CircleAvatar(
                   backgroundColor: dog.confidence > 0.8
-                      ? Colors.green[100]
-                      : Colors.orange[100],
+                      ? AppColors.success.withValues(alpha: 0.15)
+                      : AppColors.warning.withValues(alpha: 0.15),
                   child: Icon(
                     dog.gender == 'Male' ? Icons.male : Icons.female,
                     color: dog.confidence > 0.8
-                        ? Colors.green[700]
-                        : Colors.orange[700],
+                        ? AppColors.success
+                        : AppColors.warning,
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -502,19 +503,19 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
                           _positionLabel(dog.position!),
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                           ),
                         ),
                     ],
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.blue),
+                  icon: Icon(Icons.edit, color: AppColors.info),
                   onPressed: () => _editDog(dog, index),
                   tooltip: l10n.edit,
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete_outline, color: Colors.red[400]),
+                  icon: Icon(Icons.delete_outline, color: AppColors.error),
                   onPressed: () => _removeDog(index),
                   tooltip: l10n.delete,
                 ),
@@ -532,13 +533,13 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
             const SizedBox(height: 8),
             LinearProgressIndicator(
               value: dog.confidence,
-              backgroundColor: Colors.grey[200],
-              color: dog.confidence > 0.8 ? Colors.green : Colors.orange,
+              backgroundColor: context.colors.border,
+              color: dog.confidence > 0.8 ? AppColors.success : AppColors.warning,
             ),
             const SizedBox(height: 4),
             Text(
               l10n.confidencePercent('${(dog.confidence * 100).toStringAsFixed(0)}%'),
-              style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 11, color: context.colors.textMuted),
             ),
           ],
         ),
@@ -557,7 +558,7 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
               label,
               style: TextStyle(
                 fontSize: 13,
-                color: Colors.grey[600],
+                color: context.colors.textMuted,
               ),
             ),
           ),
@@ -763,9 +764,9 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey[300]!, style: BorderStyle.solid),
+            color: context.colors.neutral100,
+            borderRadius: AppRadius.smAll,
+            border: Border.all(color: context.colors.divider, style: BorderStyle.solid),
           ),
           child: Center(
             child: Column(
@@ -773,12 +774,12 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
               children: [
                 if (!mini) Text(
                   posLabel,
-                  style: TextStyle(fontSize: fontSize - 2, color: Colors.grey[500]),
+                  style: TextStyle(fontSize: fontSize - 2, color: context.colors.textCaption),
                 ),
-                Icon(Icons.add_circle_outline, size: mini ? 16 : 20, color: Colors.grey[400]),
+                Icon(Icons.add_circle_outline, size: mini ? 16 : 20, color: context.colors.textDisabled),
                 if (!mini) Text(
                   AppLocalizations.of(context)!.tapToAdd,
-                  style: TextStyle(fontSize: fontSize - 3, color: Colors.grey[400]),
+                  style: TextStyle(fontSize: fontSize - 3, color: context.colors.textDisabled),
                 ),
               ],
             ),
@@ -787,9 +788,9 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
       );
     }
 
-    final bgColor = isFemaleCard ? Colors.pink[50] : Colors.blue[50];
-    final borderColor = isFemaleCard ? Colors.pink[300]! : Colors.blue[300]!;
-    final iconColor = isFemaleCard ? Colors.pink[700] : Colors.blue[700];
+    final bgColor = isFemaleCard ? AppColors.female.withValues(alpha: 0.1) : AppColors.male.withValues(alpha: 0.1);
+    final borderColor = isFemaleCard ? AppColors.female : AppColors.male;
+    final iconColor = isFemaleCard ? AppColors.female : AppColors.male;
     final idx = _editableDogs.indexOf(dog);
 
     return GestureDetector(
@@ -799,7 +800,7 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
         height: height,
         decoration: BoxDecoration(
           color: bgColor,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: AppRadius.smAll,
           border: Border.all(color: borderColor, width: isMain ? 2.5 : 1),
           boxShadow: isMain
               ? [BoxShadow(color: borderColor.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))]
@@ -832,13 +833,13 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Icon(Icons.edit, size: mini ? 10 : 14, color: Colors.grey[400]),
+                Icon(Icons.edit, size: mini ? 10 : 14, color: context.colors.textDisabled),
               ],
             ),
             if (!mini && dog.registrationNumber != null)
               Text(
                 dog.registrationNumber!,
-                style: TextStyle(fontSize: fontSize - 3, color: Colors.grey[600]),
+                style: TextStyle(fontSize: fontSize - 3, color: context.colors.textMuted),
                 overflow: TextOverflow.ellipsis,
               ),
           ],
@@ -851,7 +852,7 @@ class _PedigreeScanReviewScreenState extends State<PedigreeScanReviewScreen> {
     return Container(
       width: 2,
       height: height,
-      color: Colors.grey[300],
+      color: context.colors.divider,
     );
   }
 
@@ -1163,7 +1164,7 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
     if (mounted) {
       final l10n = AppLocalizations.of(context)!;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.settingsSaved), backgroundColor: Colors.green),
+        SnackBar(content: Text(l10n.settingsSaved), backgroundColor: AppColors.success),
       );
     }
   }
@@ -1189,16 +1190,16 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
               children: [
                 // ──── Cloud AI Scanner Info ────
                 Card(
-                  color: Colors.green[50],
+                  color: AppColors.success.withValues(alpha: 0.1),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.cloud_done, color: Colors.green[700]),
-                            const SizedBox(width: 8),
+                            Icon(Icons.cloud_done, color: AppColors.success),
+                            const SizedBox(width: AppSpacing.sm),
                             Expanded(
                               child: Text(
                                 l10n.geminiAiVision,
@@ -1206,19 +1207,19 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
                               decoration: BoxDecoration(
-                                color: Colors.green[100],
-                                borderRadius: BorderRadius.circular(12),
+                                color: AppColors.success.withValues(alpha: 0.15),
+                                borderRadius: AppRadius.mdAll,
                               ),
-                              child: Text(l10n.cloudPowered, style: TextStyle(fontSize: 11, color: Colors.green[800], fontWeight: FontWeight.bold)),
+                              child: Text(l10n.cloudPowered, style: TextStyle(fontSize: 11, color: AppColors.success, fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         Text(
                           l10n.scannerGeminiDescription,
-                          style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                          style: TextStyle(fontSize: 13, color: context.colors.textTertiary),
                         ),
                       ],
                     ),
@@ -1228,16 +1229,16 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
 
                 // Explanation card
                 Card(
-                  color: Colors.blue[50],
+                  color: AppColors.info.withValues(alpha: 0.1),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.lightbulb_outline, color: Colors.blue[700]),
-                            const SizedBox(width: 8),
+                            Icon(Icons.lightbulb_outline, color: AppColors.info),
+                            const SizedBox(width: AppSpacing.sm),
                             Expanded(
                               child: Text(
                                 l10n.customizeScanner,
@@ -1246,10 +1247,10 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         Text(
                           l10n.addKeywordsDescription,
-                          style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                          style: TextStyle(fontSize: 13, color: context.colors.textTertiary),
                         ),
                       ],
                     ),
@@ -1299,16 +1300,16 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
 
                 // Spatial parsing info
                 Card(
-                  color: Colors.green[50],
+                  color: AppColors.success.withValues(alpha: 0.1),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Icon(Icons.auto_fix_high, color: Colors.green[700]),
-                            const SizedBox(width: 8),
+                            Icon(Icons.auto_fix_high, color: AppColors.success),
+                            const SizedBox(width: AppSpacing.sm),
                             Text(
                               l10n.automaticLearning,
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
@@ -1318,14 +1319,14 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
                         const SizedBox(height: 8),
                         Text(
                           l10n.automaticLearningDescription,
-                          style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                          style: TextStyle(fontSize: 13, color: context.colors.textTertiary),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         OutlinedButton.icon(
                           onPressed: _clearLearningData,
                           icon: const Icon(Icons.delete_outline, size: 18),
                           label: Text(l10n.resetLearningData),
-                          style: OutlinedButton.styleFrom(foregroundColor: Colors.red),
+                          style: OutlinedButton.styleFrom(foregroundColor: AppColors.error),
                         ),
                       ],
                     ),
@@ -1352,7 +1353,7 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
           children: [
             Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
             const SizedBox(height: 4),
-            Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+            Text(subtitle, style: TextStyle(fontSize: 12, color: context.colors.textMuted)),
             const SizedBox(height: 12),
             
             // Default keywords (read-only)
@@ -1361,7 +1362,7 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
               runSpacing: 6,
               children: defaultKeywords.map((kw) => Chip(
                 label: Text(kw, style: const TextStyle(fontSize: 12)),
-                backgroundColor: Colors.grey[200],
+                backgroundColor: context.colors.border,
                 visualDensity: VisualDensity.compact,
               )).toList(),
             ),
@@ -1371,14 +1372,14 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
               const Divider(),
               const SizedBox(height: 4),
               Text(AppLocalizations.of(context)!.yourCustomKeywords, 
-                style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                style: TextStyle(fontSize: 12, color: context.colors.textMuted)),
               const SizedBox(height: 6),
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
                 children: List.generate(customKeywords.length, (i) => Chip(
                   label: Text(customKeywords[i], style: const TextStyle(fontSize: 12)),
-                  backgroundColor: Colors.blue[100],
+                  backgroundColor: AppColors.info.withValues(alpha: 0.15),
                   deleteIcon: const Icon(Icons.close, size: 16),
                   onDeleted: () => onRemove(i),
                   visualDensity: VisualDensity.compact,
@@ -1411,7 +1412,7 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             child: Text(l10n.resetAction),
           ),
         ],
@@ -1423,7 +1424,7 @@ class _ScannerSettingsScreenState extends State<ScannerSettingsScreen> {
       await box.delete('corrections');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.learningDataReset), backgroundColor: Colors.orange),
+          SnackBar(content: Text(l10n.learningDataReset), backgroundColor: AppColors.warning),
         );
       }
     }

@@ -7,6 +7,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/screens/add_litter_screen.dart';
 import 'package:breedly/screens/litter_detail_screen.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/modern_widgets.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 
@@ -118,7 +119,7 @@ class _LittersListScreenState extends State<LittersListScreen>
     final primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: widget.showAppBar ? _buildAppBar(primaryColor) : null,
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Litter>('litters').listenable(),
@@ -182,15 +183,15 @@ class _LittersListScreenState extends State<LittersListScreen>
       title: Text(
         'Kull',
         style: AppTypography.headlineLarge.copyWith(
-          color: AppColors.neutral900,
+          color: context.colors.textPrimary,
           fontWeight: FontWeight.bold,
         ),
       ),
       centerTitle: true,
-      backgroundColor: AppColors.surface,
+      backgroundColor: context.colors.surface,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      foregroundColor: AppColors.neutral900,
+      foregroundColor: context.colors.textPrimary,
       actions: [
         PageInfoHelper.buildInfoButton(
           context,
@@ -200,7 +201,7 @@ class _LittersListScreenState extends State<LittersListScreen>
           tip: PageInfoContent.littersScreen.tip,
         ),
         PopupMenuButton<String>(
-          icon: Icon(Icons.sort_rounded, color: AppColors.neutral600),
+          icon: Icon(Icons.sort_rounded, color: context.colors.textMuted),
           tooltip: 'Sorter',
           onSelected: (value) {
             setState(() {
@@ -241,13 +242,13 @@ class _LittersListScreenState extends State<LittersListScreen>
           Icon(
             icon,
             size: 18,
-            color: isSelected ? primaryColor : AppColors.neutral600,
+            color: isSelected ? primaryColor : context.colors.textMuted,
           ),
           const SizedBox(width: AppSpacing.sm),
           Text(
             text,
             style: TextStyle(
-              color: isSelected ? primaryColor : AppColors.neutral800,
+              color: isSelected ? primaryColor : context.colors.textSecondary,
               fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
             ),
           ),
@@ -275,14 +276,14 @@ class _LittersListScreenState extends State<LittersListScreen>
               child: Text(
                 localizations.litters,
                 style: AppTypography.headlineLarge.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
           PopupMenuButton<String>(
-            icon: Icon(Icons.sort_rounded, color: AppColors.neutral600),
+            icon: Icon(Icons.sort_rounded, color: context.colors.textMuted),
             tooltip: 'Sorter',
             onSelected: (value) {
               setState(() {
@@ -329,32 +330,37 @@ class _LittersListScreenState extends State<LittersListScreen>
           return _buildFilterEmptyState(filter, localizations);
         }
 
-        return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.sm,
-            AppSpacing.lg,
-            AppSpacing.huge + 60, // Extra space for FAB
-          ),
-          itemCount: litters.length,
-          separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
-          itemBuilder: (context, index) {
-            final litter = litters[index];
-            return LitterCard(
-              damName: litter.damName,
-              sireName: litter.sireName,
-              breed: litter.breed,
-              birthDate: litter.dateOfBirth,
-              puppyCount: litter.numberOfPuppies,
-              availableCount: _getAvailablePuppiesCount(litter.id),
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => LitterDetailScreen(litter: litter),
-                ),
-              ),
-            );
+        return RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
           },
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.sm,
+              AppSpacing.lg,
+              AppSpacing.huge + 60, // Extra space for FAB
+            ),
+            itemCount: litters.length,
+            separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
+            itemBuilder: (context, index) {
+              final litter = litters[index];
+              return LitterCard(
+                damName: litter.damName,
+                sireName: litter.sireName,
+                breed: litter.breed,
+                birthDate: litter.dateOfBirth,
+                puppyCount: litter.numberOfPuppies,
+                availableCount: _getAvailablePuppiesCount(litter.id),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => LitterDetailScreen(litter: litter),
+                  ),
+                ),
+              );
+            },
+          ),
         );
       },
     );
@@ -394,7 +400,7 @@ class _LittersListScreenState extends State<LittersListScreen>
       icon: Icons.filter_list_off_rounded,
       title: title,
       subtitle: localizations.tryAnotherCategory,
-      iconColor: AppColors.neutral400,
+      iconColor: context.colors.textDisabled,
     );
   }
 }

@@ -9,6 +9,7 @@ import '../models/foster_contract.dart';
 import '../services/pdf_contract_service.dart';
 import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 class FosterContractScreen extends StatefulWidget {
   final Dog? preselectedDog;
@@ -226,14 +227,14 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
           : Form(
               key: _formKey,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Dog selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -241,7 +242,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               'Hund',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Dog>(
                               isExpanded: true,
                               initialValue: _selectedDog,
@@ -268,12 +269,12 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Owner info
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -281,7 +282,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               'Eier',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _ownerNameController,
                               decoration: const InputDecoration(
@@ -291,7 +292,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _ownerAddressController,
                               decoration: const InputDecoration(
@@ -306,12 +307,12 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Foster info
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -319,7 +320,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               'Fôrvert',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _fosterNameController,
                               decoration: const InputDecoration(
@@ -329,7 +330,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _fosterAddressController,
                               decoration: const InputDecoration(
@@ -344,12 +345,12 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Period
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -357,7 +358,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               'Avtaleperiode',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             ListTile(
                               contentPadding: EdgeInsets.zero,
                               leading: const Icon(Icons.calendar_today),
@@ -392,12 +393,12 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Terms
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -405,7 +406,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               'Vilkår',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _breedingTermsController,
                               decoration: const InputDecoration(
@@ -416,7 +417,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _expenseTermsController,
                               decoration: const InputDecoration(
@@ -427,7 +428,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _returnConditionsController,
                               decoration: const InputDecoration(
@@ -442,12 +443,12 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Additional terms
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -455,7 +456,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                               'Tilleggsvilkår',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _additionalTermsController,
                               decoration: const InputDecoration(
@@ -469,7 +470,7 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
 
                     // Generate button
                     SizedBox(
@@ -479,11 +480,11 @@ class _FosterContractScreenState extends State<FosterContractScreen> {
                         icon: const Icon(Icons.picture_as_pdf),
                         label: const Text('Generer fôrvertsavtale'),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                   ],
                 ),
               ),

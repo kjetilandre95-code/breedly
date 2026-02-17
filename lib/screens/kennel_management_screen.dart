@@ -8,6 +8,7 @@ import 'package:breedly/models/kennel_invitation.dart';
 import 'package:breedly/services/kennel_service.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class KennelManagementScreen extends StatefulWidget {
@@ -87,13 +88,13 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
         title: Text(localizations.kennelManagement),
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -108,31 +109,31 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
     if (localizations == null) return const SizedBox.shrink();
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppSpacing.xxxl),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.home_work_outlined,
               size: 80,
-              color: Colors.grey[400],
+              color: context.colors.textDisabled,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
             Text(
               localizations.noLittersRegistered,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               localizations.setupKennelMessage,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey[600]),
+              style: TextStyle(color: context.colors.textMuted),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppSpacing.xxxl),
             Wrap(
               alignment: WrapAlignment.center,
-              spacing: 16,
-              runSpacing: 12,
+              spacing: AppSpacing.lg,
+              runSpacing: AppSpacing.md,
               children: [
                 ElevatedButton.icon(
                   onPressed: _showCreateKennelDialog,
@@ -156,28 +157,28 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
     return RefreshIndicator(
       onRefresh: _loadData,
       child: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           // Kennel selector if multiple kennels
           if (_kennels.length > 1) ...[
             _buildKennelSelector(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Kennel info card
           if (_activeKennel != null) ...[
             _buildKennelInfoCard(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Members section
           _buildMembersSection(),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Pending invitations
           if (_invitations.isNotEmpty && (_currentUserMember?.canInvite ?? false)) ...[
             _buildInvitationsSection(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Actions
@@ -190,7 +191,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   Widget _buildKennelSelector() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -198,13 +199,13 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               'Velg kennel',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<String>(
               isExpanded: true,
               initialValue: _activeKennel?.id,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
               ),
               items: _kennels.map((k) {
                 return DropdownMenuItem(
@@ -234,17 +235,17 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Icon(
                     Icons.home_work,
@@ -252,7 +253,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppSpacing.lg),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +267,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                       ),
                       Text(
                         '${_members.length} ${_members.length == 1 ? 'medlem' : 'medlemmer'}',
-                        style: TextStyle(color: Colors.grey[600]),
+                        style: TextStyle(color: context.colors.textMuted),
                       ),
                     ],
                   ),
@@ -279,17 +280,17 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               ],
             ),
             if (kennel.description != null && kennel.description!.isNotEmpty) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 kennel.description!,
-                style: TextStyle(color: Colors.grey[600]),
+                style: TextStyle(color: context.colors.textMuted),
               ),
             ],
             if (kennel.breeds.isNotEmpty) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
                 children: kennel.breeds.map((breed) {
                   return Chip(
                     label: Text(breed, style: const TextStyle(fontSize: 12)),
@@ -307,14 +308,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   Widget _buildMembersSection() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 const Icon(Icons.people, size: 20),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 const Text(
                   'Medlemmer',
                   style: TextStyle(
@@ -325,11 +326,11 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 const Spacer(),
                 Text(
                   '${_members.length}',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             ..._members.map((member) => _buildMemberTile(member)),
           ],
         ),
@@ -361,15 +362,15 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
           ),
           if (isCurrentUser)
             Container(
-              margin: const EdgeInsets.only(left: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              margin: const EdgeInsets.only(left: AppSpacing.sm),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
               decoration: BoxDecoration(
-                color: Colors.blue.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
+                color: AppColors.info.withValues(alpha: 0.1),
+                borderRadius: AppRadius.smAll,
               ),
               child: const Text(
                 'Deg',
-                style: TextStyle(fontSize: 11, color: Colors.blue),
+                style: TextStyle(fontSize: 11, color: AppColors.info),
               ),
             ),
         ],
@@ -386,7 +387,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   ),
                 ),
                 PopupMenuItem(
-                  child: const Text('Fjern', style: TextStyle(color: Colors.red)),
+                  child: const Text('Fjern', style: TextStyle(color: AppColors.error)),
                   onTap: () => Future.delayed(
                     Duration.zero,
                     () => _confirmRemoveMember(member),
@@ -412,14 +413,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   Widget _buildInvitationsSection() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 const Icon(Icons.mail_outline, size: 20),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 const Text(
                   'Ventende invitasjoner',
                   style: TextStyle(
@@ -430,11 +431,11 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 const Spacer(),
                 Text(
                   '${_invitations.length}',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             ..._invitations.map((inv) => _buildInvitationTile(inv)),
           ],
         ),
@@ -468,7 +469,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.delete_outline, color: Colors.red),
+            icon: const Icon(Icons.delete_outline, color: AppColors.error),
             onPressed: () => _deleteInvitation(invitation),
           ),
         ],
@@ -479,7 +480,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   Widget _buildActionsSection() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -490,7 +491,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             if ((_currentUserMember?.canInvite ?? false) && _activeKennel != null)
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -515,15 +516,15 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             if (_currentUserMember != null && !_currentUserMember!.isOwner)
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.logout, color: Colors.orange),
-                title: const Text('Forlat kennel', style: TextStyle(color: Colors.orange)),
+                leading: const Icon(Icons.logout, color: AppColors.warning),
+                title: const Text('Forlat kennel', style: TextStyle(color: AppColors.warning)),
                 onTap: _confirmLeaveKennel,
               ),
             if (_currentUserMember?.isOwner ?? false)
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.delete_forever, color: Colors.red),
-                title: const Text('Slett kennel', style: TextStyle(color: Colors.red)),
+                leading: const Icon(Icons.delete_forever, color: AppColors.error),
+                title: const Text('Slett kennel', style: TextStyle(color: AppColors.error)),
                 onTap: _confirmDeleteKennel,
               ),
           ],
@@ -551,7 +552,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
               ),
               autofocus: true,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: descriptionController,
               decoration: const InputDecoration(
@@ -627,7 +628,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text('Skriv inn invitasjonskoden du har mottatt:'),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: codeController,
               decoration: const InputDecoration(
@@ -698,7 +699,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: descriptionController,
               decoration: const InputDecoration(
@@ -829,7 +830,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             child: const Text('Avbryt'),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () async {
               try {
                 await _kennelService.removeMember(
@@ -869,7 +870,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             child: const Text('Avbryt'),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning),
             onPressed: () async {
               try {
                 await _kennelService.leaveKennel(_activeKennel!.id);
@@ -908,7 +909,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             child: const Text('Avbryt'),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () async {
               try {
                 await _kennelService.deleteKennel(_activeKennel!.id);
@@ -965,7 +966,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   'Du kan opprette en invitasjonskode som andre kan bruke for å bli med i kennelen.',
                   style: TextStyle(fontSize: 14),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: emailController,
                   decoration: const InputDecoration(
@@ -976,16 +977,16 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 const Text(
                   'Rolle',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade300),
-                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: context.colors.border),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: RadioGroup<String>(
                     groupValue: selectedRole,
@@ -996,14 +997,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                           title: const Text('Medlem'),
                           subtitle: const Text('Kan se og redigere data'),
                           value: 'member',
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         ),
                         const Divider(height: 1),
                         RadioListTile<String>(
                           title: const Text('Administrator'),
                           subtitle: const Text('Kan også invitere medlemmer'),
                           value: 'admin',
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         ),
                       ],
                     ),
@@ -1055,8 +1056,8 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
       builder: (context) => AlertDialog(
         title: Row(
           children: [
-            Icon(Icons.check_circle, color: Colors.green.shade600),
-            const SizedBox(width: 8),
+            Icon(Icons.check_circle, color: AppColors.success),
+            const SizedBox(width: AppSpacing.sm),
             const Expanded(child: Text('Invitasjon opprettet!')),
           ],
         ),
@@ -1065,13 +1066,13 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text('Del denne koden med personen du vil invitere:'),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.shade300),
+                  color: context.colors.neutral100,
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(color: context.colors.border),
                 ),
                 child: Column(
                   children: [
@@ -1084,20 +1085,20 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                         fontFamily: 'monospace',
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(
                       'Gyldig i 7 dager',
-                      style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                      style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
               const Text(
                 'Del invitasjonen:',
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -1105,7 +1106,7 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   _buildShareButton(
                     icon: Icons.copy,
                     label: 'Kopier',
-                    color: Colors.grey.shade700,
+                    color: context.colors.textTertiary,
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: code));
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -1117,14 +1118,14 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
                   _buildShareButton(
                     icon: Icons.email,
                     label: 'E-post',
-                    color: Colors.blue.shade600,
+                    color: AppColors.info,
                     onTap: () => _sendEmailInvitation(code, kennelName),
                   ),
                   // Del-knapp
                   _buildShareButton(
                     icon: Icons.share,
                     label: 'Del',
-                    color: Colors.green.shade600,
+                    color: AppColors.success,
                     onTap: () => _shareInvitation(code, kennelName),
                   ),
                 ],
@@ -1150,18 +1151,18 @@ class _KennelManagementScreenState extends State<KennelManagementScreen> {
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.mdAll,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadius.mdAll,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(icon, color: color, size: 28),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               label,
               style: TextStyle(

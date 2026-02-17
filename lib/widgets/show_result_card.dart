@@ -13,6 +13,7 @@ import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/show_result.dart';
 import 'package:breedly/models/kennel_profile.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 /// Generates a shareable show result card image
 class ShowResultCardScreen extends StatefulWidget {
@@ -142,11 +143,11 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
 
   Widget _buildOptionsBar() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         border: Border(
-          top: BorderSide(color: AppColors.neutral200),
+          top: BorderSide(color: context.colors.border),
         ),
       ),
       child: Column(
@@ -157,12 +158,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           Text(
             'INNHOLD',
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -184,7 +185,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           Text(
             'BAKGRUNN',
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
@@ -217,7 +218,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           Text(
             'MØNSTER',
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
@@ -237,12 +238,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? _theme.accentColor.withValues(alpha: 0.12)
-                            : AppColors.surface,
-                        borderRadius: BorderRadius.circular(20),
+                            : context.colors.surface,
+                        borderRadius: AppRadius.xlAll,
                         border: Border.all(
                           color: isSelected
                               ? _theme.accentColor.withValues(alpha: 0.4)
-                              : AppColors.neutral300,
+                              : context.colors.divider,
                         ),
                       ),
                       child: Row(
@@ -258,7 +259,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                              color: isSelected ? _theme.accentColor : AppColors.neutral600,
+                              color: isSelected ? _theme.accentColor : context.colors.textMuted,
                             ),
                           ),
                         ],
@@ -274,7 +275,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           Text(
             'SKRIFTTYPE',
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
@@ -294,18 +295,18 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? _theme.accentColor.withValues(alpha: 0.12)
-                            : AppColors.surface,
-                        borderRadius: BorderRadius.circular(20),
+                            : context.colors.surface,
+                        borderRadius: AppRadius.xlAll,
                         border: Border.all(
                           color: isSelected
                               ? _theme.accentColor.withValues(alpha: 0.4)
-                              : AppColors.neutral300,
+                              : context.colors.divider,
                         ),
                       ),
                       child: Text(
                         font.displayName,
                         style: font.textStyle(14).copyWith(
-                          color: isSelected ? _theme.accentColor : AppColors.neutral600,
+                          color: isSelected ? _theme.accentColor : context.colors.textMuted,
                           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                         ),
                       ),
@@ -322,7 +323,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
               Text(
                 'STØRRELSE',
                 style: AppTypography.labelSmall.copyWith(
-                  color: AppColors.neutral500,
+                  color: context.colors.textCaption,
                   letterSpacing: 1.0,
                   fontSize: 10,
                 ),
@@ -371,13 +372,13 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
       labelStyle: TextStyle(
         fontSize: 13,
         fontWeight: value ? FontWeight.w600 : FontWeight.w400,
-        color: value ? theme.accentColor : AppColors.neutral500,
+        color: value ? theme.accentColor : context.colors.textCaption,
       ),
       side: BorderSide(
-        color: value ? theme.accentColor.withValues(alpha: 0.3) : AppColors.neutral300,
+        color: value ? theme.accentColor.withValues(alpha: 0.3) : context.colors.divider,
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      backgroundColor: AppColors.surface,
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.xlAll),
+      backgroundColor: context.colors.surface,
       padding: const EdgeInsets.symmetric(horizontal: 4),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity.compact,
@@ -394,12 +395,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
         decoration: BoxDecoration(
           color: isSelected
               ? accentColor.withValues(alpha: 0.12)
-              : AppColors.surface,
-          borderRadius: BorderRadius.circular(20),
+              : context.colors.surface,
+          borderRadius: AppRadius.xlAll,
           border: Border.all(
             color: isSelected
                 ? accentColor.withValues(alpha: 0.5)
-                : AppColors.neutral300,
+                : context.colors.divider,
           ),
         ),
         child: Row(
@@ -414,11 +415,11 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: AppRadius.xsAll,
                 border: Border.all(
                   color: isSelected
                       ? accentColor.withValues(alpha: 0.5)
-                      : AppColors.neutral300,
+                      : context.colors.divider,
                   width: 1,
                 ),
               ),
@@ -429,7 +430,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? accentColor : AppColors.neutral600,
+                color: isSelected ? accentColor : context.colors.textMuted,
               ),
             ),
           ],
@@ -441,20 +442,20 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EDEA),
+      backgroundColor: context.colors.background,
       appBar: AppBar(
         title: Text(
           'Resultatkort',
           style: AppTypography.headlineLarge.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           if (_showPhoto != null)
             IconButton(
@@ -507,7 +508,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _theme.accentColor,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
                     textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 0.3),
                     elevation: 0,
                   ),
@@ -535,7 +536,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: theme.cardBg,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: AppRadius.xxlAll,
         boxShadow: [
           BoxShadow(
             color: theme.gradientColors.first.withValues(alpha: 0.25),

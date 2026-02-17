@@ -14,6 +14,7 @@ import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/buyer.dart';
 import 'package:breedly/models/puppy.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/utils/notification_service.dart';
 import 'package:breedly/services/reminder_manager.dart';
@@ -39,13 +40,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
         title: Text(localizations.settings),
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -139,9 +140,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         title,
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                       Text(subtitle, style: AppTypography.caption),
@@ -220,7 +221,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 decoration: BoxDecoration(
                   color: isSelected
                       ? primaryColor.withValues(alpha: ThemeOpacity.medium(context))
-                      : AppColors.surfaceVariant,
+                      : context.colors.surfaceVariant,
                   borderRadius: AppRadius.mdAll,
                   border: Border.all(
                     color: isSelected ? primaryColor : Colors.transparent,
@@ -237,7 +238,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: AppTypography.titleSmall.copyWith(
                           color: isSelected
                               ? primaryColor
-                              : AppColors.neutral800,
+                              : context.colors.textSecondary,
                           fontWeight: isSelected
                               ? FontWeight.w600
                               : FontWeight.normal,
@@ -317,7 +318,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: isSelected
-                        ? AppColors.neutral900
+                        ? context.colors.textPrimary
                         : Colors.transparent,
                     width: 3,
                   ),
@@ -335,7 +336,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Text(
                 themeName,
                 style: AppTypography.labelSmall.copyWith(
-                  color: isSelected ? theme.primaryColor : AppColors.neutral600,
+                  color: isSelected ? theme.primaryColor : context.colors.textMuted,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),
                 textAlign: TextAlign.center,
@@ -552,15 +553,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         'Breedly Premium',
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      const SizedBox(height: 2),
+                      const SizedBox(height: AppSpacing.xxs),
                       Text(
                         '$source • Utløper: $expiryText',
                         style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.neutral600,
+                          color: context.colors.textMuted,
                         ),
                       ),
                     ],
@@ -623,28 +624,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
           width: double.infinity,
           padding: const EdgeInsets.all(AppSpacing.lg),
           decoration: BoxDecoration(
-            color: AppColors.surfaceVariant,
+            color: context.colors.surfaceVariant,
             borderRadius: AppRadius.mdAll,
           ),
           child: Column(
             children: [
-              const Icon(
+              Icon(
                 Icons.lock_outline_rounded,
-                color: AppColors.neutral500,
+                color: context.colors.textCaption,
                 size: 32,
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 'Du bruker gratisversjonen',
                 style: AppTypography.titleSmall.copyWith(
-                  color: AppColors.neutral700,
+                  color: context.colors.textTertiary,
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 'Oppgrader for ubegrenset tilgang til alle funksjoner.',
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.neutral500,
+                  color: context.colors.textCaption,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -749,18 +750,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            color: Colors.blue.withValues(alpha: 0.1),
+            color: AppColors.info.withValues(alpha: 0.1),
             borderRadius: AppRadius.mdAll,
           ),
           child: Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+              const Icon(Icons.info_outline, color: AppColors.info, size: 20),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   localizations.syncInfo,
                   style: AppTypography.caption.copyWith(
-                    color: Colors.blue[800],
+                    color: AppColors.info,
                   ),
                 ),
               ),
@@ -907,18 +908,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            color: Colors.blue.withValues(alpha: 0.1),
+            color: AppColors.info.withValues(alpha: 0.1),
             borderRadius: AppRadius.mdAll,
           ),
           child: Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+              const Icon(Icons.info_outline, color: AppColors.info, size: 20),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   localizations.notificationsInfo,
                   style: AppTypography.caption.copyWith(
-                    color: Colors.blue[800],
+                    color: AppColors.info,
                   ),
                 ),
               ),
@@ -987,9 +988,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
       ),
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
@@ -1013,7 +1014,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Text(
                 localizations.dataInApp,
                 style: AppTypography.titleMedium.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ],
@@ -1106,14 +1107,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Text(
               label,
               style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.neutral700,
+                color: context.colors.textTertiary,
               ),
             ),
           ),
           Text(
             value,
             style: AppTypography.titleSmall.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
         ],
@@ -1124,9 +1125,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildAppInfoCard(AppLocalizations localizations) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
       ),
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
@@ -1150,7 +1151,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Text(
                 localizations.aboutApp,
                 style: AppTypography.titleMedium.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ],
@@ -1162,7 +1163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Text(
             localizations.welcomeMessage,
             style: AppTypography.bodySmall.copyWith(
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
           ),
         ],
@@ -1179,13 +1180,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Text(
             label,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
           ),
           Text(
             value,
             style: AppTypography.titleSmall.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
         ],
@@ -1202,13 +1203,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: Text(
             localizations.logOut,
             style: AppTypography.headlineSmall.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
           content: Text(
             localizations.logOutConfirm,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.neutral700,
+              color: context.colors.textTertiary,
             ),
           ),
           actions: [
@@ -1217,7 +1218,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Text(
                 localizations.cancel,
                 style: AppTypography.labelLarge.copyWith(
-                  color: AppColors.neutral600,
+                  color: context.colors.textMuted,
                 ),
               ),
             ),
@@ -1245,7 +1246,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildDeveloperSection(AppLocalizations localizations) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
         border: Border.all(color: Colors.orange[200]!),
       ),
@@ -1265,23 +1266,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: const Icon(Icons.science_outlined, color: Colors.orange, size: 22),
                 ),
                 const SizedBox(width: AppSpacing.md),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Utvikler & Testing',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: AppSpacing.xxs),
                       Text(
                         'Test nye funksjoner',
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.neutral600,
+                          color: context.colors.textMuted,
                         ),
                       ),
                     ],
@@ -1293,12 +1294,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const Divider(height: 1),
           ListTile(
             leading: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(AppSpacing.sm),
               decoration: BoxDecoration(
-                color: Colors.blue.withValues(alpha: 0.1),
+                color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: AppRadius.smAll,
               ),
-              child: const Icon(Icons.document_scanner, color: Colors.blue, size: 20),
+              child: const Icon(Icons.document_scanner, color: AppColors.info, size: 20),
             ),
             title: const Text(
               'Test stamtavle-skanner',
@@ -1309,10 +1310,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: TextStyle(fontSize: 12),
             ),
             trailing: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
                 color: Colors.green.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
                 border: Border.all(color: Colors.green, width: 1),
               ),
               child: const Text(

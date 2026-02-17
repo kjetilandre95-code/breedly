@@ -8,6 +8,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/utils/id_generator.dart';
 import 'package:breedly/utils/ui_helpers.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
@@ -39,16 +40,16 @@ class _BuyersScreenState extends State<BuyersScreen> {
     final localizations = AppLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: widget.showAppBar ? AppBar(
         title: _showSearch
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
-                style: TextStyle(color: AppColors.neutral900),
+                style: TextStyle(color: context.colors.textPrimary),
                 decoration: InputDecoration(
                   hintText: localizations?.search ?? 'Søk etter kjøper...',
-                  hintStyle: TextStyle(color: AppColors.neutral500),
+                  hintStyle: TextStyle(color: context.colors.textCaption),
                   border: InputBorder.none,
                 ),
                 onChanged: (value) {
@@ -60,15 +61,15 @@ class _BuyersScreenState extends State<BuyersScreen> {
             : Text(
                 localizations?.buyers ?? 'Kjøpere',
                 style: AppTypography.headlineLarge.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           IconButton(
             icon: Icon(_showSearch ? Icons.close : Icons.search),
@@ -96,7 +97,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
               // Custom header når app bar er skjult
               Container(
                 padding: const EdgeInsets.all(AppSpacing.lg),
-                color: AppColors.surface,
+                color: context.colors.surface,
                 child: Row(
                   children: [
                     Expanded(
@@ -104,10 +105,10 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           ? TextField(
                               controller: _searchController,
                               autofocus: true,
-                              style: TextStyle(color: AppColors.neutral900),
+                              style: TextStyle(color: context.colors.textPrimary),
                               decoration: InputDecoration(
                                 hintText: 'Søk etter kjøper...',
-                                hintStyle: TextStyle(color: AppColors.neutral500),
+                                hintStyle: TextStyle(color: context.colors.textCaption),
                                 border: InputBorder.none,
                               ),
                               onChanged: (value) {
@@ -119,7 +120,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           : Text(
                               'Kjøpere',
                               style: AppTypography.headlineLarge.copyWith(
-                                color: AppColors.neutral900,
+                                color: context.colors.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -130,7 +131,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                         IconButton(
                           icon: Icon(
                             _showSearch ? Icons.close : Icons.search,
-                            color: AppColors.neutral600,
+                            color: context.colors.textMuted,
                           ),
                           onPressed: () {
                             setState(() {
@@ -143,7 +144,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.person_add, color: AppColors.neutral600),
+                          icon: Icon(Icons.person_add, color: context.colors.textMuted),
                           onPressed: () => _addBuyer(context),
                           tooltip: 'Ny kjøper',
                         ),
@@ -227,8 +228,8 @@ class _BuyersScreenState extends State<BuyersScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-                const SizedBox(height: 16),
+                Icon(Icons.search_off, size: 64, color: context.colors.textDisabled),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   _searchQuery.isNotEmpty 
                       ? 'Ingen treff på "$_searchQuery"'
@@ -237,12 +238,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           : 'Ingen kjøpere registrert',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                 ),
                 if (_selectedLitterFilter != null)
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(top: AppSpacing.lg),
                     child: TextButton.icon(
                       onPressed: () {
                         setState(() {
@@ -258,18 +259,22 @@ class _BuyersScreenState extends State<BuyersScreen> {
           );
         }
 
-        return ListView(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 100),
-          children: [
-            // Kull-filter
-            _buildLitterFilter(primaryColor),
-            
-            // Seksjon: Levert
-            if (delivered.isNotEmpty) ...[
+        return RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
+          },
+          child: ListView(
+            padding: const EdgeInsets.only(left: AppSpacing.sm, right: AppSpacing.sm, top: AppSpacing.sm, bottom: 100),
+            children: [
+              // Kull-filter
+              _buildLitterFilter(primaryColor),
+              
+              // Seksjon: Levert
+              if (delivered.isNotEmpty) ...[
               _buildSectionHeader(
                 'Levert',
                 Icons.check_circle,
-                Colors.blue,
+                AppColors.info,
                 delivered.length,
               ),
               ...delivered.map((buyer) => _buildBuyerCard(buyer, primaryColor)),
@@ -277,11 +282,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
             
             // Seksjon: Med reservasjon
             if (withReservation.isNotEmpty) ...[
-              if (delivered.isNotEmpty) const SizedBox(height: 16),
+              if (delivered.isNotEmpty) const SizedBox(height: AppSpacing.lg),
               _buildSectionHeader(
                 'Med reservasjon',
                 Icons.bookmark,
-                Colors.green,
+                AppColors.success,
                 withReservation.length,
               ),
               ...withReservation.map((buyer) => _buildBuyerCard(buyer, primaryColor)),
@@ -289,7 +294,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
             
             // Seksjon: Uten reservasjon (interessenter)
             if (withoutReservation.isNotEmpty) ...[
-              if (delivered.isNotEmpty || withReservation.isNotEmpty) const SizedBox(height: 16),
+              if (delivered.isNotEmpty || withReservation.isNotEmpty) const SizedBox(height: AppSpacing.lg),
               _buildSectionHeader(
                 'Interessenter',
                 Icons.person_outline,
@@ -297,8 +302,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 withoutReservation.length,
               ),
               ...withoutReservation.map((buyer) => _buildBuyerCard(buyer, primaryColor)),
+              ],
             ],
-          ],
+          ),
         );
       },
     );
@@ -313,13 +319,13 @@ class _BuyersScreenState extends State<BuyersScreen> {
         if (litters.isEmpty) return const SizedBox.shrink();
         
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey[300]!),
+              color: context.colors.neutral100,
+              borderRadius: AppRadius.mdAll,
+              border: Border.all(color: context.colors.neutral300),
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String?>(
@@ -327,11 +333,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 isExpanded: true,
                 hint: Row(
                   children: [
-                    Icon(Icons.filter_list, color: Colors.grey[600], size: 20),
-                    const SizedBox(width: 8),
+                    Icon(Icons.filter_list, color: context.colors.textMuted, size: 20),
+                    const SizedBox(width: AppSpacing.sm),
                     Text(
                       'Filtrer på kull',
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(color: context.colors.textMuted),
                     ),
                   ],
                 ),
@@ -365,14 +371,14 @@ class _BuyersScreenState extends State<BuyersScreen> {
 
   Widget _buildSectionHeader(String title, IconData icon, Color color, int count) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.sm, AppSpacing.lg, AppSpacing.sm, AppSpacing.sm),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: color.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadius.smAll,
             ),
             child: Icon(icon, color: color, size: 18),
           ),
@@ -382,15 +388,15 @@ class _BuyersScreenState extends State<BuyersScreen> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: context.colors.textSecondary,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
             decoration: BoxDecoration(
               color: color.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.mdAll,
             ),
             child: Text(
               '$count',
@@ -413,28 +419,28 @@ class _BuyersScreenState extends State<BuyersScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             decoration: BoxDecoration(
               color: primaryColor.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadius.lgAll,
             ),
             child: Icon(
               Icons.people_outline,
               size: 64,
-              color: Colors.grey[400],
+              color: context.colors.textDisabled,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xxl),
           Text(
             localizations?.noBuyersRegistered ?? 'Ingen kjøpere registrert',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           Text(
             localizations?.addPotentialBuyers ?? 'Legg til potensielle kjøpere',
-            style: const TextStyle(color: Colors.grey, fontSize: 15),
+            style: TextStyle(color: context.colors.textCaption, fontSize: 15),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xxl),
           ElevatedButton.icon(
             onPressed: () => _addBuyer(context),
             icon: const Icon(Icons.add),
@@ -442,7 +448,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md, horizontal: AppSpacing.xxl),
             ),
           ),
         ],
@@ -473,26 +479,26 @@ class _BuyersScreenState extends State<BuyersScreen> {
     
     // Determine colors and icons based on status
     Color statusColor = isDelivered 
-        ? Colors.blue 
-        : (hasReservation ? Colors.green : primaryColor);
+        ? AppColors.info 
+        : (hasReservation ? AppColors.success : primaryColor);
     
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
       ),
       child: InkWell(
         onTap: () => _showBuyerDetails(context, buyer),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
           leading: Container(
             width: 56,
             height: 56,
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.mdAll,
             ),
             child: Icon(
               isDelivered 
@@ -515,19 +521,19 @@ class _BuyersScreenState extends State<BuyersScreen> {
               ),
               if (hasReservation)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                   decoration: BoxDecoration(
                     color: isDelivered 
-                        ? Colors.blue.withValues(alpha: ThemeOpacity.medium(context))
-                        : Colors.green.withValues(alpha: ThemeOpacity.medium(context)),
-                    borderRadius: BorderRadius.circular(8),
+                        ? AppColors.info.withValues(alpha: ThemeOpacity.medium(context))
+                        : AppColors.success.withValues(alpha: ThemeOpacity.medium(context)),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Text(
                     isDelivered ? 'Levert' : 'Reservert',
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: isDelivered ? Colors.blue : Colors.green,
+                      color: isDelivered ? AppColors.info : AppColors.success,
                     ),
                   ),
                 ),
@@ -540,12 +546,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (buyer.phone != null && buyer.phone!.isNotEmpty)
                 Row(
                   children: [
-                    Icon(Icons.phone, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
+                    Icon(Icons.phone, size: 14, color: context.colors.textMuted),
+                    const SizedBox(width: AppSpacing.xs),
                     Text(
                       buyer.phone!,
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: context.colors.textMuted,
                         fontSize: 13,
                       ),
                     ),
@@ -554,13 +560,13 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (buyer.email != null && buyer.email!.isNotEmpty)
                 Row(
                   children: [
-                    Icon(Icons.email, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
+                    Icon(Icons.email, size: 14, color: context.colors.textMuted),
+                    const SizedBox(width: AppSpacing.xs),
                     Expanded(
                       child: Text(
                         buyer.email!,
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color: context.colors.textMuted,
                           fontSize: 13,
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -588,14 +594,14 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     if (litter.id.isEmpty) return const SizedBox.shrink();
                     return Row(
                       children: [
-                        Icon(Icons.pets, size: 14, color: Colors.blue[600]),
-                        const SizedBox(width: 4),
+                        Icon(Icons.pets, size: 14, color: AppColors.info),
+                        const SizedBox(width: AppSpacing.xs),
                         Expanded(
                           child: Text(
                             '${litter.damName} × ${litter.sireName}',
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.blue[600],
+                              color: AppColors.info,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -622,12 +628,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     if (puppy.id.isEmpty) return const SizedBox.shrink();
                     return Row(
                       children: [
-                        FaIcon(FontAwesomeIcons.bone, size: 14, color: Colors.green[600]),
-                        const SizedBox(width: 4),
+                        FaIcon(FontAwesomeIcons.bone, size: 14, color: AppColors.success),
+                        const SizedBox(width: AppSpacing.xs),
                         Text(
                           'Valp: ${puppy.name}',
                           style: TextStyle(
-                            color: Colors.green[600],
+                            color: AppColors.success,
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
                           ),
@@ -666,9 +672,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   PopupMenuItem(
                     child: const Row(
                       children: [
-                        Icon(Icons.cancel, size: 20, color: Colors.orange),
-                        SizedBox(width: 8),
-                        Text('Fjern reservasjon', style: TextStyle(color: Colors.orange)),
+                        Icon(Icons.cancel, size: 20, color: AppColors.warning),
+                        SizedBox(width: AppSpacing.sm),
+                        Text('Fjern reservasjon', style: TextStyle(color: AppColors.warning)),
                       ],
                     ),
                     onTap: () {
@@ -683,9 +689,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   PopupMenuItem(
                     child: const Row(
                       children: [
-                        Icon(Icons.bookmark_add, size: 20, color: Colors.green),
-                        SizedBox(width: 8),
-                        Text('Legg til reservasjon', style: TextStyle(color: Colors.green)),
+                        Icon(Icons.bookmark_add, size: 20, color: AppColors.success),
+                        SizedBox(width: AppSpacing.sm),
+                        Text('Legg til reservasjon', style: TextStyle(color: AppColors.success)),
                       ],
                     ),
                     onTap: () {
@@ -701,9 +707,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   PopupMenuItem(
                     child: const Row(
                       children: [
-                        Icon(Icons.check_circle, size: 20, color: Colors.blue),
-                        SizedBox(width: 8),
-                        Text('Marker som levert', style: TextStyle(color: Colors.blue)),
+                        Icon(Icons.check_circle, size: 20, color: AppColors.info),
+                        SizedBox(width: AppSpacing.sm),
+                        Text('Marker som levert', style: TextStyle(color: AppColors.info)),
                       ],
                     ),
                     onTap: () {
@@ -718,7 +724,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   child: const Row(
                     children: [
                       Icon(Icons.edit, size: 20),
-                      SizedBox(width: 8),
+                      SizedBox(width: AppSpacing.sm),
                       Text('Rediger'),
                     ],
                   ),
@@ -733,9 +739,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 PopupMenuItem(
                   child: const Row(
                     children: [
-                      Icon(Icons.delete, size: 20, color: Colors.red),
-                      SizedBox(width: 8),
-                      Text('Slett', style: TextStyle(color: Colors.red)),
+                      Icon(Icons.delete, size: 20, color: AppColors.error),
+                      SizedBox(width: AppSpacing.sm),
+                      Text('Slett', style: TextStyle(color: AppColors.error)),
                     ],
                   ),
                   onTap: () {
@@ -844,7 +850,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(localizations?.selectPuppyToReserve ?? 'Velg en valp å reservere:'),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   DropdownButtonFormField<String>(
                     isExpanded: true,
                     initialValue: selectedPuppyId,
@@ -1022,11 +1028,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 UIHelpers.buildDetailRow('Preferanser', buyer.preferences!),
               if (buyer.puppyReserved != null &&
                   buyer.puppyReserved!.isNotEmpty) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 UIHelpers.buildDetailRow('Reservert valp', buyer.puppyReserved!),
               ],
               if (buyer.notes != null && buyer.notes!.isNotEmpty) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 UIHelpers.buildDetailRow('Notater', buyer.notes!),
               ],
             ],
@@ -1132,7 +1138,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     ),
                     maxLines: 2,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   const Divider(),
                   const SizedBox(height: 10),
                   const Text(
@@ -1387,7 +1393,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     ),
                     maxLines: 2,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   const Divider(),
                   const SizedBox(height: 10),
                   const Text(

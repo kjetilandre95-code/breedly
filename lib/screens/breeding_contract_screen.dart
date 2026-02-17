@@ -8,6 +8,7 @@ import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:breedly/utils/app_bar_builder.dart';
+import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/notification_service.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io' show Directory;
@@ -215,8 +216,8 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
       builder: (context) => AlertDialog(
         title: Row(
           children: [
-            Icon(Icons.check_circle, color: Colors.green),
-            const SizedBox(width: 8),
+            Icon(Icons.check_circle, color: AppColors.success),
+            const SizedBox(width: AppSpacing.sm),
             const Text('Kontrakt generert!'),
           ],
         ),
@@ -250,36 +251,36 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Info Card
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.blue.shade200),
+                  color: AppColors.info.withValues(alpha: 0.08),
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.info_outline, color: Colors.blue.shade700),
-                    const SizedBox(width: 12),
+                    Icon(Icons.info_outline, color: AppColors.info),
+                    const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Text(
                         'Fyll ut informasjon om paring og kontraktsvilkår for å generere avlskontrakt.',
-                        style: TextStyle(color: Colors.blue.shade700, fontSize: 13),
+                        style: TextStyle(color: AppColors.info, fontSize: 13),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
 
               // Stud Section
               _buildSectionHeader('Hannhund (far)', Icons.male),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               DropdownButtonFormField<Dog>(
                 initialValue: _selectedStud,
                 decoration: const InputDecoration(
@@ -293,7 +294,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                 )).toList(),
                 onChanged: (dog) => setState(() => _selectedStud = dog),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: _studOwnerNameController,
                 decoration: const InputDecoration(
@@ -302,7 +303,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                   prefixIcon: Icon(Icons.person),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: _studOwnerAddressController,
                 decoration: const InputDecoration(
@@ -311,11 +312,11 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                   prefixIcon: Icon(Icons.location_on),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
 
               // Dam Section
               _buildSectionHeader('Tispe (mor)', Icons.female),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               DropdownButtonFormField<Dog>(
                 initialValue: _selectedDam,
                 decoration: const InputDecoration(
@@ -329,7 +330,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                 )).toList(),
                 onChanged: (dog) => setState(() => _selectedDam = dog),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: _damOwnerNameController,
                 decoration: const InputDecoration(
@@ -338,7 +339,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                   prefixIcon: Icon(Icons.person),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: _damOwnerAddressController,
                 decoration: const InputDecoration(
@@ -347,11 +348,11 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                   prefixIcon: Icon(Icons.location_on),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
 
               // Payment Section
               _buildSectionHeader('Paringsavgift', Icons.payments),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               TextField(
                 controller: _studFeeController,
                 decoration: const InputDecoration(
@@ -361,7 +362,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                 ),
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: _paymentTermsController,
                 decoration: const InputDecoration(
@@ -372,11 +373,11 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                 ),
                 maxLines: 2,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
 
               // Terms Section
               _buildSectionHeader('Tilleggsvilkår', Icons.description),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               TextField(
                 controller: _additionalTermsController,
                 decoration: const InputDecoration(
@@ -387,7 +388,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                 ),
                 maxLines: 4,
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppSpacing.xxxl),
 
               // Generate Button
               SizedBox(
@@ -403,13 +404,13 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
                       : const Icon(Icons.picture_as_pdf),
                   label: Text(_isGenerating ? 'Genererer...' : 'Generer avlskontrakt (PDF)'),
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     backgroundColor: Theme.of(context).primaryColor,
                     foregroundColor: Colors.white,
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
             ],
           ),
         ),
@@ -421,7 +422,7 @@ class _BreedingContractScreenState extends State<BreedingContractScreen> {
     return Row(
       children: [
         Icon(icon, color: Theme.of(context).primaryColor, size: 20),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Text(
           title,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(

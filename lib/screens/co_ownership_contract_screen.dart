@@ -8,6 +8,7 @@ import '../models/co_ownership_contract.dart';
 import '../services/pdf_contract_service.dart';
 import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 class CoOwnershipContractScreen extends StatefulWidget {
   final Dog? preselectedDog;
@@ -198,14 +199,14 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
           : Form(
               key: _formKey,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Dog selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -213,7 +214,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               'Hund',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Dog>(
                               initialValue: _selectedDog,
                               decoration: const InputDecoration(
@@ -236,12 +237,12 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Owner 1
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -249,7 +250,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               'Eier 1',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _owner1NameController,
                               decoration: const InputDecoration(
@@ -259,7 +260,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _owner1AddressController,
                               decoration: const InputDecoration(
@@ -274,12 +275,12 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Owner 2
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -287,7 +288,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               'Eier 2',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _owner2NameController,
                               decoration: const InputDecoration(
@@ -297,7 +298,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _owner2AddressController,
                               decoration: const InputDecoration(
@@ -312,12 +313,12 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Ownership percentage
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -325,7 +326,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               'Eierandel',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             Row(
                               children: [
                                 Expanded(
@@ -346,7 +347,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                                 setState(() => _owner1Percentage = value.round());
                               },
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             DropdownButtonFormField<String>(
                               initialValue: _primaryCaretaker,
                               decoration: const InputDecoration(
@@ -375,12 +376,12 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Rights and responsibilities
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -388,7 +389,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               'Rettigheter og ansvar',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _breedingRightsController,
                               decoration: const InputDecoration(
@@ -399,7 +400,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _showRightsController,
                               decoration: const InputDecoration(
@@ -410,7 +411,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               validator: (value) =>
                                   value?.isEmpty ?? true ? 'Påkrevd' : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _expenseSharingController,
                               decoration: const InputDecoration(
@@ -425,12 +426,12 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Additional terms
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -438,7 +439,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                               'Tilleggsvilkår',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _additionalTermsController,
                               decoration: const InputDecoration(
@@ -452,7 +453,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
 
                     // Generate button
                     SizedBox(
@@ -462,11 +463,11 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         icon: const Icon(Icons.picture_as_pdf),
                         label: const Text('Generer medeieravtale'),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                   ],
                 ),
               ),

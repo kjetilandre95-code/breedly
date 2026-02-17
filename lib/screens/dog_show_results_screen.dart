@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/show_result.dart';
 import 'package:breedly/utils/app_bar_builder.dart';
@@ -43,19 +45,19 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                   icon: Icons.add_circle_outline,
                   title: localizations?.registerResults ?? 'Registrer resultater',
                   description: localizations?.registerResultsDesc ?? 'Legg til resultater fra utstillinger',
-                  color: Colors.blue,
+                  color: AppColors.info,
                 ),
                 PageInfoItem(
                   icon: Icons.bar_chart,
                   title: localizations?.showStatistics ?? 'Statistikk',
                   description: localizations?.showStatisticsDesc ?? 'Se statistikk over BIR, BIM, gruppe- og BIS-resultater',
-                  color: Colors.green,
+                  color: AppColors.success,
                 ),
                 PageInfoItem(
                   icon: Icons.description,
                   title: localizations?.critique ?? 'Kritikk',
                   description: localizations?.critiqueDesc ?? 'Lagre dommerkritikk for hver utstilling',
-                  color: Colors.orange,
+                  color: AppColors.warning,
                 ),
               ],
               tip: localizations?.showResultTip ?? 'Hvis hunden blir BIR, kan du legge til grupperesultat. Vinner den gruppen (BIG1), kan du legge til BIS-resultat.',
@@ -64,7 +66,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
           bottom: TabBar(
             indicatorColor: primaryColor,
             labelColor: primaryColor,
-            unselectedLabelColor: Colors.grey[600],
+            unselectedLabelColor: context.colors.textMuted,
             indicatorWeight: 3,
             tabs: [
               Tab(text: localizations?.results ?? 'Resultater'),
@@ -105,10 +107,10 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(AppSpacing.xxl),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: AppRadius.xlAll,
                   ),
                   child: Icon(
                     Icons.emoji_events_outlined,
@@ -116,18 +118,18 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                     color: Theme.of(context).primaryColor.withValues(alpha: 0.5),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: AppSpacing.xxl),
                 Text(
                   localizations?.noShowResults ?? 'Ingen utstillingsresultater ennå',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Text(
                   localizations?.tapToAdd ?? 'Trykk + for å legge til et resultat',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[500],
+                    color: context.colors.textCaption,
                   ),
                 ),
               ],
@@ -136,7 +138,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
+          padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 80),
           itemCount: results.length,
           itemBuilder: (context, index) {
             final result = results[index];
@@ -152,15 +154,15 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     
     return Card(
       elevation: 2,
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
       ),
       child: InkWell(
         onTap: () => _showResultDetails(result),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -177,11 +179,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: AppSpacing.xs),
                         Text(
                           dateFormat.format(result.date),
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                             fontSize: 13,
                           ),
                         ),
@@ -191,37 +193,37 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                   _buildResultBadges(result),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Wrap(
-                spacing: 8,
-                runSpacing: 4,
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.xs,
                 children: [
-                  _buildChip(result.showClass, Colors.blue),
+                  _buildChip(result.showClass, AppColors.info),
                   _buildChip(result.quality, _getQualityColor(result.quality)),
                   if (result.classPlacement != null)
-                    _buildChip('Kl: ${result.classPlacement}', Colors.teal),
+                    _buildChip('Kl: ${result.classPlacement}', AppColors.accent2),
                   if (result.hasCK)
-                    _buildChip('CK', Colors.green[700]!, icon: Icons.check_circle),
+                    _buildChip('CK', AppColors.success, icon: Icons.check_circle),
                   if (result.bestOfSexPlacement != null)
-                    _buildChip('BH/BT: ${result.bestOfSexPlacement}', Colors.indigo),
+                    _buildChip('BH/BT: ${result.bestOfSexPlacement}', AppColors.accent1),
                   if (result.placement != null)
                     _buildChip(result.placement!, _getPlacementColor(result.placement!)),
                   if (result.certificates != null)
-                    ...result.certificates!.map((cert) => _buildChip(cert, Colors.purple)),
+                    ...result.certificates!.map((cert) => _buildChip(cert, AppColors.accent5)),
                 ],
               ),
               if (result.groupResult != null || result.bisResult != null) ...[
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 const Divider(),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
+                  spacing: AppSpacing.sm,
+                  runSpacing: AppSpacing.xs,
                   children: [
                     if (result.groupResult != null)
-                      _buildChip(result.groupResult!, Colors.orange, icon: Icons.groups),
+                      _buildChip(result.groupResult!, AppColors.warning, icon: Icons.groups),
                     if (result.bisResult != null)
-                      _buildChip(result.bisResult!, Colors.amber[800]!, icon: Icons.emoji_events),
+                      _buildChip(result.bisResult!, AppColors.warning, icon: Icons.emoji_events),
                   ],
                 ),
               ],
@@ -236,9 +238,9 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     final badges = <Widget>[];
     
     if (result.bisResult != null) {
-      badges.add(_buildBadge(Icons.emoji_events, Colors.amber[800]!));
+      badges.add(_buildBadge(Icons.emoji_events, AppColors.warning));
     } else if (result.groupResult != null) {
-      badges.add(_buildBadge(Icons.groups, Colors.orange));
+      badges.add(_buildBadge(Icons.groups, AppColors.warning));
     } else if (result.isBIR) {
       badges.add(_buildBadge(Icons.star, Theme.of(context).primaryColor));
     }
@@ -248,10 +250,10 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildBadge(IconData icon, Color color) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(AppSpacing.sm),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.smAll,
       ),
       child: Icon(icon, color: color, size: 20),
     );
@@ -259,10 +261,10 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildChip(String label, Color color, {IconData? icon}) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: AppSpacing.xs),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.lgAll,
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
@@ -270,7 +272,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         children: [
           if (icon != null) ...[
             Icon(icon, size: 14, color: color),
-            const SizedBox(width: 4),
+            const SizedBox(width: AppSpacing.xs),
           ],
           Text(
             label,
@@ -288,28 +290,28 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
   Color _getQualityColor(String quality) {
     switch (quality) {
       case 'Excellent':
-        return Colors.green;
+        return AppColors.success;
       case 'Very Good':
-        return Colors.teal;
+        return AppColors.accent2;
       case 'Good':
-        return Colors.blue;
+        return AppColors.info;
       case 'Sufficient':
-        return Colors.orange;
+        return AppColors.warning;
       default:
-        return Colors.grey;
+        return AppColors.neutral500;
     }
   }
 
   Color _getPlacementColor(String placement) {
     switch (placement) {
       case 'BIR':
-        return Colors.amber[700]!;
+        return AppColors.warning;
       case 'BIM':
-        return Colors.grey[600]!;
+        return AppColors.neutral600;
       case 'CK':
-        return Colors.green[700]!;
+        return AppColors.success;
       default:
-        return Colors.blueGrey;
+        return AppColors.neutral500;
     }
   }
 
@@ -330,12 +332,12 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 Icon(
                   Icons.bar_chart_outlined,
                   size: 64,
-                  color: Colors.grey[400],
+                  color: context.colors.textDisabled,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   localizations?.noStatisticsAvailable ?? 'Ingen statistikk tilgjengelig',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ],
             ),
@@ -345,20 +347,20 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         final stats = ShowStatistics.fromResults(results);
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildOverviewCard(stats),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _buildClassPlacementsCard(stats),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _buildPlacementCard(stats),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _buildGroupAndBISCard(stats),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _buildCertificatesCard(stats),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               _buildJudgesCard(stats, results),
             ],
           ),
@@ -371,23 +373,23 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     final localizations = AppLocalizations.of(context);
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.analytics_outlined, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.overview ?? 'Oversikt',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             Row(
               children: [
                 Expanded(
@@ -398,24 +400,24 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Text(
               localizations?.quality ?? 'Premiegrader',
               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
               children: [
                 _buildQualityChip('Excellent', stats.excellentCount, Theme.of(context).primaryColor),
                 _buildQualityChip('Very Good', stats.veryGoodCount, Theme.of(context).primaryColor),
                 _buildQualityChip('Good', stats.goodCount, Theme.of(context).primaryColor),
                 _buildQualityChip('Sufficient', stats.sufficientCount, Theme.of(context).primaryColor),
                 if (stats.disqualifiedCount > 0)
-                  _buildQualityChip('Disqualified', stats.disqualifiedCount, Colors.grey),
+                  _buildQualityChip('Disqualified', stats.disqualifiedCount, AppColors.neutral500),
                 if (stats.cannotBeJudgedCount > 0)
-                  _buildQualityChip('Cannot be judged', stats.cannotBeJudgedCount, Colors.grey),
+                  _buildQualityChip('Cannot be judged', stats.cannotBeJudgedCount, AppColors.neutral500),
               ],
             ),
           ],
@@ -426,10 +428,10 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildQualityChip(String label, int count, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.lgAll,
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
@@ -473,28 +475,28 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.format_list_numbered, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.classPlacements ?? 'Klasseplasseringer',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             Text(
               localizations?.classPlacement ?? 'Plassering i klassen',
               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(child: _buildMiniStat('1', stats.class1Count, Theme.of(context).primaryColor)),
@@ -503,12 +505,12 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 Expanded(child: _buildMiniStat('4', stats.class4Count, Theme.of(context).primaryColor)),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.xl),
             Text(
               bestOfSexLabel,
               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(child: _buildMiniStat('1', stats.bestOfSex1Count, Theme.of(context).primaryColor)),
@@ -527,23 +529,23 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     final localizations = AppLocalizations.of(context);
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.star_outline, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.breedPlacements ?? 'BIR/BIM',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             Row(
               children: [
                 Expanded(
@@ -564,28 +566,28 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     final localizations = AppLocalizations.of(context);
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.emoji_events, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.groupAndBIS ?? 'Gruppe & BIS',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             Text(
               localizations?.groupFinals ?? 'Gruppefinaler',
               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(child: _buildMiniStat('BIG1', stats.big1Count, Theme.of(context).primaryColor)),
@@ -594,12 +596,12 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 Expanded(child: _buildMiniStat('BIG4', stats.big4Count, Theme.of(context).primaryColor)),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.xl),
             Text(
               localizations?.bestInShow ?? 'Best In Show',
               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(child: _buildMiniStat('BIS1', stats.bis1Count, Theme.of(context).primaryColor)),
@@ -634,27 +636,27 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     if (certCounts.isEmpty) {
       return Card(
         elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Icon(Icons.card_membership, color: Theme.of(context).primaryColor),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   Text(
                     'Cert & Cacib',
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ],
               ),
-              const Divider(height: 24),
+              const Divider(height: AppSpacing.xxl),
               Center(
                 child: Text(
                   'Ingen Cert/Cacib ennå',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
             ],
@@ -669,33 +671,33 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.card_membership, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   'Cert & Cacib',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             // Display all certificates in a wrap
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
               children: sortedCerts.map((entry) {
                 return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.smAll,
                     border: Border.all(
                       color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
                     ),
@@ -747,16 +749,16 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.person_outline, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.judges ?? 'Dommere',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -764,14 +766,14 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 const Spacer(),
                 Text(
                   localizations?.judgesCount(judges.length) ?? '${judges.length} dommere',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                 ),
               ],
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             ...judges.take(10).map((judge) => _buildJudgeItem(judge, allResults)),
             if (judges.length > 10) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Center(
                 child: TextButton(
                   onPressed: () => _showAllJudges(judges, allResults),
@@ -789,9 +791,9 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     final localizations = AppLocalizations.of(context);
     return InkWell(
       onTap: () => _showJudgeResults(judge, allResults),
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: AppRadius.smAll,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm, horizontal: AppSpacing.xs),
         child: Row(
           children: [
             CircleAvatar(
@@ -805,7 +807,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -819,7 +821,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                         ? (localizations?.exhibitionCount(judge.showCount) ?? '${judge.showCount} utstilling')
                         : (localizations?.exhibitionsCount(judge.showCount) ?? '${judge.showCount} utstillinger'),
                     style: TextStyle(
-                      color: Colors.grey[600],
+                      color: context.colors.textMuted,
                       fontSize: 12,
                     ),
                   ),
@@ -832,7 +834,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
               _buildMiniChip('BIM', judge.bimCount, Theme.of(context).primaryColor),
             if (judge.ckCount > 0)
               _buildMiniChip('CK', judge.ckCount, Theme.of(context).primaryColor),
-            const Icon(Icons.chevron_right, color: Colors.grey),
+            const Icon(Icons.chevron_right, color: AppColors.neutral500),
           ],
         ),
       ),
@@ -841,11 +843,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildMiniChip(String label, int count, Color color) {
     return Container(
-      margin: const EdgeInsets.only(right: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      margin: const EdgeInsets.only(right: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: AppSpacing.xxs),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.smAll,
       ),
       child: Text(
         '$count',
@@ -874,9 +876,9 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.85,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -884,14 +886,14 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             Container(
               width: 40,
               height: 4,
-              margin: const EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: AppSpacing.md),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: context.colors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
                 children: [
                   CircleAvatar(
@@ -906,7 +908,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -921,7 +923,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                         Text(
                           '${judge.showCount} utstilling${judge.showCount != 1 ? 'er' : ''} • ${judge.excellentCount} Excellent • ${judge.ckCount} CK',
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                             fontSize: 13,
                           ),
                         ),
@@ -937,7 +939,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             ),
             // Statistikk-rad
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -948,15 +950,15 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                 ],
               ),
             ),
-            const Divider(height: 24),
+            const Divider(height: AppSpacing.xxl),
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                 itemCount: judgeResults.length,
                 itemBuilder: (context, index) {
                   final result = judgeResults[index];
                   return Card(
-                    margin: const EdgeInsets.only(bottom: 8),
+                    margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                     child: ListTile(
                       title: Text(result.showName),
                       subtitle: Text(dateFormat.format(result.date)),
@@ -995,10 +997,10 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildJudgeStatChip(String label, int count, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.lgAll,
       ),
       child: Column(
         children: [
@@ -1031,9 +1033,9 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.85,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1041,18 +1043,18 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             Container(
               width: 40,
               height: 4,
-              margin: const EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: AppSpacing.md),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: context.colors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
                 children: [
                   Icon(Icons.person_outline, color: Theme.of(context).primaryColor, size: 28),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Text(
                     '${AppLocalizations.of(context)?.allJudges ?? 'Alle dommere'} (${judges.length})',
                     style: const TextStyle(
@@ -1071,7 +1073,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             const Divider(height: 1),
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                 itemCount: judges.length,
                 itemBuilder: (context, index) {
                   final judge = judges[index];
@@ -1089,7 +1091,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
     return Column(
       children: [
         Icon(icon, color: Theme.of(context).primaryColor, size: 28),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         Text(
           value,
           style: const TextStyle(
@@ -1100,7 +1102,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         Text(
           label,
           style: TextStyle(
-            color: Colors.grey[600],
+            color: context.colors.textMuted,
             fontSize: 12,
           ),
         ),
@@ -1110,11 +1112,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildHighlightStat(String label, int value, Color color) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
@@ -1141,11 +1143,11 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
 
   Widget _buildMiniStat(String label, int value, Color color) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-      margin: const EdgeInsets.symmetric(horizontal: 2),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm, horizontal: AppSpacing.xs),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.xxs),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.smAll,
       ),
       child: Column(
         children: [
@@ -1154,14 +1156,14 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: color.computeLuminance() > 0.5 ? Colors.grey[800] : color,
+              color: color.computeLuminance() > 0.5 ? context.colors.textSecondary : color,
             ),
           ),
           Text(
             label,
             style: TextStyle(
               fontSize: 11,
-              color: color.computeLuminance() > 0.5 ? Colors.grey[700] : color,
+              color: color.computeLuminance() > 0.5 ? context.colors.textTertiary : color,
             ),
           ),
         ],
@@ -1193,9 +1195,9 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.85,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1203,14 +1205,14 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
             Container(
               width: 40,
               height: 4,
-              margin: const EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: AppSpacing.md),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: context.colors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(AppSpacing.xl),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1226,7 +1228,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.share_outlined, color: Colors.blue[600]),
+                        icon: Icon(Icons.share_outlined, color: AppColors.info),
                         tooltip: 'Del resultatkort',
                         onPressed: () {
                           final nav = Navigator.of(context, rootNavigator: true);
@@ -1249,69 +1251,69 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                         },
                       ),
                       IconButton(
-                        icon: const Icon(Icons.delete_outline, color: Colors.red),
+                        icon: const Icon(Icons.delete_outline, color: AppColors.error),
                         onPressed: () => _deleteResult(result),
                       ),
                     ],
                   ),
                   Text(
                     dateFormat.format(result.date),
-                    style: TextStyle(color: Colors.grey[600]),
+                    style: TextStyle(color: context.colors.textMuted),
                   ),
                   if (result.judge != null) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       '${AppLocalizations.of(context)?.judge ?? 'Dommer'}: ${result.judge}',
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(color: context.colors.textMuted),
                     ),
                   ],
-                  const SizedBox(height: 20),
+                  const SizedBox(height: AppSpacing.xl),
                   Text(
                     AppLocalizations.of(context)?.result ?? 'Resultat',
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.sm,
                     children: [
                       if (result.showType != null)
-                        _buildChip(result.showType!, Colors.indigo),
-                      _buildChip(result.showClass, Colors.blue),
+                        _buildChip(result.showType!, AppColors.accent1),
+                      _buildChip(result.showClass, AppColors.info),
                       _buildChip(result.quality, _getQualityColor(result.quality)),
                       if (result.classPlacement != null)
-                        _buildChip('Kl: ${result.classPlacement}', Colors.teal),
+                        _buildChip('Kl: ${result.classPlacement}', AppColors.accent2),
                       if (result.hasCK)
-                        _buildChip('CK', Colors.green[700]!, icon: Icons.check_circle),
+                        _buildChip('CK', AppColors.success, icon: Icons.check_circle),
                       if (result.bestOfSexPlacement != null)
-                        _buildChip('${widget.dog.gender == 'Male' ? 'BHK' : 'BTK'}: ${result.bestOfSexPlacement}', Colors.indigo[400]!),
+                        _buildChip('${widget.dog.gender == 'Male' ? 'BHK' : 'BTK'}: ${result.bestOfSexPlacement}', AppColors.accent1),
                       if (result.placement != null)
                         _buildChip(result.placement!, _getPlacementColor(result.placement!)),
                       if (result.certificates != null)
-                        ...result.certificates!.map((cert) => _buildChip(cert, Colors.purple)),
+                        ...result.certificates!.map((cert) => _buildChip(cert, AppColors.accent5)),
                       if (result.groupResult != null)
-                        _buildChip(result.groupResult!, Colors.orange, icon: Icons.groups),
+                        _buildChip(result.groupResult!, AppColors.warning, icon: Icons.groups),
                       if (result.groupJudge != null && result.groupJudge!.isNotEmpty)
-                        _buildChip('Gruppedommer: ${result.groupJudge!}', Colors.orange[300]!, icon: Icons.person_outline),
+                        _buildChip('Gruppedommer: ${result.groupJudge!}', AppColors.accent3, icon: Icons.person_outline),
                       if (result.bisResult != null)
-                        _buildChip(result.bisResult!, Colors.amber[800]!, icon: Icons.emoji_events),
+                        _buildChip(result.bisResult!, AppColors.warning, icon: Icons.emoji_events),
                       if (result.bisJudge != null && result.bisJudge!.isNotEmpty)
-                        _buildChip('BIS-dommer: ${result.bisJudge!}', Colors.amber[600]!, icon: Icons.person_outline),
+                        _buildChip('BIS-dommer: ${result.bisJudge!}', AppColors.warning, icon: Icons.person_outline),
                     ],
                   ),
                   if (result.critique != null && result.critique!.isNotEmpty) ...[
-                    const SizedBox(height: 20),
+                    const SizedBox(height: AppSpacing.xl),
                     Text(
                       AppLocalizations.of(context)?.critique ?? 'Kritikk',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(AppSpacing.md),
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(8),
+                        color: context.colors.neutral100,
+                        borderRadius: AppRadius.smAll,
                       ),
                       child: Text(
                         result.critique!,
@@ -1320,12 +1322,12 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
                     ),
                   ],
                   if (result.notes != null && result.notes!.isNotEmpty) ...[
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                     Text(
                       AppLocalizations.of(context)?.ownNotes ?? 'Notater',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(result.notes!),
                   ],
                 ],
@@ -1365,7 +1367,7 @@ class _DogShowResultsScreenState extends State<DogShowResultsScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
             child: Text(localizations?.delete ?? 'Slett'),
           ),
         ],
@@ -1738,9 +1740,9 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.9,
       ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      decoration: BoxDecoration(
+        color: context.colors.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1748,14 +1750,14 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
           Container(
             width: 40,
             height: 4,
-            margin: const EdgeInsets.only(top: 12),
+            margin: const EdgeInsets.only(top: AppSpacing.md),
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: context.colors.divider,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             child: Row(
               children: [
                 Text(
@@ -1780,7 +1782,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
             child: Form(
               key: _formKey,
               child: ListView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 shrinkWrap: true,
                 children: [
                   // Dato
@@ -1801,7 +1803,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       }
                     },
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   
                   // Utstillingsnavn
                   TextFormField(
@@ -1813,7 +1815,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     ),
                     validator: (value) => value?.isEmpty ?? true ? (localizations?.required ?? 'Påkrevd') : null,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Utstillingstype
                   DropdownButtonFormField<String>(
@@ -1846,7 +1848,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       });
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Land
                   DropdownButtonFormField<String>(
@@ -1875,7 +1877,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       }
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Dommer
                   TextFormField(
@@ -1885,7 +1887,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       border: const OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Klasse
                   DropdownButtonFormField<String>(
@@ -1914,7 +1916,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       }
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Premiegrad
                   DropdownButtonFormField<String>(
@@ -1927,7 +1929,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       helperText: _isQualityLocking 
                           ? 'Ingen plassering eller sertifikater tilgjengelig med denne premiegraden' 
                           : null,
-                      helperStyle: TextStyle(color: Colors.orange[700]),
+                      helperStyle: TextStyle(color: AppColors.warning),
                     ),
                     items: _availableQualities.map((q) => DropdownMenuItem(
                       value: q,
@@ -1953,7 +1955,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       }
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Resten av feltene vises kun hvis premiegrad tillater det
                   if (!_isQualityLocking) ...[
@@ -1974,7 +1976,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     ],
                     onChanged: (value) => setState(() => _classPlacement = value),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // CK Checkbox (kun tilgjengelig med Excellent OG i nordiske land)
                   // HP Checkbox for valper (kun tilgjengelig med Særdeles lovende)
@@ -1982,26 +1984,26 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     Container(
                       decoration: BoxDecoration(
                         color: _quality == 'Særdeles lovende'
-                            ? Colors.amber.withValues(alpha: 0.15)
-                            : Colors.grey.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(8),
+                            ? AppColors.warning.withValues(alpha: 0.15)
+                            : context.colors.neutral200.withValues(alpha: 0.5),
+                        borderRadius: AppRadius.smAll,
                         border: Border.all(
                           color: _quality == 'Særdeles lovende'
-                              ? Colors.amber.withValues(alpha: 0.4)
-                              : Colors.grey.withValues(alpha: 0.3),
+                              ? AppColors.warning.withValues(alpha: 0.4)
+                              : context.colors.neutral300.withValues(alpha: 0.5),
                         ),
                       ),
                       child: CheckboxListTile(
                         title: Text(
                           'HP (Hederspris / Hopeful Puppy)',
                           style: TextStyle(
-                            color: _quality == 'Særdeles lovende' ? null : Colors.grey[400],
+                            color: _quality == 'Særdeles lovende' ? null : context.colors.textDisabled,
                           ),
                         ),
                         subtitle: _quality != 'Særdeles lovende'
                             ? Text(
                                 'Krever Særdeles lovende',
-                                style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                                style: TextStyle(color: context.colors.textDisabled, fontSize: 12),
                               )
                             : const Text(
                                 'Kvalifiserer for beste hannvalp/tispevalp',
@@ -2011,9 +2013,9 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                         onChanged: _quality == 'Særdeles lovende'
                             ? (value) => setState(() => _hasCK = value ?? false)
                             : null,
-                        activeColor: Colors.amber[700],
+                        activeColor: AppColors.warning,
                         controlAffinity: ListTileControlAffinity.leading,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         dense: true,
                       ),
                     )
@@ -2021,39 +2023,39 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                   Container(
                     decoration: BoxDecoration(
                       color: _isCKAvailable 
-                          ? Colors.green.withValues(alpha: 0.15)
-                          : Colors.grey.withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(8),
+                          ? AppColors.success.withValues(alpha: 0.15)
+                          : context.colors.neutral200.withValues(alpha: 0.5),
+                      borderRadius: AppRadius.smAll,
                       border: Border.all(
                         color: _isCKAvailable
-                            ? Colors.green.withValues(alpha: 0.4)
-                            : Colors.grey.withValues(alpha: 0.3),
+                            ? AppColors.success.withValues(alpha: 0.4)
+                            : context.colors.neutral300.withValues(alpha: 0.5),
                       ),
                     ),
                     child: CheckboxListTile(
                       title: Text(
                         localizations?.ckCertificateQuality ?? 'CK (Certifikat Kvalitet)',
                         style: TextStyle(
-                          color: _isCKAvailable ? null : Colors.grey[400],
+                          color: _isCKAvailable ? null : context.colors.textDisabled,
                         ),
                       ),
                       subtitle: !_isCKAvailable
                           ? Text(
                               'Krever Excellent',
-                              style: TextStyle(color: Colors.grey[400], fontSize: 12),
+                              style: TextStyle(color: context.colors.textDisabled, fontSize: 12),
                             )
                           : null,
                       value: _hasCK,
                       onChanged: _isCKAvailable
                           ? (value) => setState(() => _hasCK = value ?? false)
                           : null,
-                      activeColor: Colors.green,
+                      activeColor: AppColors.success,
                       controlAffinity: ListTileControlAffinity.leading,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                       dense: true,
                     ),
                   ),
-                  if (_isNordicCountry || _isPuppyClass) const SizedBox(height: 16),
+                  if (_isNordicCountry || _isPuppyClass) const SizedBox(height: AppSpacing.lg),
                   
                   // Beste hannhund/tispe plassering (eller beste hannvalp/tispevalp)
                   DropdownButtonFormField<String?>(
@@ -2098,7 +2100,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       });
                     },
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // BIR/BIM - låst i Norden hvis ikke BHK/BTK 1
                   // For valper: BIR Valp / BIM Valp
@@ -2111,7 +2113,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                       helperText: _isPuppyClass
                           ? (_bestOfSexPlacement != '1' ? 'Krever å være beste hannvalp/tispevalp' : null)
                           : (!_isBIRBIMAvailable ? 'Krever BHK/BTK 1. plass i Norden' : null),
-                      helperStyle: TextStyle(color: Colors.orange[700]),
+                      helperStyle: TextStyle(color: AppColors.warning),
                     ),
                     items: [
                       DropdownMenuItem(value: null, child: Text(localizations?.unplaced ?? 'Ingen')),
@@ -2133,16 +2135,16 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                           }
                         : null,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Sertifikater (checkboxer for flere valg) - kun hvis det finnes tilgjengelige cert
                   if (_getAvailableCertificates().isNotEmpty || 
                       ((_showClass == 'Junior' || _showClass == 'Veteran') && _getAvailableJuniorVeteranCertificates().isNotEmpty)) ...[
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(AppSpacing.md),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: AppRadius.smAll,
                         border: Border.all(color: Theme.of(context).primaryColor.withValues(alpha: 0.4)),
                       ),
                       child: Column(
@@ -2150,7 +2152,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                         children: [
                           if (_getAvailableCertificates().isNotEmpty)
                             Wrap(
-                              spacing: 4,
+                              spacing: AppSpacing.xs,
                               runSpacing: 0,
                               children: _getAvailableCertificates().map((cert) {
                                 final isSelected = _selectedCertificates.contains(cert);
@@ -2174,7 +2176,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                                 },
                                 selectedColor: Theme.of(context).primaryColor.withValues(alpha: 0.35),
                                 checkmarkColor: Theme.of(context).primaryColor,
-                                backgroundColor: Colors.white,
+                                backgroundColor: context.colors.surface,
                                 side: BorderSide(color: Theme.of(context).primaryColor.withValues(alpha: 0.5)),
                               );
                             }).toList(),
@@ -2182,12 +2184,12 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                           // Junior/Veteran spesifikke cert
                           if ((_showClass == 'Junior' || _showClass == 'Veteran') && _getAvailableJuniorVeteranCertificates().isNotEmpty) ...[
                             if (_getAvailableCertificates().isNotEmpty) ...[
-                              const SizedBox(height: 4),
+                              const SizedBox(height: AppSpacing.xs),
                               const Divider(),
                             ],
-                            const SizedBox(height: 4),
+                            const SizedBox(height: AppSpacing.xs),
                             Wrap(
-                              spacing: 4,
+                              spacing: AppSpacing.xs,
                               runSpacing: 0,
                               children: _getAvailableJuniorVeteranCertificates().map((cert) {
                                 final isSelected = _selectedCertificates.contains(cert);
@@ -2211,7 +2213,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                                   },
                                   selectedColor: Theme.of(context).primaryColor.withValues(alpha: 0.35),
                                   checkmarkColor: Theme.of(context).primaryColor,
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: context.colors.surface,
                                   side: BorderSide(color: Theme.of(context).primaryColor.withValues(alpha: 0.5)),
                                 );
                               }).toList(),
@@ -2224,31 +2226,31 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                   
                   // Grupperesultat (kun synlig hvis BIR, ikke for valper)
                   if (_isBIR && !_isPuppyClass) ...[
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(AppSpacing.md),
                       decoration: BoxDecoration(
-                        color: Colors.orange.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.orange.withValues(alpha: 0.3)),
+                        color: AppColors.warning.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.smAll,
+                        border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.groups, color: Colors.orange[700]),
-                              const SizedBox(width: 8),
+                              Icon(Icons.groups, color: AppColors.warning),
+                              const SizedBox(width: AppSpacing.sm),
                               Text(
                                 localizations?.groupFinal ?? 'Gruppefinale',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.orange[700],
+                                  color: AppColors.warning,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: AppSpacing.md),
                           DropdownButtonFormField<String?>(
                             isExpanded: true,
                             initialValue: _groupResult,
@@ -2256,7 +2258,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                               labelText: localizations?.groupResult ?? 'Grupperesultat',
                               border: const OutlineInputBorder(),
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: context.colors.surface,
                             ),
                             items: [
                               DropdownMenuItem(value: null, child: Text(localizations?.didNotParticipate ?? 'Deltok ikke / ingen plassering')),
@@ -2276,15 +2278,15 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                               });
                             },
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: AppSpacing.md),
                           TextFormField(
                             controller: _groupJudgeController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Gruppedommer',
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               filled: true,
-                              fillColor: Colors.white,
-                              prefixIcon: Icon(Icons.person_outline),
+                              fillColor: context.colors.surface,
+                              prefixIcon: const Icon(Icons.person_outline),
                             ),
                           ),
                         ],
@@ -2294,31 +2296,31 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                   
                   // BIS-resultat (kun synlig hvis BIG1)
                   if (_isBIG1) ...[
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(AppSpacing.md),
                       decoration: BoxDecoration(
-                        color: Colors.amber.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.amber.withValues(alpha: 0.4)),
+                        color: AppColors.warning.withValues(alpha: 0.15),
+                        borderRadius: AppRadius.smAll,
+                        border: Border.all(color: AppColors.warning.withValues(alpha: 0.4)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.emoji_events, color: Colors.amber[800]),
-                              const SizedBox(width: 8),
+                              Icon(Icons.emoji_events, color: AppColors.warning),
+                              const SizedBox(width: AppSpacing.sm),
                               Text(
                                 localizations?.bestInShow ?? 'Best In Show',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.amber[800],
+                                  color: AppColors.warning,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: AppSpacing.md),
                           DropdownButtonFormField<String?>(
                             isExpanded: true,
                             initialValue: _bisResult,
@@ -2326,7 +2328,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                               labelText: localizations?.bisResult ?? 'BIS-resultat',
                               border: const OutlineInputBorder(),
                               filled: true,
-                              fillColor: Colors.white,
+                              fillColor: context.colors.surface,
                             ),
                             items: [
                               DropdownMenuItem(value: null, child: Text(localizations?.noPlacement ?? 'Ingen plassering')),
@@ -2337,15 +2339,15 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                             ],
                             onChanged: (value) => setState(() => _bisResult = value),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: AppSpacing.md),
                           TextFormField(
                             controller: _bisJudgeController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'BIS-dommer',
-                              border: OutlineInputBorder(),
+                              border: const OutlineInputBorder(),
                               filled: true,
-                              fillColor: Colors.white,
-                              prefixIcon: Icon(Icons.person_outline),
+                              fillColor: context.colors.surface,
+                              prefixIcon: const Icon(Icons.person_outline),
                             ),
                           ),
                         ],
@@ -2353,7 +2355,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     ),
                   ],
                   
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xxl),
                   ], // Slutt på if (!_isQualityLocking)
                   
                   // Kritikk
@@ -2366,7 +2368,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     ),
                     maxLines: 4,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   
                   // Notater
                   TextFormField(
@@ -2377,7 +2379,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     ),
                     maxLines: 2,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: AppSpacing.xxl),
                   
                   // Lagre-knapp
                   SizedBox(
@@ -2385,9 +2387,9 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                     child: ElevatedButton(
                       onPressed: _saveResult,
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: AppRadius.smAll,
                         ),
                       ),
                       child: Text(widget.existingResult != null 
@@ -2395,7 +2397,7 @@ class _AddShowResultSheetState extends State<_AddShowResultSheet> {
                           : (localizations?.save ?? 'Lagre')),
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                 ],
               ),
             ),

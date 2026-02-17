@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/models/dog.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/puppy.dart';
 import 'package:breedly/models/kennel_profile.dart';
@@ -214,20 +216,20 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
             // Planleggingsmodus toggle
             Card(
               elevation: 2,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
               ),
               color: _isPlannedLitter 
                   ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
                   : null,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -237,7 +239,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                           _isPlannedLitter ? Icons.calendar_month : Icons.pets,
                           color: Theme.of(context).primaryColor,
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: AppSpacing.md),
                         Expanded(
                           child: Text(
                             _isPlannedLitter 
@@ -251,7 +253,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     SwitchListTile(
                       title: Text(l10n.planningMode),
                       subtitle: Text(
@@ -292,15 +294,15 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                           });
                         },
                         contentPadding: EdgeInsets.zero,
-                        activeTrackColor: Colors.grey.withValues(alpha: 0.5),
-                        activeThumbColor: Colors.grey,
+                        activeTrackColor: context.colors.textMuted.withValues(alpha: 0.5),
+                        activeThumbColor: context.colors.textMuted,
                       ),
                     ],
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             
             // Dam Selection
             Row(
@@ -325,22 +327,22 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                   ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             _dogs.isEmpty
                 ? Container(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red),
-                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.error),
+                      borderRadius: AppRadius.smAll,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Ingen hunder registrert ennå',
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(color: AppColors.error),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         ElevatedButton(
                           onPressed: () async {
                             final result = await Navigator.push(
@@ -376,7 +378,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                         child: Row(
                           children: [
                             const Icon(Icons.add, size: 18),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: AppSpacing.sm),
                             Text(l10n.addNewFemale),
                           ],
                         ),
@@ -401,22 +403,22 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadius.mdAll,
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadius.mdAll,
                         borderSide: BorderSide(
                           color: Theme.of(context).primaryColor,
                           width: 2,
                         ),
                       ),
                       labelText: l10n.selectDam,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
                     ),
                     validator: (value) =>
                         value == null ? l10n.pleaseSelectDam : null,
                   ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Sire Selection
             Row(
@@ -438,7 +440,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                   ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<Dog>(
               isExpanded: true,
               initialValue: _selectedSire,
@@ -457,7 +459,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                   child: Row(
                     children: [
                       const Icon(Icons.add, size: 18),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.sm),
                       Text(l10n.addNewMale),
                     ],
                   ),
@@ -482,44 +484,44 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
               },
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
                 labelText: l10n.selectSire,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
               ),
               validator: (value) => value == null ? l10n.pleaseSelectSire : null,
             ),
             
             // Inbreeding coefficient display
             if (_selectedDam != null && _selectedSire != null) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               InbreedingWidget(
                 motherId: _selectedDam!.id,
                 fatherId: _selectedSire!.id,
               ),
             ],
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Breed - Searchable
             _buildSearchableBreedDropdown(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Mating Date - viktig for planlegging
             if (_isPlannedLitter && _damMatingDate == null)
               Padding(
-                padding: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: Text(
                   l10n.dateSetWhenMatingCompleted,
                   style: TextStyle(
                     fontSize: 13,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -527,7 +529,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
             Card(
               elevation: 2,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
               ),
               color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
               child: ListTile(
@@ -583,14 +585,14 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Estimated Due Date - alltid vis i planleggingsmodus
             if (_estimatedDueDate != null || _isPlannedLitter)
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
                 child: ListTile(
@@ -643,20 +645,20 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                 ),
               ),
             if (_estimatedDueDate != null || _isPlannedLitter) 
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
             // Progesteronmålinger-knapp i planleggingsmodus
             if (_isPlannedLitter && _selectedDam != null)
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
-                color: Colors.purple.withValues(alpha: 0.15),
+                color: AppColors.accent5.withValues(alpha: 0.15),
                 child: ListTile(
-                  leading: const Icon(
+                  leading: Icon(
                     Icons.science,
-                    color: Colors.purple,
+                    color: AppColors.accent5,
                   ),
                   title: Text(
                     l10n.progesteroneMeasurements,
@@ -677,20 +679,20 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                 ),
               ),
             if (_isPlannedLitter && _selectedDam != null) 
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
             // Opprett parringsavtale - kun i planleggingsmodus med begge foreldre valgt
             if (_isPlannedLitter && _selectedDam != null && _selectedSire != null)
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
-                color: Colors.teal.withValues(alpha: 0.15),
+                color: AppColors.accent2.withValues(alpha: 0.15),
                 child: ListTile(
-                  leading: const Icon(
+                  leading: Icon(
                     Icons.description,
-                    color: Colors.teal,
+                    color: AppColors.accent2,
                   ),
                   title: Text(
                     l10n.breedingContract,
@@ -714,14 +716,14 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                 ),
               ),
             if (_isPlannedLitter && _selectedDam != null && _selectedSire != null)
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
             // Date of Birth - skjul i planleggingsmodus
             if (!_isPlannedLitter)
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
                 child: ListTile(
@@ -750,7 +752,7 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                   },
                 ),
               ),
-            if (!_isPlannedLitter) const SizedBox(height: 16),
+            if (!_isPlannedLitter) const SizedBox(height: AppSpacing.lg),
 
             // Number of Puppies Expected (vis kun for aktive kull, ikke planlagt eller historisk)
             if (!_isPlannedLitter && !_isHistoricalLitter) ...[
@@ -758,22 +760,22 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                 decoration: InputDecoration(
                   labelText: l10n.numberOfPuppiesExpected,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                       width: 2,
                     ),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) =>
                     _numberOfPuppies = int.tryParse(value) ?? 0,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
             ],
 
             // Males Count (vis for aktive og historiske kull, ikke planlagte)
@@ -782,44 +784,44 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
                 decoration: InputDecoration(
                   labelText: l10n.numberOfMales,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                       width: 2,
                     ),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
                 ),
                 keyboardType: TextInputType.number,
                 onChanged: (value) =>
                     _actualMalesCount = int.tryParse(value) ?? 0,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Females Count
               TextFormField(
                 decoration: InputDecoration(
                   labelText: l10n.numberOfFemales,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
               ),
               keyboardType: TextInputType.number,
               onChanged: (value) =>
                   _actualFemalesCount = int.tryParse(value) ?? 0,
             ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
             ], // Slutt på if (!_isPlannedLitter) - hanner/tisper
 
             // Notes
@@ -827,29 +829,29 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
               decoration: InputDecoration(
                 labelText: l10n.notes,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
               ),
               maxLines: 3,
               onChanged: (value) => _notes = value,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Save Button
             ElevatedButton.icon(
               onPressed: _saveLitter,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                 backgroundColor: _isPlannedLitter 
-                    ? Colors.orange 
+                    ? AppColors.warning 
                     : Theme.of(context).primaryColor,
               ),
               icon: Icon(_isPlannedLitter ? Icons.calendar_month : Icons.save),
@@ -875,10 +877,10 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
             decoration: InputDecoration(
               labelText: l10n.breed,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
                   width: 2,
@@ -886,12 +888,12 @@ class _AddLitterScreenState extends State<AddLitterScreen> {
               ),
               errorText: field.errorText,
               suffixIcon: const Icon(Icons.arrow_drop_down),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
             ),
             child: Text(
               _breed.isEmpty ? l10n.pleaseSelectBreed : _breed,
               style: TextStyle(
-                color: _breed.isEmpty ? Colors.grey : Colors.black,
+                color: _breed.isEmpty ? context.colors.textDisabled : context.colors.textPrimary,
               ),
             ),
           );
@@ -1010,12 +1012,12 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
           const Text('Velg rase'),
           if (hasKennelBreeds)
             Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
               child: Text(
                 _showAllBreeds ? l10n.showingAllBreeds : l10n.showingKennelBreeds,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[600],
+                  color: context.colors.textMuted,
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -1029,17 +1031,17 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
           children: [
             if (!hasKennelBreeds)
               Container(
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.all(AppSpacing.md),
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.orange.withValues(alpha: 0.5)),
+                  color: AppColors.warning.withValues(alpha: 0.15),
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(color: AppColors.warning.withValues(alpha: 0.5)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.lightbulb_outline, color: Colors.orange, size: 20),
-                    const SizedBox(width: 8),
+                    Icon(Icons.lightbulb_outline, color: AppColors.warning, size: 20),
+                    const SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1048,12 +1050,12 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                             l10n.tipSetUpBreeds,
                             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                           ),
-                          const SizedBox(height: 2),
+                          const SizedBox(height: AppSpacing.xxs),
                           Text(
                             l10n.addBreedsToKennelInfo,
                             style: const TextStyle(fontSize: 12),
                           ),
-                          const SizedBox(height: 6),
+                          const SizedBox(height: AppSpacing.xs),
                           GestureDetector(
                             onTap: widget.onNavigateToKennelProfile,
                             child: Text(
@@ -1079,16 +1081,16 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                 hintText: 'Søk rase...',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AppRadius.smAll,
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             if (hasKennelBreeds)
               InkWell(
                 onTap: _toggleShowAllBreeds,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: Row(
                     children: [
                       Icon(
@@ -1096,7 +1098,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                         size: 18,
                         color: Theme.of(context).primaryColor,
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.sm),
                       Text(
                         _showAllBreeds ? l10n.showOnlyKennelBreeds : l10n.showAllBreeds,
                         style: TextStyle(
@@ -1108,7 +1110,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                   ),
                 ),
               ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Expanded(
               child: _filteredBreeds.isEmpty
                   ? Center(

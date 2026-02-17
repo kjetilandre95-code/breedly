@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/providers/language_provider.dart';
@@ -146,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen>
               Text(
                 localizations.resetPasswordInstructions,
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.neutral600,
+                  color: context.colors.textMuted,
                 ),
               ),
               const SizedBox(height: AppSpacing.lg),
@@ -175,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen>
             onPressed: () => Navigator.pop(dialogContext),
             child: Text(
               localizations.cancel,
-              style: TextStyle(color: AppColors.neutral600),
+              style: TextStyle(color: context.colors.textMuted),
             ),
           ),
           ElevatedButton(
@@ -244,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen>
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       body: SafeArea(
         child: Stack(
           children: [
@@ -373,7 +374,7 @@ class _LoginScreenState extends State<LoginScreen>
                   lang['name']!,
                   style: AppTypography.bodyMedium.copyWith(
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                    color: isSelected ? primaryColor : AppColors.neutral800,
+                    color: isSelected ? primaryColor : context.colors.textSecondary,
                   ),
                 ),
                 if (isSelected) ...[
@@ -391,9 +392,9 @@ class _LoginScreenState extends State<LoginScreen>
           vertical: AppSpacing.sm,
         ),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: context.colors.surface,
           borderRadius: AppRadius.lgAll,
-          border: Border.all(color: AppColors.neutral200),
+          border: Border.all(color: context.colors.border),
           boxShadow: AppShadows.sm,
         ),
         child: Row(
@@ -405,7 +406,7 @@ class _LoginScreenState extends State<LoginScreen>
             ),
             const SizedBox(width: AppSpacing.xs),
             Icon(Icons.expand_more_rounded, 
-                 color: AppColors.neutral600, 
+                 color: context.colors.textMuted, 
                  size: 20),
           ],
         ),
@@ -438,7 +439,7 @@ class _LoginScreenState extends State<LoginScreen>
         Text(
           'Breedly',
           style: AppTypography.displayMedium.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -448,7 +449,7 @@ class _LoginScreenState extends State<LoginScreen>
         // Subtitle
         Text(
           AppLocalizations.of(context)?.welcomeMessage ?? 'Your digital kennel assistant',
-          style: AppTypography.bodyLarge.copyWith(color: AppColors.neutral600),
+          style: AppTypography.bodyLarge.copyWith(color: context.colors.textMuted),
         ),
       ],
     );
@@ -484,12 +485,12 @@ class _LoginScreenState extends State<LoginScreen>
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
-      style: AppTypography.bodyMedium.copyWith(color: AppColors.neutral900),
+      style: AppTypography.bodyMedium.copyWith(color: context.colors.textPrimary),
       decoration: InputDecoration(
         labelText: localizations.email,
         prefixIcon: const Icon(Icons.email_outlined),
         filled: true,
-        fillColor: AppColors.surface,
+        fillColor: context.colors.surface,
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -511,7 +512,7 @@ class _LoginScreenState extends State<LoginScreen>
       obscureText: !_showPassword,
       textInputAction: TextInputAction.done,
       onFieldSubmitted: (_) => _signInWithEmail(),
-      style: AppTypography.bodyMedium.copyWith(color: AppColors.neutral900),
+      style: AppTypography.bodyMedium.copyWith(color: context.colors.textPrimary),
       decoration: InputDecoration(
         labelText: localizations.password,
         prefixIcon: const Icon(Icons.lock_outlined),
@@ -528,7 +529,7 @@ class _LoginScreenState extends State<LoginScreen>
           },
         ),
         filled: true,
-        fillColor: AppColors.surface,
+        fillColor: context.colors.surface,
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -573,17 +574,17 @@ class _LoginScreenState extends State<LoginScreen>
   Widget _buildDivider() {
     return Row(
       children: [
-        Expanded(child: Divider(color: AppColors.neutral300)),
+        Expanded(child: Divider(color: context.colors.divider)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
           child: Text(
             AppLocalizations.of(context)?.orContinueWith ?? 'Or continue with',
             style: AppTypography.bodySmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
             ),
           ),
         ),
-        Expanded(child: Divider(color: AppColors.neutral300)),
+        Expanded(child: Divider(color: context.colors.divider)),
       ],
     );
   }
@@ -594,7 +595,7 @@ class _LoginScreenState extends State<LoginScreen>
       child: OutlinedButton(
         onPressed: _isLoading ? null : _signInWithGoogle,
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: AppColors.neutral300),
+          side: BorderSide(color: context.colors.divider),
           shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
         ),
         child: Row(
@@ -605,15 +606,15 @@ class _LoginScreenState extends State<LoginScreen>
               width: 24,
               height: 24,
               decoration: BoxDecoration(
-                color: AppColors.neutral200,
-                borderRadius: BorderRadius.circular(4),
+                color: context.colors.border,
+                borderRadius: AppRadius.xsAll,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   'G',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: AppColors.neutral700,
+                    color: context.colors.textTertiary,
                   ),
                 ),
               ),
@@ -622,7 +623,7 @@ class _LoginScreenState extends State<LoginScreen>
             Text(
               AppLocalizations.of(context)?.continueWithGoogle ?? 'Continue with Google',
               style: AppTypography.titleSmall.copyWith(
-                color: AppColors.neutral800,
+                color: context.colors.textSecondary,
               ),
             ),
           ],
@@ -639,7 +640,7 @@ class _LoginScreenState extends State<LoginScreen>
       children: [
         Text(
           '${localizations.noAccount} ',
-          style: AppTypography.bodyMedium.copyWith(color: AppColors.neutral600),
+          style: AppTypography.bodyMedium.copyWith(color: context.colors.textMuted),
         ),
         TextButton(
           onPressed: () {

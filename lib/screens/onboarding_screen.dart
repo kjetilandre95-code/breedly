@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 /// Onboarding screen shown to new users after first login
 class OnboardingScreen extends StatefulWidget {
@@ -196,7 +197,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Text(
             page.title,
             style: AppTypography.headlineLarge.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
             textAlign: TextAlign.center,
           ),
@@ -206,7 +207,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Text(
             page.description,
             style: AppTypography.bodyLarge.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               height: 1.5,
             ),
             textAlign: TextAlign.center,

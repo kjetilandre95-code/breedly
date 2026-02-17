@@ -10,6 +10,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/buyer.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/services/auth_service.dart';
@@ -70,7 +71,7 @@ class _AllContractsScreenState extends State<AllContractsScreen>
           isScrollable: true,
           indicatorColor: themeColor,
           labelColor: themeColor,
-          unselectedLabelColor: AppColors.neutral500,
+          unselectedLabelColor: context.colors.textCaption,
           tabs: const [
             Tab(text: 'Kjøpskontrakter'),
             Tab(text: 'Reservasjoner'),
@@ -292,13 +293,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
           Icon(
             icon,
             size: 64,
-            color: AppColors.neutral400,
+            color: context.colors.textDisabled,
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
             message,
             style: AppTypography.bodyLarge.copyWith(
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
           ),
         ],
@@ -320,9 +321,9 @@ class _AllContractsScreenState extends State<AllContractsScreen>
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.sm,
       ),
       child: Column(
@@ -349,18 +350,18 @@ class _AllContractsScreenState extends State<AllContractsScreen>
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.xxs),
                     Text(
                       subtitle,
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.neutral600,
+                        color: context.colors.textMuted,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       DateFormat('dd.MM.yyyy').format(date),
                       style: AppTypography.caption.copyWith(
-                        color: AppColors.neutral500,
+                        color: context.colors.textCaption,
                       ),
                     ),
                   ],
@@ -398,7 +399,7 @@ class _AllContractsScreenState extends State<AllContractsScreen>
                     icon: const Icon(Icons.edit, size: 18),
                     label: const Text('Rediger'),
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColors.neutral700,
+                      foregroundColor: context.colors.textTertiary,
                     ),
                   ),
                 if (onDelete != null) ...[
@@ -408,7 +409,7 @@ class _AllContractsScreenState extends State<AllContractsScreen>
                     icon: const Icon(Icons.delete, size: 18),
                     label: const Text('Slett'),
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.red,
+                      foregroundColor: AppColors.error,
                     ),
                   ),
                 ],
@@ -588,7 +589,7 @@ class _AllContractsScreenState extends State<AllContractsScreen>
               Navigator.pop(context);
               onConfirm();
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -599,20 +600,20 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     switch (status.toLowerCase()) {
       case 'active':
       case 'aktiv':
-        return Colors.green;
+        return AppColors.success;
       case 'pending':
       case 'venter':
       case 'draft':
-        return Colors.orange;
+        return AppColors.warning;
       case 'completed':
       case 'fullført':
       case 'converted':
-        return Colors.blue;
+        return AppColors.info;
       case 'cancelled':
       case 'kansellert':
-        return Colors.red;
+        return AppColors.error;
       default:
-        return AppColors.neutral500;
+        return context.colors.textCaption;
     }
   }
 

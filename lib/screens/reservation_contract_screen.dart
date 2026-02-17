@@ -11,6 +11,7 @@ import '../models/reservation_contract.dart';
 import '../services/pdf_contract_service.dart';
 import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 class ReservationContractScreen extends StatefulWidget {
   final Puppy? preselectedPuppy;
@@ -210,14 +211,14 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
           : Form(
               key: _formKey,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Puppy selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -225,7 +226,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                               'Valp',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Puppy>(
                               isExpanded: true,
                               initialValue: _selectedPuppy,
@@ -250,7 +251,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                                   value == null ? 'Påkrevd' : null,
                             ),
                             if (_selectedPuppy != null) ...[
-                              const SizedBox(height: 12),
+                              const SizedBox(height: AppSpacing.md),
                               Text(
                                 'Kjønn: ${_selectedPuppy!.gender == 'male' ? 'Hannhund' : 'Tispe'}',
                                 style: Theme.of(context).textTheme.bodyMedium,
@@ -265,12 +266,12 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Buyer selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -278,7 +279,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                               'Kjøper',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Buyer>(
                               isExpanded: true,
                               initialValue: _selectedBuyer,
@@ -302,7 +303,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                                   value == null ? 'Påkrevd' : null,
                             ),
                             if (_selectedBuyer != null) ...[
-                              const SizedBox(height: 12),
+                              const SizedBox(height: AppSpacing.md),
                               Text(
                                 'Adresse: ${_selectedBuyer!.address}',
                                 style: Theme.of(context).textTheme.bodyMedium,
@@ -322,12 +323,12 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Price info
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -335,7 +336,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                               'Priser',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _reservationFeeController,
                               decoration: const InputDecoration(
@@ -352,7 +353,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _totalPriceController,
                               decoration: const InputDecoration(
@@ -369,7 +370,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             Text(
                               'Restbeløp: kr ${((double.tryParse(_totalPriceController.text) ?? 0) - (double.tryParse(_reservationFeeController.text) ?? 0)).toStringAsFixed(0)},-',
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -380,12 +381,12 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Notes
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -393,7 +394,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                               'Merknader',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _notesController,
                               decoration: const InputDecoration(
@@ -407,7 +408,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
 
                     // Generate button
                     SizedBox(
@@ -417,11 +418,11 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         icon: const Icon(Icons.picture_as_pdf),
                         label: const Text('Generer reservasjonsavtale'),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                   ],
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/puppy.dart';
 import 'package:breedly/models/dog.dart';
@@ -95,7 +96,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         bottom: TabBar(
           controller: _tabController,
           labelColor: primaryColor,
-          unselectedLabelColor: AppColors.neutral500,
+          unselectedLabelColor: context.colors.textCaption,
           indicatorColor: primaryColor,
           indicatorWeight: 3,
           tabs: const [
@@ -134,7 +135,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     final isPlannedLitter = widget.litter.dateOfBirth.isAfter(DateTime.now());
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 88),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 88),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -142,7 +143,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           if (isPlannedLitter)
             _buildPlannedLitterBanner(),
 
-          if (isPlannedLitter) const SizedBox(height: 16),
+          if (isPlannedLitter) const SizedBox(height: AppSpacing.lg),
 
           // Status Overview Card - viser raskt oversikt (kun hvis født)
           if (!isPlannedLitter)
@@ -152,12 +153,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               reservedCount,
               availableCount,
             ),
-          if (!isPlannedLitter) const SizedBox(height: 16),
+          if (!isPlannedLitter) const SizedBox(height: AppSpacing.lg),
 
           // Litter Information Card
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -167,14 +168,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         Icons.info_outline,
                         color: Theme.of(context).primaryColor,
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: AppSpacing.sm),
                       Text(
                         isPlannedLitter ? 'Planlagt kull' : 'Kullinfo',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   _buildInfoRow('Mor', widget.litter.damName),
                   _buildInfoRow('Far', widget.litter.sireName),
                   _buildInfoRow('Rase', widget.litter.breed),
@@ -193,9 +194,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     _buildInfoRow('Status', widget.litter.getStatus()),
                   ],
                   if (puppies.isNotEmpty && !isPlannedLitter) ...[
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     const Divider(),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     _buildInfoRow('Totalt valper', '${puppies.length}'),
                     _buildInfoRow(
                       'Hanner',
@@ -207,9 +208,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     ),
                   ],
                   if (widget.litter.damMatingDate != null) ...[
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     const Divider(),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     _buildInfoRow(
                       'Parringsdato',
                       DateFormat(
@@ -218,7 +219,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     ),
                   ],
                   if (widget.litter.estimatedDueDate != null) ...[
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     _buildInfoRow(
                       'Estimert dato for fødsel',
                       DateFormat(
@@ -229,7 +230,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     if (widget.litter.estimatedDueDate!.isAfter(
                       DateTime.now(),
                     )) ...[
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.sm),
                       _buildHighlightedInfoRow(
                         'Dager til valping',
                         '${widget.litter.estimatedDueDate!.difference(DateTime.now()).inDays}',
@@ -243,7 +244,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           ),
 
           // Hurtighandlinger
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (isPlannedLitter)
             _buildPlannedLitterActionsCard()
           else
@@ -251,7 +252,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
           // Behandlingsoversikt
           if (puppies.isNotEmpty && !isPlannedLitter) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             _buildTreatmentOverviewCard(puppies),
           ],
         ],
@@ -273,13 +274,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         side: BorderSide(color: primaryColor, width: 2),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           children: [
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: primaryColor.withValues(alpha: ThemeOpacity.high(context)),
                     borderRadius: AppRadius.lgAll,
@@ -290,7 +291,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     size: 32,
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppSpacing.lg),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,7 +304,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                           color: primaryColor,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.xs),
                       Text(
                         daysToGo != null
                             ? (daysToGo > 0
@@ -312,7 +313,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                             : 'Sett parringsdato for å beregne termin',
                         style: TextStyle(
                           fontSize: 14,
-                          color: AppColors.neutral600,
+                          color: context.colors.textMuted,
                         ),
                       ),
                     ],
@@ -320,7 +321,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -328,7 +329,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 ),
                 icon: const Icon(Icons.cake),
                 label: const Text('Registrer fødsel'),
@@ -343,7 +344,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
   Widget _buildPlannedLitterActionsCard() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -353,7 +354,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   Icons.rocket_launch,
                   color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 const Text(
                   'Planleggingsverktøy',
                   style: TextStyle(
@@ -363,11 +364,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Parringsdato-seksjon
             _buildMatingDateSection(),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
 
             Row(
               children: [
@@ -385,7 +386,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.science,
@@ -396,7 +397,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
                 Expanded(
@@ -407,7 +408,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     onTap: () => _editLitter(context),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.cake,
@@ -430,7 +431,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     final primaryColor = Theme.of(context).primaryColor;
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: primaryColor.withValues(alpha: 0.08),
         borderRadius: AppRadius.mdAll,
@@ -448,7 +449,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 color: primaryColor,
                 size: 20,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   hasMatingDate
@@ -468,28 +469,28 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 label: Text(hasMatingDate ? 'Endre' : 'Sett dato'),
                 style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                 ),
               ),
             ],
           ),
           if (hasEstimatedDate) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
                 Icon(Icons.child_care, color: Theme.of(context).primaryColor, size: 18),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   'Estimert fødsel: ${DateFormat('dd.MM.yyyy').format(widget.litter.estimatedDueDate!)}',
                   style: TextStyle(
-                    color: AppColors.neutral700,
+                    color: context.colors.textTertiary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
             if (widget.litter.estimatedDueDate!.isAfter(DateTime.now())) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Row(
                 children: [
                   const SizedBox(width: 26),
@@ -600,10 +601,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text('Kullet er nå født! Vil du oppdatere fødselsdatoen til i dag?'),
-            const SizedBox(height: 16),
-            const Text(
+            const SizedBox(height: AppSpacing.lg),
+            Text(
               'Du kan deretter legge til valpene manuelt.',
-              style: TextStyle(color: AppColors.neutral400, fontSize: 13),
+              style: TextStyle(color: context.colors.textDisabled, fontSize: 13),
             ),
           ],
         ),
@@ -665,11 +666,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     if (total == 0) {
       return Card(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Row(
             children: [
-              Icon(Icons.pets_outlined, size: 40, color: AppColors.neutral400),
-              const SizedBox(width: 16),
+              Icon(Icons.pets_outlined, size: 40, color: context.colors.textDisabled),
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -678,10 +679,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       'Ingen valper ennå',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       'Gå til Valper-fanen for å legge til valper',
-                      style: TextStyle(color: AppColors.neutral500, fontSize: 12),
+                      style: TextStyle(color: context.colors.textCaption, fontSize: 12),
                     ),
                   ],
                 ),
@@ -694,14 +695,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.pets, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   'Valper ($total)',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -710,20 +711,20 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             // Progress bar
             ClipRRect(
               borderRadius: AppRadius.mdAll,
               child: LinearProgressIndicator(
                 value: total > 0 ? (sold + reserved) / total : 0,
-                backgroundColor: AppColors.neutral200,
+                backgroundColor: context.colors.border,
                 valueColor: AlwaysStoppedAnimation<Color>(
                   sold == total ? AppColors.success : Theme.of(context).primaryColor,
                 ),
                 minHeight: 8,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -742,7 +743,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
           decoration: BoxDecoration(
             color: color.withValues(alpha: ThemeOpacity.low(context)),
             borderRadius: AppRadius.mdAll,
@@ -757,8 +758,8 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             ),
           ),
         ),
-        const SizedBox(height: 4),
-        Text(label, style: AppTypography.caption.copyWith(color: AppColors.neutral500)),
+        const SizedBox(height: AppSpacing.xs),
+        Text(label, style: AppTypography.caption.copyWith(color: context.colors.textCaption)),
       ],
     );
   }
@@ -766,14 +767,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
   Widget _buildQuickActionsCard() {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.flash_on, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   'Hurtighandlinger',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -782,7 +783,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
                 Expanded(
@@ -804,7 +805,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         : null,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.scale,
@@ -813,7 +814,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     onTap: () => _showBulkWeightDialog(context),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildQuickActionButton(
                     icon: Icons.add,
@@ -841,24 +842,24 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       onTap: onTap,
       borderRadius: AppRadius.lgAll,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
         decoration: BoxDecoration(
-          color: isEnabled ? color.withValues(alpha: ThemeOpacity.low(context)) : AppColors.neutral100,
+          color: isEnabled ? color.withValues(alpha: ThemeOpacity.low(context)) : context.colors.borderSubtle,
           borderRadius: AppRadius.lgAll,
           border: Border.all(
-            color: isEnabled ? color.withValues(alpha: 0.3) : AppColors.neutral300,
+            color: isEnabled ? color.withValues(alpha: 0.3) : context.colors.divider,
           ),
         ),
         child: Column(
           children: [
-            Icon(icon, color: isEnabled ? color : AppColors.neutral400, size: 24),
-            const SizedBox(height: 4),
+            Icon(icon, color: isEnabled ? color : context.colors.textDisabled, size: 24),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               label,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: isEnabled ? color : AppColors.neutral400,
+                color: isEnabled ? color : context.colors.textDisabled,
               ),
             ),
           ],
@@ -882,7 +883,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -892,7 +893,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   Icons.medical_services,
                   color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   'Behandlingsoversikt',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -901,21 +902,21 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             _buildTreatmentProgressRow(
               'Vaksinert',
               totalVaccinated,
               total,
               AppColors.success,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             _buildTreatmentProgressRow(
               'Avmasket',
               totalDewormed,
               total,
               AppColors.warning,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             _buildTreatmentProgressRow(
               'ID-merket',
               totalMicrochipped,
@@ -945,19 +946,19 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             borderRadius: AppRadius.xsAll,
             child: LinearProgressIndicator(
               value: total > 0 ? done / total : 0,
-              backgroundColor: AppColors.neutral200,
+              backgroundColor: context.colors.border,
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 6,
             ),
           ),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Text(
           '$done/$total',
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: done == total && total > 0 ? color : AppColors.neutral500,
+            color: done == total && total > 0 ? color : context.colors.textCaption,
           ),
         ),
       ],
@@ -992,8 +993,8 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
   Widget _buildHighlightedInfoRow(String label, String value, Color color) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       decoration: BoxDecoration(
         color: color.withValues(alpha: ThemeOpacity.low(context)),
         borderRadius: AppRadius.mdAll,
@@ -1012,7 +1013,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Text(
             value,
             style: TextStyle(
@@ -1028,14 +1029,14 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
   Widget _buildPuppiesTab() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 88),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 88),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Puppies Summary
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1057,8 +1058,8 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                               backgroundColor: primaryColor,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
+                                horizontal: AppSpacing.md,
+                                vertical: AppSpacing.sm,
                               ),
                             ),
                           );
@@ -1066,7 +1067,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -1094,11 +1095,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.xl),
 
           // Puppies List
           Text('Valpeliste', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           ValueListenableBuilder(
             valueListenable: Hive.box<Puppy>('puppies').listenable(),
             builder: (context, Box<Puppy> box, _) {
@@ -1108,9 +1109,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
               if (puppies.isEmpty) {
                 return Container(
-                  padding: const EdgeInsets.all(32),
+                  padding: const EdgeInsets.all(AppSpacing.xxxl),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.neutral300),
+                    border: Border.all(color: context.colors.divider),
                     borderRadius: AppRadius.lgAll,
                   ),
                   child: Center(
@@ -1120,12 +1121,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         Icon(
                           Icons.pets_outlined,
                           size: 48,
-                          color: AppColors.neutral400,
+                          color: context.colors.textDisabled,
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         Text(
                           'Ingen valper registrert ennå',
-                          style: TextStyle(color: AppColors.neutral500),
+                          style: TextStyle(color: context.colors.textCaption),
                         ),
                       ],
                     ),
@@ -1142,7 +1143,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   final puppyId = puppy.id;
 
                   return Card(
-                    margin: const EdgeInsets.only(bottom: 12),
+                    margin: const EdgeInsets.only(bottom: AppSpacing.md),
                     child: Theme(
                       data: Theme.of(
                         context,
@@ -1174,7 +1175,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: AppSpacing.md),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1190,7 +1191,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                     'Farge: ${puppy.color} • Alder: ${puppy.getAgeInWeeks()} uker',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: AppColors.neutral500,
+                                      color: context.colors.textCaption,
                                     ),
                                   ),
                                 ],
@@ -1198,8 +1199,8 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                             ),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 4,
+                                horizontal: AppSpacing.sm,
+                                vertical: AppSpacing.xs,
                               ),
                               decoration: BoxDecoration(
                                 color: _getStatusColor(
@@ -1224,7 +1225,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         ),
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(AppSpacing.lg),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -1254,7 +1255,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                       '${puppy.birthWeight?.toStringAsFixed(0)} g',
                                     ),
                                 ]),
-                                const SizedBox(height: 16),
+                                const SizedBox(height: AppSpacing.lg),
                                 _buildDetailSection('Behandlinger', [
                                   UIHelpers.buildDetailRow(
                                     'Vaksinert',
@@ -1269,7 +1270,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                     puppy.microchipped ? '✓ Ja' : '✗ Nei',
                                   ),
                                 ]),
-                                const SizedBox(height: 16),
+                                const SizedBox(height: AppSpacing.lg),
                                 if (puppy.buyerName != null &&
                                     puppy.buyerName!.isNotEmpty) ...[
                                   _buildDetailSection('Kjøper', [
@@ -1284,7 +1285,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                         puppy.buyerContact!,
                                       ),
                                   ]),
-                                  const SizedBox(height: 16),
+                                  const SizedBox(height: AppSpacing.lg),
                                 ],
                                 if (puppy.notes != null &&
                                     puppy.notes!.isNotEmpty) ...[
@@ -1294,7 +1295,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                       style: const TextStyle(fontSize: 13),
                                     ),
                                   ]),
-                                  const SizedBox(height: 16),
+                                  const SizedBox(height: AppSpacing.lg),
                                 ],
                                 // Action Buttons - Rad 1: Vekt og Plan
                                 Row(
@@ -1313,7 +1314,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           child: Text('Vekt'),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: context.colors.surface,
                                           foregroundColor: Theme.of(
                                             context,
                                           ).primaryColor,
@@ -1326,7 +1327,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const SizedBox(width: AppSpacing.sm),
                                     Expanded(
                                       child: ElevatedButton.icon(
                                         onPressed: () {
@@ -1341,7 +1342,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           child: Text('Plan'),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: context.colors.surface,
                                           foregroundColor: Theme.of(
                                             context,
                                           ).primaryColor,
@@ -1354,7 +1355,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const SizedBox(width: AppSpacing.sm),
                                     Expanded(
                                       child: ElevatedButton.icon(
                                         onPressed: () {
@@ -1377,7 +1378,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           child: Text('Kontrakt'),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: context.colors.surface,
                                           foregroundColor: Theme.of(
                                             context,
                                           ).primaryColor,
@@ -1392,7 +1393,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: AppSpacing.md),
                                 Row(
                                   children: [
                                     Expanded(
@@ -1409,7 +1410,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           child: Text('PDF'),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: context.colors.surface,
                                           foregroundColor: Theme.of(
                                             context,
                                           ).primaryColor,
@@ -1422,7 +1423,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const SizedBox(width: AppSpacing.sm),
                                     Expanded(
                                       child: ElevatedButton.icon(
                                         onPressed: () {
@@ -1445,7 +1446,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: AppSpacing.md),
                                 Row(
                                   children: [
                                     Expanded(
@@ -1459,7 +1460,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           child: Text('Rediger'),
                                         ),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor: context.colors.surface,
                                           foregroundColor: Theme.of(
                                             context,
                                           ).primaryColor,
@@ -1472,7 +1473,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
+                                    const SizedBox(width: AppSpacing.sm),
                                     Expanded(
                                       child: ElevatedButton.icon(
                                         onPressed: () {
@@ -1506,7 +1507,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               );
             },
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: AppSpacing.xxxl),
         ],
       ),
     );
@@ -1514,7 +1515,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
   Widget _buildTrackingTab() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 88),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 88),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1522,7 +1523,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           if (widget.litter.damMatingDate != null)
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1530,12 +1531,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       'Temperaturregistrering',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     Text(
                       'Registrer temperatur på tispa før estimert fødsel',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
@@ -1561,11 +1562,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               ),
             ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.xl),
 
           // Puppies Weight Tracking
           Text('Valpenes vekt', style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton.icon(
@@ -1580,7 +1581,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           ValueListenableBuilder(
             valueListenable: Hive.box<Puppy>('puppies').listenable(),
             builder: (context, Box<Puppy> box, _) {
@@ -1590,15 +1591,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
               if (puppies.isEmpty) {
                 return Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(AppSpacing.xl),
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.neutral300),
+                    border: Border.all(color: context.colors.divider),
                     borderRadius: AppRadius.mdAll,
                   ),
                   child: Center(
                     child: Text(
                       'Ingen valper registrert',
-                      style: TextStyle(color: AppColors.neutral500),
+                      style: TextStyle(color: context.colors.textCaption),
                     ),
                   ),
                 );
@@ -1611,7 +1612,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 itemBuilder: (context, index) {
                   final puppy = puppies[index];
                   return Card(
-                    margin: const EdgeInsets.only(bottom: 8),
+                    margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                     child: ListTile(
                       leading: Container(
                         width: 40,
@@ -1667,13 +1668,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
       children: [
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: AppColors.neutral400,
+            color: context.colors.textDisabled,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: AppSpacing.sm),
         ...children,
       ],
     );
@@ -1692,12 +1693,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
-          const SizedBox(width: 16),
+          const SizedBox(width: AppSpacing.lg),
           Flexible(
             child: Text(
               value,
@@ -1728,13 +1729,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             color.withValues(alpha: ThemeOpacity.medium(context)),
           ],
         ),
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: AppRadius.lgAll,
         border: Border.all(color: color.withValues(alpha: 0.3), width: 1.5),
       ),
       child: Column(
         children: [
           Icon(icon, color: color, size: 20),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             value,
             style: TextStyle(
@@ -1744,7 +1745,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               letterSpacing: -0.5,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             label,
             style: TextStyle(
@@ -1804,7 +1805,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     setState(() => selectedStatus = value ?? 'Available');
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: birthWeightController,
                   decoration: const InputDecoration(
@@ -1814,7 +1815,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     decimal: true,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: birthNotesController,
                   decoration: const InputDecoration(
@@ -1822,7 +1823,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ),
                   maxLines: 2,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 CheckboxListTile(
                   title: const Text('Vaksinert'),
                   value: vaccinated,
@@ -1847,7 +1848,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   },
                   contentPadding: EdgeInsets.zero,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   controller: buyerNameController,
                   decoration: const InputDecoration(labelText: 'Kjøpernavn'),
@@ -1930,7 +1931,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     maxWidth: MediaQuery.of(context).size.width * 0.8,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: LineChart(
                       LineChartData(
                         minX: 0,
@@ -2030,7 +2031,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                         borderData: FlBorderData(
                           show: true,
                           border: Border.all(
-                            color: AppColors.neutral300,
+                            color: context.colors.divider,
                             width: 1,
                           ),
                         ),
@@ -2067,17 +2068,17 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
               if (displayLogs.isEmpty)
                 const Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.all(AppSpacing.lg),
                   child: Text(
                     'Ingen vektmålinger eller fødselssvekt registrert',
                   ),
                 )
               else
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
               if (displayLogs.isNotEmpty) ...[
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -2089,7 +2090,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                           fontSize: 12,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.sm),
                       SizedBox(
                         height: 150,
                         child: SingleChildScrollView(
@@ -2100,12 +2101,12 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                   .inHours;
                               final days = (hours / 24).ceil();
                               return Container(
-                                margin: const EdgeInsets.only(bottom: 8),
-                                padding: const EdgeInsets.all(8),
+                                margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                                padding: const EdgeInsets.all(AppSpacing.sm),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[50],
-                                  border: Border.all(color: AppColors.neutral200),
-                                  borderRadius: BorderRadius.circular(6),
+                                  color: context.colors.neutral50,
+                                  border: Border.all(color: context.colors.border),
+                                  borderRadius: AppRadius.smAll,
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -2125,9 +2126,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                           ),
                                           Text(
                                             'Dag $days - ${DateFormat('dd.MM.yyyy').format(log.logDate)}',
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 10,
-                                              color: AppColors.neutral400,
+                                              color: context.colors.textDisabled,
                                             ),
                                           ),
                                         ],
@@ -2138,9 +2139,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                                       Flexible(
                                         child: Text(
                                           log.notes!,
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                             fontSize: 10,
-                                            color: AppColors.neutral400,
+                                            color: context.colors.textDisabled,
                                           ),
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -2297,7 +2298,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     }
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Vekt (gram)'),
                   keyboardType: const TextInputType.numberWithOptions(
@@ -2305,7 +2306,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ),
                   controller: weightController,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Notater'),
                   controller: notesController,
@@ -2427,13 +2428,13 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     }
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 const Divider(),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 ...puppies.map(
                   (puppy) => Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(AppSpacing.md),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -2444,7 +2445,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                               fontSize: 15,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: AppSpacing.sm),
                           TextFormField(
                             decoration: const InputDecoration(
                               labelText: 'Vekt (gram)',
@@ -2455,7 +2456,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                             ),
                             controller: weightControllers[puppy.id],
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: AppSpacing.sm),
                           TextFormField(
                             decoration: const InputDecoration(
                               labelText: 'Notater (valgfritt)',
@@ -2606,7 +2607,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     }
                   },
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Vekt (gram)'),
                   keyboardType: const TextInputType.numberWithOptions(
@@ -2614,7 +2615,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ),
                   controller: weightController,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Notater'),
                   controller: notesController,
@@ -2712,7 +2713,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               children: [
                 // Ormekur Section
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: const Text(
                     'Ormekur:',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -2745,11 +2746,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   (date) => dialogSetState(() => wormerDate3 = date),
                   (done) => dialogSetState(() => wormerDone3 = done),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: AppSpacing.xl),
 
                 // Vaksiner Section
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: const Text(
                     'Vaksiner:',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -2782,11 +2783,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   (date) => dialogSetState(() => vaccineDate3 = date),
                   (done) => dialogSetState(() => vaccineDone3 = done),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: AppSpacing.xl),
 
                 // Annet Section
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: const Text(
                     'Annet:',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -2803,7 +2804,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 if (microchipDate != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                     child: TextField(
                       decoration: InputDecoration(
                         labelText: 'ID-merkenummer',
@@ -2939,7 +2940,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+          padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, bottom: AppSpacing.sm),
           child: GestureDetector(
             onTap: () async {
               final pickedDate = await showDatePicker(
@@ -2953,9 +2954,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               }
             },
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.neutral300),
+                border: Border.all(color: context.colors.divider),
                 borderRadius: AppRadius.lgAll,
               ),
               child: Text(
@@ -2963,7 +2964,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                     ? DateFormat('dd.MM.yyyy').format(selectedDate)
                     : 'Velg dato',
                 style: TextStyle(
-                  color: selectedDate != null ? Colors.black : AppColors.neutral500,
+                  color: selectedDate != null ? context.colors.textPrimary : context.colors.textCaption,
                 ),
               ),
             ),
@@ -3051,7 +3052,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
         title: Row(
           children: [
             Icon(Icons.medical_services, color: AppColors.success),
-            const SizedBox(width: 8),
+            const SizedBox(width: AppSpacing.sm),
             const Expanded(child: Text('Helseattest')),
           ],
         ),
@@ -3066,40 +3067,40 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 'Generer helseattest for ${puppy.name}',
                 style: const TextStyle(fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               
               // Helsesjekk-seksjon med ekspanderbare merknader
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade50,
+                  color: AppColors.success.withValues(alpha: 0.1),
                   borderRadius: AppRadius.mdAll,
-                  border: Border.all(color: Colors.green.shade200),
+                  border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.medical_services, color: Colors.green.shade700, size: 20),
-                        const SizedBox(width: 8),
+                        Icon(Icons.medical_services, color: AppColors.success, size: 20),
+                        const SizedBox(width: AppSpacing.sm),
                         Expanded(
                           child: Text(
                             'Helseundersøkelse',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.green.shade700,
+                              color: AppColors.success,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       'Trykk på et punkt for å legge til merknad',
-                      style: TextStyle(fontSize: 11, color: AppColors.neutral500),
+                      style: TextStyle(fontSize: 11, color: context.colors.textCaption),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     ...healthChecks.entries.map((entry) => _buildHealthCheckItem(
                       key: entry.key,
                       label: entry.value['label'] as String,
@@ -3116,16 +3117,16 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               
-              const Text(
+              Text(
                 'Veterinærinformasjon (valgfritt):',
                 style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.neutral400,
+                  color: context.colors.textDisabled,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               TextField(
                 controller: vetNameController,
                 decoration: const InputDecoration(
@@ -3135,7 +3136,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   isDense: true,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: vetClinicController,
                 decoration: const InputDecoration(
@@ -3145,7 +3146,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   isDense: true,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: vetPhoneController,
                 decoration: const InputDecoration(
@@ -3156,7 +3157,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 ),
                 keyboardType: TextInputType.phone,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextField(
                 controller: notesController,
                 decoration: const InputDecoration(
@@ -3241,7 +3242,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   label,
                   style: TextStyle(
                     fontSize: 14,
-                    color: isOk ? Colors.green.shade700 : AppColors.error,
+                    color: isOk ? AppColors.success : AppColors.error,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -3249,35 +3250,35 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
             ),
             Icon(
               isOk ? Icons.check_circle : Icons.warning,
-              color: isOk ? AppColors.success : Colors.orange,
+              color: isOk ? AppColors.success : AppColors.warning,
               size: 20,
             ),
           ],
         ),
         if (!isOk || noteController.text.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(left: 40, right: 8, bottom: 8),
+            padding: const EdgeInsets.only(left: 40, right: AppSpacing.sm, bottom: AppSpacing.sm),
             child: TextField(
               controller: noteController,
               decoration: InputDecoration(
                 hintText: 'Legg til merknad for $label...',
-                hintStyle: TextStyle(fontSize: 12, color: AppColors.neutral400),
+                hintStyle: TextStyle(fontSize: 12, color: context.colors.textDisabled),
                 border: OutlineInputBorder(
                   borderRadius: AppRadius.mdAll,
-                  borderSide: BorderSide(color: Colors.orange.shade300),
+                  borderSide: BorderSide(color: AppColors.warning.withValues(alpha: 0.5)),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: AppRadius.mdAll,
-                  borderSide: BorderSide(color: Colors.orange.shade300),
+                  borderSide: BorderSide(color: AppColors.warning.withValues(alpha: 0.5)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: AppRadius.mdAll,
-                  borderSide: BorderSide(color: Colors.orange.shade600, width: 2),
+                  borderSide: BorderSide(color: AppColors.warning, width: 2),
                 ),
                 filled: true,
-                fillColor: Colors.orange.shade50,
+                fillColor: AppColors.warning.withValues(alpha: 0.1),
                 isDense: true,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
               ),
               style: const TextStyle(fontSize: 13),
               maxLines: 2,
@@ -3386,7 +3387,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
           title: Row(
             children: [
               const Icon(Icons.share, color: AppColors.info),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               const Text('Del oppdatering'),
             ],
           ),
@@ -3399,10 +3400,10 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   'Del oppdatering om ${puppy.name} med kjøper',
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
-                const SizedBox(height: 16),
-                const Text(
+                const SizedBox(height: AppSpacing.lg),
+                Text(
                   'Inkluder i meldingen:',
-                  style: TextStyle(fontSize: 12, color: AppColors.neutral400),
+                  style: TextStyle(fontSize: 12, color: context.colors.textDisabled),
                 ),
                 CheckboxListTile(
                   title: const Text('Alder'),
@@ -3425,7 +3426,7 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   contentPadding: EdgeInsets.zero,
                   dense: true,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 TextField(
                   controller: messageController,
                   decoration: const InputDecoration(
@@ -3502,35 +3503,35 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                 controller: damController,
                 decoration: const InputDecoration(labelText: 'Mor (Tispe) *'),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: sireController,
                 decoration: const InputDecoration(
                   labelText: 'Far (Hannhund) *',
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: breedController,
                 decoration: const InputDecoration(labelText: 'Rase'),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
               const Text(
                 'Antall valper (basert på registrerte valper):',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
                     child: Column(
                       children: [
                         const Text('Hanner'),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.neutral400),
+                            border: Border.all(color: context.colors.textDisabled),
                             borderRadius: AppRadius.xsAll,
                           ),
                           child: Center(
@@ -3543,16 +3544,16 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Column(
                       children: [
                         const Text('Tisper'),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColors.neutral400),
+                            border: Border.all(color: context.colors.textDisabled),
                             borderRadius: AppRadius.xsAll,
                           ),
                           child: Center(
@@ -3567,9 +3568,9 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(AppSpacing.sm),
                 decoration: BoxDecoration(
                   color: AppColors.info.withValues(alpha: ThemeOpacity.low(context)),
                   borderRadius: AppRadius.xsAll,

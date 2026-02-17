@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:breedly/services/user_sharing_service.dart';
 import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/utils/logger.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class UserSharingScreen extends StatefulWidget {
@@ -116,7 +118,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.remove, style: const TextStyle(color: Colors.red)),
+            child: Text(l10n.remove, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -160,7 +162,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
         child: _isLoading
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(AppSpacing.xl),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -168,10 +170,10 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                     Card(
                       elevation: 2,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadius.mdAll,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -182,7 +184,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextField(
                               controller: _emailController,
                               focusNode: _emailFocusNode,
@@ -190,11 +192,11 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                                 hintText: l10n.emailAddress,
                                 prefixIcon: const Icon(Icons.email),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: AppRadius.smAll,
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
+                                  horizontal: AppSpacing.lg,
+                                  vertical: AppSpacing.md,
                                 ),
                               ),
                               keyboardType: TextInputType.emailAddress,
@@ -206,7 +208,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                                 }
                               },
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
@@ -214,7 +216,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Theme.of(context).primaryColor,
                                   padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
+                                      const EdgeInsets.symmetric(vertical: AppSpacing.md),
                                 ),
                                 child: Text(
                                   l10n.share,
@@ -226,7 +228,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
 
                     // Shared users list
                     Text(
@@ -236,14 +238,14 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     if (_sharedUsers.isEmpty)
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(AppSpacing.xl),
                           child: Text(
                             l10n.notSharedWithAnyone,
-                            style: const TextStyle(color: Colors.grey),
+                            style: TextStyle(color: context.colors.textDisabled),
                           ),
                         ),
                       )
@@ -255,7 +257,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                         itemBuilder: (context, index) {
                           final user = _sharedUsers[index];
                           return Card(
-                            margin: const EdgeInsets.only(bottom: 8),
+                            margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                             child: ListTile(
                               leading: CircleAvatar(
                                 backgroundColor: Theme.of(context).primaryColor,
@@ -274,7 +276,7 @@ class _UserSharingScreenState extends State<UserSharingScreen> {
                                   ? IconButton(
                                       icon: const Icon(
                                         Icons.delete,
-                                        color: Colors.red,
+                                        color: AppColors.error,
                                       ),
                                       onPressed: () =>
                                           _removeUser(user['userId']),

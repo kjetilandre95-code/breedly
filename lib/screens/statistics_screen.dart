@@ -11,6 +11,8 @@ import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -56,28 +58,28 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 title: localizations?.litterStatistics ?? 'Kullstatistikk',
                 description: localizations?.litterStatisticsDesc ??
                     'Gjennomsnittlig kullstørrelse, kjønnsfordeling og mer.',
-                color: Colors.blue,
+                color: AppColors.accent1,
               ),
               PageInfoItem(
                 icon: Icons.show_chart,
                 title: localizations?.weightDevelopment ?? 'Vektutvikling',
                 description: localizations?.weightDevelopmentDesc ??
                     'Sammenlign vektutvikling mellom valper og kull.',
-                color: Colors.green,
+                color: AppColors.success,
               ),
               PageInfoItem(
                 icon: Icons.attach_money,
                 title: localizations?.economyStats ?? 'Økonomi',
                 description: localizations?.economyStatsDesc ??
                     'Inntektsrapporter per år og rase.',
-                color: Colors.orange,
+                color: AppColors.warning,
               ),
               PageInfoItem(
                 icon: Icons.science,
                 title: localizations?.breedingStatistics ?? 'Avlsstatistikk',
                 description: localizations?.breedingStatisticsDesc ??
                     'Se hvilke foreldrekombinasjoner som gir best resultat.',
-                color: Colors.purple,
+                color: AppColors.accent5,
               ),
             ],
             tip: localizations?.statisticsTip ??
@@ -87,7 +89,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
         bottom: TabBar(
           controller: _tabController,
           labelColor: primaryColor,
-          unselectedLabelColor: Colors.grey[600],
+          unselectedLabelColor: context.colors.textMuted,
           indicatorColor: primaryColor,
           indicatorWeight: 3,
           isScrollable: true,
@@ -130,12 +132,12 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     final litterStats = _calculateLitterStatistics(litters, puppyBox);
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Oversiktskort
-          _buildOverviewCard(localizations?.litterOverview ?? 'Kulloversikt', Icons.pets, Colors.blue, [
+          _buildOverviewCard(localizations?.litterOverview ?? 'Kulloversikt', Icons.pets, AppColors.accent1, [
             _StatItem(localizations?.totalLitters ?? 'Totalt kull', '${litters.length}'),
             _StatItem(
               localizations?.averageLitterSize ?? 'Gjennomsnittlig kullstørrelse',
@@ -146,17 +148,17 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             _StatItem(localizations?.smallestLitter ?? 'Minste kull', '${litterStats['smallestLitter']} ${localizations?.puppies ?? 'valper'}'),
           ]),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Kjønnsfordeling
           _buildGenderDistributionCard(litterStats),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Kullstørrelse per rase
           _buildLitterSizeByBreedCard(litters, puppyBox),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Kull per år graf
           _buildLittersPerYearChart(litters),
@@ -221,21 +223,21 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.pie_chart, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.genderDistribution ?? 'Kjønnsfordeling',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             SizedBox(
               height: 180,
               child: PieChart(
@@ -244,7 +246,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     PieChartSectionData(
                       value: males.toDouble(),
                       title: '${localizations?.males ?? 'Hanner'}\n$males',
-                      color: Colors.blue,
+                      color: AppColors.male,
                       radius: 60,
                       titleStyle: const TextStyle(
                         color: Colors.white,
@@ -256,7 +258,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     PieChartSectionData(
                       value: females.toDouble(),
                       title: '${localizations?.females ?? 'Tisper'}\n$females',
-                      color: Colors.pink,
+                      color: AppColors.female,
                       radius: 60,
                       titleStyle: const TextStyle(
                         color: Colors.white,
@@ -271,19 +273,19 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildLegendItem(
                   localizations?.males ?? 'Hanner',
-                  Colors.blue,
+                  AppColors.male,
                   '${(males / total * 100).toStringAsFixed(1)}%',
                 ),
-                const SizedBox(width: 24),
+                const SizedBox(width: AppSpacing.xxl),
                 _buildLegendItem(
                   localizations?.females ?? 'Tisper',
-                  Colors.pink,
+                  AppColors.female,
                   '${(females / total * 100).toStringAsFixed(1)}%',
                 ),
               ],
@@ -302,7 +304,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
           height: 16,
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
-        const SizedBox(width: 8),
+        const SizedBox(width: AppSpacing.sm),
         Text('$label ($percentage)'),
       ],
     );
@@ -340,36 +342,36 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.bar_chart, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.litterSizeByBreed ?? 'Kullstørrelse per rase',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...sortedBreeds.map((entry) {
               final avg =
                   entry.value.reduce((a, b) => a + b) / entry.value.length;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: Row(
                   children: [
                     Expanded(flex: 2, child: Text(entry.key)),
                     Expanded(
                       flex: 3,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: AppRadius.xsAll,
                         child: LinearProgressIndicator(
                           value: avg / 12, // Maks 12 valper som referanse
-                          backgroundColor: Colors.grey[200],
+                          backgroundColor: context.colors.border,
                           valueColor: AlwaysStoppedAnimation<Color>(
                             Theme.of(context).primaryColor,
                           ),
@@ -377,7 +379,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.sm),
                     SizedBox(
                       width: 80,
                       child: Text(
@@ -415,21 +417,21 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.timeline, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.littersPerYear ?? 'Kull per år',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             SizedBox(
               height: 200,
               child: BarChart(
@@ -455,7 +457,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                           final index = value.toInt();
                           if (index >= 0 && index < sortedYears.length) {
                             return Padding(
-                              padding: const EdgeInsets.only(top: 8),
+                              padding: const EdgeInsets.only(top: AppSpacing.sm),
                               child: Text(
                                 sortedYears[index].toString(),
                                 style: const TextStyle(fontSize: 12),
@@ -536,19 +538,19 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Velg kull for sammenligning
           _buildWeightComparisonCard(litters, puppyBox, weightBox),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Gjennomsnittlig vektutvikling
           _buildAverageWeightGrowthCard(puppyBox, weightBox),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Fødselsvekt statistikk
           _buildBirthWeightStatsCard(puppyBox),
@@ -576,16 +578,16 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     if (littersWithWeight.isEmpty) {
       return Card(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             children: [
-              Icon(Icons.info_outline, size: 48, color: Colors.grey[400]),
-              const SizedBox(height: 12),
+              Icon(Icons.info_outline, size: 48, color: context.colors.textDisabled),
+              const SizedBox(height: AppSpacing.md),
               Text(localizations?.noWeightDataRegistered ?? 'Ingen vektdata registrert ennå'),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 localizations?.registerWeightToCompare ?? 'Registrer vekt på valpene for å sammenligne',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
           ),
@@ -595,7 +597,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -605,14 +607,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   Icons.compare_arrows,
                   color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.weightComparisonBetweenLitters ?? 'Vektsammenligning mellom kull',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...littersWithWeight.take(5).map((litter) {
               final puppies = puppyBox.values
                   .where((p) => p.litterId == litter.id)
@@ -624,12 +626,12 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               );
 
               return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[200]!),
+                  color: context.colors.neutral50,
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(color: context.colors.border),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -640,9 +642,9 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     ),
                     Text(
                       '${litter.breed} • ${puppies.length} ${localizations?.puppies ?? 'valper'}',
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 12, color: context.colors.textMuted),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Row(
                       children: [
                         Expanded(
@@ -651,7 +653,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                             avgBirthWeight > 0
                                 ? '${avgBirthWeight.toStringAsFixed(0)} g'
                                 : '-',
-                            Colors.blue,
+                            AppColors.accent1,
                           ),
                         ),
                         Expanded(
@@ -660,7 +662,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                             latestAvgWeight > 0
                                 ? '${latestAvgWeight.toStringAsFixed(0)} g'
                                 : '-',
-                            Colors.green,
+                            AppColors.success,
                           ),
                         ),
                       ],
@@ -679,8 +681,8 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(fontSize: 11, color: Colors.grey[600])),
-        const SizedBox(height: 2),
+        Text(label, style: TextStyle(fontSize: 11, color: context.colors.textMuted)),
+        const SizedBox(height: AppSpacing.xxs),
         Text(
           value,
           style: TextStyle(
@@ -748,26 +750,26 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.trending_up, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.averageWeightDevelopment ?? 'Gjennomsnittlig vektutvikling',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               localizations?.basedOnAllWeightMeasurements ?? 'Basert på alle registrerte vektmålinger',
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 12, color: context.colors.textMuted),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             SizedBox(
               height: 200,
               child: LineChart(
@@ -872,7 +874,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -882,59 +884,59 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   Icons.monitor_weight_outlined,
                   color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.birthWeightStatistics ?? 'Fødselsvekt statistikk',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
                 Expanded(
                   child: _buildStatBox(
                     localizations?.average ?? 'Snitt',
                     '${avg.toStringAsFixed(0)} g',
-                    Colors.blue,
+                    AppColors.accent1,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
                     localizations?.min ?? 'Min',
                     '${min.toStringAsFixed(0)} g',
-                    Colors.orange,
+                    AppColors.accent3,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
                     localizations?.max ?? 'Maks',
                     '${max.toStringAsFixed(0)} g',
-                    Colors.green,
+                    AppColors.success,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             const Divider(),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: _buildStatBox(
                     localizations?.malesAverage ?? 'Hanner (snitt)',
                     maleAvg > 0 ? '${maleAvg.toStringAsFixed(0)} g' : '-',
-                    Colors.blue,
+                    AppColors.male,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
                     localizations?.femalesAverage ?? 'Tisper (snitt)',
                     femaleAvg > 0 ? '${femaleAvg.toStringAsFixed(0)} g' : '-',
-                    Colors.pink,
+                    AppColors.female,
                   ),
                 ),
               ],
@@ -947,10 +949,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
   Widget _buildStatBox(String label, String value, Color color) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: color.withValues(alpha: ThemeOpacity.low(context)),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.smAll,
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
@@ -963,10 +965,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               color: color,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             label,
-            style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+            style: TextStyle(fontSize: 11, color: context.colors.textMuted),
             textAlign: TextAlign.center,
           ),
         ],
@@ -992,24 +994,24 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Total inntekt oversikt
           _buildRevenueOverviewCard(contracts),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Inntekt per år
           _buildRevenuePerYearCard(contracts),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Inntekt per rase
           _buildRevenuePerBreedCard(contracts, puppyBox, litterBox),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Gjennomsnittspris
           _buildAveragePriceCard(contracts),
@@ -1029,7 +1031,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1039,38 +1041,38 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   Icons.account_balance_wallet,
                   color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.revenueOverview ?? 'Inntektsoversikt',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               decoration: BoxDecoration(
-                color: Colors.green.withValues(alpha: ThemeOpacity.low(context)),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
+                color: AppColors.success.withValues(alpha: ThemeOpacity.low(context)),
+                borderRadius: AppRadius.mdAll,
+                border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.trending_up, color: Colors.green, size: 32),
-                  const SizedBox(width: 12),
+                  const Icon(Icons.trending_up, color: AppColors.success, size: 32),
+                  const SizedBox(width: AppSpacing.md),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         localizations?.totalTurnover ?? 'Total omsetning',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                       ),
                       Text(
                         formatter.format(totalRevenue),
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.green,
+                          color: AppColors.success,
                         ),
                       ),
                     ],
@@ -1078,32 +1080,32 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ],
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: _buildFinanceStatBox(
                     localizations?.paid ?? 'Betalt',
                     formatter.format(paidRevenue),
-                    Colors.green,
+                    AppColors.success,
                     Icons.check_circle,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildFinanceStatBox(
                     localizations?.outstanding ?? 'Utestående',
                     formatter.format(pendingRevenue),
-                    Colors.orange,
+                    AppColors.warning,
                     Icons.pending,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               '${contracts.length} ${localizations?.contractsTotal ?? 'kontrakter totalt'}',
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
           ],
         ),
@@ -1118,22 +1120,22 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     IconData icon,
   ) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: color.withValues(alpha: ThemeOpacity.low(context)),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.smAll,
       ),
       child: Row(
         children: [
           Icon(icon, color: color, size: 20),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 11, color: context.colors.textMuted),
                 ),
                 Text(
                   value,
@@ -1174,7 +1176,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1184,18 +1186,18 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   Icons.calendar_today,
                   color: Theme.of(context).primaryColor,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.revenuePerYear ?? 'Inntekt per år',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...sortedYears.map((year) {
               final revenue = yearRevenue[year]!;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: Row(
                   children: [
                     SizedBox(
@@ -1207,10 +1209,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     ),
                     Expanded(
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: AppRadius.xsAll,
                         child: LinearProgressIndicator(
                           value: revenue / maxRevenue,
-                          backgroundColor: Colors.grey[200],
+                          backgroundColor: context.colors.border,
                           valueColor: AlwaysStoppedAnimation<Color>(
                             Theme.of(context).primaryColor,
                           ),
@@ -1218,7 +1220,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.sm),
                     SizedBox(
                       width: 100,
                       child: Text(
@@ -1274,24 +1276,24 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.pets, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.revenuePerBreed ?? 'Inntekt per rase',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...sortedBreeds.map((entry) {
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -1331,44 +1333,44 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.price_check, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.priceStatistics ?? 'Prisstatistikk',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
                 Expanded(
                   child: _buildStatBox(
                     localizations?.averagePrice ?? 'Snittpris',
                     formatter.format(avg),
-                    Colors.blue,
+                    AppColors.accent1,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
                     localizations?.lowest ?? 'Laveste',
                     formatter.format(min),
-                    Colors.orange,
+                    AppColors.accent3,
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: _buildStatBox(
                     localizations?.highest ?? 'Høyeste',
                     formatter.format(max),
-                    Colors.green,
+                    AppColors.success,
                   ),
                 ),
               ],
@@ -1397,19 +1399,19 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Beste foreldrekombinasjoner
           _buildBestCombinationsCard(litters, puppyBox),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Avlshunder statistikk
           _buildBreedingDogsStatsCard(litters, puppyBox, dogBox),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Suksessrate
           _buildSuccessRateCard(litters, puppyBox),
@@ -1463,34 +1465,34 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.stars, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.bestParentCombinations ?? 'Beste foreldrekombinasjoner',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               localizations?.sortedByAverageLitterSize ?? 'Sortert etter gjennomsnittlig kullstørrelse',
-              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              style: TextStyle(fontSize: 12, color: context.colors.textMuted),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...combinationAverages.take(5).map((combo) {
               return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[200]!),
+                  color: context.colors.neutral50,
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(color: context.colors.border),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1505,14 +1507,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 2,
+                            horizontal: AppSpacing.sm,
+                            vertical: AppSpacing.xxs,
                           ),
                           decoration: BoxDecoration(
                             color: Theme.of(
                               context,
                             ).primaryColor.withValues(alpha: ThemeOpacity.low(context)),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           child: Text(
                             '${combo.litterCount} ${localizations?.litters ?? 'kull'}',
@@ -1525,12 +1527,12 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                         ),
                       ],
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       combo.breed,
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 12, color: context.colors.textMuted),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Row(
                       children: [
                         _buildMiniStat(
@@ -1538,7 +1540,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                           combo.avgLitterSize.toStringAsFixed(1),
                           Icons.pets,
                         ),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: AppSpacing.lg),
                         if (combo.avgBirthWeight > 0)
                           _buildMiniStat(
                             localizations?.avgBirthWeight ?? 'Snitt fødselsvekt',
@@ -1560,11 +1562,11 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   Widget _buildMiniStat(String label, String value, IconData icon) {
     return Row(
       children: [
-        Icon(icon, size: 14, color: Colors.grey[600]),
-        const SizedBox(width: 4),
+        Icon(icon, size: 14, color: context.colors.textMuted),
+        const SizedBox(width: AppSpacing.xs),
         Text(
           '$label: ',
-          style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+          style: TextStyle(fontSize: 11, color: context.colors.textMuted),
         ),
         Text(
           value,
@@ -1596,21 +1598,21 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.leaderboard, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.mostUsedBreedingDogs ?? 'Mest brukte avlshunder',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1620,20 +1622,20 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.female, color: Colors.pink, size: 18),
-                          const SizedBox(width: 4),
+                          Icon(Icons.female, color: AppColors.female, size: 18),
+                          const SizedBox(width: AppSpacing.xs),
                           Text(
                             localizations?.females ?? 'Tisper',
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.sm),
                       ...topDams
                           .take(3)
                           .map(
                             (e) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -1647,7 +1649,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                                     '${e.value} ${localizations?.litters ?? 'kull'}',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: context.colors.textMuted,
                                     ),
                                   ),
                                 ],
@@ -1657,27 +1659,27 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: AppSpacing.lg),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.male, color: Colors.blue, size: 18),
-                          const SizedBox(width: 4),
+                          Icon(Icons.male, color: AppColors.male, size: 18),
+                          const SizedBox(width: AppSpacing.xs),
                           Text(
                             localizations?.males ?? 'Hanner',
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: AppSpacing.sm),
                       ...topSires
                           .take(3)
                           .map(
                             (e) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -1691,7 +1693,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                                     '${e.value} ${localizations?.litters ?? 'kull'}',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: context.colors.textMuted,
                                     ),
                                   ),
                                 ],
@@ -1734,21 +1736,21 @@ class _StatisticsScreenState extends State<StatisticsScreen>
 
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(Icons.emoji_events, color: Theme.of(context).primaryColor),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   localizations?.placementRate ?? 'Plasseringsrate',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Center(
               child: SizedBox(
                 height: 150,
@@ -1762,10 +1764,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                       child: CircularProgressIndicator(
                         value: placedPercentage / 100,
                         strokeWidth: 12,
-                        backgroundColor: Colors.grey[200],
+                        backgroundColor: context.colors.border,
                         valueColor: AlwaysStoppedAnimation<Color>(
                           placedPercentage > 80
-                              ? Colors.green
+                              ? AppColors.success
                               : Theme.of(context).primaryColor,
                         ),
                       ),
@@ -1784,7 +1786,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                           'plassert',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                           ),
                         ),
                       ],
@@ -1793,7 +1795,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -1801,19 +1803,19 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   localizations?.sold ?? 'Solgt',
                   soldPuppies,
                   soldPercentage,
-                  Colors.green,
+                  AppColors.success,
                 ),
                 _buildPlacementStat(
                   localizations?.reserved ?? 'Reservert',
                   reservedPuppies,
                   reservedPercentage,
-                  Colors.orange,
+                  AppColors.warning,
                 ),
                 _buildPlacementStat(
                   localizations?.available ?? 'Ledig',
                   totalPuppies - soldPuppies - reservedPuppies,
                   100 - placedPercentage,
-                  Colors.blue,
+                  AppColors.accent1,
                 ),
               ],
             ),
@@ -1839,7 +1841,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             color: color,
           ),
         ),
-        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+        Text(label, style: TextStyle(fontSize: 12, color: context.colors.textMuted)),
         Text(
           '${percentage.toStringAsFixed(0)}%',
           style: TextStyle(fontSize: 11, color: color),
@@ -1854,18 +1856,18 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 64, color: Colors.grey[300]),
-          const SizedBox(height: 16),
+          Icon(icon, size: 64, color: context.colors.neutral300),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             title,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Colors.grey[600],
+              color: context.colors.textMuted,
             ),
           ),
-          const SizedBox(height: 8),
-          Text(subtitle, style: TextStyle(color: Colors.grey[500])),
+          const SizedBox(height: AppSpacing.sm),
+          Text(subtitle, style: TextStyle(color: context.colors.textCaption)),
         ],
       ),
     );
@@ -1879,27 +1881,24 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   ) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Icon(icon, color: color),
-                const SizedBox(width: 8),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTypography.headlineSmall,
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...stats.map(
               (stat) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

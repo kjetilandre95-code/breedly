@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:breedly/widgets/pedigree_scanner_widget.dart';
 import 'package:breedly/services/pedigree_scanner_service.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 /// Test screen for pedigree scanner functionality
 class PedigreeScannerTestScreen extends StatelessWidget {
@@ -11,47 +13,46 @@ class PedigreeScannerTestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test Stamtavle-skanner'),
-        backgroundColor: Colors.indigo,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Information card
             Card(
-              color: Colors.blue[50],
+              color: AppColors.info.withValues(alpha: 0.1),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.info_outline, color: Colors.blue[700]),
-                        const SizedBox(width: 8),
+                        Icon(Icons.info_outline, color: AppColors.info),
+                        const SizedBox(width: AppSpacing.sm),
                         Text(
                           'Testing av stamtavle-skanner',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.blue[900],
+                            color: AppColors.info,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     const Text(
                       'Denne funksjonen bruker Google ML Kit for å:',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     _buildBullet('Lese tekst fra bilder (OCR)'),
                     _buildBullet('Finne registreringsnummer'),
                     _buildBullet('Identifisere hundenavn'),
                     _buildBullet('Gjenkjenne foreldre (Far/Mor)'),
                     _buildBullet('Ekstrahere fødselsdatoer'),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     const Text(
                       '💡 Tips: Bruk et tydelig bilde av en stamtavle for beste resultat.',
                       style: TextStyle(
@@ -63,7 +64,7 @@ class PedigreeScannerTestScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Scanner widget
             PedigreeScannerWidget(
@@ -79,12 +80,12 @@ class PedigreeScannerTestScreen extends StatelessWidget {
               },
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Test instructions
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -95,7 +96,7 @@ class PedigreeScannerTestScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     _buildStep('1', 'Ta et bilde av en stamtavle'),
                     _buildStep('2', 'Vent mens ML Kit prosesserer bildet'),
                     _buildStep('3', 'Se resultatene og nøyaktigheten'),
@@ -106,33 +107,33 @@ class PedigreeScannerTestScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Example data
             Card(
-              color: Colors.green[50],
+              color: AppColors.success.withValues(alpha: 0.1),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.lightbulb_outline, color: Colors.green[700]),
-                        const SizedBox(width: 8),
+                        Icon(Icons.lightbulb_outline, color: AppColors.success),
+                        const SizedBox(width: AppSpacing.sm),
                         const Text(
                           'Eksempel på data som kan gjenkjennes',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     const Text('Registreringsnummer:'),
                     const Text(
                       '  • N 12345/18\n  • NO 54321/2020\n  • DK 67890\n  • SE 123456',
                       style: TextStyle(fontFamily: 'monospace'),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     const Text('Nøkkelord:'),
                     const Text(
                       '  • Far: / Sire: / Father:\n  • Mor: / Dam: / Mother:\n  • Rase: / Breed:',
@@ -150,11 +151,11 @@ class PedigreeScannerTestScreen extends StatelessWidget {
 
   Widget _buildBullet(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
       child: Row(
         children: [
-          const Icon(Icons.check_circle, size: 16, color: Colors.green),
-          const SizedBox(width: 8),
+          const Icon(Icons.check_circle, size: 16, color: AppColors.success),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(child: Text(text)),
         ],
       ),
@@ -163,12 +164,12 @@ class PedigreeScannerTestScreen extends StatelessWidget {
 
   Widget _buildStep(String number, String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         children: [
           CircleAvatar(
             radius: 14,
-            backgroundColor: Colors.indigo,
+            backgroundColor: AppColors.primary,
             child: Text(
               number,
               style: const TextStyle(
@@ -178,7 +179,7 @@ class PedigreeScannerTestScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: AppSpacing.md),
           Expanded(child: Text(text)),
         ],
       ),
@@ -200,16 +201,15 @@ class PedigreeScanResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Skanneresultat'),
-        backgroundColor: Colors.indigo,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           // Overall confidence
           Card(
             color: _getConfidenceColor().withValues(alpha: 0.1),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 children: [
                   Icon(
@@ -217,7 +217,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                     size: 48,
                     color: _getConfidenceColor(),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     'Nøyaktighet: ${(result.confidence * 100).toStringAsFixed(0)}%',
                     style: TextStyle(
@@ -226,7 +226,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                       color: _getConfidenceColor(),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     '${result.totalDogs} hunder funnet',
                     style: const TextStyle(fontSize: 14),
@@ -235,7 +235,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
 
           // Main dog
           if (result.dog != null) ...[
@@ -243,9 +243,9 @@ class PedigreeScanResultScreen extends StatelessWidget {
               'Hovedhund',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            _buildDogCard(result.dog!),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.sm),
+            _buildDogCard(context, result.dog!),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Parents
@@ -254,9 +254,9 @@ class PedigreeScanResultScreen extends StatelessWidget {
               'Foreldre',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            ...result.parents.map((dog) => _buildDogCard(dog)),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.sm),
+            ...result.parents.map((dog) => _buildDogCard(context, dog)),
+            const SizedBox(height: AppSpacing.lg),
           ],
 
           // Grandparents
@@ -265,16 +265,16 @@ class PedigreeScanResultScreen extends StatelessWidget {
               'Besteforeldre',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
-            ...result.grandparents.map((dog) => _buildDogCard(dog)),
+            const SizedBox(height: AppSpacing.sm),
+            ...result.grandparents.map((dog) => _buildDogCard(context, dog)),
           ],
 
           // Debug info
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xxl),
           Card(
-            color: Colors.grey[100],
+            color: context.colors.neutral100,
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -282,7 +282,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                     'Debug-informasjon',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text('Totalt funnet: ${result.totalDogs} hunder'),
                   Text('Confidence: ${result.confidence.toStringAsFixed(3)}'),
                   Text('Vellykket: ${result.isSuccessful}'),
@@ -295,11 +295,11 @@ class PedigreeScanResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDogCard(ScannedDog dog) {
+  Widget _buildDogCard(BuildContext context, ScannedDog dog) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -307,16 +307,16 @@ class PedigreeScanResultScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundColor: dog.confidence > 0.7
-                      ? Colors.green[100]
-                      : Colors.orange[100],
+                      ? AppColors.success.withValues(alpha: 0.2)
+                      : AppColors.warning.withValues(alpha: 0.2),
                   child: Icon(
                     dog.gender == 'Male' ? Icons.male : Icons.female,
                     color: dog.confidence > 0.7
-                        ? Colors.green[700]
-                        : Colors.orange[700],
+                        ? AppColors.success
+                        : AppColors.warning,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -333,7 +333,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                           dog.position!,
                           style: TextStyle(
                             fontSize: 12,
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                           ),
                         ),
                     ],
@@ -342,7 +342,7 @@ class PedigreeScanResultScreen extends StatelessWidget {
                 Text(
                   '${(dog.confidence * 100).toStringAsFixed(0)}%',
                   style: TextStyle(
-                    color: dog.confidence > 0.7 ? Colors.green : Colors.orange,
+                    color: dog.confidence > 0.7 ? AppColors.success : AppColors.warning,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -351,33 +351,33 @@ class PedigreeScanResultScreen extends StatelessWidget {
             if (dog.registrationNumber != null ||
                 dog.breed != null ||
                 dog.birthDate != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               const Divider(height: 1),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
             ],
             if (dog.registrationNumber != null)
-              _buildInfoRow('Reg.nr:', dog.registrationNumber!),
-            if (dog.breed != null) _buildInfoRow('Rase:', dog.breed!),
-            if (dog.birthDate != null) _buildInfoRow('Født:', dog.birthDate!),
-            if (dog.color != null) _buildInfoRow('Farge:', dog.color!),
+              _buildInfoRow(context, 'Reg.nr:', dog.registrationNumber!),
+            if (dog.breed != null) _buildInfoRow(context, 'Rase:', dog.breed!),
+            if (dog.birthDate != null) _buildInfoRow(context, 'Født:', dog.birthDate!),
+            if (dog.color != null) _buildInfoRow(context, 'Farge:', dog.color!),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(BuildContext context, String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
       child: Row(
         children: [
           SizedBox(
             width: 70,
             child: Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
-                color: Colors.grey,
+                color: context.colors.textDisabled,
               ),
             ),
           ),
@@ -393,9 +393,9 @@ class PedigreeScanResultScreen extends StatelessWidget {
   }
 
   Color _getConfidenceColor() {
-    if (result.confidence > 0.8) return Colors.green;
-    if (result.confidence > 0.6) return Colors.orange;
-    return Colors.red;
+    if (result.confidence > 0.8) return AppColors.success;
+    if (result.confidence > 0.6) return AppColors.warning;
+    return AppColors.error;
   }
 
   IconData _getConfidenceIcon() {

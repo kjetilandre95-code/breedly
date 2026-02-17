@@ -3,6 +3,7 @@ import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -135,7 +136,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final l10n = AppLocalizations.of(context)!;
     
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
         title: Text(l10n.createAccount),
         elevation: 0,
@@ -147,11 +148,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppSpacing.xxl),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Header
             Center(
@@ -162,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     size: 56,
                     color: Theme.of(context).primaryColor,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   Text(
                     l10n.registerYourself,
                     style: TextStyle(
@@ -171,32 +172,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     l10n.createAccountSubtitle,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey[600],
+                      color: context.colors.textMuted,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppSpacing.xxxl),
 
             // Error message
             if (_errorMessage != null)
               Container(
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(AppSpacing.md),
+                margin: const EdgeInsets.only(bottom: AppSpacing.lg),
                 decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  border: Border.all(color: Colors.red[200]!),
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.error.withValues(alpha: 0.08),
+                  border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                  borderRadius: AppRadius.smAll,
                 ),
                 child: Text(
                   _errorMessage!,
-                  style: TextStyle(color: Colors.red[700], fontSize: 14),
+                  style: TextStyle(color: AppColors.error, fontSize: 14),
                 ),
               ),
 
@@ -210,10 +211,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: l10n.fullNameHint,
                   prefixIcon: const Icon(Icons.person_outlined),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                       width: 2,
@@ -225,7 +226,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onSubmitted: (_) => _emailFocusNode.requestFocus(),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Email field
             TextField(
@@ -237,10 +238,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 hintText: l10n.emailHint,
                 prefixIcon: const Icon(Icons.email_outlined),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
@@ -252,7 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               autofillHints: const [AutofillHints.email],
               onSubmitted: (_) => _passwordFocusNode.requestFocus(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Password field
             TextField(
@@ -273,10 +274,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
@@ -287,7 +288,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               autofillHints: const [AutofillHints.newPassword],
               onSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Confirm password field
             TextField(
@@ -308,10 +309,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
@@ -326,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 }
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.xl),
 
             // Terms checkbox
             CheckboxListTile(
@@ -339,7 +340,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               contentPadding: EdgeInsets.zero,
               title: RichText(
                 text: TextSpan(
-                  style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                  style: TextStyle(color: context.colors.textTertiary, fontSize: 13),
                   children: [
                     TextSpan(text: l10n.iAgreeToThe),
                     WidgetSpan(
@@ -361,7 +362,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Sign up button
             ElevatedButton(
@@ -369,9 +370,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
               ),
               child: _isLoading
@@ -391,13 +392,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Login link
             Center(
               child: RichText(
                 text: TextSpan(
-                  style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                  style: TextStyle(color: context.colors.textTertiary, fontSize: 14),
                   children: [
                     TextSpan(text: l10n.alreadyHaveAccountQuestion),
                     WidgetSpan(
@@ -465,7 +466,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   lang['name']!,
                   style: AppTypography.bodyMedium.copyWith(
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                    color: isSelected ? primaryColor : AppColors.neutral800,
+                    color: isSelected ? primaryColor : context.colors.textSecondary,
                   ),
                 ),
                 if (isSelected) ...[
@@ -484,7 +485,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             currentLang == 'nb' ? '🇳🇴' : '🇬🇧',
             style: const TextStyle(fontSize: 18),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: AppSpacing.xs),
           const Icon(Icons.expand_more_rounded, color: Colors.white, size: 20),
         ],
       ),

@@ -6,6 +6,8 @@ import 'package:breedly/models/temperature_record.dart';
 import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/utils/constants.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
@@ -123,17 +125,17 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
             final records = _getTemperatureRecords();
 
             return ListView(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 88),
+              padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 88),
               children: [
               // Mating info
               if (widget.litter.damMatingDate != null)
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -144,7 +146,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -156,7 +158,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: AppSpacing.sm),
                         if (widget.litter.estimatedDueDate != null)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,7 +174,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                         // Vis bare "Dager til valping" hvis kullet ikke er født ennå
                         if (widget.litter.estimatedDueDate != null && 
                             widget.litter.dateOfBirth.isAfter(DateTime.now())) ...[
-                          const SizedBox(height: 8),
+                          const SizedBox(height: AppSpacing.sm),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -192,17 +194,17 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                     ),
                   ),
                 ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
 
               // Temperature graph
               if (records.isNotEmpty)
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -213,7 +215,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.lg),
                         SizedBox(
                           height: 200,
                           child: records.isEmpty
@@ -221,7 +223,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                                   child: Text(
                                     l10n.noDataToShowGraph,
                                     style: TextStyle(
-                                      color: Colors.grey[600],
+                                      color: context.colors.textMuted,
                                     ),
                                   ),
                                 )
@@ -244,7 +246,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
 
                                     return Container(
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 4),
+                                          horizontal: AppSpacing.xs),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
@@ -264,14 +266,14 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                                             decoration: BoxDecoration(
                                               color: Theme.of(context).primaryColor,
                                               borderRadius:
-                                                  BorderRadius.circular(4),
+                                                  AppRadius.xsAll,
                                             ),
                                           ),
                                           Text(
                                             record.dateTime.day.toString(),
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 10,
-                                              color: Colors.grey,
+                                              color: context.colors.textDisabled,
                                             ),
                                           ),
                                         ],
@@ -285,16 +287,16 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                   ),
                 ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
 
               // Add temperature form
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -305,7 +307,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                           fontSize: 16,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       ListTile(
                         title: Text(l10n.dateAndTime),
                         subtitle: Text(DateFormat('dd.MM.yyyy HH:mm')
@@ -343,24 +345,24 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                           });
                         },
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.md),
                       TextFormField(
                         controller: _temperatureController,
                         focusNode: _temperatureFocusNode,
                         decoration: InputDecoration(
                           labelText: l10n.temperatureCelsius,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
                               width: 2,
                             ),
                           ),
                           contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: AppSpacing.lg,
                             vertical: 14,
                           ),
                         ),
@@ -370,24 +372,24 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) => _notesFocusNode.requestFocus(),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.md),
                       TextFormField(
                         controller: _notesController,
                         focusNode: _notesFocusNode,
                         decoration: InputDecoration(
                           labelText: l10n.notesOptional,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: Theme.of(context).primaryColor,
                               width: 2,
                             ),
                           ),
                           contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
+                            horizontal: AppSpacing.lg,
                             vertical: 14,
                           ),
                         ),
@@ -395,7 +397,7 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _addTemperatureRecord(),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
@@ -413,22 +415,22 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
 
               // Temperature list
               if (records.isEmpty)
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Center(
                       child: Text(
                         l10n.noTemperatureReadings,
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color: context.colors.textMuted,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -439,10 +441,10 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                 Card(
                   elevation: 2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -453,16 +455,16 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                             fontSize: 16,
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         ...records.map((record) {
                           return Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
+                            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                             child: Container(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(AppSpacing.md),
                               decoration: BoxDecoration(
                                 color: Theme.of(context).primaryColor
                                     .withValues(alpha: ThemeOpacity.medium(context)),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: AppRadius.smAll,
                                 border: Border.all(
                                   color: Theme.of(context).primaryColor
                                       .withValues(alpha: 0.3),
@@ -488,18 +490,18 @@ class _TemperatureTrackingScreenState extends State<TemperatureTrackingScreen> {
                                             .format(record.dateTime),
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Colors.grey[600],
+                                          color: context.colors.textMuted,
                                         ),
                                       ),
                                       if (record.notes != null)
                                         Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 4),
+                                              const EdgeInsets.only(top: AppSpacing.xs),
                                           child: Text(
                                             record.notes!,
                                             style: TextStyle(
                                               fontSize: 12,
-                                              color: Colors.grey[500],
+                                              color: context.colors.textCaption,
                                               fontStyle: FontStyle.italic,
                                             ),
                                           ),

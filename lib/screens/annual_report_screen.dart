@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:breedly/services/annual_report_service.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/models/litter.dart';
@@ -139,7 +140,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('${AppLocalizations.of(context)?.error ?? 'Feil'}: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -190,8 +191,8 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                         horizontal: AppSpacing.md,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.neutral300),
-                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        border: Border.all(color: context.colors.divider),
+                        borderRadius: AppRadius.mdAll,
                       ),
                       child: DropdownButton<int>(
                         value: _selectedYear,
@@ -246,7 +247,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                     title: l10n.puppiesBorn,
                     value: '${stats['puppies']}',
                     icon: Icons.pets,
-                    color: Colors.purple,
+                    color: AppColors.accent5,
                   ),
                 ),
               ],
@@ -262,7 +263,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                     title: l10n.malePuppies,
                     value: '${stats['malePuppies']}',
                     icon: Icons.male,
-                    color: Colors.blue,
+                    color: AppColors.male,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
@@ -271,7 +272,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                     title: l10n.femalePuppies,
                     value: '${stats['femalePuppies']}',
                     icon: Icons.female,
-                    color: Colors.pink,
+                    color: AppColors.female,
                   ),
                 ),
               ],
@@ -284,7 +285,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
               title: l10n.puppiesSold,
               value: '${stats['soldPuppies']}',
               icon: Icons.shopping_cart,
-              color: Colors.orange,
+              color: AppColors.warning,
             ),
 
             const SizedBox(height: AppSpacing.lg),
@@ -305,7 +306,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                     title: l10n.totalIncome,
                     value: _currencyFormat.format(stats['totalIncome']),
                     icon: Icons.arrow_upward,
-                    color: Colors.green,
+                    color: AppColors.success,
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
@@ -314,7 +315,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                     title: l10n.totalExpenses,
                     value: _currencyFormat.format(stats['totalExpenses']),
                     icon: Icons.arrow_downward,
-                    color: Colors.red,
+                    color: AppColors.error,
                   ),
                 ),
               ],
@@ -328,7 +329,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
               icon: stats['netResult'] >= 0
                   ? Icons.trending_up
                   : Icons.trending_down,
-              color: stats['netResult'] >= 0 ? Colors.green : Colors.red,
+              color: stats['netResult'] >= 0 ? AppColors.success : AppColors.error,
               large: true,
             ),
 
@@ -350,7 +351,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                       title: l10n.shows,
                       value: '${stats['showResults']}',
                       icon: Icons.emoji_events,
-                      color: Colors.amber,
+                      color: AppColors.warning,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
@@ -359,7 +360,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                       title: 'BIR',
                       value: '${stats['birCount']}',
                       icon: Icons.star,
-                      color: Colors.amber.shade700,
+                      color: AppColors.accent3,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
@@ -368,7 +369,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                       title: l10n.certificates,
                       value: '${stats['certCount']}',
                       icon: Icons.verified,
-                      color: Colors.amber.shade900,
+                      color: AppColors.accent4,
                     ),
                   ),
                 ],
@@ -409,14 +410,14 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
             Container(
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
-                color: AppColors.neutral100,
-                borderRadius: BorderRadius.circular(AppRadius.md),
+                color: context.colors.neutral100,
+                borderRadius: AppRadius.mdAll,
               ),
               child: Row(
                 children: [
                   Icon(
                     Icons.info_outline,
-                    color: AppColors.neutral600,
+                    color: context.colors.textMuted,
                     size: 20,
                   ),
                   const SizedBox(width: AppSpacing.sm),
@@ -424,7 +425,7 @@ class _AnnualReportScreenState extends State<AnnualReportScreen> {
                     child: Text(
                       l10n.reportInfo,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.neutral600,
+                        color: context.colors.textMuted,
                       ),
                     ),
                   ),
@@ -466,10 +467,10 @@ class _StatCard extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: color.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Icon(icon, color: color, size: large ? 28 : 20),
                 ),
@@ -485,11 +486,11 @@ class _StatCard extends StatelessWidget {
                 fontSize: large ? 24 : 18,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: AppSpacing.xs),
             Text(
               title,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.neutral600,
+                color: context.colors.textMuted,
               ),
             ),
           ],

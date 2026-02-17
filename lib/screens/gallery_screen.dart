@@ -5,6 +5,8 @@ import 'package:breedly/models/litter.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:breedly/utils/app_bar_builder.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/utils/app_theme.dart';
 
 class GalleryScreen extends StatefulWidget {
   final Litter litter;
@@ -38,18 +40,18 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(AppSpacing.xl),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: AppRadius.lgAll,
                       ),
                       child: Icon(
                         Icons.image_not_supported,
                         size: 64,
-                        color: Colors.grey[400],
+                        color: context.colors.textDisabled,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
                     const Text(
                       'Ingen bilder ennå',
                       style: TextStyle(
@@ -57,11 +59,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     Text(
                       'Trykk på + for å legge til bilder',
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: context.colors.textMuted,
                         fontSize: 15,
                       ),
                     ),
@@ -71,12 +73,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
             }
 
             return GridView.builder(
-              padding: const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 88),
+              padding: const EdgeInsets.only(left: AppSpacing.md, right: AppSpacing.md, top: AppSpacing.md, bottom: 88),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 1,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
+                crossAxisSpacing: AppSpacing.md,
+                mainAxisSpacing: AppSpacing.md,
               ),
               itemCount: images.length,
               itemBuilder: (context, index) {
@@ -88,7 +90,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   clipBehavior: Clip.antiAlias,
                   elevation: 4,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Stack(
                     fit: StackFit.expand,
@@ -98,7 +100,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
-                            color: Colors.grey.shade200,
+                            color: context.colors.borderSubtle,
                             child: const Icon(Icons.image_not_supported),
                           );
                         },
@@ -118,7 +120,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               ],
                             ),
                           ),
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(AppSpacing.md),
                           child: Text(
                             DateFormat('yyyy-MM-dd').format(image.dateAdded),
                             style: const TextStyle(
@@ -160,17 +162,17 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      color: Colors.grey.shade200,
+                      color: context.colors.borderSubtle,
                       child: const Icon(Icons.image_not_supported),
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Text('Dato: ${DateFormat('yyyy-MM-dd HH:mm').format(image.dateAdded)}'),
               Text('Filstørrelse: ${(image.fileSize / 1024 / 1024).toStringAsFixed(2)} MB'),
               if (image.description != null) ...[
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 Text('Beskrivelse: ${image.description}'),
               ],
             ],

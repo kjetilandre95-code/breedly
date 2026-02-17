@@ -25,6 +25,7 @@ import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:breedly/utils/sync_helper.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/modern_widgets.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/models/dog.dart';
@@ -113,18 +114,52 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: PageView(
-        controller: _pageController,
-        physics:
-            const NeverScrollableScrollPhysics(), // Disable swipe for better UX
-        onPageChanged: (index) => setState(() => _selectedIndex = index),
+      backgroundColor: context.colors.background,
+      body: Column(
         children: [
-          const DogsScreen(showAppBar: true),
-          const LittersListScreen(showAppBar: true),
-          _buildDashboard(),
-          const FinanceScreen(showAppBar: true),
-          const BuyersScreen(showAppBar: true),
+          StreamBuilder<bool>(
+            stream: OfflineModeManager().onlineStatusStream,
+            initialData: OfflineModeManager().isOnline,
+            builder: (context, snapshot) {
+              final isOffline = snapshot.data == false;
+              if (!isOffline) return const SizedBox.shrink();
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                color: Colors.orange,
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.cloud_off, color: Colors.white, size: 16),
+                    SizedBox(width: 8),
+                    Text(
+                      'Frakoblet - endringer lagres lokalt',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              physics:
+                  const NeverScrollableScrollPhysics(), // Disable swipe for better UX
+              onPageChanged: (index) => setState(() => _selectedIndex = index),
+              children: [
+                const DogsScreen(showAppBar: true),
+                const LittersListScreen(showAppBar: true),
+                _buildDashboard(),
+                const FinanceScreen(showAppBar: true),
+                const BuyersScreen(showAppBar: true),
+              ],
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(),
@@ -137,10 +172,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
+            color: Colors.black.withValues(alpha: context.isDark ? 0.3 : 0.12),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -201,10 +236,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final isSelected = _selectedIndex == index;
     final primaryColor = Theme.of(context).primaryColor;
 
-    return GestureDetector(
-      onTap: () => _onItemTapped(index),
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
+    return Semantics(
+      label: label,
+      button: true,
+      selected: isSelected,
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: () => _onItemTapped(index),
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(
           horizontal: isSelected ? AppSpacing.lg : AppSpacing.md,
@@ -221,7 +261,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           children: [
             Icon(
               isSelected ? activeIcon : inactiveIcon,
-              color: isSelected ? primaryColor : AppColors.neutral500,
+              color: isSelected ? primaryColor : context.colors.textCaption,
               size: 24,
             ),
             if (isSelected) ...[
@@ -237,6 +277,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ],
         ),
       ),
+      ),
     );
   }
 
@@ -251,7 +292,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           expandedHeight: 120,
           floating: false,
           pinned: true,
-          backgroundColor: AppColors.surface,
+          backgroundColor: context.colors.surface,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: FlexibleSpaceBar(
@@ -262,7 +303,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             title: Text(
               _getKennelName() ?? (localizations?.appTitle ?? 'Breedly'),
               style: AppTypography.headlineMedium.copyWith(
-                color: AppColors.neutral900,
+                color: context.colors.textPrimary,
               ),
             ),
             background: Container(
@@ -270,7 +311,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [primaryColor.withValues(alpha: 0.12), AppColors.surface],
+                  colors: [primaryColor.withValues(alpha: 0.12), context.colors.surface],
                 ),
               ),
             ),
@@ -280,7 +321,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               onPressed: _syncDataManually,
               icon: const Icon(Icons.sync_rounded),
               tooltip: localizations?.sync ?? 'Sync',
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
             IconButton(
               onPressed: () => Navigator.push(
@@ -291,7 +332,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               ),
               icon: const Icon(Icons.settings_rounded),
               tooltip: localizations?.settings ?? 'Settings',
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
             const SizedBox(width: AppSpacing.sm),
           ],
@@ -355,16 +396,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: context.colors.surface,
           borderRadius: AppRadius.lgAll,
-          border: Border.all(color: AppColors.neutral300),
+          border: Border.all(color: context.colors.divider),
           boxShadow: AppShadows.sm,
         ),
         child: Row(
           children: [
             Icon(
               Icons.search_rounded,
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               size: 22,
             ),
             const SizedBox(width: AppSpacing.md),
@@ -372,13 +413,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               child: Text(
                 localizations?.searchDogsLittersBuyers ?? 'Søk etter hunder, kull, kjøpere...',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.neutral500,
+                  color: context.colors.textCaption,
                 ),
               ),
             ),
             Icon(
               Icons.arrow_forward_ios_rounded,
-              color: AppColors.neutral400,
+              color: context.colors.textDisabled,
               size: 16,
             ),
           ],
@@ -449,9 +490,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.xlAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.sm,
       ),
       child: Column(
@@ -553,14 +594,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                   Text(
                     value,
                     style: AppTypography.titleLarge.copyWith(
-                      color: AppColors.neutral900,
+                      color: context.colors.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     title,
                     style: AppTypography.caption.copyWith(
-                      color: AppColors.neutral600,
+                      color: context.colors.textMuted,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -627,7 +668,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                   statusColor = const Color(0xFF2196F3);
                   break;
                 default:
-                  statusColor = Colors.grey;
+                  statusColor = context.colors.textCaption;
               }
               
               events.add({
@@ -736,9 +777,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       return Container(
         padding: const EdgeInsets.all(AppSpacing.xl),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: context.colors.surface,
           borderRadius: AppRadius.xlAll,
-          border: Border.all(color: AppColors.neutral200),
+          border: Border.all(color: context.colors.border),
           boxShadow: AppShadows.sm,
         ),
         child: Column(
@@ -746,20 +787,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Icon(
               Icons.event_available_rounded,
               size: 48,
-              color: AppColors.neutral400,
+              color: context.colors.textDisabled,
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
               AppLocalizations.of(context)?.noUpcomingEvents ?? 'No upcoming events',
               style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.neutral600,
+                color: context.colors.textMuted,
               ),
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
               AppLocalizations.of(context)?.registerHeatOrMating ?? 'Register heat cycle or mating to see events here',
               style: AppTypography.caption.copyWith(
-                color: AppColors.neutral500,
+                color: context.colors.textCaption,
               ),
               textAlign: TextAlign.center,
             ),
@@ -770,9 +811,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.xlAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.sm,
       ),
       child: Column(
@@ -866,7 +907,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                           child: Text(
                             event['title'] as String,
                             style: AppTypography.titleSmall.copyWith(
-                              color: AppColors.neutral900,
+                              color: context.colors.textPrimary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -890,16 +931,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                           ),
                       ],
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.xxs),
                     Text(
                       event['subtitle'] as String,
                       style: AppTypography.caption.copyWith(
-                        color: AppColors.neutral600,
+                        color: context.colors.textMuted,
                       ),
                     ),
                     // Show progesterone info for progesterone events
                     if (type == 'progesterone') ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.xs),
                       // Show progesterone value and status
                       Row(
                         children: [
@@ -916,7 +957,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.science, size: 10, color: color),
-                                const SizedBox(width: 4),
+                                const SizedBox(width: AppSpacing.xs),
                                 Text(
                                   event['progesteroneDisplay'] as String? ?? 
                                     '${(event['progesteroneValue'] as double).toStringAsFixed(1)} ng/mL',
@@ -929,7 +970,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 4),
+                          const SizedBox(width: AppSpacing.xs),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: AppSpacing.xs,
@@ -952,7 +993,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                       ),
                       // Show recommendation
                       if (event['recommendation'] != null) ...[
-                        const SizedBox(height: 4),
+                        const SizedBox(height: AppSpacing.xs),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppSpacing.sm,
@@ -961,7 +1002,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                           decoration: BoxDecoration(
                             color: event['canMate'] == true 
                                 ? color.withValues(alpha: 0.15)
-                                : AppColors.neutral100,
+                                : context.colors.neutral100,
                             borderRadius: AppRadius.xsAll,
                           ),
                           child: Row(
@@ -970,14 +1011,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               Icon(
                                 event['canMate'] == true ? Icons.check_circle : Icons.info_outline,
                                 size: 10,
-                                color: event['canMate'] == true ? color : AppColors.neutral600,
+                                color: event['canMate'] == true ? color : context.colors.textMuted,
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: AppSpacing.xs),
                               Flexible(
                                 child: Text(
                                   event['recommendation'] as String,
                                   style: AppTypography.caption.copyWith(
-                                    color: event['canMate'] == true ? color : AppColors.neutral700,
+                                    color: event['canMate'] == true ? color : context.colors.textTertiary,
                                     fontWeight: event['isUrgent'] == true ? FontWeight.bold : FontWeight.w500,
                                     fontSize: 10,
                                   ),
@@ -990,7 +1031,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     ],
                     // Show mating window for heat events
                     if (type == 'heat') ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.xs),
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.sm,
@@ -1022,13 +1063,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 decoration: BoxDecoration(
                   color: daysUntil <= 7 
                       ? color.withValues(alpha: 0.1)
-                      : AppColors.neutral100,
+                      : context.colors.neutral100,
                   borderRadius: AppRadius.smAll,
                 ),
                 child: Text(
                   type == 'progesterone' ? 'NÅ' : timeText,
                   style: AppTypography.caption.copyWith(
-                    color: daysUntil <= 7 || type == 'progesterone' ? color : AppColors.neutral600,
+                    color: daysUntil <= 7 || type == 'progesterone' ? color : context.colors.textMuted,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -1041,7 +1082,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             height: 1,
             indent: AppSpacing.md,
             endIndent: AppSpacing.md,
-            color: AppColors.neutral200,
+            color: context.colors.border,
           ),
       ],
     );
@@ -1176,9 +1217,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.7,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1186,18 +1227,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Container(
               width: 40,
               height: 4,
-              margin: const EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: AppSpacing.md),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: context.colors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
                 children: [
                   Icon(Icons.emoji_events, color: themeColor),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Text(
                     AppLocalizations.of(context)?.selectDog ?? 'Select dog',
                     style: const TextStyle(
@@ -1244,7 +1285,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
           ],
         ),
       ),
@@ -1272,7 +1313,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             vertical: AppSpacing.md,
           ),
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: context.colors.surface,
             borderRadius: AppRadius.mdAll,
             border: Border.all(color: color.withValues(alpha: 0.3)),
             boxShadow: [
@@ -1303,7 +1344,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 child: Text(
                   title,
                   style: AppTypography.titleSmall.copyWith(
-                    color: AppColors.neutral800,
+                    color: context.colors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

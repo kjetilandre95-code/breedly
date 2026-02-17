@@ -17,6 +17,8 @@ import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/reminder_manager.dart';
 import 'package:breedly/utils/logger.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 class DogHealthScreen extends StatefulWidget {
   final Dog dog;
@@ -50,7 +52,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           bottom: TabBar(
             indicatorColor: primaryColor,
             labelColor: primaryColor,
-            unselectedLabelColor: Colors.grey[600],
+            unselectedLabelColor: context.colors.textMuted,
             indicatorWeight: 3,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
@@ -84,7 +86,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   Widget _buildHealthStatusTab() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -94,7 +96,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (widget.dog.healthInfoId != null)
             _buildHealthCard()
           else
@@ -102,12 +104,12 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(AppSpacing.xxl),
                     decoration: BoxDecoration(
                       color: Theme.of(
                         context,
                       ).primaryColor.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: AppRadius.xlAll,
                     ),
                     child: Icon(
                       Icons.medical_information_outlined,
@@ -117,7 +119,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       ).primaryColor.withValues(alpha: 0.7),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: AppSpacing.xl),
                   Text(
                     'Ingen helseopplysninger registrert',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -125,19 +127,19 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     'Legg til helseopplysninger for ${widget.dog.name}',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    style: TextStyle(color: context.colors.textMuted, fontSize: 14),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   ElevatedButton.icon(
                     onPressed: _addHealthInfo,
                     icon: const Icon(Icons.add),
                     label: const Text('Legg til helseopplysninger'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).primaryColor,
-                      foregroundColor: Colors.black87,
+                      foregroundColor: context.colors.textPrimary,
                     ),
                   ),
                 ],
@@ -158,30 +160,30 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadius.lgAll,
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, Colors.grey[50]!],
+            colors: [context.colors.surface, context.colors.neutral50],
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(AppSpacing.xl),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     decoration: BoxDecoration(
                       color: Theme.of(
                         context,
                       ).primaryColor.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.mdAll,
                     ),
                     child: Icon(
                       Icons.health_and_safety_rounded,
@@ -189,7 +191,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       size: 28,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Text(
                     'Helsestatus',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -199,18 +201,18 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
               if (health.hdStatus != null) ...[
                 _buildHealthInfoRow(
                   'HD Status',
                   health.hdStatus!,
                   health.hdDate,
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.md),
               ],
               if (health.adStatus != null) ...[
                 _buildADStatusRow('AD Status', health.adStatus!, health.adDate),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.md),
               ],
               if (health.patellaStatus != null) ...[
                 _buildPatellaStatusRow(
@@ -218,14 +220,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   health.patellaStatus!,
                   health.patellaDate,
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.md),
               ],
               if (health.notes != null && health.notes!.isNotEmpty) ...[
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
-                    color: Colors.blue.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.info.withValues(alpha: 0.12),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,20 +237,20 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
-                          color: Colors.grey[700],
+                          color: context.colors.textTertiary,
                         ),
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: AppSpacing.sm),
                       Text(
                         health.notes!,
-                        style: TextStyle(fontSize: 13, color: Colors.grey[800]),
+                        style: TextStyle(fontSize: 13, color: context.colors.textSecondary),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: AppSpacing.md),
               ],
-              const Divider(height: 20),
+              const Divider(height: AppSpacing.xl),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -259,21 +261,21 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       label: const Text('Rediger'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
-                        foregroundColor: Colors.black87,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        foregroundColor: context.colors.textPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () => _deleteHealthInfo(health),
                       icon: const Icon(Icons.delete_outline_rounded),
                       label: const Text('Slett'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.withValues(alpha: 0.1),
-                        foregroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        backgroundColor: AppColors.error.withValues(alpha: 0.1),
+                        foregroundColor: AppColors.error,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                       ),
                     ),
                   ),
@@ -288,11 +290,11 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   Widget _buildHealthInfoRow(String label, String value, DateTime? date) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!, width: 1),
+        color: context.colors.neutral50,
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: context.colors.border, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,11 +304,11 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
               letterSpacing: 0.2,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             value,
             style: TextStyle(
@@ -317,10 +319,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             ),
           ),
           if (date != null) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               'Dato: ${DateFormat('dd.MM.yyyy').format(date)}',
-              style: TextStyle(color: Colors.grey[500], fontSize: 11),
+              style: TextStyle(color: context.colors.textCaption, fontSize: 11),
             ),
           ],
         ],
@@ -332,18 +334,18 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     final adStatusLabels = {0: 'Grad 0 (Fri)', 1: 'Grad 1 (Svak)', 2: 'Grad 2 (Moderat)', 3: 'Grad 3 (Sterk)'};
     final statusText = adStatusLabels[value] ?? 'Ukjent';
     final statusColor = value == 0
-        ? Colors.green
+        ? AppColors.success
         : value == 1
-        ? Colors.yellow[700]
+        ? AppColors.accent3
         : value == 2
-        ? Colors.orange
-        : Colors.red;
+        ? AppColors.warning
+        : AppColors.error;
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: statusColor!.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
+        color: statusColor.withValues(alpha: 0.15),
+        borderRadius: AppRadius.mdAll,
         border: Border.all(color: statusColor.withValues(alpha: 0.3), width: 1),
       ),
       child: Column(
@@ -354,11 +356,11 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
               letterSpacing: 0.2,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Container(
@@ -369,7 +371,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                   shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               Text(
                 statusText,
                 style: TextStyle(
@@ -382,10 +384,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             ],
           ),
           if (date != null) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               'Dato: ${DateFormat('dd.MM.yyyy').format(date)}',
-              style: TextStyle(color: Colors.grey[500], fontSize: 11),
+              style: TextStyle(color: context.colors.textCaption, fontSize: 11),
             ),
           ],
         ],
@@ -413,19 +415,19 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     final patellaStatusLabels = {0: 'Grad 0 (Normal)', 1: 'Grad 1', 2: 'Grad 2', 3: 'Grad 3'};
     final statusText = numericValue != null ? patellaStatusLabels[numericValue] ?? value : value;
     final statusColor = numericValue == 0
-        ? Colors.green
+        ? AppColors.success
         : numericValue == 1
-            ? Colors.yellow[700]
+            ? AppColors.accent3
             : numericValue == 2
-                ? Colors.orange
-                : Colors.red;
+                ? AppColors.warning
+                : AppColors.error;
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: (statusColor ?? Colors.grey).withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: (statusColor ?? Colors.grey).withValues(alpha: 0.3), width: 1),
+        color: (statusColor).withValues(alpha: 0.15),
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: (statusColor).withValues(alpha: 0.3), width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -435,39 +437,39 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w600,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
               letterSpacing: 0.2,
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Container(
                 width: 10,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: statusColor ?? Colors.grey,
+                  color: statusColor,
                   shape: BoxShape.circle,
                 ),
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   statusText,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
-                    color: Colors.grey[800],
+                    color: context.colors.textSecondary,
                   ),
                 ),
               ),
             ],
           ),
           if (date != null) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               'Dato: ${DateFormat('dd.MM.yyyy').format(date)}',
-              style: TextStyle(color: Colors.grey[500], fontSize: 11),
+              style: TextStyle(color: context.colors.textCaption, fontSize: 11),
             ),
           ],
         ],
@@ -484,7 +486,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
         .toList();
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -504,24 +506,24 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (vaccines.isEmpty)
             Center(
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(AppSpacing.xxl),
                     decoration: BoxDecoration(
-                      color: Colors.green.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.success.withValues(alpha: 0.15),
+                      borderRadius: AppRadius.xlAll,
                     ),
                     child: Icon(
                       Icons.vaccines_outlined,
                       size: 72,
-                      color: Colors.green.withValues(alpha: 0.5),
+                      color: AppColors.success.withValues(alpha: 0.5),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: AppSpacing.xl),
                   Text(
                     'Ingen vaksiner registrert',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -529,10 +531,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     'Legg til vaksiner for ${widget.dog.name}',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    style: TextStyle(color: context.colors.textMuted, fontSize: 14),
                   ),
                 ],
               ),
@@ -542,7 +544,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: vaccines.length,
-              separatorBuilder: (context, index) => const SizedBox(height: 12),
+              separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
               itemBuilder: (context, index) {
                 final vaccine = vaccines[index];
                 final isOverdue = vaccine.isOverdue();
@@ -551,34 +553,34 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 return Card(
                   elevation: isOverdue ? 4 : 2,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: AppRadius.lgAll,
                     side: BorderSide(
                       color: isOverdue
-                          ? Colors.red
+                          ? AppColors.error
                           : isDueForReminder
-                          ? Colors.orange
+                          ? AppColors.warning
                           : Colors.transparent,
                       width: (isOverdue || isDueForReminder) ? 2 : 0,
                     ),
                   ),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: AppRadius.lgAll,
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
                           isOverdue
-                              ? Colors.red.withValues(alpha: 0.12)
+                              ? AppColors.error.withValues(alpha: 0.12)
                               : isDueForReminder
-                              ? Colors.orange.withValues(alpha: 0.12)
-                              : Colors.white,
-                          Colors.grey[50]!,
+                              ? AppColors.warning.withValues(alpha: 0.12)
+                              : context.colors.surface,
+                          context.colors.neutral50,
                         ],
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(AppSpacing.lg),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -601,11 +603,11 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                             letterSpacing: 0.2,
                                           ),
                                     ),
-                                    const SizedBox(height: 4),
+                                    const SizedBox(height: AppSpacing.xs),
                                     Text(
                                       'Tatt: ${DateFormat('dd.MM.yyyy').format(vaccine.dateTaken)}',
                                       style: TextStyle(
-                                        color: Colors.grey[600],
+                                        color: context.colors.textMuted,
                                         fontSize: 12,
                                       ),
                                     ),
@@ -615,20 +617,20 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                               if (isOverdue)
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 6,
+                                    horizontal: AppSpacing.md,
+                                    vertical: AppSpacing.sm,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.red.withValues(alpha: 0.2),
+                                    color: AppColors.error.withValues(alpha: 0.2),
                                     border: Border.all(
-                                      color: Colors.red.withValues(alpha: 0.5),
+                                      color: AppColors.error.withValues(alpha: 0.5),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: AppRadius.smAll,
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Forfalt',
                                     style: TextStyle(
-                                      color: Colors.red,
+                                      color: AppColors.error,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -637,22 +639,22 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                               else if (isDueForReminder)
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 6,
+                                    horizontal: AppSpacing.md,
+                                    vertical: AppSpacing.sm,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.orange.withValues(alpha: 0.2),
+                                    color: AppColors.warning.withValues(alpha: 0.2),
                                     border: Border.all(
-                                      color: Colors.orange.withValues(
+                                      color: AppColors.warning.withValues(
                                         alpha: 0.5,
                                       ),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: AppRadius.smAll,
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'Varsel',
                                     style: TextStyle(
-                                      color: Colors.orange,
+                                      color: AppColors.warning,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -661,22 +663,22 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                               else
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 6,
+                                    horizontal: AppSpacing.md,
+                                    vertical: AppSpacing.sm,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: Colors.green.withValues(alpha: 0.2),
+                                    color: AppColors.success.withValues(alpha: 0.2),
                                     border: Border.all(
-                                      color: Colors.green.withValues(
+                                      color: AppColors.success.withValues(
                                         alpha: 0.5,
                                       ),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: AppRadius.smAll,
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     'OK',
                                     style: TextStyle(
-                                      color: Colors.green,
+                                      color: AppColors.success,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -684,16 +686,16 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                 ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: AppSpacing.md),
                           // Next due date info
                           if (vaccine.nextDueDate != null)
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(AppSpacing.md),
                               decoration: BoxDecoration(
-                                color: Colors.blue.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(8),
+                                color: AppColors.info.withValues(alpha: 0.12),
+                                borderRadius: AppRadius.smAll,
                                 border: Border.all(
-                                  color: Colors.blue.withValues(alpha: 0.3),
+                                  color: AppColors.info.withValues(alpha: 0.3),
                                 ),
                               ),
                               child: Row(
@@ -701,13 +703,13 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                   Icon(
                                     Icons.calendar_today_rounded,
                                     size: 16,
-                                    color: Colors.blue[600],
+                                    color: AppColors.info,
                                   ),
-                                  const SizedBox(width: 8),
+                                  const SizedBox(width: AppSpacing.sm),
                                   Text(
                                     'Neste dose: ${DateFormat('dd.MM.yyyy').format(vaccine.nextDueDate!)}',
                                     style: TextStyle(
-                                      color: Colors.blue[700],
+                                      color: AppColors.info,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -717,14 +719,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                             ),
                           if (vaccine.veterinarian != null &&
                               vaccine.veterinarian!.isNotEmpty) ...[
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(AppSpacing.md),
                               decoration: BoxDecoration(
-                                color: Colors.purple.withValues(alpha: 0.12),
-                                borderRadius: BorderRadius.circular(8),
+                                color: AppColors.accent5.withValues(alpha: 0.12),
+                                borderRadius: AppRadius.smAll,
                                 border: Border.all(
-                                  color: Colors.purple.withValues(alpha: 0.3),
+                                  color: AppColors.accent5.withValues(alpha: 0.3),
                                 ),
                               ),
                               child: Row(
@@ -732,14 +734,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                   Icon(
                                     Icons.person_rounded,
                                     size: 16,
-                                    color: Colors.purple[600],
+                                    color: AppColors.accent5,
                                   ),
-                                  const SizedBox(width: 8),
+                                  const SizedBox(width: AppSpacing.sm),
                                   Expanded(
                                     child: Text(
                                       'Veterinær: ${vaccine.veterinarian!}',
                                       style: TextStyle(
-                                        color: Colors.purple[700],
+                                        color: AppColors.accent5,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -749,7 +751,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                               ),
                             ),
                           ],
-                          const SizedBox(height: 14),
+                          const SizedBox(height: AppSpacing.md),
                           // Action buttons
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -763,14 +765,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                     backgroundColor: Theme.of(
                                       context,
                                     ).primaryColor,
-                                    foregroundColor: Colors.black87,
+                                    foregroundColor: context.colors.textPrimary,
                                     padding: const EdgeInsets.symmetric(
-                                      vertical: 12,
+                                      vertical: AppSpacing.md,
                                     ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: AppSpacing.md),
                               Expanded(
                                 child: ElevatedButton.icon(
                                   onPressed: () => _deleteVaccine(vaccine),
@@ -779,12 +781,12 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                                   ),
                                   label: const Text('Slett'),
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.red.withValues(
+                                    backgroundColor: AppColors.error.withValues(
                                       alpha: 0.1,
                                     ),
-                                    foregroundColor: Colors.red,
+                                    foregroundColor: AppColors.error,
                                     padding: const EdgeInsets.symmetric(
-                                      vertical: 12,
+                                      vertical: AppSpacing.md,
                                     ),
                                   ),
                                 ),
@@ -812,7 +814,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           ..sort((a, b) => b.dateMeasured.compareTo(a.dateMeasured));
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -832,18 +834,18 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (measurements.isEmpty)
             Center(
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(AppSpacing.xxl),
                     decoration: BoxDecoration(
                       color: Theme.of(
                         context,
                       ).primaryColor.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: AppRadius.xlAll,
                     ),
                     child: Icon(
                       Icons.science_outlined,
@@ -853,7 +855,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       ).primaryColor.withValues(alpha: 0.7),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: AppSpacing.xl),
                   Text(
                     'Ingen progesteronmålinger registrert',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -861,10 +863,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       fontSize: 18,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
                     'Legg til progesteronmålinger for å følge ${widget.dog.name}s syklus',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                    style: TextStyle(color: context.colors.textMuted, fontSize: 14),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -884,33 +886,33 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     Color statusColor;
 
     if (measurement.value < 2.0) {
-      statusColor = Colors.grey;
+      statusColor = AppColors.neutral500;
     } else if (measurement.value >= 2.0 && measurement.value < 5.0) {
-      statusColor = Colors.orange;
+      statusColor = AppColors.warning;
     } else if (measurement.value >= 5.0 && measurement.value < 10.0) {
-      statusColor = Colors.green;
+      statusColor = AppColors.success;
     } else {
-      statusColor = Colors.blue;
+      statusColor = AppColors.info;
     }
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Icon(Icons.science, color: statusColor, size: 20),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -944,7 +946,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     PopupMenuItem(
                       child: const Text(
                         'Slett',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
                         Duration.zero,
@@ -955,21 +957,21 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               'Dato: ${DateFormat('dd.MM.yyyy HH:mm').format(measurement.dateMeasured)}',
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
             if (measurement.veterinarian != null &&
                 measurement.veterinarian!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Veterinær: ${measurement.veterinarian}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (measurement.notes != null && measurement.notes!.isNotEmpty) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(measurement.notes!, style: const TextStyle(fontSize: 14)),
             ],
           ],
@@ -1026,7 +1028,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1082,7 +1084,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1136,7 +1138,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1151,7 +1153,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           ..sort((a, b) => b.visitDate.compareTo(a.visitDate));
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1171,7 +1173,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (visits.isEmpty)
             _buildEmptyState(
               icon: Icons.local_hospital_outlined,
@@ -1198,42 +1200,42 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     Color typeColor;
     switch (visit.visitType) {
       case 'emergency':
-        typeColor = Colors.red;
+        typeColor = AppColors.error;
         break;
       case 'surgery':
-        typeColor = Colors.purple;
+        typeColor = AppColors.accent5;
         break;
       case 'vaccination':
-        typeColor = Colors.blue;
+        typeColor = AppColors.info;
         break;
       case 'routine':
-        typeColor = Colors.green;
+        typeColor = AppColors.success;
         break;
       case 'followup':
-        typeColor = Colors.orange;
+        typeColor = AppColors.warning;
         break;
       default:
-        typeColor = Colors.grey;
+        typeColor = AppColors.neutral500;
     }
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: typeColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Icon(Icons.local_hospital, color: typeColor, size: 20),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1247,7 +1249,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       ),
                       Text(
                         DateFormat('dd.MM.yyyy').format(visit.visitDate),
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                       ),
                     ],
                   ),
@@ -1264,7 +1266,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     PopupMenuItem(
                       child: const Text(
                         'Slett',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
                         Duration.zero,
@@ -1276,21 +1278,21 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ],
             ),
             if (visit.reason != null && visit.reason!.isNotEmpty) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Text(
                 'Årsak: ${visit.reason}',
                 style: const TextStyle(fontSize: 14),
               ),
             ],
             if (visit.diagnosis != null && visit.diagnosis!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Diagnose: ${visit.diagnosis}',
                 style: const TextStyle(fontSize: 14),
               ),
             ],
             if (visit.treatment != null && visit.treatment!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Behandling: ${visit.treatment}',
                 style: const TextStyle(fontSize: 14),
@@ -1298,37 +1300,37 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             ],
             if (visit.veterinarian != null &&
                 visit.veterinarian!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Veterinær: ${visit.veterinarian}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (visit.cost != null) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Kostnad: ${visit.cost!.toStringAsFixed(0)} kr',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (visit.followUpDate != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(4),
+                  color: AppColors.warning.withValues(alpha: 0.1),
+                  borderRadius: AppRadius.xsAll,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.event, size: 14, color: Colors.orange),
-                    const SizedBox(width: 4),
+                    const Icon(Icons.event, size: 14, color: AppColors.warning),
+                    const SizedBox(width: AppSpacing.xs),
                     Text(
                       'Oppfølging: ${DateFormat('dd.MM.yyyy').format(visit.followUpDate!)}',
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Colors.orange,
+                        color: AppColors.warning,
                       ),
                     ),
                   ],
@@ -1390,7 +1392,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1405,7 +1407,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           ..sort((a, b) => b.dateGiven.compareTo(a.dateGiven));
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1425,7 +1427,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (treatments.isEmpty)
             _buildEmptyState(
               icon: Icons.medication_outlined,
@@ -1454,27 +1456,27 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     switch (treatment.treatmentType) {
       case 'deworming':
         typeIcon = Icons.bug_report;
-        typeColor = Colors.brown;
+        typeColor = AppColors.accent4;
         break;
       case 'flea':
         typeIcon = Icons.pest_control;
-        typeColor = Colors.orange;
+        typeColor = AppColors.warning;
         break;
       case 'tick':
         typeIcon = Icons.pest_control_rodent;
-        typeColor = Colors.red;
+        typeColor = AppColors.error;
         break;
       case 'medication':
         typeIcon = Icons.medication;
-        typeColor = Colors.blue;
+        typeColor = AppColors.info;
         break;
       case 'supplement':
         typeIcon = Icons.local_pharmacy;
-        typeColor = Colors.green;
+        typeColor = AppColors.success;
         break;
       default:
         typeIcon = Icons.healing;
-        typeColor = Colors.grey;
+        typeColor = AppColors.neutral500;
     }
 
     final isDue =
@@ -1484,23 +1486,23 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
         );
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: typeColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Icon(typeIcon, color: typeColor, size: 20),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1515,7 +1517,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       Text(
                         typeLabels[treatment.treatmentType] ??
                             treatment.treatmentType,
-                        style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                        style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                       ),
                     ],
                   ),
@@ -1539,7 +1541,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     PopupMenuItem(
                       child: const Text(
                         'Slett',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
                         Duration.zero,
@@ -1550,35 +1552,35 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Text(
               'Sist gitt: ${DateFormat('dd.MM.yyyy').format(treatment.dateGiven)}',
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
             if (treatment.dosage != null && treatment.dosage!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Dosering: ${treatment.dosage}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (treatment.manufacturer != null &&
                 treatment.manufacturer!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Produsent: ${treatment.manufacturer}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (treatment.nextDueDate != null) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                 decoration: BoxDecoration(
                   color: isDue
-                      ? Colors.red.withValues(alpha: 0.1)
-                      : Colors.green.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(4),
+                      ? AppColors.error.withValues(alpha: 0.1)
+                      : AppColors.success.withValues(alpha: 0.1),
+                  borderRadius: AppRadius.xsAll,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -1586,14 +1588,14 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     Icon(
                       isDue ? Icons.warning : Icons.schedule,
                       size: 14,
-                      color: isDue ? Colors.red : Colors.green,
+                      color: isDue ? AppColors.error : AppColors.success,
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: AppSpacing.xs),
                     Text(
                       'Neste: ${DateFormat('dd.MM.yyyy').format(treatment.nextDueDate!)}',
                       style: TextStyle(
                         fontSize: 12,
-                        color: isDue ? Colors.red : Colors.green,
+                        color: isDue ? AppColors.error : AppColors.success,
                         fontWeight: isDue ? FontWeight.bold : FontWeight.normal,
                       ),
                     ),
@@ -1686,7 +1688,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1705,7 +1707,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           );
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1725,7 +1727,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (tests.isEmpty)
             _buildEmptyState(
               icon: Icons.biotech_outlined,
@@ -1746,49 +1748,49 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
     switch (test.result) {
       case 'clear':
-        resultColor = Colors.green;
+        resultColor = AppColors.success;
         resultIcon = Icons.check_circle;
         resultLabel = 'Fri';
         break;
       case 'carrier':
-        resultColor = Colors.orange;
+        resultColor = AppColors.warning;
         resultIcon = Icons.warning;
         resultLabel = 'Bærer';
         break;
       case 'affected':
-        resultColor = Colors.red;
+        resultColor = AppColors.error;
         resultIcon = Icons.error;
         resultLabel = 'Affisert';
         break;
       case 'pending':
-        resultColor = Colors.grey;
+        resultColor = AppColors.neutral500;
         resultIcon = Icons.hourglass_empty;
         resultLabel = 'Venter på resultat';
         break;
       default:
-        resultColor = Colors.grey;
+        resultColor = AppColors.neutral500;
         resultIcon = Icons.help_outline;
         resultLabel = test.result;
     }
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: resultColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Icon(Icons.biotech, color: resultColor, size: 20),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1803,7 +1805,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                       Row(
                         children: [
                           Icon(resultIcon, size: 14, color: resultColor),
-                          const SizedBox(width: 4),
+                          const SizedBox(width: AppSpacing.xs),
                           Text(
                             resultLabel,
                             style: TextStyle(
@@ -1829,7 +1831,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                     PopupMenuItem(
                       child: const Text(
                         'Slett',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(color: AppColors.error),
                       ),
                       onTap: () => Future.delayed(
                         Duration.zero,
@@ -1840,29 +1842,29 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             if (test.testDate != null)
               Text(
                 'Testet: ${DateFormat('dd.MM.yyyy').format(test.testDate!)}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             if (test.laboratory != null && test.laboratory!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Laboratorium: ${test.laboratory}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (test.certificateNumber != null &&
                 test.certificateNumber!.isNotEmpty) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
                 'Sertifikatnr: ${test.certificateNumber}',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: context.colors.textMuted, fontSize: 12),
               ),
             ],
             if (test.notes != null && test.notes!.isNotEmpty) ...[
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               Text(test.notes!, style: const TextStyle(fontSize: 14)),
             ],
           ],
@@ -1916,7 +1918,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -1931,7 +1933,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
           ..sort((a, b) => b.date.compareTo(a.date));
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 24),
+      padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: AppSpacing.xxl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1951,7 +1953,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           if (records.isEmpty)
             _buildEmptyState(
               icon: Icons.monitor_weight_outlined,
@@ -1960,7 +1962,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
             )
           else ...[
             _buildWeightSummary(records),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             ...records.map((record) => _buildWeightCard(record)),
           ],
         ],
@@ -1980,7 +1982,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
     return Card(
       color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -1988,7 +1990,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               children: [
                 Text(
                   'Nåværende vekt',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                  style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                 ),
                 Text(
                   '${latestWeight.toStringAsFixed(1)} kg',
@@ -2005,7 +2007,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                 children: [
                   Text(
                     'Endring',
-                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    style: TextStyle(color: context.colors.textMuted, fontSize: 12),
                   ),
                   Row(
                     children: [
@@ -2016,10 +2018,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                             ? Icons.arrow_downward
                             : Icons.remove,
                         color: weightChange > 0
-                            ? Colors.red
+                            ? AppColors.error
                             : weightChange < 0
-                            ? Colors.green
-                            : Colors.grey,
+                            ? AppColors.success
+                            : AppColors.neutral500,
                         size: 20,
                       ),
                       Text(
@@ -2028,10 +2030,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: weightChange > 0
-                              ? Colors.red
+                              ? AppColors.error
                               : weightChange < 0
-                              ? Colors.green
-                              : Colors.grey,
+                              ? AppColors.success
+                              : AppColors.neutral500,
                         ),
                       ),
                     ],
@@ -2046,13 +2048,13 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
 
   Widget _buildWeightCard(WeightRecord record) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: ListTile(
         leading: Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(AppSpacing.sm),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.smAll,
           ),
           child: Icon(
             Icons.monitor_weight,
@@ -2075,7 +2077,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               ),
             ),
             PopupMenuItem(
-              child: const Text('Slett', style: TextStyle(color: Colors.red)),
+              child: const Text('Slett', style: TextStyle(color: AppColors.error)),
               onTap: () => Future.delayed(
                 Duration.zero,
                 () => _deleteWeightRecord(record),
@@ -2136,7 +2138,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               if (context.mounted) Navigator.pop(context);
               setState(() {});
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: const Text('Slett', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -2153,10 +2155,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(AppSpacing.xxl),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: AppRadius.xlAll,
             ),
             child: Icon(
               icon,
@@ -2164,7 +2166,7 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               color: Theme.of(context).primaryColor.withValues(alpha: 0.8),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: AppSpacing.xl),
           Text(
             title,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -2172,10 +2174,10 @@ class _DogHealthScreenState extends State<DogHealthScreen> {
               fontSize: 18,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             subtitle,
-            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+            style: TextStyle(color: context.colors.textMuted, fontSize: 14),
             textAlign: TextAlign.center,
           ),
         ],
@@ -2242,11 +2244,11 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                 setState(() => hdDate = date);
               },
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             _buildADStatusSelector(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             _buildPatellaStatusSelector(),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -2275,15 +2277,15 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('AD Status', style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         DropdownButton<int?>(  
           value: adStatus,
           hint: const Text('Velg AD Status'),
           isExpanded: true,
           items: [
-            const DropdownMenuItem<int?>(
+            DropdownMenuItem<int?>(
               value: null,
-              child: Text('Ingen (fjern valg)', style: TextStyle(color: Colors.grey)),
+              child: Text('Ingen (fjern valg)', style: TextStyle(color: context.colors.textDisabled)),
             ),
             ...adStatusLabels.entries
                 .map(
@@ -2301,7 +2303,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
           },
         ),
         if (adStatus != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Expanded(
@@ -2309,7 +2311,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                   adDate != null
                       ? DateFormat('dd.MM.yyyy').format(adDate!)
                       : 'AD dato',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
               IconButton(
@@ -2340,15 +2342,15 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Patella Status', style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         DropdownButton<int?>(
           value: patellaStatus != null ? int.tryParse(patellaStatus!) ?? _convertOldPatellaStatus(patellaStatus!) : null,
           hint: const Text('Velg Patella Status'),
           isExpanded: true,
           items: [
-            const DropdownMenuItem<int?>(
+            DropdownMenuItem<int?>(
               value: null,
-              child: Text('Ingen (fjern valg)', style: TextStyle(color: Colors.grey)),
+              child: Text('Ingen (fjern valg)', style: TextStyle(color: context.colors.textDisabled)),
             ),
             ...patellaStatusLabels.entries
                 .map(
@@ -2366,7 +2368,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
           },
         ),
         if (patellaStatus != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Expanded(
@@ -2374,7 +2376,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                   patellaDate != null
                       ? DateFormat('dd.MM.yyyy').format(patellaDate!)
                       : 'Patella dato',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
               IconButton(
@@ -2423,15 +2425,15 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
+        const SizedBox(height: AppSpacing.xs),
         DropdownButton<String?>(
           value: selectedValue,
           hint: Text('Velg $label'),
           isExpanded: true,
           items: [
-            const DropdownMenuItem<String?>(
+            DropdownMenuItem<String?>(
               value: null,
-              child: Text('Ingen (fjern valg)', style: TextStyle(color: Colors.grey)),
+              child: Text('Ingen (fjern valg)', style: TextStyle(color: context.colors.textDisabled)),
             ),
             ...options.map(
               (status) =>
@@ -2446,7 +2448,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
           },
         ),
         if (selectedValue != null) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
               Expanded(
@@ -2454,7 +2456,7 @@ class __HealthInfoDialogState extends State<_HealthInfoDialog> {
                   selectedDate != null
                       ? DateFormat('dd.MM.yyyy').format(selectedDate)
                       : dateLabel,
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: context.colors.textMuted),
                 ),
               ),
               IconButton(
@@ -2610,7 +2612,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -2634,7 +2636,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
@@ -2660,7 +2662,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             CheckboxListTile(
               value: reminderEnabled,
               onChanged: (value) =>
@@ -2668,7 +2670,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
               title: const Text('Aktiver varsel'),
             ),
             if (reminderEnabled) ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Row(
                 children: [
                   Expanded(
@@ -2692,7 +2694,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
                 ],
               ),
             ],
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               controller: veterinarianController,
               decoration: const InputDecoration(
@@ -2700,7 +2702,7 @@ class __VaccineDialogState extends State<_VaccineDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -2863,7 +2865,7 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
               keyboardType: TextInputType.number,
               autofocus: true,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('Dato og tid'),
@@ -2873,7 +2875,7 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
               trailing: const Icon(Icons.calendar_today),
               onTap: _selectDateTime,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               controller: veterinarianController,
               decoration: const InputDecoration(
@@ -2881,7 +2883,7 @@ class _ProgesteroneDialogState extends State<_ProgesteroneDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -3093,7 +3095,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 if (date != null) setState(() => visitDate = date);
               },
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<String>(
               initialValue: visitType,
               decoration: const InputDecoration(
@@ -3105,7 +3107,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                   .toList(),
               onChanged: (value) => setState(() => visitType = value!),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: reasonController,
               decoration: const InputDecoration(
@@ -3113,7 +3115,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: diagnosisController,
               decoration: const InputDecoration(
@@ -3121,7 +3123,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: treatmentController,
               decoration: const InputDecoration(
@@ -3130,7 +3132,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
               ),
               maxLines: 2,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: prescriptionController,
               decoration: const InputDecoration(
@@ -3138,7 +3140,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: veterinarianController,
               decoration: const InputDecoration(
@@ -3146,7 +3148,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: clinicController,
               decoration: const InputDecoration(
@@ -3154,7 +3156,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: costController,
               decoration: const InputDecoration(
@@ -3163,7 +3165,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
               ),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             ListTile(
               title: const Text('Oppfølgingsdato'),
               subtitle: Text(
@@ -3194,7 +3196,7 @@ class __VetVisitDialogState extends State<_VetVisitDialog> {
                 if (date != null) setState(() => followUpDate = date);
               },
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -3395,11 +3397,11 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                   .toList(),
               onChanged: (value) => setState(() => treatmentType = value!),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             if (commonTreatments.containsKey(treatmentType)) ...[
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
                 children: commonTreatments[treatmentType]!
                     .map(
                       (name) => ActionChip(
@@ -3419,7 +3421,7 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                     )
                     .toList(),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
             ],
             TextField(
               controller: nameController,
@@ -3428,7 +3430,7 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             ListTile(
               title: const Text('Dato gitt'),
               subtitle: Text(DateFormat('dd.MM.yyyy').format(dateGiven)),
@@ -3443,7 +3445,7 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                 if (date != null) setState(() => dateGiven = date);
               },
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: dosageController,
               decoration: const InputDecoration(
@@ -3451,7 +3453,7 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: manufacturerController,
               decoration: const InputDecoration(
@@ -3459,7 +3461,7 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: batchNumberController,
               decoration: const InputDecoration(
@@ -3467,7 +3469,7 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: intervalController,
               decoration: const InputDecoration(
@@ -3476,14 +3478,14 @@ class __TreatmentDialogState extends State<_TreatmentDialog> {
               ),
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             SwitchListTile(
               title: const Text('Påminnelse'),
               subtitle: Text('$reminderDaysBefore dager før'),
               value: reminderEnabled,
               onChanged: (value) => setState(() => reminderEnabled = value),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -3658,10 +3660,10 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
               'Vanlige tester:',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
               children: CommonDnaTests.tests
                   .take(12)
                   .map(
@@ -3682,7 +3684,7 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
                   )
                   .toList(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: testNameController,
               decoration: const InputDecoration(
@@ -3690,7 +3692,7 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             ListTile(
               title: const Text('Testdato'),
               subtitle: Text(DateFormat('dd.MM.yyyy').format(testDate)),
@@ -3705,7 +3707,7 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
                 if (date != null) setState(() => testDate = date);
               },
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             DropdownButtonFormField<String>(
               initialValue: result,
               decoration: const InputDecoration(
@@ -3717,7 +3719,7 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
                   .toList(),
               onChanged: (value) => setState(() => result = value!),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: laboratoryController,
               decoration: const InputDecoration(
@@ -3725,7 +3727,7 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: certificateController,
               decoration: const InputDecoration(
@@ -3733,7 +3735,7 @@ class __DnaTestDialogState extends State<_DnaTestDialog> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -3871,7 +3873,7 @@ class __WeightDialogState extends State<_WeightDialog> {
                 if (selectedDate != null) setState(() => date = selectedDate);
               },
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: weightController,
               decoration: const InputDecoration(
@@ -3884,7 +3886,7 @@ class __WeightDialogState extends State<_WeightDialog> {
               ),
               autofocus: true,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(

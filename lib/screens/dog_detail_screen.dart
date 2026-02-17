@@ -19,6 +19,10 @@ import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/utils/logger.dart';
+import 'package:breedly/utils/theme_colors.dart';
+
+/// Extra bottom padding for the list to clear FABs / bottom navigation.
+const _kListBottomPadding = 88.0;
 
 class DogDetailScreen extends StatefulWidget {
   final Dog dog;
@@ -88,7 +92,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.delete_outline, color: Colors.red[400]),
+            icon: const Icon(Icons.delete_outline, color: AppColors.error),
             tooltip: 'Slett hund',
             onPressed: _confirmDeleteDog,
           ),
@@ -96,14 +100,14 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 88),
+          padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: _kListBottomPadding),
           children: [
           // Basic Info Card
           Card(
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.lgAll,
-              side: BorderSide(color: AppColors.neutral200),
+              side: BorderSide(color: context.colors.border),
             ),
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
@@ -121,7 +125,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                       Text(
                         'Grunnleggende informasjon',
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                     ],
@@ -151,7 +155,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.lgAll,
-                side: BorderSide(color: AppColors.neutral200),
+                side: BorderSide(color: context.colors.border),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.lg),
@@ -174,7 +178,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                                 child: Text(
                                   'Løpetidssykler',
                                   style: AppTypography.titleMedium.copyWith(
-                                    color: AppColors.neutral900,
+                                    color: context.colors.textPrimary,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -203,7 +207,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.lgAll,
-              side: BorderSide(color: AppColors.neutral200),
+              side: BorderSide(color: context.colors.border),
             ),
             child: InkWell(
               onTap: () {
@@ -219,17 +223,19 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Row(
                   children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.success.withValues(alpha: ThemeOpacity.medium(context)),
-                        borderRadius: AppRadius.mdAll,
-                      ),
-                      child: const Icon(
-                        Icons.medical_services_rounded,
-                        color: AppColors.success,
-                        size: 24,
+                    ExcludeSemantics(
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.success.withValues(alpha: ThemeOpacity.medium(context)),
+                          borderRadius: AppRadius.mdAll,
+                        ),
+                        child: const Icon(
+                          Icons.medical_services_rounded,
+                          color: AppColors.success,
+                          size: 24,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.lg),
@@ -240,22 +246,24 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                           Text(
                             'Helse & Vaksiner',
                             style: AppTypography.titleMedium.copyWith(
-                              color: AppColors.neutral900,
+                              color: context.colors.textPrimary,
                             ),
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
                             'Se og registrer helseopplysninger og vaksiner',
                             style: AppTypography.bodySmall.copyWith(
-                              color: AppColors.neutral500,
+                              color: context.colors.textCaption,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.chevron_right,
-                      color: AppColors.neutral400,
+                    ExcludeSemantics(
+                      child: Icon(
+                        Icons.chevron_right,
+                        color: context.colors.textDisabled,
+                      ),
                     ),
                   ],
                 ),
@@ -269,7 +277,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.lgAll,
-              side: BorderSide(color: AppColors.neutral200),
+              side: BorderSide(color: context.colors.border),
             ),
             child: InkWell(
               onTap: () {
@@ -285,17 +293,19 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Row(
                   children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: AppColors.secondary.withValues(alpha: ThemeOpacity.medium(context)),
-                        borderRadius: AppRadius.mdAll,
-                      ),
-                      child: const Icon(
-                        Icons.emoji_events_rounded,
-                        color: AppColors.secondary,
-                        size: 24,
+                    ExcludeSemantics(
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.secondary.withValues(alpha: ThemeOpacity.medium(context)),
+                          borderRadius: AppRadius.mdAll,
+                        ),
+                        child: const Icon(
+                          Icons.emoji_events_rounded,
+                          color: AppColors.secondary,
+                          size: 24,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.lg),
@@ -306,22 +316,24 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                           Text(
                             'Utstillinger',
                             style: AppTypography.titleMedium.copyWith(
-                              color: AppColors.neutral900,
+                              color: context.colors.textPrimary,
                             ),
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
                             'Registrer resultater og se statistikk',
                             style: AppTypography.bodySmall.copyWith(
-                              color: AppColors.neutral500,
+                              color: context.colors.textCaption,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Icon(
-                      Icons.chevron_right,
-                      color: AppColors.neutral400,
+                    ExcludeSemantics(
+                      child: Icon(
+                        Icons.chevron_right,
+                        color: context.colors.textDisabled,
+                      ),
                     ),
                   ],
                 ),
@@ -346,7 +358,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.lgAll,
-              side: BorderSide(color: AppColors.neutral200),
+              side: BorderSide(color: context.colors.border),
             ),
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
@@ -364,7 +376,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                       Text(
                         'Stamtavle',
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                     ],
@@ -399,7 +411,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.lgAll,
-                side: BorderSide(color: AppColors.neutral200),
+                side: BorderSide(color: context.colors.border),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.lg),
@@ -417,7 +429,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                         Text(
                           'Notater',
                           style: AppTypography.titleMedium.copyWith(
-                            color: AppColors.neutral900,
+                            color: context.colors.textPrimary,
                           ),
                         ),
                       ],
@@ -426,7 +438,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     Text(
                       widget.dog.notes!,
                       style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.neutral700,
+                        color: context.colors.textTertiary,
                       ),
                     ),
                   ],
@@ -440,7 +452,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.lgAll,
-              side: BorderSide(color: AppColors.neutral200),
+              side: BorderSide(color: context.colors.border),
             ),
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
@@ -458,7 +470,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                       Text(
                         'Dokumenter og kontrakter',
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                     ],
@@ -538,7 +550,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           Text(
             label,
             style: AppTypography.labelLarge.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
             ),
           ),
           const SizedBox(width: AppSpacing.lg),
@@ -548,7 +560,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               textAlign: TextAlign.right,
               style: AppTypography.bodyMedium.copyWith(
                 fontWeight: FontWeight.w500,
-                color: AppColors.neutral900,
+                color: context.colors.textPrimary,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -588,21 +600,21 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           Text(
             label,
             style: AppTypography.labelMedium.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
             ),
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
             dog.name,
             style: AppTypography.titleMedium.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
             '${dog.breed} • ${dog.color}',
             style: AppTypography.bodySmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
             ),
           ),
         ],
@@ -614,16 +626,16 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.neutral100,
+        color: context.colors.borderSubtle,
         borderRadius: AppRadius.lgAll,
         border: Border.all(
-          color: AppColors.neutral200,
+          color: context.colors.border,
         ),
       ),
       child: Text(
         label,
         style: AppTypography.bodySmall.copyWith(
-          color: AppColors.neutral500,
+          color: context.colors.textCaption,
           fontStyle: FontStyle.italic,
         ),
       ),
@@ -797,7 +809,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
         Text(
           'Ingen løpetidsdatoer registrert',
           style: AppTypography.bodySmall.copyWith(
-            color: AppColors.neutral500,
+            color: context.colors.textCaption,
             fontStyle: FontStyle.italic,
           ),
         )
@@ -820,11 +832,11 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
       
       widgets.add(
         Container(
-          padding: const EdgeInsets.all(12),
-          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(AppSpacing.md),
+          margin: const EdgeInsets.only(bottom: AppSpacing.md),
           decoration: BoxDecoration(
             color: const Color(0xFF4CAF50).withValues(alpha: ThemeOpacity.medium(context)),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.smAll,
             border: Border.all(
               color: const Color(0xFF4CAF50).withValues(alpha: 0.3),
             ),
@@ -839,7 +851,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     color: Color(0xFF4CAF50),
                     size: 20,
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -863,7 +875,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                     decoration: BoxDecoration(
                       color: const Color(0xFF4CAF50).withValues(alpha: ThemeOpacity.medium(context)),
                       borderRadius: BorderRadius.circular(12),
@@ -894,12 +906,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
       final date = entry.value;
       
       return Padding(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
             color: const Color(0xFFE91E63).withValues(alpha: ThemeOpacity.medium(context)),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.smAll,
             border: Border.all(
               color: const Color(0xFFE91E63).withValues(alpha: 0.3),
             ),
@@ -916,8 +928,9 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               IconButton(
                 icon: const Icon(Icons.delete, size: 20),
                 onPressed: () => _deleteHeatCycle(index),
+                tooltip: 'Slett løpetid',
                 padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
+                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
               ),
             ],
           ),
@@ -972,7 +985,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
             color: Color(0xFFFF9800),
             size: 16,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -985,7 +998,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     color: Color(0xFFFF9800),
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: AppSpacing.xxs),
                 Text(
                   '${DateFormat('dd.MM.yyyy').format(matingWindowStart)} - ${DateFormat('dd.MM.yyyy').format(matingWindowEnd)}',
                   style: const TextStyle(
@@ -993,21 +1006,21 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     color: Color(0xFFE65100),
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
                     Icon(
                       Icons.info_outline,
                       size: 12,
-                      color: Colors.grey[600],
+                      color: context.colors.textMuted,
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: AppSpacing.xs),
                     Expanded(
                       child: Text(
                         'Registrer progesteronmålinger for mer nøyaktig vindu',
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[600],
+                          color: context.colors.textMuted,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -1076,7 +1089,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                 color: statusColor,
                 size: 18,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   'Parringsvindu basert på progesteron',
@@ -1104,20 +1117,20 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           // Status description
           Text(
             status.description,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[800],
+              color: context.colors.textSecondary,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: AppSpacing.xs),
           // Recommendation
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: ThemeOpacity.medium(context)),
               borderRadius: BorderRadius.circular(4),
@@ -1143,12 +1156,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           // Reference ranges
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
-              color: Colors.grey.withValues(alpha: ThemeOpacity.medium(context)),
+              color: context.colors.textDisabled.withValues(alpha: ThemeOpacity.medium(context)),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Column(
@@ -1159,10 +1172,10 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
-                    color: Colors.grey[700],
+                    color: context.colors.textTertiary,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: AppSpacing.xs),
                 Row(
                   children: [
                     Expanded(
@@ -1170,7 +1183,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                         status.rangeNgMl,
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[600],
+                          color: context.colors.textMuted,
                         ),
                       ),
                     ),
@@ -1178,7 +1191,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                       'eller',
                       style: TextStyle(
                         fontSize: 9,
-                        color: Colors.grey[500],
+                        color: context.colors.textCaption,
                       ),
                     ),
                     Expanded(
@@ -1186,7 +1199,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                         status.rangeNmolL,
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[600],
+                          color: context.colors.textMuted,
                         ),
                         textAlign: TextAlign.end,
                       ),
@@ -1202,15 +1215,15 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               Icon(
                 Icons.science,
                 size: 12,
-                color: Colors.grey[600],
+                color: context.colors.textMuted,
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: Text(
                   'Siste måling: ${DateFormat('dd.MM.yyyy HH:mm').format(latestMeasurement.dateMeasured)} - ${latestMeasurement.displayValue}',
                   style: TextStyle(
                     fontSize: 10,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                 ),
               ),
@@ -1218,11 +1231,11 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           ),
           // Show history of recent measurements
           if (measurements.length > 1) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(AppSpacing.sm),
               decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: ThemeOpacity.low(context)),
+                color: context.colors.textDisabled.withValues(alpha: ThemeOpacity.low(context)),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Column(
@@ -1233,12 +1246,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey[700],
+                      color: context.colors.textTertiary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   ...measurements.take(3).map((m) => Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
+                    padding: const EdgeInsets.only(bottom: AppSpacing.xxs),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -1246,7 +1259,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                           DateFormat('dd.MM HH:mm').format(m.dateMeasured),
                           style: TextStyle(
                             fontSize: 10,
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                           ),
                         ),
                         Row(
@@ -1259,12 +1272,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                                 color: _getProgesteroneColor(m.valueInNgMl),
                               ),
                             ),
-                            const SizedBox(width: 4),
+                            const SizedBox(width: AppSpacing.xs),
                             Text(
                               '(${m.getStatus().label})',
                               style: TextStyle(
                                 fontSize: 9,
-                                color: Colors.grey[500],
+                                color: context.colors.textCaption,
                               ),
                             ),
                           ],
@@ -1324,7 +1337,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.lgAll,
-        side: BorderSide(color: AppColors.neutral200),
+        side: BorderSide(color: context.colors.border),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -1333,17 +1346,19 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
           children: [
             Row(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary.withValues(alpha: ThemeOpacity.high(context)),
-                    borderRadius: AppRadius.smAll,
-                  ),
-                  child: const Icon(
-                    Icons.emoji_events,
-                    color: AppColors.secondary,
-                    size: 24,
+                ExcludeSemantics(
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.secondary.withValues(alpha: ThemeOpacity.high(context)),
+                      borderRadius: AppRadius.smAll,
+                    ),
+                    child: const Icon(
+                      Icons.emoji_events,
+                      color: AppColors.secondary,
+                      size: 24,
+                    ),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.lg),
@@ -1354,14 +1369,14 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                       Text(
                         'Championater & Titler',
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
                         'Registrer oppnådde titler',
                         style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.neutral500,
+                          color: context.colors.textCaption,
                         ),
                       ),
                     ],
@@ -1375,10 +1390,10 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               ],
             ),
             if (widget.dog.championships.isNotEmpty) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
                 children: widget.dog.championships.map((title) {
                   return Chip(
                     label: Text(
@@ -1395,20 +1410,20 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                 }).toList(),
               ),
             ] else ...[
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.grey.withValues(alpha: ThemeOpacity.low(context)),
-                  borderRadius: BorderRadius.circular(8),
+                  color: context.colors.textDisabled.withValues(alpha: ThemeOpacity.low(context)),
+                  borderRadius: AppRadius.smAll,
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(Icons.info_outline, color: Colors.grey, size: 20),
-                    SizedBox(width: 8),
+                    Icon(Icons.info_outline, color: context.colors.textDisabled, size: 20),
+                    const SizedBox(width: AppSpacing.sm),
                     Text(
                       'Ingen championater registrert',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: context.colors.textDisabled),
                     ),
                   ],
                 ),
@@ -1445,10 +1460,10 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     'Velg championat:',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.sm,
                     children: available.map((championship) {
                       final isSelected = selectedChampionship == championship;
                       return GestureDetector(
@@ -1461,16 +1476,16 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                           label: Text(championship),
                           backgroundColor: isSelected 
                               ? Colors.amber[700] 
-                              : Colors.grey[200],
+                              : context.colors.border,
                           labelStyle: TextStyle(
-                            color: isSelected ? Colors.white : Colors.black87,
+                            color: isSelected ? Colors.white : context.colors.textPrimary,
                             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                           ),
                         ),
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   TextButton.icon(
                     onPressed: () {
                       setDialogState(() => useCustom = true);
@@ -1484,7 +1499,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     'Skriv inn tittel:',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   TextField(
                     controller: customController,
                     decoration: const InputDecoration(
@@ -1494,7 +1509,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     textCapitalization: TextCapitalization.characters,
                   ),
                   if (available.isNotEmpty) ...[
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     TextButton.icon(
                       onPressed: () {
                         setDialogState(() => useCustom = false);
@@ -1616,7 +1631,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.lgAll,
-        side: BorderSide(color: AppColors.neutral200),
+        side: BorderSide(color: context.colors.border),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -1637,7 +1652,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     Text(
                       'Parringer',
                       style: AppTypography.titleMedium.copyWith(
-                        color: AppColors.neutral900,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                   ],
@@ -1654,7 +1669,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               Text(
                 'Ingen parringer registrert',
                 style: AppTypography.bodySmall.copyWith(
-                  color: AppColors.neutral500,
+                  color: context.colors.textCaption,
                   fontStyle: FontStyle.italic,
                 ),
               )
@@ -1662,7 +1677,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
               Column(
                 children: matings.map((mating) {
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.only(bottom: AppSpacing.md),
                     child: Container(
                       padding: const EdgeInsets.all(AppSpacing.md),
                       decoration: BoxDecoration(
@@ -1681,21 +1696,21 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                                 Text(
                                   mating.damName ?? 'Ukjent tispe',
                                   style: AppTypography.labelLarge.copyWith(
-                                    color: AppColors.neutral900,
+                                    color: context.colors.textPrimary,
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xs),
                                 Text(
                                   'Dato: ${DateFormat('dd.MM.yyyy').format(mating.matingDate)}',
                                   style: AppTypography.bodySmall.copyWith(
-                                    color: AppColors.neutral500,
+                                    color: context.colors.textCaption,
                                   ),
                                 ),
                                 if (mating.puppyCount != null)
                                   Text(
                                     'Valper: ${mating.puppyCount}',
                                     style: AppTypography.bodySmall.copyWith(
-                                      color: AppColors.neutral500,
+                                      color: context.colors.textCaption,
                                     ),
                                   ),
                                 if (mating.notes != null && mating.notes!.isNotEmpty)
@@ -1704,7 +1719,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                                     child: Text(
                                       mating.notes!,
                                       style: AppTypography.bodySmall.copyWith(
-                                        color: AppColors.neutral600,
+                                        color: context.colors.textMuted,
                                         fontStyle: FontStyle.italic,
                                       ),
                                     ),
@@ -1717,15 +1732,17 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                               IconButton(
                                 icon: const Icon(Icons.edit, size: 20),
                                 onPressed: () => _showEditMatingDialog(mating),
+                                tooltip: 'Rediger parring',
                                 padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
+                                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: AppSpacing.sm),
                               IconButton(
                                 icon: const Icon(Icons.delete, size: 20),
                                 onPressed: () => _deleteMating(mating),
+                                tooltip: 'Slett parring',
                                 padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
+                                constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
                               ),
                             ],
                           ),
@@ -1764,7 +1781,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   'Tispe',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 DropdownButtonFormField<Dog>(
                   isExpanded: true,
                   initialValue: selectedDam,
@@ -1792,7 +1809,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   },
                 ),
                 if (selectedDam == null) ...[
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   TextField(
                     decoration: const InputDecoration(
                       labelText: 'Tispens navn',
@@ -1803,12 +1820,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     },
                   ),
                 ],
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 const Text(
                   'Parringsdato',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 InkWell(
                   onTap: () async {
                     final picked = await showDatePicker(
@@ -1824,9 +1841,9 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
+                      border: Border.all(color: context.colors.border),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Row(
@@ -1838,7 +1855,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: puppyCountController,
                   decoration: const InputDecoration(
@@ -1847,7 +1864,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   ),
                   keyboardType: TextInputType.number,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: notesController,
                   decoration: const InputDecoration(
@@ -1935,7 +1952,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   'Tispe',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 DropdownButtonFormField<Dog?>(
                   isExpanded: true,
                   initialValue: selectedDam,
@@ -1963,7 +1980,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   },
                 ),
                 if (selectedDam == null) ...[
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   TextField(
                     controller: damNameController,
                     decoration: const InputDecoration(
@@ -1972,12 +1989,12 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     ),
                   ),
                 ],
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 const Text(
                   'Parringsdato',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.sm),
                 InkWell(
                   onTap: () async {
                     final picked = await showDatePicker(
@@ -1993,9 +2010,9 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
+                      border: Border.all(color: context.colors.border),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Row(
@@ -2007,7 +2024,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: puppyCountController,
                   decoration: const InputDecoration(
@@ -2016,7 +2033,7 @@ class _DogDetailScreenState extends State<DogDetailScreen> {
                   ),
                   keyboardType: TextInputType.number,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: AppSpacing.lg),
                 TextField(
                   controller: notesController,
                   decoration: const InputDecoration(

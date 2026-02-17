@@ -6,6 +6,8 @@ import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/utils/pdf_generator.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 
@@ -42,7 +44,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
       scrollDirection: Axis.horizontal,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: _buildPedigreeTree(context, currentDog),
         ),
       ),
@@ -229,9 +231,9 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey[300]!),
+          color: context.colors.neutral100,
+          borderRadius: AppRadius.smAll,
+          border: Border.all(color: context.colors.divider),
         ),
         child: Center(
           child: Column(
@@ -242,14 +244,14 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
                   label,
                   style: TextStyle(
                     fontSize: fontSize - 2,
-                    color: Colors.grey[500],
+                    color: context.colors.textCaption,
                   ),
                 ),
               Text(
                 l10n.unknown,
                 style: TextStyle(
                   fontSize: fontSize,
-                  color: Colors.grey[400],
+                  color: context.colors.textDisabled,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -260,9 +262,9 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
     }
 
     final isFemale = dog.gender == 'Female';
-    final color = isFemale ? Colors.pink[100] : Colors.blue[100];
-    final borderColor = isFemale ? Colors.pink[300] : Colors.blue[300];
-    final iconColor = isFemale ? Colors.pink[700] : Colors.blue[700];
+    final color = isFemale ? AppColors.female.withValues(alpha: 0.15) : AppColors.male.withValues(alpha: 0.15);
+    final borderColor = isFemale ? AppColors.female : AppColors.male;
+    final iconColor = isFemale ? AppColors.female : AppColors.male;
 
     return GestureDetector(
       onTap: () {
@@ -274,8 +276,8 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
         height: height,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: borderColor!, width: isMain ? 2 : 1),
+          borderRadius: AppRadius.smAll,
+          border: Border.all(color: borderColor, width: isMain ? 2 : 1),
           boxShadow: isMain
               ? [
                   BoxShadow(
@@ -327,7 +329,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
                   dog.registrationNumber!,
                   style: TextStyle(
                     fontSize: fontSize - 3,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -342,7 +344,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
     return Container(
       width: 2,
       height: 200,
-      color: Colors.grey[300],
+      color: context.colors.divider,
     );
   }
 
@@ -356,7 +358,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
             children: [
               Icon(
                 dog.gender == 'Female' ? Icons.female : Icons.male,
-                color: dog.gender == 'Female' ? Colors.pink : Colors.blue,
+                color: dog.gender == 'Female' ? AppColors.female : AppColors.male,
               ),
               const SizedBox(width: 8),
               Expanded(child: Text(dog.name, overflow: TextOverflow.ellipsis)),
@@ -392,7 +394,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
                           dog.isPedigreeOnly
                               ? l10n.pedigreeOnlyDescription
                               : l10n.visibleInDogListDescription,
-                          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                          style: TextStyle(fontSize: 12, color: context.colors.textMuted),
                         ),
                       ],
                     ),
@@ -443,9 +445,9 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
             width: 80,
             child: Text(
               '$label:',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color: context.colors.textCaption,
               ),
             ),
           ),
@@ -480,7 +482,7 @@ class PedigreeScreen extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(l10n.couldNotGeneratePdf(e.toString())),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
           ),
         );
       }
