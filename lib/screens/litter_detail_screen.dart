@@ -3456,9 +3456,11 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
               onPressed: () {
                 Navigator.pop(context);
                 final shareService = ShareService();
+                final l10n = AppLocalizations.of(context)!;
                 final message = shareService.generatePuppyUpdateMessage(
                   puppy,
                   widget.litter,
+                  l10n: l10n,
                   customMessage: messageController.text.trim().isNotEmpty
                       ? messageController.text.trim()
                       : null,
@@ -3467,11 +3469,15 @@ class _LitterDetailScreenState extends State<LitterDetailScreen>
                   includeAge: includeAge,
                 );
                 
+                // Parse buyerContact into phone and email
+                final contact = shareService.parseContact(puppy.buyerContact);
+                
                 // Show share options
                 shareService.showShareOptionsDialog(
                   context,
                   message: message,
-                  phoneNumber: puppy.buyerContact,
+                  phoneNumber: contact.phone,
+                  email: contact.email,
                   subject: AppLocalizations.of(context)!.updateAbout(puppy.name),
                 );
               },

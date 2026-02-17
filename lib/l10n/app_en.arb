@@ -4299,5 +4299,177 @@
   "privacyPolicy": "Privacy Policy",
   "@privacyPolicy": { "description": "Privacy policy title" },
   "privacyPolicyDescription": "Read about how we handle your data",
-  "@privacyPolicyDescription": { "description": "Privacy policy description" }
+  "@privacyPolicyDescription": { "description": "Privacy policy description" },
+  "sendSmsLabel": "Send SMS",
+  "@sendSmsLabel": { "description": "Label for SMS share option" },
+  "sendEmailLabel": "Send email",
+  "@sendEmailLabel": { "description": "Label for email share option" },
+  "shareViaOtherApps": "Share via other apps",
+  "@shareViaOtherApps": { "description": "Label for sharing via other apps" },
+  "messengerWhatsappEtc": "Messenger, WhatsApp, etc.",
+  "@messengerWhatsappEtc": { "description": "Subtitle for other apps share option" },
+  "copyTextLabel": "Copy text",
+  "@copyTextLabel": { "description": "Label for copy to clipboard option" },
+  "textCopiedToClipboard": "Text copied to clipboard",
+  "@textCopiedToClipboard": { "description": "Snackbar message when text is copied" },
+  "couldNotOpenSms": "Could not open SMS app",
+  "@couldNotOpenSms": { "description": "Error when SMS app cannot be opened" },
+  "puppyUpdateSubject": "Puppy update",
+  "@puppyUpdateSubject": { "description": "Default subject for puppy update email" },
+
+  "msgUpdateFromKennel": "Update from {kennelName}",
+  "@msgUpdateFromKennel": {
+    "description": "Header for puppy update message",
+    "placeholders": {
+      "kennelName": { "type": "String" }
+    }
+  },
+  "msgDefaultKennelName": "The kennel",
+  "@msgDefaultKennelName": { "description": "Fallback kennel name when none is set" },
+  "msgPuppy": "Puppy: {name}",
+  "@msgPuppy": {
+    "description": "Puppy name line in message",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "msgBreed": "Breed: {breed}",
+  "@msgBreed": {
+    "description": "Breed line in message",
+    "placeholders": {
+      "breed": { "type": "String" }
+    }
+  },
+  "msgAgeWeeksAndDays": "Age: {weeks} weeks and {days} days",
+  "@msgAgeWeeksAndDays": {
+    "description": "Age with weeks and days",
+    "placeholders": {
+      "weeks": { "type": "int" },
+      "days": { "type": "int" }
+    }
+  },
+  "msgAgeWeeks": "Age: {weeks} weeks",
+  "@msgAgeWeeks": {
+    "description": "Age with weeks only",
+    "placeholders": {
+      "weeks": { "type": "int" }
+    }
+  },
+  "msgBirthWeight": "Birth weight: {weight} g",
+  "@msgBirthWeight": {
+    "description": "Birth weight line in message",
+    "placeholders": {
+      "weight": { "type": "String" }
+    }
+  },
+  "msgStatusHeader": "Status:",
+  "@msgStatusHeader": { "description": "Status section header" },
+  "msgVaccinated": "Vaccinated: {status}",
+  "@msgVaccinated": {
+    "description": "Vaccination status line",
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "msgDewormed": "Dewormed: {status}",
+  "@msgDewormed": {
+    "description": "Deworming status line",
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "msgIdTagged": "ID tagged: {status}",
+  "@msgIdTagged": {
+    "description": "ID tagging status line",
+    "placeholders": {
+      "status": { "type": "String" }
+    }
+  },
+  "msgMessageHeader": "Message:",
+  "@msgMessageHeader": { "description": "Message section header" },
+  "msgBestRegards": "Best regards,",
+  "@msgBestRegards": { "description": "Closing salutation" },
+  "msgContact": "Contact: {phone}",
+  "@msgContact": {
+    "description": "Contact phone line",
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+  "msgLitterUpdateFromKennel": "Litter update from {kennelName}",
+  "@msgLitterUpdateFromKennel": {
+    "description": "Header for litter update message",
+    "placeholders": {
+      "kennelName": { "type": "String" }
+    }
+  },
+  "msgLitter": "Litter: {damName} × {sireName}",
+  "@msgLitter": {
+    "description": "Litter parents line",
+    "placeholders": {
+      "damName": { "type": "String" },
+      "sireName": { "type": "String" }
+    }
+  },
+  "msgPuppyCount": "Number of puppies: {count}",
+  "@msgPuppyCount": {
+    "description": "Puppy count line",
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "msgTreatmentStatus": "Treatment status:",
+  "@msgTreatmentStatus": { "description": "Treatment status section header" },
+  "msgDeliveryReminder": "Delivery reminder from {kennelName}",
+  "@msgDeliveryReminder": {
+    "description": "Header for delivery reminder message",
+    "placeholders": {
+      "kennelName": { "type": "String" }
+    }
+  },
+  "msgReadyToMoveHome": "{puppyName} is ready to move home to you!",
+  "@msgReadyToMoveHome": {
+    "description": "Puppy ready to move home",
+    "placeholders": {
+      "puppyName": { "type": "String" }
+    }
+  },
+  "msgDeliveryDate": "Delivery date: {date}",
+  "@msgDeliveryDate": {
+    "description": "Delivery date line",
+    "placeholders": {
+      "date": { "type": "String" }
+    }
+  },
+  "msgInDays": "In {count} {dayWord}",
+  "@msgInDays": {
+    "description": "Countdown line",
+    "placeholders": {
+      "count": { "type": "int" },
+      "dayWord": { "type": "String" }
+    }
+  },
+  "msgDaySingular": "day",
+  "@msgDaySingular": { "description": "Singular form of day" },
+  "msgDayPlural": "days",
+  "@msgDayPlural": { "description": "Plural form of day" },
+  "msgToday": "Today!",
+  "@msgToday": { "description": "Delivery is today" },
+  "msgRememberToBring": "Remember to bring:",
+  "@msgRememberToBring": { "description": "Checklist header" },
+  "msgTransportCrate": "Transport crate/carrier",
+  "@msgTransportCrate": { "description": "Checklist item" },
+  "msgBlanketWithHomeScent": "Blanket with home scent",
+  "@msgBlanketWithHomeScent": { "description": "Checklist item" },
+  "msgWaterForTrip": "Water for the trip",
+  "@msgWaterForTrip": { "description": "Checklist item" },
+  "msgAddress": "Address: {address}",
+  "@msgAddress": {
+    "description": "Address line",
+    "placeholders": {
+      "address": { "type": "String" }
+    }
+  },
+  "msgLookingForward": "We look forward to seeing you!",
+  "@msgLookingForward": { "description": "Closing line for delivery reminder" }
 }

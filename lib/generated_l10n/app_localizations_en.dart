@@ -4999,4 +4999,157 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyPolicyDescription => 'Read about how we handle your data';
+
+  @override
+  String get sendSmsLabel => 'Send SMS';
+
+  @override
+  String get sendEmailLabel => 'Send email';
+
+  @override
+  String get shareViaOtherApps => 'Share via other apps';
+
+  @override
+  String get messengerWhatsappEtc => 'Messenger, WhatsApp, etc.';
+
+  @override
+  String get copyTextLabel => 'Copy text';
+
+  @override
+  String get textCopiedToClipboard => 'Text copied to clipboard';
+
+  @override
+  String get couldNotOpenSms => 'Could not open SMS app';
+
+  @override
+  String get puppyUpdateSubject => 'Puppy update';
+
+  @override
+  String msgUpdateFromKennel(String kennelName) {
+    return 'Update from $kennelName';
+  }
+
+  @override
+  String get msgDefaultKennelName => 'The kennel';
+
+  @override
+  String msgPuppy(String name) {
+    return 'Puppy: $name';
+  }
+
+  @override
+  String msgBreed(String breed) {
+    return 'Breed: $breed';
+  }
+
+  @override
+  String msgAgeWeeksAndDays(int weeks, int days) {
+    return 'Age: $weeks weeks and $days days';
+  }
+
+  @override
+  String msgAgeWeeks(int weeks) {
+    return 'Age: $weeks weeks';
+  }
+
+  @override
+  String msgBirthWeight(String weight) {
+    return 'Birth weight: $weight g';
+  }
+
+  @override
+  String get msgStatusHeader => 'Status:';
+
+  @override
+  String msgVaccinated(String status) {
+    return 'Vaccinated: $status';
+  }
+
+  @override
+  String msgDewormed(String status) {
+    return 'Dewormed: $status';
+  }
+
+  @override
+  String msgIdTagged(String status) {
+    return 'ID tagged: $status';
+  }
+
+  @override
+  String get msgMessageHeader => 'Message:';
+
+  @override
+  String get msgBestRegards => 'Best regards,';
+
+  @override
+  String msgContact(String phone) {
+    return 'Contact: $phone';
+  }
+
+  @override
+  String msgLitterUpdateFromKennel(String kennelName) {
+    return 'Litter update from $kennelName';
+  }
+
+  @override
+  String msgLitter(String damName, String sireName) {
+    return 'Litter: $damName × $sireName';
+  }
+
+  @override
+  String msgPuppyCount(int count) {
+    return 'Number of puppies: $count';
+  }
+
+  @override
+  String get msgTreatmentStatus => 'Treatment status:';
+
+  @override
+  String msgDeliveryReminder(String kennelName) {
+    return 'Delivery reminder from $kennelName';
+  }
+
+  @override
+  String msgReadyToMoveHome(String puppyName) {
+    return '$puppyName is ready to move home to you!';
+  }
+
+  @override
+  String msgDeliveryDate(String date) {
+    return 'Delivery date: $date';
+  }
+
+  @override
+  String msgInDays(int count, String dayWord) {
+    return 'In $count $dayWord';
+  }
+
+  @override
+  String get msgDaySingular => 'day';
+
+  @override
+  String get msgDayPlural => 'days';
+
+  @override
+  String get msgToday => 'Today!';
+
+  @override
+  String get msgRememberToBring => 'Remember to bring:';
+
+  @override
+  String get msgTransportCrate => 'Transport crate/carrier';
+
+  @override
+  String get msgBlanketWithHomeScent => 'Blanket with home scent';
+
+  @override
+  String get msgWaterForTrip => 'Water for the trip';
+
+  @override
+  String msgAddress(String address) {
+    return 'Address: $address';
+  }
+
+  @override
+  String get msgLookingForward => 'We look forward to seeing you!';
 }

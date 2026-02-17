@@ -5006,4 +5006,157 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get privacyPolicyDescription => 'Lue, miten käsittelemme tietojasi';
+
+  @override
+  String get sendSmsLabel => 'Lähetä tekstiviesti';
+
+  @override
+  String get sendEmailLabel => 'Lähetä sähköposti';
+
+  @override
+  String get shareViaOtherApps => 'Jaa muiden sovellusten kautta';
+
+  @override
+  String get messengerWhatsappEtc => 'Messenger, WhatsApp, jne.';
+
+  @override
+  String get copyTextLabel => 'Kopioi teksti';
+
+  @override
+  String get textCopiedToClipboard => 'Teksti kopioitu leikepöydälle';
+
+  @override
+  String get couldNotOpenSms => 'Tekstiviestisovellusta ei voitu avata';
+
+  @override
+  String get puppyUpdateSubject => 'Pentupäivitys';
+
+  @override
+  String msgUpdateFromKennel(String kennelName) {
+    return 'Päivitys kenneliltä $kennelName';
+  }
+
+  @override
+  String get msgDefaultKennelName => 'Kennel';
+
+  @override
+  String msgPuppy(String name) {
+    return 'Pentu: $name';
+  }
+
+  @override
+  String msgBreed(String breed) {
+    return 'Rotu: $breed';
+  }
+
+  @override
+  String msgAgeWeeksAndDays(int weeks, int days) {
+    return 'Ikä: $weeks viikkoa ja $days päivää';
+  }
+
+  @override
+  String msgAgeWeeks(int weeks) {
+    return 'Ikä: $weeks viikkoa';
+  }
+
+  @override
+  String msgBirthWeight(String weight) {
+    return 'Syntymäpaino: $weight g';
+  }
+
+  @override
+  String get msgStatusHeader => 'Tila:';
+
+  @override
+  String msgVaccinated(String status) {
+    return 'Rokotettu: $status';
+  }
+
+  @override
+  String msgDewormed(String status) {
+    return 'Matolääkitty: $status';
+  }
+
+  @override
+  String msgIdTagged(String status) {
+    return 'ID-merkitty: $status';
+  }
+
+  @override
+  String get msgMessageHeader => 'Viesti:';
+
+  @override
+  String get msgBestRegards => 'Ystävällisin terveisin,';
+
+  @override
+  String msgContact(String phone) {
+    return 'Yhteystieto: $phone';
+  }
+
+  @override
+  String msgLitterUpdateFromKennel(String kennelName) {
+    return 'Pentuepäivitys kenneliltä $kennelName';
+  }
+
+  @override
+  String msgLitter(String damName, String sireName) {
+    return 'Pentue: $damName × $sireName';
+  }
+
+  @override
+  String msgPuppyCount(int count) {
+    return 'Pentujen määrä: $count';
+  }
+
+  @override
+  String get msgTreatmentStatus => 'Hoitotilanne:';
+
+  @override
+  String msgDeliveryReminder(String kennelName) {
+    return 'Luovutusmuistutus kenneliltä $kennelName';
+  }
+
+  @override
+  String msgReadyToMoveHome(String puppyName) {
+    return '$puppyName on valmis muuttamaan kotiisi!';
+  }
+
+  @override
+  String msgDeliveryDate(String date) {
+    return 'Luovutuspäivä: $date';
+  }
+
+  @override
+  String msgInDays(int count, String dayWord) {
+    return '$count $dayWord päästä';
+  }
+
+  @override
+  String get msgDaySingular => 'päivä';
+
+  @override
+  String get msgDayPlural => 'päivää';
+
+  @override
+  String get msgToday => 'Tänään!';
+
+  @override
+  String get msgRememberToBring => 'Muista ottaa mukaan:';
+
+  @override
+  String get msgTransportCrate => 'Kuljetuslaatikko/kantolaukku';
+
+  @override
+  String get msgBlanketWithHomeScent => 'Peitto kodin tuoksulla';
+
+  @override
+  String get msgWaterForTrip => 'Vettä matkalle';
+
+  @override
+  String msgAddress(String address) {
+    return 'Osoite: $address';
+  }
+
+  @override
+  String get msgLookingForward => 'Odotamme innolla tapaamista!';
 }

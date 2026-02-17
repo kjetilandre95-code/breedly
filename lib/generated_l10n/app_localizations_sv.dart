@@ -5003,4 +5003,157 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get privacyPolicyDescription =>
       'Läs om hur vi hanterar dina uppgifter';
+
+  @override
+  String get sendSmsLabel => 'Skicka SMS';
+
+  @override
+  String get sendEmailLabel => 'Skicka e-post';
+
+  @override
+  String get shareViaOtherApps => 'Dela via andra appar';
+
+  @override
+  String get messengerWhatsappEtc => 'Messenger, WhatsApp, etc.';
+
+  @override
+  String get copyTextLabel => 'Kopiera text';
+
+  @override
+  String get textCopiedToClipboard => 'Text kopierad till urklipp';
+
+  @override
+  String get couldNotOpenSms => 'Kunde inte öppna SMS-app';
+
+  @override
+  String get puppyUpdateSubject => 'Valpuppdatering';
+
+  @override
+  String msgUpdateFromKennel(String kennelName) {
+    return 'Uppdatering från $kennelName';
+  }
+
+  @override
+  String get msgDefaultKennelName => 'Kenneln';
+
+  @override
+  String msgPuppy(String name) {
+    return 'Valp: $name';
+  }
+
+  @override
+  String msgBreed(String breed) {
+    return 'Ras: $breed';
+  }
+
+  @override
+  String msgAgeWeeksAndDays(int weeks, int days) {
+    return 'Ålder: $weeks veckor och $days dagar';
+  }
+
+  @override
+  String msgAgeWeeks(int weeks) {
+    return 'Ålder: $weeks veckor';
+  }
+
+  @override
+  String msgBirthWeight(String weight) {
+    return 'Födelsevikt: $weight g';
+  }
+
+  @override
+  String get msgStatusHeader => 'Status:';
+
+  @override
+  String msgVaccinated(String status) {
+    return 'Vaccinerad: $status';
+  }
+
+  @override
+  String msgDewormed(String status) {
+    return 'Avmaskad: $status';
+  }
+
+  @override
+  String msgIdTagged(String status) {
+    return 'ID-märkt: $status';
+  }
+
+  @override
+  String get msgMessageHeader => 'Meddelande:';
+
+  @override
+  String get msgBestRegards => 'Med vänliga hälsningar,';
+
+  @override
+  String msgContact(String phone) {
+    return 'Kontakt: $phone';
+  }
+
+  @override
+  String msgLitterUpdateFromKennel(String kennelName) {
+    return 'Kulluppdatering från $kennelName';
+  }
+
+  @override
+  String msgLitter(String damName, String sireName) {
+    return 'Kull: $damName × $sireName';
+  }
+
+  @override
+  String msgPuppyCount(int count) {
+    return 'Antal valpar: $count';
+  }
+
+  @override
+  String get msgTreatmentStatus => 'Behandlingsstatus:';
+
+  @override
+  String msgDeliveryReminder(String kennelName) {
+    return 'Leveranspåminnelse från $kennelName';
+  }
+
+  @override
+  String msgReadyToMoveHome(String puppyName) {
+    return '$puppyName är redo att flytta hem till dig!';
+  }
+
+  @override
+  String msgDeliveryDate(String date) {
+    return 'Leveransdatum: $date';
+  }
+
+  @override
+  String msgInDays(int count, String dayWord) {
+    return 'Om $count $dayWord';
+  }
+
+  @override
+  String get msgDaySingular => 'dag';
+
+  @override
+  String get msgDayPlural => 'dagar';
+
+  @override
+  String get msgToday => 'Idag!';
+
+  @override
+  String get msgRememberToBring => 'Kom ihåg att ta med:';
+
+  @override
+  String get msgTransportCrate => 'Transportbur/bärväska';
+
+  @override
+  String get msgBlanketWithHomeScent => 'Filt med hemdoft';
+
+  @override
+  String get msgWaterForTrip => 'Vatten till resan';
+
+  @override
+  String msgAddress(String address) {
+    return 'Adress: $address';
+  }
+
+  @override
+  String get msgLookingForward => 'Vi ser fram emot att träffa dig!';
 }

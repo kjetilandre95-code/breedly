@@ -9277,6 +9277,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Read about how we handle your data'**
   String get privacyPolicyDescription;
+
+  /// Label for SMS share option
+  ///
+  /// In en, this message translates to:
+  /// **'Send SMS'**
+  String get sendSmsLabel;
+
+  /// Label for email share option
+  ///
+  /// In en, this message translates to:
+  /// **'Send email'**
+  String get sendEmailLabel;
+
+  /// Label for sharing via other apps
+  ///
+  /// In en, this message translates to:
+  /// **'Share via other apps'**
+  String get shareViaOtherApps;
+
+  /// Subtitle for other apps share option
+  ///
+  /// In en, this message translates to:
+  /// **'Messenger, WhatsApp, etc.'**
+  String get messengerWhatsappEtc;
+
+  /// Label for copy to clipboard option
+  ///
+  /// In en, this message translates to:
+  /// **'Copy text'**
+  String get copyTextLabel;
+
+  /// Snackbar message when text is copied
+  ///
+  /// In en, this message translates to:
+  /// **'Text copied to clipboard'**
+  String get textCopiedToClipboard;
+
+  /// Error when SMS app cannot be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open SMS app'**
+  String get couldNotOpenSms;
+
+  /// Default subject for puppy update email
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy update'**
+  String get puppyUpdateSubject;
+
+  /// Header for puppy update message
+  ///
+  /// In en, this message translates to:
+  /// **'Update from {kennelName}'**
+  String msgUpdateFromKennel(String kennelName);
+
+  /// Fallback kennel name when none is set
+  ///
+  /// In en, this message translates to:
+  /// **'The kennel'**
+  String get msgDefaultKennelName;
+
+  /// Puppy name line in message
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy: {name}'**
+  String msgPuppy(String name);
+
+  /// Breed line in message
+  ///
+  /// In en, this message translates to:
+  /// **'Breed: {breed}'**
+  String msgBreed(String breed);
+
+  /// Age with weeks and days
+  ///
+  /// In en, this message translates to:
+  /// **'Age: {weeks} weeks and {days} days'**
+  String msgAgeWeeksAndDays(int weeks, int days);
+
+  /// Age with weeks only
+  ///
+  /// In en, this message translates to:
+  /// **'Age: {weeks} weeks'**
+  String msgAgeWeeks(int weeks);
+
+  /// Birth weight line in message
+  ///
+  /// In en, this message translates to:
+  /// **'Birth weight: {weight} g'**
+  String msgBirthWeight(String weight);
+
+  /// Status section header
+  ///
+  /// In en, this message translates to:
+  /// **'Status:'**
+  String get msgStatusHeader;
+
+  /// Vaccination status line
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinated: {status}'**
+  String msgVaccinated(String status);
+
+  /// Deworming status line
+  ///
+  /// In en, this message translates to:
+  /// **'Dewormed: {status}'**
+  String msgDewormed(String status);
+
+  /// ID tagging status line
+  ///
+  /// In en, this message translates to:
+  /// **'ID tagged: {status}'**
+  String msgIdTagged(String status);
+
+  /// Message section header
+  ///
+  /// In en, this message translates to:
+  /// **'Message:'**
+  String get msgMessageHeader;
+
+  /// Closing salutation
+  ///
+  /// In en, this message translates to:
+  /// **'Best regards,'**
+  String get msgBestRegards;
+
+  /// Contact phone line
+  ///
+  /// In en, this message translates to:
+  /// **'Contact: {phone}'**
+  String msgContact(String phone);
+
+  /// Header for litter update message
+  ///
+  /// In en, this message translates to:
+  /// **'Litter update from {kennelName}'**
+  String msgLitterUpdateFromKennel(String kennelName);
+
+  /// Litter parents line
+  ///
+  /// In en, this message translates to:
+  /// **'Litter: {damName} × {sireName}'**
+  String msgLitter(String damName, String sireName);
+
+  /// Puppy count line
+  ///
+  /// In en, this message translates to:
+  /// **'Number of puppies: {count}'**
+  String msgPuppyCount(int count);
+
+  /// Treatment status section header
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment status:'**
+  String get msgTreatmentStatus;
+
+  /// Header for delivery reminder message
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery reminder from {kennelName}'**
+  String msgDeliveryReminder(String kennelName);
+
+  /// Puppy ready to move home
+  ///
+  /// In en, this message translates to:
+  /// **'{puppyName} is ready to move home to you!'**
+  String msgReadyToMoveHome(String puppyName);
+
+  /// Delivery date line
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery date: {date}'**
+  String msgDeliveryDate(String date);
+
+  /// Countdown line
+  ///
+  /// In en, this message translates to:
+  /// **'In {count} {dayWord}'**
+  String msgInDays(int count, String dayWord);
+
+  /// Singular form of day
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get msgDaySingular;
+
+  /// Plural form of day
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get msgDayPlural;
+
+  /// Delivery is today
+  ///
+  /// In en, this message translates to:
+  /// **'Today!'**
+  String get msgToday;
+
+  /// Checklist header
+  ///
+  /// In en, this message translates to:
+  /// **'Remember to bring:'**
+  String get msgRememberToBring;
+
+  /// Checklist item
+  ///
+  /// In en, this message translates to:
+  /// **'Transport crate/carrier'**
+  String get msgTransportCrate;
+
+  /// Checklist item
+  ///
+  /// In en, this message translates to:
+  /// **'Blanket with home scent'**
+  String get msgBlanketWithHomeScent;
+
+  /// Checklist item
+  ///
+  /// In en, this message translates to:
+  /// **'Water for the trip'**
+  String get msgWaterForTrip;
+
+  /// Address line
+  ///
+  /// In en, this message translates to:
+  /// **'Address: {address}'**
+  String msgAddress(String address);
+
+  /// Closing line for delivery reminder
+  ///
+  /// In en, this message translates to:
+  /// **'We look forward to seeing you!'**
+  String get msgLookingForward;
 }
 
 class _AppLocalizationsDelegate
