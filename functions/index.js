@@ -1,6 +1,8 @@
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { defineSecret } = require("firebase-functions/params");
+const { getFirestore, FieldValue } = require("firebase-admin/firestore");
+const { initializeApp } = require("firebase-admin/app");
 
 // Store API key as Firebase secret (set via: firebase functions:secrets:set GEMINI_API_KEY)
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
@@ -142,5 +144,101 @@ exports.scanPedigree = onCall(
       if (error instanceof HttpsError) throw error;
       throw new HttpsError("internal", `Feil ved analyse av stamtavle: ${error.message}`);
     }
+  }
+);
+
+// Initialize Firebase Admin
+initializeApp();
+
+// =============================================================================
+// PROMO CODE MANAGEMENT (Admin only)
+// =============================================================================
+
+// Admin UIDs that can create promo codes — add your own Firebase Auth UID here
+const ADMIN_UIDS = [
+  // TODO: Replace with your Firebase Auth UID
+  // You can find it in Firebase Console > Authentication > Users
+];
+
+/**
+ * Create a promo code for friends and family
+ * 
+ * Call with:
+ * {
+ *   code: "VENNER2025",
+ *   type: "lifetime" | "months",
+ *   durationMonths: 3,       // required if type === "months"
+ *   maxUses: 5,              // optional, default unlimited
+ *   expiresAt: "2025-12-31"  // optional expiry for the code itself
+ * }
+ */
+exports.createPromoCode = onCall(
+  {
+    memory: "256MiB",
+    timeoutSeconds: 15,
+    maxInstances: 5,
+  },
+  async (request) => {
+    // Require authentication
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Du må være logget inn.");
+    }
+
+    // Check admin access
+    if (!ADMIN_UIDS.includes(request.auth.uid)) {
+      throw new HttpsError("permission-denied", "Du har ikke tilgang til å opprette kampanjekoder.");
+    }
+
+    const { code, type, durationMonths, maxUses, expiresAt } = request.data;
+
+    // Validate inputs
+    if (!code || typeof code !== "string" || code.length < 3) {
+      throw new HttpsError("invalid-argument", "Kode må være minst 3 tegn.");
+    }
+
+    if (!["lifetime", "months"].includes(type)) {
+      throw new HttpsError("invalid-argument", "Type må være 'lifetime' eller 'months'.");
+    }
+
+    if (type === "months" && (!durationMonths || durationMonths < 1)) {
+      throw new HttpsError("invalid-argument", "durationMonths må være minst 1.");
+    }
+
+    const db = getFirestore();
+    const codeRef = db.collection("promo_codes").doc(code.toUpperCase());
+
+    // Check if code already exists
+    const existing = await codeRef.get();
+    if (existing.exists) {
+      throw new HttpsError("already-exists", `Koden '${code}' finnes allerede.`);
+    }
+
+    // Create the promo code document
+    const promoData = {
+      code: code.toUpperCase(),
+      type: type,
+      maxUses: maxUses || null,
+      usedCount: 0,
+      usedBy: [],
+      createdAt: FieldValue.serverTimestamp(),
+      createdBy: request.auth.uid,
+      active: true,
+    };
+
+    if (type === "months") {
+      promoData.durationMonths = durationMonths;
+    }
+
+    if (expiresAt) {
+      promoData.expiresAt = new Date(expiresAt);
+    }
+
+    await codeRef.set(promoData);
+
+    return {
+      success: true,
+      message: `Kampanjekode '${code.toUpperCase()}' opprettet.`,
+      code: code.toUpperCase(),
+    };
   }
 );

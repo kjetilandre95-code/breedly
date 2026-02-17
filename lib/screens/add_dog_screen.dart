@@ -412,6 +412,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     messenger.showSnackBar(
       SnackBar(
         content: Text('${scannedDog.name} lagt til med stamtavle ($totalCreated hunder totalt)'),
+        // ignore: use_build_context_synchronously
         backgroundColor: Theme.of(context).primaryColor,
         duration: const Duration(seconds: 4),
       ),

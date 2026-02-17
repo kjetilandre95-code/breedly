@@ -19,6 +19,8 @@ import 'package:breedly/providers/kennel_provider.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/providers/subscription_provider.dart';
+import 'package:breedly/screens/paywall_screen.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -129,6 +131,9 @@ void main() async {
   // Initialize kennel provider
   final kennelProvider = KennelProvider();
 
+  // Initialize subscription provider
+  final subscriptionProvider = SubscriptionProvider();
+
   final languageProvider = LanguageProvider();
 
   runApp(
@@ -137,6 +142,7 @@ void main() async {
         ChangeNotifierProvider.value(value: languageProvider),
         ChangeNotifierProvider.value(value: themeProvider),
         ChangeNotifierProvider.value(value: kennelProvider),
+        ChangeNotifierProvider.value(value: subscriptionProvider),
         Provider.value(value: offlineModeManager),
       ],
       child: const MyApp(),
@@ -208,6 +214,7 @@ class _MyAppState extends State<MyApp> {
               _initializedForUserId = user.uid;
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 kennelProvider.initialize(user.uid, user.email ?? '');
+                context.read<SubscriptionProvider>().initialize(user.uid);
               });
             }
             
@@ -270,6 +277,8 @@ class _AuthenticatedHomeState extends State<_AuthenticatedHome> {
 
   @override
   Widget build(BuildContext context) {
+    final subProvider = context.watch<SubscriptionProvider>();
+
     // Show loading while checking onboarding status
     if (_onboardingCompleted == null) {
       return const Scaffold(
@@ -283,6 +292,26 @@ class _AuthenticatedHomeState extends State<_AuthenticatedHome> {
     if (!_onboardingCompleted!) {
       return OnboardingScreen(
         onComplete: _onOnboardingComplete,
+      );
+    }
+
+    // Show loading while checking subscription
+    if (subProvider.isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // Show paywall if user is not premium (allowDismiss for now until RevenueCat products are live)
+    if (subProvider.isFreeUser) {
+      return PaywallScreen(
+        allowDismiss: true,
+        onSubscribed: () {
+          // Rebuild to show main navigation
+          setState(() {});
+        },
       );
     }
 

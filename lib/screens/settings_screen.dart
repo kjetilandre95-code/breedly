@@ -4,9 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/providers/theme_provider.dart';
+import 'package:breedly/providers/subscription_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/data_sync_service.dart';
+import 'package:breedly/screens/paywall_screen.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/buyer.dart';
@@ -84,6 +86,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: AuthService().currentUserEmail ?? localizations.notLoggedIn,
             icon: Icons.person_rounded,
             child: _buildAccountSection(localizations),
+          ),
+
+          const SizedBox(height: AppSpacing.lg),
+
+          // Subscription Section
+          _buildSectionCard(
+            title: 'Abonnement',
+            subtitle: 'Administrer ditt Breedly-abonnement',
+            icon: Icons.workspace_premium_rounded,
+            child: _buildSubscriptionSection(),
           ),
 
           const SizedBox(height: AppSpacing.lg),
@@ -486,6 +498,207 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubscriptionSection() {
+    final subProvider = context.watch<SubscriptionProvider>();
+    final primaryColor = Theme.of(context).primaryColor;
+
+    if (subProvider.isPremium) {
+      // Show active subscription info
+      final source = subProvider.subscriptionSource == 'promo_code'
+          ? 'Kampanjekode'
+          : 'Abonnement';
+      final expiry = subProvider.expirationDate;
+      final expiryText = expiry != null
+          ? '${expiry.day}.${expiry.month}.${expiry.year}'
+          : 'Livstid';
+
+      return Column(
+        children: [
+          // Status badge
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.secondary.withValues(alpha: 0.15),
+                  AppColors.primary.withValues(alpha: 0.08),
+                ],
+              ),
+              borderRadius: AppRadius.mdAll,
+              border: Border.all(
+                color: AppColors.secondary.withValues(alpha: 0.3),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.workspace_premium_rounded,
+                  color: AppColors.secondary,
+                  size: 28,
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Breedly Premium',
+                        style: AppTypography.titleMedium.copyWith(
+                          color: AppColors.neutral900,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '$source • Utløper: $expiryText',
+                        style: AppTypography.bodySmall.copyWith(
+                          color: AppColors.neutral600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: AppSpacing.xxs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.success,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: Text(
+                    'Aktiv',
+                    style: AppTypography.labelSmall.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // Restore purchases
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () async {
+                await subProvider.restorePurchases();
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Kjøp gjenopprettet.'),
+                    ),
+                  );
+                }
+              },
+              icon: const Icon(Icons.restore_rounded),
+              label: const Text('Gjenopprett kjøp'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: primaryColor,
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                side: BorderSide(color: primaryColor),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    // Not premium — show upgrade prompt
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: AppColors.surfaceVariant,
+            borderRadius: AppRadius.mdAll,
+          ),
+          child: Column(
+            children: [
+              const Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.neutral500,
+                size: 32,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                'Du bruker gratisversjonen',
+                style: AppTypography.titleSmall.copyWith(
+                  color: AppColors.neutral700,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                'Oppgrader for ubegrenset tilgang til alle funksjoner.',
+                style: AppTypography.bodySmall.copyWith(
+                  color: AppColors.neutral500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => PaywallScreen(
+                    allowDismiss: true,
+                    onSubscribed: () {
+                      setState(() {});
+                    },
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.workspace_premium_rounded),
+            label: const Text('Oppgrader til Premium'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondary,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            onPressed: () async {
+              await subProvider.restorePurchases();
+              if (mounted) {
+                final msg = subProvider.isPremium
+                    ? 'Premium gjenopprettet!'
+                    : 'Ingen tidligere kjøp funnet.';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(msg)),
+                );
+              }
+            },
+            icon: const Icon(Icons.restore_rounded),
+            label: const Text('Gjenopprett kjøp'),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: primaryColor,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+              side: BorderSide(color: primaryColor),
             ),
           ),
         ),
