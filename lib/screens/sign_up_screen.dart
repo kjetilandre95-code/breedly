@@ -3,15 +3,16 @@ import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/constants.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
-  final LanguageProvider languageProvider;
   final VoidCallback onSignUpSuccess;
 
   const SignUpScreen({
     super.key,
-    required this.languageProvider,
     required this.onSignUpSuccess,
   });
 
@@ -50,39 +51,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUp() async {
+    final l10n = AppLocalizations.of(context)!;
     // Validation
     if (_nameController.text.isEmpty) {
-      setState(() => _errorMessage = 'Vennligst skriv inn navn');
+      setState(() => _errorMessage = l10n.pleaseEnterNameValidation);
       return;
     }
 
     if (_emailController.text.isEmpty) {
-      setState(() => _errorMessage = 'Vennligst skriv inn e-postadresse');
+      setState(() => _errorMessage = l10n.pleaseEnterEmailValidation);
       return;
     }
 
     if (!_isValidEmail(_emailController.text)) {
-      setState(() => _errorMessage = 'Ugyldig e-postadresse');
+      setState(() => _errorMessage = l10n.invalidEmailValidation);
       return;
     }
 
     if (_passwordController.text.isEmpty) {
-      setState(() => _errorMessage = 'Vennligst skriv inn passord');
+      setState(() => _errorMessage = l10n.pleaseEnterPasswordValidation);
       return;
     }
 
     if (_passwordController.text.length < 6) {
-      setState(() => _errorMessage = 'Passordet må være minst 6 tegn');
+      setState(() => _errorMessage = l10n.passwordMin6Chars);
       return;
     }
 
     if (_passwordController.text != _confirmPasswordController.text) {
-      setState(() => _errorMessage = 'Passordene stemmer ikke overens');
+      setState(() => _errorMessage = l10n.passwordsDoNotMatchValidation);
       return;
     }
 
     if (!_agreedToTerms) {
-      setState(() => _errorMessage = 'Du må godta vilkårene for bruk');
+      setState(() => _errorMessage = l10n.mustAcceptTerms);
       return;
     }
 
@@ -131,13 +133,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final currentLang = widget.languageProvider.currentLocale.languageCode;
-    final isEnglish = currentLang == 'en';
+    final l10n = AppLocalizations.of(context)!;
     
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
-        title: Text(isEnglish ? 'Create Account' : 'Opprett konto'),
+        title: Text(l10n.createAccount),
         elevation: 0,
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
@@ -147,11 +148,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppSpacing.xxl),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Header
             Center(
@@ -162,41 +163,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     size: 56,
                     color: Theme.of(context).primaryColor,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   Text(
-                    'Registrer deg',
+                    l10n.registerYourself,
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Text(
-                    'Opprett en konto for å komme i gang',
+                    l10n.createAccountSubtitle,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey[600],
+                      color: context.colors.textMuted,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppSpacing.xxxl),
 
             // Error message
             if (_errorMessage != null)
               Container(
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.all(AppSpacing.md),
+                margin: const EdgeInsets.only(bottom: AppSpacing.lg),
                 decoration: BoxDecoration(
-                  color: Colors.red[50],
-                  border: Border.all(color: Colors.red[200]!),
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.error.withValues(alpha: 0.08),
+                  border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                  borderRadius: AppRadius.smAll,
                 ),
                 child: Text(
                   _errorMessage!,
-                  style: TextStyle(color: Colors.red[700], fontSize: 14),
+                  style: TextStyle(color: AppColors.error, fontSize: 14),
                 ),
               ),
 
@@ -206,14 +207,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _nameController,
                 enabled: !_isLoading,
                 decoration: InputDecoration(
-                  labelText: 'Fullt navn',
-                  hintText: 'Ola Nordmann',
+                  labelText: l10n.fullName,
+                  hintText: l10n.fullNameHint,
                   prefixIcon: const Icon(Icons.person_outlined),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                     borderSide: BorderSide(
                       color: Theme.of(context).primaryColor,
                       width: 2,
@@ -225,7 +226,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onSubmitted: (_) => _emailFocusNode.requestFocus(),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Email field
             TextField(
@@ -233,14 +234,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               enabled: !_isLoading,
               focusNode: _emailFocusNode,
               decoration: InputDecoration(
-                labelText: 'E-postadresse',
-                hintText: 'navn@eksempel.no',
+                labelText: l10n.emailAddressLabel,
+                hintText: l10n.emailHint,
                 prefixIcon: const Icon(Icons.email_outlined),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
@@ -252,7 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               autofillHints: const [AutofillHints.email],
               onSubmitted: (_) => _passwordFocusNode.requestFocus(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Password field
             TextField(
@@ -261,8 +262,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               obscureText: !_showPassword,
               focusNode: _passwordFocusNode,
               decoration: InputDecoration(
-                labelText: 'Passord',
-                hintText: 'Minst 6 tegn',
+                labelText: l10n.passwordLabel,
+                hintText: l10n.passwordHintText,
                 prefixIcon: const Icon(Icons.lock_outlined),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -273,10 +274,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
@@ -287,7 +288,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               autofillHints: const [AutofillHints.newPassword],
               onSubmitted: (_) => _confirmPasswordFocusNode.requestFocus(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Confirm password field
             TextField(
@@ -296,8 +297,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               obscureText: !_showConfirmPassword,
               focusNode: _confirmPasswordFocusNode,
               decoration: InputDecoration(
-                labelText: 'Bekreft passord',
-                hintText: 'Gjenta passordet',
+                labelText: l10n.confirmPasswordLabel,
+                hintText: l10n.repeatPasswordHint,
                 prefixIcon: const Icon(Icons.lock_outlined),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -308,10 +309,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
@@ -326,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 }
               },
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: AppSpacing.xl),
 
             // Terms checkbox
             CheckboxListTile(
@@ -339,16 +340,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
               contentPadding: EdgeInsets.zero,
               title: RichText(
                 text: TextSpan(
-                  style: TextStyle(color: Colors.grey[700], fontSize: 13),
+                  style: TextStyle(color: context.colors.textTertiary, fontSize: 13),
                   children: [
-                    const TextSpan(text: 'Jeg godtar '),
+                    TextSpan(text: l10n.iAgreeToThe),
                     WidgetSpan(
                       child: GestureDetector(
                         onTap: () {
                           // Open terms and conditions
                         },
                         child: Text(
-                          'vilkårene for bruk',
+                          l10n.termsOfUse,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
@@ -361,7 +362,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.xxl),
 
             // Sign up button
             ElevatedButton(
@@ -369,9 +370,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
               ),
               child: _isLoading
@@ -383,23 +384,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
-                  : const Text(
-                      'Opprett konto',
+                  : Text(
+                      l10n.createAccountButton,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
 
             // Login link
             Center(
               child: RichText(
                 text: TextSpan(
-                  style: TextStyle(color: Colors.grey[700], fontSize: 14),
+                  style: TextStyle(color: context.colors.textTertiary, fontSize: 14),
                   children: [
-                    const TextSpan(text: 'Har du allerede en konto? '),
+                    TextSpan(text: l10n.alreadyHaveAccountQuestion),
                     WidgetSpan(
                       child: GestureDetector(
                         onTap: _isLoading
@@ -408,7 +409,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Navigator.pop(context);
                               },
                         child: Text(
-                          'Logg inn',
+                          l10n.logIn,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
@@ -428,7 +429,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _buildLanguageSelector(Color primaryColor) {
-    final currentLang = widget.languageProvider.currentLocale.languageCode;
+    final languageProvider = context.read<LanguageProvider>();
+    final currentLang = languageProvider.currentLocale.languageCode;
     final languages = [
       {'code': 'nb', 'name': 'Norsk', 'flag': '🇳🇴'},
       {'code': 'en', 'name': 'English', 'flag': '🇬🇧'},
@@ -436,7 +438,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     return PopupMenuButton<String>(
       onSelected: (String languageCode) async {
-        await widget.languageProvider.setLanguage(languageCode);
+        await context.read<LanguageProvider>().setLanguage(languageCode);
         if (mounted) setState(() {});
       },
       shape: RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
@@ -464,7 +466,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   lang['name']!,
                   style: AppTypography.bodyMedium.copyWith(
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                    color: isSelected ? primaryColor : AppColors.neutral800,
+                    color: isSelected ? primaryColor : context.colors.textSecondary,
                   ),
                 ),
                 if (isSelected) ...[
@@ -483,7 +485,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             currentLang == 'nb' ? '🇳🇴' : '🇬🇧',
             style: const TextStyle(fontSize: 18),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: AppSpacing.xs),
           const Icon(Icons.expand_more_rounded, color: Colors.white, size: 20),
         ],
       ),

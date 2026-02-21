@@ -13,16 +13,20 @@ import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/providers/theme_provider.dart';
 import 'package:breedly/providers/kennel_provider.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
-      MyApp(
-        languageProvider: LanguageProvider(),
-        offlineModeManager: OfflineModeManager(),
-        themeProvider: ThemeProvider(),
-        kennelProvider: KennelProvider(),
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => LanguageProvider()),
+          ChangeNotifierProvider(create: (_) => ThemeProvider()),
+          ChangeNotifierProvider(create: (_) => KennelProvider()),
+          Provider(create: (_) => OfflineModeManager()),
+        ],
+        child: const MyApp(),
       ),
     );
 

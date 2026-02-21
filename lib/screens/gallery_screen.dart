@@ -5,6 +5,9 @@ import 'package:breedly/models/litter.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:breedly/utils/app_bar_builder.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class GalleryScreen extends StatefulWidget {
   final Litter litter;
@@ -18,9 +21,10 @@ class GalleryScreen extends StatefulWidget {
 class _GalleryScreenState extends State<GalleryScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: '${widget.litter.damName} - Bildegalleri',
+        title: l10n.photoGalleryTitle(widget.litter.damName),
         context: context,
       ),
       body: SafeArea(
@@ -38,30 +42,30 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(AppSpacing.xl),
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: AppRadius.lgAll,
                       ),
                       child: Icon(
                         Icons.image_not_supported,
                         size: 64,
-                        color: Colors.grey[400],
+                        color: context.colors.textDisabled,
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    const Text(
-                      'Ingen bilder ennå',
-                      style: TextStyle(
+                    const SizedBox(height: AppSpacing.xxl),
+                    Text(
+                      l10n.noImagesYet,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: AppSpacing.md),
                     Text(
-                      'Trykk på + for å legge til bilder',
+                      l10n.tapToAddPhotos,
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: context.colors.textMuted,
                         fontSize: 15,
                       ),
                     ),
@@ -71,12 +75,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
             }
 
             return GridView.builder(
-              padding: const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 88),
+              padding: const EdgeInsets.only(left: AppSpacing.md, right: AppSpacing.md, top: AppSpacing.md, bottom: 88),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 1,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
+                crossAxisSpacing: AppSpacing.md,
+                mainAxisSpacing: AppSpacing.md,
               ),
               itemCount: images.length,
               itemBuilder: (context, index) {
@@ -88,7 +92,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   clipBehavior: Clip.antiAlias,
                   elevation: 4,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   child: Stack(
                     fit: StackFit.expand,
@@ -98,7 +102,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
-                            color: Colors.grey.shade200,
+                            color: context.colors.borderSubtle,
                             child: const Icon(Icons.image_not_supported),
                           );
                         },
@@ -118,7 +122,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                               ],
                             ),
                           ),
-                          padding: const EdgeInsets.all(12),
+                          padding: const EdgeInsets.all(AppSpacing.md),
                           child: Text(
                             DateFormat('yyyy-MM-dd').format(image.dateAdded),
                             style: const TextStyle(
@@ -144,35 +148,35 @@ class _GalleryScreenState extends State<GalleryScreen> {
   }
 
   void _showImageDetail(BuildContext context, GalleryImage image) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Bildedetaljer'),
+        title: Text(l10n.imageDetails),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 300,
-                width: 300,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 300, maxWidth: 300),
                 child: Image.file(
                   File(image.imagePath),
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      color: Colors.grey.shade200,
+                      color: context.colors.borderSubtle,
                       child: const Icon(Icons.image_not_supported),
                     );
                   },
                 ),
               ),
-              const SizedBox(height: 16),
-              Text('Dato: ${DateFormat('yyyy-MM-dd HH:mm').format(image.dateAdded)}'),
-              Text('Filstørrelse: ${(image.fileSize / 1024 / 1024).toStringAsFixed(2)} MB'),
+              const SizedBox(height: AppSpacing.lg),
+              Text(l10n.dateWithValue(DateFormat('yyyy-MM-dd HH:mm').format(image.dateAdded))),
+              Text(l10n.fileSizeLabel((image.fileSize / 1024 / 1024).toStringAsFixed(2))),
               if (image.description != null) ...[
-                const SizedBox(height: 8),
-                Text('Beskrivelse: ${image.description}'),
+                const SizedBox(height: AppSpacing.sm),
+                Text(l10n.descriptionWithValue(image.description!)),
               ],
             ],
           ),
@@ -180,11 +184,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
         actions: [
           TextButton(
             onPressed: () => _editImageDescription(context, image),
-            child: const Text('Rediger'),
+            child: Text(l10n.edit),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Lukk'),
+            child: Text(l10n.close),
           ),
         ],
       ),
@@ -192,21 +196,22 @@ class _GalleryScreenState extends State<GalleryScreen> {
   }
 
   void _editImageDescription(BuildContext context, GalleryImage image) {
+    final l10n = AppLocalizations.of(context)!;
     final descriptionController = TextEditingController(text: image.description);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Rediger bildenotater'),
+        title: Text(l10n.editImageNotes),
         content: TextField(
           controller: descriptionController,
-          decoration: const InputDecoration(labelText: 'Beskrivelse'),
+          decoration: InputDecoration(labelText: l10n.descriptionLabel),
           maxLines: 3,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -215,10 +220,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
               Navigator.pop(context);
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Bildenotater oppdatert')),
+                SnackBar(content: Text(l10n.imageNotesUpdated)),
               );
             },
-            child: const Text('Lagre'),
+            child: Text(l10n.save),
           ),
         ],
       ),
@@ -226,15 +231,16 @@ class _GalleryScreenState extends State<GalleryScreen> {
   }
 
   void _deleteImage(GalleryImage image) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett bilde'),
-        content: const Text('Er du sikker på at du vil slette dette bildet?'),
+        title: Text(l10n.deleteImage),
+        content: Text(l10n.confirmDeleteImage),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -242,11 +248,11 @@ class _GalleryScreenState extends State<GalleryScreen> {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Bilde slettet')),
+                  SnackBar(content: Text(l10n.imageDeleted)),
                 );
               }
             },
-            child: const Text('Slett'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

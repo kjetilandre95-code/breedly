@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/models/purchase_contract.dart';
 import 'package:breedly/models/breeding_contract.dart';
 import 'package:breedly/models/co_ownership_contract.dart';
@@ -10,6 +11,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/buyer.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/services/auth_service.dart';
@@ -51,11 +53,12 @@ class _AllContractsScreenState extends State<AllContractsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final themeColor = Theme.of(context).primaryColor;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kontrakter'),
+        title: Text(l10n.contracts),
         actions: [
           PageInfoHelper.buildInfoButton(
             context,
@@ -70,13 +73,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
           isScrollable: true,
           indicatorColor: themeColor,
           labelColor: themeColor,
-          unselectedLabelColor: AppColors.neutral500,
-          tabs: const [
-            Tab(text: 'Kjøpskontrakter'),
-            Tab(text: 'Reservasjoner'),
-            Tab(text: 'Paringsavtaler'),
-            Tab(text: 'Sameie'),
-            Tab(text: 'Fôrvertsavtaler'),
+          unselectedLabelColor: context.colors.textCaption,
+          tabs: [
+            Tab(text: l10n.purchaseContracts),
+            Tab(text: l10n.reservations),
+            Tab(text: l10n.breedingContracts),
+            Tab(text: l10n.coOwnership),
+            Tab(text: l10n.fosterContracts),
           ],
         ),
       ),
@@ -97,12 +100,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     return ValueListenableBuilder(
       valueListenable: Hive.box<PurchaseContract>('purchase_contracts').listenable(),
       builder: (context, Box<PurchaseContract> box, _) {
+        final l10n = AppLocalizations.of(context)!;
         final contracts = box.values.toList()
           ..sort((a, b) => b.contractDate.compareTo(a.contractDate));
 
         if (contracts.isEmpty) {
           return _buildEmptyState(
-            'Ingen kjøpskontrakter',
+            l10n.purchaseContracts,
             Icons.description_outlined,
           );
         }
@@ -135,12 +139,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     return ValueListenableBuilder(
       valueListenable: Hive.box<ReservationContract>('reservation_contracts').listenable(),
       builder: (context, Box<ReservationContract> box, _) {
+        final l10n = AppLocalizations.of(context)!;
         final contracts = box.values.toList()
           ..sort((a, b) => b.contractDate.compareTo(a.contractDate));
 
         if (contracts.isEmpty) {
           return _buildEmptyState(
-            'Ingen reservasjoner',
+            l10n.reservations,
             Icons.bookmark_outline,
           );
         }
@@ -173,12 +178,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     return ValueListenableBuilder(
       valueListenable: Hive.box<BreedingContract>('breeding_contracts').listenable(),
       builder: (context, Box<BreedingContract> box, _) {
+        final l10n = AppLocalizations.of(context)!;
         final contracts = box.values.toList()
           ..sort((a, b) => b.contractDate.compareTo(a.contractDate));
 
         if (contracts.isEmpty) {
           return _buildEmptyState(
-            'Ingen paringsavtaler',
+            l10n.breedingContracts,
             Icons.favorite_outline,
           );
         }
@@ -212,12 +218,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     return ValueListenableBuilder(
       valueListenable: Hive.box<CoOwnershipContract>('co_ownership_contracts').listenable(),
       builder: (context, Box<CoOwnershipContract> box, _) {
+        final l10n = AppLocalizations.of(context)!;
         final contracts = box.values.toList()
           ..sort((a, b) => b.contractDate.compareTo(a.contractDate));
 
         if (contracts.isEmpty) {
           return _buildEmptyState(
-            'Ingen sameieavtaler',
+            l10n.coOwnership,
             Icons.people_outline,
           );
         }
@@ -250,12 +257,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     return ValueListenableBuilder(
       valueListenable: Hive.box<FosterContract>('foster_contracts').listenable(),
       builder: (context, Box<FosterContract> box, _) {
+        final l10n = AppLocalizations.of(context)!;
         final contracts = box.values.toList()
           ..sort((a, b) => b.contractDate.compareTo(a.contractDate));
 
         if (contracts.isEmpty) {
           return _buildEmptyState(
-            'Ingen fôrvertsavtaler',
+            l10n.fosterContracts,
             Icons.home_outlined,
           );
         }
@@ -292,13 +300,13 @@ class _AllContractsScreenState extends State<AllContractsScreen>
           Icon(
             icon,
             size: 64,
-            color: AppColors.neutral400,
+            color: context.colors.textDisabled,
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
             message,
             style: AppTypography.bodyLarge.copyWith(
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
           ),
         ],
@@ -320,9 +328,9 @@ class _AllContractsScreenState extends State<AllContractsScreen>
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.sm,
       ),
       child: Column(
@@ -349,18 +357,18 @@ class _AllContractsScreenState extends State<AllContractsScreen>
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.xxs),
                     Text(
                       subtitle,
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.neutral600,
+                        color: context.colors.textMuted,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: AppSpacing.xs),
                     Text(
                       DateFormat('dd.MM.yyyy').format(date),
                       style: AppTypography.caption.copyWith(
-                        color: AppColors.neutral500,
+                        color: context.colors.textCaption,
                       ),
                     ),
                   ],
@@ -396,9 +404,9 @@ class _AllContractsScreenState extends State<AllContractsScreen>
                   TextButton.icon(
                     onPressed: onEdit,
                     icon: const Icon(Icons.edit, size: 18),
-                    label: const Text('Rediger'),
+                    label: Text(AppLocalizations.of(context)!.edit),
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColors.neutral700,
+                      foregroundColor: context.colors.textTertiary,
                     ),
                   ),
                 if (onDelete != null) ...[
@@ -406,9 +414,9 @@ class _AllContractsScreenState extends State<AllContractsScreen>
                   TextButton.icon(
                     onPressed: onDelete,
                     icon: const Icon(Icons.delete, size: 18),
-                    label: const Text('Slett'),
+                    label: Text(AppLocalizations.of(context)!.delete),
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.red,
+                      foregroundColor: AppColors.error,
                     ),
                   ),
                 ],
@@ -482,9 +490,10 @@ class _AllContractsScreenState extends State<AllContractsScreen>
   // ============ DELETE METHODS ============
 
   void _deletePurchaseContract(PurchaseContract contract) {
+    final l10n = AppLocalizations.of(context)!;
     _showDeleteConfirmation(
-      title: 'Slett kjøpskontrakt',
-      message: 'Er du sikker på at du vil slette denne kjøpskontrakten?',
+      title: l10n.delete,
+      message: l10n.confirmDeleteContract,
       onConfirm: () async {
         final userId = AuthService().currentUser?.uid;
         if (userId != null) {
@@ -497,7 +506,7 @@ class _AllContractsScreenState extends State<AllContractsScreen>
         if (mounted) {
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Kjøpskontrakt slettet')),
+            SnackBar(content: Text(l10n.purchaseContractDeleted)),
           );
         }
       },
@@ -505,15 +514,16 @@ class _AllContractsScreenState extends State<AllContractsScreen>
   }
 
   void _deleteReservationContract(ReservationContract contract) {
+    final l10n = AppLocalizations.of(context)!;
     _showDeleteConfirmation(
-      title: 'Slett reservasjonsavtale',
-      message: 'Er du sikker på at du vil slette denne reservasjonsavtalen?',
+      title: l10n.delete,
+      message: l10n.confirmDeleteContract,
       onConfirm: () async {
         await contract.delete();
         if (mounted) {
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Reservasjonsavtale slettet')),
+            SnackBar(content: Text(l10n.reservationContractDeleted)),
           );
         }
       },
@@ -521,15 +531,16 @@ class _AllContractsScreenState extends State<AllContractsScreen>
   }
 
   void _deleteBreedingContract(BreedingContract contract) {
+    final l10n = AppLocalizations.of(context)!;
     _showDeleteConfirmation(
-      title: 'Slett paringsavtale',
-      message: 'Er du sikker på at du vil slette denne paringsavtalen?',
+      title: l10n.delete,
+      message: l10n.confirmDeleteContract,
       onConfirm: () async {
         await contract.delete();
         if (mounted) {
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Paringsavtale slettet')),
+            SnackBar(content: Text(l10n.breedingContractDeleted)),
           );
         }
       },
@@ -537,15 +548,16 @@ class _AllContractsScreenState extends State<AllContractsScreen>
   }
 
   void _deleteCoOwnershipContract(CoOwnershipContract contract) {
+    final l10n = AppLocalizations.of(context)!;
     _showDeleteConfirmation(
-      title: 'Slett sameieavtale',
-      message: 'Er du sikker på at du vil slette denne sameieavtalen?',
+      title: l10n.delete,
+      message: l10n.confirmDeleteContract,
       onConfirm: () async {
         await contract.delete();
         if (mounted) {
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Sameieavtale slettet')),
+            SnackBar(content: Text(l10n.coOwnershipContractDeleted)),
           );
         }
       },
@@ -553,15 +565,16 @@ class _AllContractsScreenState extends State<AllContractsScreen>
   }
 
   void _deleteFosterContract(FosterContract contract) {
+    final l10n = AppLocalizations.of(context)!;
     _showDeleteConfirmation(
-      title: 'Slett fôrvertsavtale',
-      message: 'Er du sikker på at du vil slette denne fôrvertsavtalen?',
+      title: l10n.delete,
+      message: l10n.confirmDeleteContract,
       onConfirm: () async {
         await contract.delete();
         if (mounted) {
           setState(() {});
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Fôrvertsavtale slettet')),
+            SnackBar(content: Text(l10n.fosterContractDeleted)),
           );
         }
       },
@@ -581,14 +594,14 @@ class _AllContractsScreenState extends State<AllContractsScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               onConfirm();
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: Text(AppLocalizations.of(context)!.delete, style: const TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -599,20 +612,20 @@ class _AllContractsScreenState extends State<AllContractsScreen>
     switch (status.toLowerCase()) {
       case 'active':
       case 'aktiv':
-        return Colors.green;
+        return AppColors.success;
       case 'pending':
       case 'venter':
       case 'draft':
-        return Colors.orange;
+        return AppColors.warning;
       case 'completed':
       case 'fullført':
       case 'converted':
-        return Colors.blue;
+        return AppColors.info;
       case 'cancelled':
       case 'kansellert':
-        return Colors.red;
+        return AppColors.error;
       default:
-        return AppColors.neutral500;
+        return context.colors.textCaption;
     }
   }
 

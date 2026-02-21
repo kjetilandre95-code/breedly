@@ -20,34 +20,28 @@ import 'package:breedly/screens/calendar_screen.dart';
 import 'package:breedly/screens/waitlist_screen.dart';
 import 'package:breedly/screens/all_contracts_screen.dart';
 import 'package:breedly/screens/annual_report_screen.dart';
-import 'package:breedly/providers/language_provider.dart';
-import 'package:breedly/providers/theme_provider.dart';
 import 'package:breedly/providers/kennel_provider.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
+import 'package:provider/provider.dart';
 import 'package:breedly/utils/sync_helper.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/modern_widgets.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/buyer.dart';
 import 'package:breedly/models/puppy.dart';
+import 'package:breedly/models/treatment_plan.dart';
+import 'package:breedly/models/vaccine.dart';
 
 import 'package:breedly/models/progesterone_measurement.dart';
+import 'package:breedly/models/feed_post.dart';
+import 'package:breedly/services/feed_service.dart';
+import 'package:breedly/screens/feed_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  final LanguageProvider languageProvider;
-  final ThemeProvider themeProvider;
-  final KennelProvider kennelProvider;
-  final OfflineModeManager offlineModeManager;
-
-  const MainNavigationScreen({
-    super.key,
-    required this.languageProvider,
-    required this.themeProvider,
-    required this.kennelProvider,
-    required this.offlineModeManager,
-  });
+  const MainNavigationScreen({super.key});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -57,14 +51,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 2;
   StreamSubscription<bool>? _onlineStatusSubscription;
   final PageController _pageController = PageController(initialPage: 2);
+  int _unreadFeedCount = 0;
+  List<FeedPost> _latestFeedPosts = [];
 
   @override
   void initState() {
     super.initState();
-    _onlineStatusSubscription = widget.offlineModeManager.onlineStatusStream
+    final offlineModeManager = context.read<OfflineModeManager>();
+    _loadFeedData();
+    _onlineStatusSubscription = offlineModeManager.onlineStatusStream
         .listen(_onOnlineStatusChanged);
-    // Listen to kennel provider changes
-    widget.kennelProvider.addListener(_onKennelChanged);
     // Perform initial data sync from Firebase on app start
     _performInitialSync();
   }
@@ -82,12 +78,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   void dispose() {
     _onlineStatusSubscription?.cancel();
     _pageController.dispose();
-    widget.kennelProvider.removeListener(_onKennelChanged);
     super.dispose();
-  }
-
-  void _onKennelChanged() {
-    if (mounted) setState(() {});
   }
 
   void _onOnlineStatusChanged(bool isOnline) {
@@ -112,9 +103,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   String? _getKennelName() {
-    return widget.kennelProvider.activeKennel?.name ?? 
-           (widget.kennelProvider.kennels.isNotEmpty 
-               ? widget.kennelProvider.kennels.first.name 
+    final kennelProvider = context.read<KennelProvider>();
+    return kennelProvider.activeKennel?.name ?? 
+           (kennelProvider.kennels.isNotEmpty 
+               ? kennelProvider.kennels.first.name 
                : null);
   }
 
@@ -130,18 +122,52 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: PageView(
-        controller: _pageController,
-        physics:
-            const NeverScrollableScrollPhysics(), // Disable swipe for better UX
-        onPageChanged: (index) => setState(() => _selectedIndex = index),
+      backgroundColor: context.colors.background,
+      body: Column(
         children: [
-          const DogsScreen(showAppBar: true),
-          const LittersListScreen(showAppBar: true),
-          _buildDashboard(),
-          const FinanceScreen(showAppBar: true),
-          const BuyersScreen(showAppBar: true),
+          StreamBuilder<bool>(
+            stream: OfflineModeManager().onlineStatusStream,
+            initialData: OfflineModeManager().isOnline,
+            builder: (context, snapshot) {
+              final isOffline = snapshot.data == false;
+              if (!isOffline) return const SizedBox.shrink();
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                color: Colors.orange,
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.cloud_off, color: Colors.white, size: 16),
+                    SizedBox(width: 8),
+                    Text(
+                      'Frakoblet - endringer lagres lokalt',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          Expanded(
+            child: PageView(
+              controller: _pageController,
+              physics:
+                  const NeverScrollableScrollPhysics(), // Disable swipe for better UX
+              onPageChanged: (index) => setState(() => _selectedIndex = index),
+              children: [
+                const DogsScreen(showAppBar: true),
+                const LittersListScreen(showAppBar: true),
+                _buildDashboard(),
+                const FinanceScreen(showAppBar: true),
+                const BuyersScreen(showAppBar: true),
+              ],
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(),
@@ -154,10 +180,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.12),
+            color: Colors.black.withValues(alpha: context.isDark ? 0.3 : 0.12),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -218,10 +244,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     final isSelected = _selectedIndex == index;
     final primaryColor = Theme.of(context).primaryColor;
 
-    return GestureDetector(
-      onTap: () => _onItemTapped(index),
-      behavior: HitTestBehavior.opaque,
-      child: AnimatedContainer(
+    return Semantics(
+      label: label,
+      button: true,
+      selected: isSelected,
+      excludeSemantics: true,
+      child: GestureDetector(
+        onTap: () => _onItemTapped(index),
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(
           horizontal: isSelected ? AppSpacing.lg : AppSpacing.md,
@@ -238,7 +269,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           children: [
             Icon(
               isSelected ? activeIcon : inactiveIcon,
-              color: isSelected ? primaryColor : AppColors.neutral500,
+              color: isSelected ? primaryColor : context.colors.textCaption,
               size: 24,
             ),
             if (isSelected) ...[
@@ -254,6 +285,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ],
         ),
       ),
+      ),
     );
   }
 
@@ -268,7 +300,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           expandedHeight: 120,
           floating: false,
           pinned: true,
-          backgroundColor: AppColors.surface,
+          backgroundColor: context.colors.surface,
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: FlexibleSpaceBar(
@@ -279,7 +311,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             title: Text(
               _getKennelName() ?? (localizations?.appTitle ?? 'Breedly'),
               style: AppTypography.headlineMedium.copyWith(
-                color: AppColors.neutral900,
+                color: context.colors.textPrimary,
               ),
             ),
             background: Container(
@@ -287,31 +319,66 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [primaryColor.withValues(alpha: 0.12), AppColors.surface],
+                  colors: [primaryColor.withValues(alpha: 0.12), context.colors.surface],
                 ),
               ),
             ),
           ),
           actions: [
+            // Feed / News unread badge button
+            Stack(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const FeedScreen()),
+                    ).then((_) => _loadFeedData());
+                  },
+                  icon: const Icon(Icons.newspaper_rounded),
+                  tooltip: localizations?.feedTitle ?? 'Nyheter',
+                  color: context.colors.textMuted,
+                ),
+                if (_unreadFeedCount > 0)
+                  Positioned(
+                    right: 4,
+                    top: 4,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: AppColors.error,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(minWidth: 18, minHeight: 18),
+                      child: Text(
+                        _unreadFeedCount > 99 ? '99+' : '$_unreadFeedCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             IconButton(
               onPressed: _syncDataManually,
               icon: const Icon(Icons.sync_rounded),
               tooltip: localizations?.sync ?? 'Sync',
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
             IconButton(
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => SettingsScreen(
-                    languageProvider: widget.languageProvider,
-                    themeProvider: widget.themeProvider,
-                  ),
+                  builder: (_) => const SettingsScreen(),
                 ),
               ),
               icon: const Icon(Icons.settings_rounded),
               tooltip: localizations?.settings ?? 'Settings',
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
             const SizedBox(width: AppSpacing.sm),
           ],
@@ -339,7 +406,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               const SizedBox(height: AppSpacing.md),
               _buildStatisticsGrid(),
 
+              // Action Cards (things needing attention)
+              ..._buildActionCardsSection(),
+
               const SizedBox(height: AppSpacing.xxl),
+
+              // News Carousel
+              ..._buildFeedCarouselSection(localizations),
 
               // Upcoming Events Calendar Section
               SectionHeader(
@@ -375,16 +448,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: context.colors.surface,
           borderRadius: AppRadius.lgAll,
-          border: Border.all(color: AppColors.neutral300),
+          border: Border.all(color: context.colors.divider),
           boxShadow: AppShadows.sm,
         ),
         child: Row(
           children: [
             Icon(
               Icons.search_rounded,
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               size: 22,
             ),
             const SizedBox(width: AppSpacing.md),
@@ -392,13 +465,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               child: Text(
                 localizations?.searchDogsLittersBuyers ?? 'Søk etter hunder, kull, kjøpere...',
                 style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.neutral500,
+                  color: context.colors.textCaption,
                 ),
               ),
             ),
             Icon(
               Icons.arrow_forward_ios_rounded,
-              color: AppColors.neutral400,
+              color: context.colors.textDisabled,
               size: 16,
             ),
           ],
@@ -465,13 +538,222 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     );
   }
 
+  // ─── Feed / News Methods ────────────────────────────────
+
+  Future<void> _loadFeedData() async {
+    try {
+      final feedService = FeedService();
+      final count = await feedService.getUnreadCount();
+      final posts = await feedService.getFeed(limit: 5);
+      if (mounted) {
+        setState(() {
+          _unreadFeedCount = count;
+          _latestFeedPosts = posts;
+        });
+      }
+    } catch (_) {
+      // Feed not available — no problem
+    }
+  }
+
+  List<Widget> _buildFeedCarouselSection(AppLocalizations? localizations) {
+    if (_latestFeedPosts.isEmpty) return [];
+
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SectionHeader(
+            title: localizations?.feedTitle ?? 'Nyheter',
+          ),
+          TextButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const FeedScreen()),
+              ).then((_) => _loadFeedData());
+            },
+            icon: const Icon(Icons.arrow_forward, size: 16),
+            label: Text(localizations?.seeAll ?? 'Se alle'),
+          ),
+        ],
+      ),
+      const SizedBox(height: AppSpacing.sm),
+      SizedBox(
+        height: 170,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: _latestFeedPosts.length,
+          itemBuilder: (context, index) {
+            return _buildFeedCarouselCard(_latestFeedPosts[index]);
+          },
+        ),
+      ),
+      const SizedBox(height: AppSpacing.xxl),
+    ];
+  }
+
+  Widget _buildFeedCarouselCard(FeedPost post) {
+    final theme = Theme.of(context);
+
+    IconData icon;
+    Color color;
+    switch (post.postType) {
+      case FeedPostType.showResult:
+        icon = Icons.emoji_events;
+        color = AppColors.accent1;
+        break;
+      case FeedPostType.championTitle:
+        icon = Icons.workspace_premium;
+        color = const Color(0xFFFFD700);
+        break;
+      case FeedPostType.litterAnnouncement:
+        icon = Icons.pets;
+        color = AppColors.success;
+        break;
+      case FeedPostType.puppiesAvailable:
+        icon = Icons.sell;
+        color = AppColors.accent4;
+        break;
+    }
+
+    final timeAgo = _formatTimeAgo(post.timestamp);
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const FeedScreen()),
+        ).then((_) => _loadFeedData());
+      },
+      child: Container(
+        width: 260,
+        margin: const EdgeInsets.only(right: AppSpacing.md),
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: AppRadius.lgAll,
+          border: Border.all(color: context.colors.divider),
+          boxShadow: AppShadows.sm,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header row
+            Row(
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.15),
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: Icon(icon, color: color, size: 18),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        post.kennelName,
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        timeAgo,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: context.colors.textCaption,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            const Spacer(),
+
+            // Title
+            Text(
+              post.title,
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            if (post.subtitle != null && post.subtitle!.isNotEmpty) ...[
+              const SizedBox(height: 4),
+              Text(
+                post.subtitle!,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: context.colors.textSecondary,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+
+            const SizedBox(height: AppSpacing.xs),
+
+            // Footer
+            Row(
+              children: [
+                Text(
+                  post.breed,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: context.colors.textCaption,
+                    fontSize: 10,
+                  ),
+                ),
+                const Spacer(),
+                if (post.likes > 0) ...[
+                  Icon(Icons.favorite, size: 12, color: context.colors.textCaption),
+                  const SizedBox(width: 2),
+                  Text(
+                    '${post.likes}',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: context.colors.textCaption,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _formatTimeAgo(DateTime timestamp) {
+    final diff = DateTime.now().difference(timestamp);
+    final l10n = AppLocalizations.of(context);
+    if (diff.inMinutes < 60) {
+      return l10n?.feedMinutesAgo(diff.inMinutes) ?? '${diff.inMinutes}m';
+    } else if (diff.inHours < 24) {
+      return l10n?.feedHoursAgo(diff.inHours) ?? '${diff.inHours}t';
+    } else if (diff.inDays < 7) {
+      return l10n?.feedDaysAgo(diff.inDays) ?? '${diff.inDays}d';
+    } else {
+      return DateFormat('dd.MM').format(timestamp);
+    }
+  }
+
   Widget _buildStatisticsGrid() {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.xlAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.sm,
       ),
       child: Column(
@@ -573,14 +855,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                   Text(
                     value,
                     style: AppTypography.titleLarge.copyWith(
-                      color: AppColors.neutral900,
+                      color: context.colors.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     title,
                     style: AppTypography.caption.copyWith(
-                      color: AppColors.neutral600,
+                      color: context.colors.textMuted,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -602,6 +884,308 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     } catch (e) {
       return 0;
     }
+  }
+
+  // ──── ACTION CARDS (things needing attention) ────
+
+  /// Build action cards section — only shows if there are actionable items
+  List<Widget> _buildActionCardsSection() {
+    final cards = _getActionCards();
+    if (cards.isEmpty) return [];
+
+    return [
+      const SizedBox(height: AppSpacing.xxl),
+      SectionHeader(
+        title: AppLocalizations.of(context)?.attentionNeeded ?? 'Trenger oppmerksomhet',
+      ),
+      const SizedBox(height: AppSpacing.md),
+      ...cards,
+    ];
+  }
+
+  /// Get action cards for items needing attention
+  List<Widget> _getActionCards() {
+    final cards = <Widget>[];
+    final now = DateTime.now();
+
+    try {
+      final dogBox = Hive.box<Dog>('dogs');
+      final puppyBox = Hive.box<Puppy>('puppies');
+      final treatmentBox = Hive.box<TreatmentPlan>('treatment_plans');
+      final vaccineBox = Hive.box<Vaccine>('vaccines');
+      final litterBox = Hive.box<Litter>('litters');
+
+      // ── 1. Overdue/upcoming puppy treatments ──
+      final pendingTreatments = <String>[];
+      for (final plan in treatmentBox.values) {
+        final puppy = puppyBox.values.where((p) => p.id == plan.puppyId).firstOrNull;
+        if (puppy == null) continue;
+
+        final name = puppy.displayName ?? puppy.name;
+        // Check each treatment date
+        if (!plan.wormerDone1 && plan.wormerDate1 != null &&
+            plan.wormerDate1!.isBefore(now.add(const Duration(days: 3)))) {
+          pendingTreatments.add('$name: Ormekur 1');
+        }
+        if (!plan.wormerDone2 && plan.wormerDate2 != null &&
+            plan.wormerDate2!.isBefore(now.add(const Duration(days: 3)))) {
+          pendingTreatments.add('$name: Ormekur 2');
+        }
+        if (!plan.wormerDone3 && plan.wormerDate3 != null &&
+            plan.wormerDate3!.isBefore(now.add(const Duration(days: 3)))) {
+          pendingTreatments.add('$name: Ormekur 3');
+        }
+        if (!plan.vaccineDone1 && plan.vaccineDate1 != null &&
+            plan.vaccineDate1!.isBefore(now.add(const Duration(days: 3)))) {
+          pendingTreatments.add('$name: Vaksinering 1');
+        }
+        if (!plan.vaccineDone2 && plan.vaccineDate2 != null &&
+            plan.vaccineDate2!.isBefore(now.add(const Duration(days: 3)))) {
+          pendingTreatments.add('$name: Vaksinering 2');
+        }
+        if (!plan.microchipDone && plan.microchipDate != null &&
+            plan.microchipDate!.isBefore(now.add(const Duration(days: 3)))) {
+          pendingTreatments.add('$name: ID-merking');
+        }
+      }
+      if (pendingTreatments.isNotEmpty) {
+        cards.add(_buildActionCard(
+          icon: Icons.medical_services_rounded,
+          color: const Color(0xFFF44336),
+          title: '${pendingTreatments.length} behandling${pendingTreatments.length == 1 ? '' : 'er'} snart/forfalt',
+          details: pendingTreatments.take(3).toList(),
+          moreCount: pendingTreatments.length > 3 ? pendingTreatments.length - 3 : 0,
+          onTap: () => _onItemTapped(1), // Go to litters
+        ));
+      }
+
+      // ── 2. Overdue dog vaccines ──
+      final overdueVaccines = <String>[];
+      for (final vaccine in vaccineBox.values) {
+        if (vaccine.nextDueDate != null && vaccine.nextDueDate!.isBefore(now)) {
+          final dog = dogBox.values.where((d) => d.id == vaccine.dogId).firstOrNull;
+          if (dog != null && !dog.isPedigreeOnly && dog.deathDate == null) {
+            overdueVaccines.add('${dog.name}: ${vaccine.name}');
+          }
+        }
+      }
+      if (overdueVaccines.isNotEmpty) {
+        cards.add(_buildActionCard(
+          icon: Icons.vaccines_rounded,
+          color: const Color(0xFFFF9800),
+          title: '${overdueVaccines.length} vaksine${overdueVaccines.length == 1 ? '' : 'r'} forfalt',
+          details: overdueVaccines.take(3).toList(),
+          moreCount: overdueVaccines.length > 3 ? overdueVaccines.length - 3 : 0,
+          onTap: () => _onItemTapped(0), // Go to dogs
+        ));
+      }
+
+      // ── 3. Upcoming vaccines (within 7 days) ──
+      final upcomingVaccines = <String>[];
+      for (final vaccine in vaccineBox.values) {
+        if (vaccine.nextDueDate != null &&
+            vaccine.nextDueDate!.isAfter(now) &&
+            vaccine.nextDueDate!.isBefore(now.add(const Duration(days: 7)))) {
+          final dog = dogBox.values.where((d) => d.id == vaccine.dogId).firstOrNull;
+          if (dog != null && !dog.isPedigreeOnly && dog.deathDate == null) {
+            final daysLeft = vaccine.nextDueDate!.difference(now).inDays;
+            upcomingVaccines.add('${dog.name}: ${vaccine.name} (${daysLeft}d)');
+          }
+        }
+      }
+      if (upcomingVaccines.isNotEmpty) {
+        cards.add(_buildActionCard(
+          icon: Icons.schedule_rounded,
+          color: const Color(0xFF2196F3),
+          title: '${upcomingVaccines.length} vaksine${upcomingVaccines.length == 1 ? '' : 'r'} denne uken',
+          details: upcomingVaccines.take(3).toList(),
+          moreCount: upcomingVaccines.length > 3 ? upcomingVaccines.length - 3 : 0,
+          onTap: () => _onItemTapped(0),
+        ));
+      }
+
+      // ── 4. Dog birthdays this week ──
+      final birthdayDogs = <String>[];
+      for (final dog in dogBox.values) {
+        if (dog.isPedigreeOnly || dog.deathDate != null) continue;
+        final nextBirthday = DateTime(now.year, dog.dateOfBirth.month, dog.dateOfBirth.day);
+        final adjustedBirthday = nextBirthday.isBefore(now.subtract(const Duration(days: 1)))
+            ? DateTime(now.year + 1, dog.dateOfBirth.month, dog.dateOfBirth.day)
+            : nextBirthday;
+        final daysUntil = adjustedBirthday.difference(now).inDays;
+        if (daysUntil >= 0 && daysUntil <= 7) {
+          final age = adjustedBirthday.year - dog.dateOfBirth.year;
+          birthdayDogs.add(daysUntil == 0
+              ? '${dog.name} fyller $age år i dag! 🎂'
+              : '${dog.name} fyller $age år om $daysUntil d');
+        }
+      }
+      if (birthdayDogs.isNotEmpty) {
+        cards.add(_buildActionCard(
+          icon: Icons.cake_rounded,
+          color: const Color(0xFF9C27B0),
+          title: '${birthdayDogs.length} bursdag${birthdayDogs.length == 1 ? '' : 'er'} denne uken',
+          details: birthdayDogs.take(3).toList(),
+          moreCount: birthdayDogs.length > 3 ? birthdayDogs.length - 3 : 0,
+          onTap: () => _onItemTapped(0),
+        ));
+      }
+
+      // ── 5. Puppies not yet delivered (past 8 weeks) ──
+      final lateDeliveries = <String>[];
+      for (final puppy in puppyBox.values) {
+        if ((puppy.status == 'Sold' || puppy.status == 'Reserved') &&
+            puppy.deliveredDate == null) {
+          final weeksOld = puppy.getAgeInWeeks();
+          if (weeksOld >= 8) {
+            lateDeliveries.add('${puppy.displayName ?? puppy.name} ($weeksOld uker gammel)');
+          }
+        }
+      }
+      if (lateDeliveries.isNotEmpty) {
+        cards.add(_buildActionCard(
+          icon: Icons.local_shipping_rounded,
+          color: const Color(0xFFFF5722),
+          title: '${lateDeliveries.length} valp${lateDeliveries.length == 1 ? 'e' : 'er'} venter på levering',
+          details: lateDeliveries.take(3).toList(),
+          moreCount: lateDeliveries.length > 3 ? lateDeliveries.length - 3 : 0,
+          onTap: () => _onItemTapped(1),
+        ));
+      }
+
+      // ── 6. Weight check reminders (active litters without recent weight logs) ──
+      final needsWeightCheck = <String>[];
+      final weightLogBox = Hive.isBoxOpen('puppy_weight_logs')
+          ? Hive.box('puppy_weight_logs')
+          : null;
+      for (final litter in litterBox.values) {
+        final weeksOld = litter.getAgeInWeeks();
+        if (weeksOld >= 0 && weeksOld <= 8) {
+          // Check if any puppies in litter have been weighed in last 5 days
+          final litterPuppies = puppyBox.values.where((p) => p.litterId == litter.id).toList();
+          if (litterPuppies.isNotEmpty && weightLogBox != null) {
+            bool hasRecentWeight = false;
+            for (final puppy in litterPuppies) {
+              final logs = weightLogBox.values.where((log) {
+                if (log is! HiveObject) return false;
+                try {
+                  final dynamic l = log;
+                  return l.puppyId == puppy.id &&
+                      (l.logDate as DateTime).isAfter(now.subtract(const Duration(days: 5)));
+                } catch (_) {
+                  return false;
+                }
+              });
+              if (logs.isNotEmpty) {
+                hasRecentWeight = true;
+                break;
+              }
+            }
+            if (!hasRecentWeight && litterPuppies.length > 1) {
+              needsWeightCheck.add('${litter.damName}s kull ($weeksOld uker)');
+            }
+          }
+        }
+      }
+      if (needsWeightCheck.isNotEmpty) {
+        cards.add(_buildActionCard(
+          icon: Icons.monitor_weight_rounded,
+          color: const Color(0xFF607D8B),
+          title: '${needsWeightCheck.length} kull trenger veiing',
+          details: needsWeightCheck.take(3).toList(),
+          moreCount: needsWeightCheck.length > 3 ? needsWeightCheck.length - 3 : 0,
+          onTap: () => _onItemTapped(1),
+        ));
+      }
+    } catch (e) {
+      // Return empty on error
+    }
+
+    return cards;
+  }
+
+  Widget _buildActionCard({
+    required IconData icon,
+    required Color color,
+    required String title,
+    required List<String> details,
+    int moreCount = 0,
+    VoidCallback? onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: AppRadius.lgAll,
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.06),
+              borderRadius: AppRadius.lgAll,
+              border: Border.all(color: color.withValues(alpha: 0.2)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.15),
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: Icon(icon, color: color, size: 20),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: AppTypography.labelLarge.copyWith(
+                          color: color,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      ...details.map((d) => Padding(
+                        padding: const EdgeInsets.only(top: 1),
+                        child: Text(
+                          d,
+                          style: AppTypography.caption.copyWith(
+                            color: context.colors.textMuted,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )),
+                      if (moreCount > 0)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 1),
+                          child: Text(
+                            '+ $moreCount til...',
+                            style: AppTypography.caption.copyWith(
+                              color: color.withValues(alpha: 0.7),
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: color.withValues(alpha: 0.5),
+                  size: 24,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   /// Get all upcoming events sorted by date
@@ -647,7 +1231,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                   statusColor = const Color(0xFF2196F3);
                   break;
                 default:
-                  statusColor = Colors.grey;
+                  statusColor = context.colors.textCaption;
               }
               
               events.add({
@@ -756,9 +1340,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       return Container(
         padding: const EdgeInsets.all(AppSpacing.xl),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: context.colors.surface,
           borderRadius: AppRadius.xlAll,
-          border: Border.all(color: AppColors.neutral200),
+          border: Border.all(color: context.colors.border),
           boxShadow: AppShadows.sm,
         ),
         child: Column(
@@ -766,20 +1350,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Icon(
               Icons.event_available_rounded,
               size: 48,
-              color: AppColors.neutral400,
+              color: context.colors.textDisabled,
             ),
             const SizedBox(height: AppSpacing.md),
             Text(
               AppLocalizations.of(context)?.noUpcomingEvents ?? 'No upcoming events',
               style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.neutral600,
+                color: context.colors.textMuted,
               ),
             ),
             const SizedBox(height: AppSpacing.xs),
             Text(
               AppLocalizations.of(context)?.registerHeatOrMating ?? 'Register heat cycle or mating to see events here',
               style: AppTypography.caption.copyWith(
-                color: AppColors.neutral500,
+                color: context.colors.textCaption,
               ),
               textAlign: TextAlign.center,
             ),
@@ -790,9 +1374,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.xlAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
         boxShadow: AppShadows.sm,
       ),
       child: Column(
@@ -886,7 +1470,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                           child: Text(
                             event['title'] as String,
                             style: AppTypography.titleSmall.copyWith(
-                              color: AppColors.neutral900,
+                              color: context.colors.textPrimary,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -910,16 +1494,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                           ),
                       ],
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: AppSpacing.xxs),
                     Text(
                       event['subtitle'] as String,
                       style: AppTypography.caption.copyWith(
-                        color: AppColors.neutral600,
+                        color: context.colors.textMuted,
                       ),
                     ),
                     // Show progesterone info for progesterone events
                     if (type == 'progesterone') ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.xs),
                       // Show progesterone value and status
                       Row(
                         children: [
@@ -936,7 +1520,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.science, size: 10, color: color),
-                                const SizedBox(width: 4),
+                                const SizedBox(width: AppSpacing.xs),
                                 Text(
                                   event['progesteroneDisplay'] as String? ?? 
                                     '${(event['progesteroneValue'] as double).toStringAsFixed(1)} ng/mL',
@@ -949,7 +1533,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(width: 4),
+                          const SizedBox(width: AppSpacing.xs),
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: AppSpacing.xs,
@@ -972,7 +1556,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                       ),
                       // Show recommendation
                       if (event['recommendation'] != null) ...[
-                        const SizedBox(height: 4),
+                        const SizedBox(height: AppSpacing.xs),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppSpacing.sm,
@@ -981,7 +1565,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                           decoration: BoxDecoration(
                             color: event['canMate'] == true 
                                 ? color.withValues(alpha: 0.15)
-                                : AppColors.neutral100,
+                                : context.colors.neutral100,
                             borderRadius: AppRadius.xsAll,
                           ),
                           child: Row(
@@ -990,14 +1574,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                               Icon(
                                 event['canMate'] == true ? Icons.check_circle : Icons.info_outline,
                                 size: 10,
-                                color: event['canMate'] == true ? color : AppColors.neutral600,
+                                color: event['canMate'] == true ? color : context.colors.textMuted,
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: AppSpacing.xs),
                               Flexible(
                                 child: Text(
                                   event['recommendation'] as String,
                                   style: AppTypography.caption.copyWith(
-                                    color: event['canMate'] == true ? color : AppColors.neutral700,
+                                    color: event['canMate'] == true ? color : context.colors.textTertiary,
                                     fontWeight: event['isUrgent'] == true ? FontWeight.bold : FontWeight.w500,
                                     fontSize: 10,
                                   ),
@@ -1010,7 +1594,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                     ],
                     // Show mating window for heat events
                     if (type == 'heat') ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: AppSpacing.xs),
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.sm,
@@ -1042,13 +1626,13 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 decoration: BoxDecoration(
                   color: daysUntil <= 7 
                       ? color.withValues(alpha: 0.1)
-                      : AppColors.neutral100,
+                      : context.colors.neutral100,
                   borderRadius: AppRadius.smAll,
                 ),
                 child: Text(
                   type == 'progesterone' ? 'NÅ' : timeText,
                   style: AppTypography.caption.copyWith(
-                    color: daysUntil <= 7 || type == 'progesterone' ? color : AppColors.neutral600,
+                    color: daysUntil <= 7 || type == 'progesterone' ? color : context.colors.textMuted,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -1061,7 +1645,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             height: 1,
             indent: AppSpacing.md,
             endIndent: AppSpacing.md,
-            color: AppColors.neutral200,
+            color: context.colors.border,
           ),
       ],
     );
@@ -1196,9 +1780,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.7,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        decoration: BoxDecoration(
+          color: context.colors.surface,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1206,18 +1790,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Container(
               width: 40,
               height: 4,
-              margin: const EdgeInsets.only(top: 12),
+              margin: const EdgeInsets.only(top: AppSpacing.md),
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: context.colors.divider,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
                 children: [
                   Icon(Icons.emoji_events, color: themeColor),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.md),
                   Text(
                     AppLocalizations.of(context)?.selectDog ?? 'Select dog',
                     style: const TextStyle(
@@ -1264,7 +1848,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
           ],
         ),
       ),
@@ -1292,7 +1876,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             vertical: AppSpacing.md,
           ),
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: context.colors.surface,
             borderRadius: AppRadius.mdAll,
             border: Border.all(color: color.withValues(alpha: 0.3)),
             boxShadow: [
@@ -1323,7 +1907,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 child: Text(
                   title,
                   style: AppTypography.titleSmall.copyWith(
-                    color: AppColors.neutral800,
+                    color: context.colors.textSecondary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

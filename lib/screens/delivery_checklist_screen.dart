@@ -200,7 +200,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(localizations?.deliveryDateSet ?? 'Leveringsdato satt'),
-              backgroundColor: Colors.green,
+              backgroundColor: AppColors.success,
             ),
           );
         }
@@ -260,7 +260,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
           _buildCategorySection(
             DeliveryChecklistCategory.health,
             Icons.medical_services_rounded,
-            Colors.red,
+            AppColors.error,
             localizations,
           ),
           
@@ -269,7 +269,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
           _buildCategorySection(
             DeliveryChecklistCategory.documents,
             Icons.description_rounded,
-            Colors.blue,
+            AppColors.info,
             localizations,
           ),
           
@@ -278,7 +278,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
           _buildCategorySection(
             DeliveryChecklistCategory.equipment,
             Icons.shopping_bag_rounded,
-            Colors.orange,
+            AppColors.warning,
             localizations,
           ),
           
@@ -287,7 +287,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
           _buildCategorySection(
             DeliveryChecklistCategory.information,
             Icons.info_rounded,
-            Colors.purple,
+            AppColors.accent5,
             localizations,
           ),
 
@@ -307,7 +307,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: isComplete
-              ? [Colors.green, Colors.green.shade700]
+              ? [AppColors.success, AppColors.success.withValues(alpha: 0.8)]
               : [primaryColor, primaryColor.withValues(alpha: 0.8)],
         ),
         borderRadius: AppRadius.xlAll,
@@ -473,14 +473,14 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
                   ),
                   decoration: BoxDecoration(
                     color: completedCount == items.length
-                        ? Colors.green.withValues(alpha: 0.15)
+                        ? AppColors.success.withValues(alpha: 0.15)
                         : color.withValues(alpha: 0.1),
                     borderRadius: AppRadius.smAll,
                   ),
                   child: Text(
                     '$completedCount/${items.length}',
                     style: AppTypography.labelMedium.copyWith(
-                      color: completedCount == items.length ? Colors.green : color,
+                      color: completedCount == items.length ? AppColors.success : color,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -513,10 +513,10 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
               width: 24,
               height: 24,
               decoration: BoxDecoration(
-                color: item.isCompleted ? Colors.green : Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
+                color: item.isCompleted ? AppColors.success : Colors.transparent,
+                borderRadius: AppRadius.smAll,
                 border: Border.all(
-                  color: item.isCompleted ? Colors.green : Theme.of(context).colorScheme.outline,
+                  color: item.isCompleted ? AppColors.success : Theme.of(context).colorScheme.outline,
                   width: 2,
                 ),
               ),
@@ -542,7 +542,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
                     Text(
                       _dateFormat.format(item.completedDate!),
                       style: AppTypography.caption.copyWith(
-                        color: Colors.green,
+                        color: AppColors.success,
                       ),
                     ),
                 ],
@@ -551,7 +551,7 @@ class _DeliveryChecklistScreenState extends State<DeliveryChecklistScreen> {
             if (item.isCompleted)
               Icon(
                 Icons.check_circle,
-                color: Colors.green,
+                color: AppColors.success,
                 size: 20,
               ),
           ],

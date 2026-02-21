@@ -10,8 +10,11 @@ import 'package:breedly/utils/constants.dart';
 import 'dart:io' show Directory, File;
 import 'package:path_provider/path_provider.dart';
 import 'package:breedly/utils/app_bar_builder.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class PurchaseContractScreen extends StatefulWidget {
   final Puppy puppy;
@@ -169,16 +172,17 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
   }
 
   void _saveContract() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedBuyer == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Velg en kjøper')),
+        SnackBar(content: Text(l10n.selectBuyer)),
       );
       return;
     }
 
     if (_priceController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Angi pris')),
+        SnackBar(content: Text(l10n.enterPrice)),
       );
       return;
     }
@@ -239,7 +243,7 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kontrakt lagret')),
+          SnackBar(content: Text(l10n.contractSaved)),
         );
 
         Navigator.pop(context);
@@ -247,7 +251,7 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil ved lagring: $e')),
+          SnackBar(content: Text(l10n.errorSaving(e.toString()))),
         );
       }
     }
@@ -255,14 +259,15 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: 'Kjøpekontrakt',
+        title: l10n.purchaseContract,
         context: context,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,17 +275,17 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
               // Puppy Info Card
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Valp',
+                        l10n.puppy,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w800,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: AppSpacing.md),
                       Row(
                         children: [
                           Container(
@@ -289,19 +294,19 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: widget.puppy.gender == 'Male'
-                                  ? Colors.blue.withValues(alpha: ThemeOpacity.high(context))
-                                  : Colors.pink.withValues(alpha: ThemeOpacity.high(context)),
+                                  ? AppColors.male.withValues(alpha: ThemeOpacity.high(context))
+                                  : AppColors.female.withValues(alpha: ThemeOpacity.high(context)),
                             ),
                             child: Center(
                               child: Icon(
                                 Icons.pets,
                                 color: widget.puppy.gender == 'Male'
-                                    ? Colors.blue
-                                    : Colors.pink,
+                                    ? AppColors.male
+                                    : AppColors.female,
                               ),
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          const SizedBox(width: AppSpacing.md),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,10 +319,10 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                                   ),
                                 ),
                                 Text(
-                                  '${widget.puppy.gender == "Male" ? "Hannvalp" : "Tispevalp"} • ${widget.puppy.color}',
+                                  '${widget.puppy.gender == "Male" ? l10n.malePuppy : l10n.femalePuppy} • ${widget.puppy.color}',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Colors.grey[600],
+                                    color: context.colors.textMuted,
                                   ),
                                 ),
                               ],
@@ -329,24 +334,24 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
 
               // Buyer Selection
               Text(
-                'Kjøperinformasjon',
+                l10n.buyerInformation,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               DropdownButtonFormField<Buyer>(
                 isExpanded: true,
                 // ignore: deprecated_member_use
                 value: _selectedBuyer,
                 decoration: InputDecoration(
-                  labelText: 'Velg kjøper',
+                  labelText: l10n.selectBuyer,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
                 items: _availableBuyers
@@ -365,173 +370,173 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 },
               ),
               if (_selectedBuyer != null) ...[
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(AppSpacing.md),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildInfoRow('Navn', _selectedBuyer!.name),
+                        _buildInfoRow(l10n.name, _selectedBuyer!.name),
                         if (_selectedBuyer!.email != null)
-                          _buildInfoRow('E-post', _selectedBuyer!.email!),
+                          _buildInfoRow(l10n.email, _selectedBuyer!.email!),
                         if (_selectedBuyer!.phone != null)
-                          _buildInfoRow('Telefon', _selectedBuyer!.phone!),
+                          _buildInfoRow(l10n.phone, _selectedBuyer!.phone!),
                         if (_selectedBuyer!.address != null)
-                          _buildInfoRow('Adresse', _selectedBuyer!.address!),
+                          _buildInfoRow(l10n.address, _selectedBuyer!.address!),
                       ],
                     ),
                   ),
                 ),
               ],
-              const SizedBox(height: 20),
+              const SizedBox(height: AppSpacing.xl),
 
               // Contract Details
               Text(
-                'Kontraktdetaljer',
+                l10n.contractDetails,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _priceController,
                 decoration: InputDecoration(
-                  labelText: 'Pris',
+                  labelText: l10n.price,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   prefixIcon: const Icon(Icons.attach_money),
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _depositController,
                 decoration: InputDecoration(
-                  labelText: 'Depositum (valgfritt)',
-                  hintText: 'Beløp allerede betalt som forskudd',
+                  labelText: l10n.depositOptional,
+                  hintText: l10n.amountAlreadyPaidAsAdvance,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   prefixIcon: const Icon(Icons.savings_outlined),
                 ),
                 keyboardType:
                     const TextInputType.numberWithOptions(decimal: true),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _contractNumberController,
                 decoration: InputDecoration(
-                  labelText: 'Kontraktnummer (valgfritt)',
+                  labelText: l10n.contractNumberOptional,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _paymentTermsController,
                 decoration: InputDecoration(
-                  labelText: 'Betalingsbetingelser',
-                  hintText: 'F.eks. Full betaling ved opphenesting',
+                  labelText: l10n.paymentTerms,
+                  hintText: l10n.paymentTermsExampleHint,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
                 maxLines: 2,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _deliveryLocationController,
                 decoration: InputDecoration(
-                  labelText: 'Overlevingssted (valgfritt)',
-                  hintText: 'F.eks. Oppdretters adresse',
+                  labelText: l10n.deliveryLocationOptional,
+                  hintText: l10n.deliveryLocationHint,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                   prefixIcon: const Icon(Icons.location_on_outlined),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Standard kontraktvilkår med checkboxes
               Text(
-                'Kontraktvilkår',
+                l10n.contractTerms,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: AppSpacing.xs),
               Text(
-                'Velg hvilke vilkår som skal inkluderes i kontrakten',
+                l10n.selectTermsToInclude,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
+                  color: context.colors.textMuted,
                   fontStyle: FontStyle.italic,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               CheckboxListTile(
-                title: const Text('Generelt'),
-                subtitle: const Text('Grunnleggende kjøps- og salgsvilkår'),
+                title: Text(l10n.termGeneral),
+                subtitle: Text(l10n.termGeneralSubtitle),
                 value: _termGeneral,
                 onChanged: (value) => setState(() => _termGeneral = value ?? false),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Helse'),
-                subtitle: const Text('Garanti om frisk valp og veterinærkontroll'),
+                title: Text(l10n.termHealth),
+                subtitle: Text(l10n.termHealthSubtitle),
                 value: _termHealth,
                 onChanged: (value) => setState(() => _termHealth = value ?? false),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Vaksinasjoner og behandlinger'),
-                subtitle: const Text('Vaksinert og avmasket iht. retningslinjer'),
+                title: Text(l10n.termVaccinations),
+                subtitle: Text(l10n.termVaccinationsSubtitle),
                 value: _termVaccination,
                 onChanged: (value) => setState(() => _termVaccination = value ?? false),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Tilbakelevering'),
-                subtitle: const Text('Selger kontaktes først ved omplassering'),
+                title: Text(l10n.termReturn),
+                subtitle: Text(l10n.termReturnSubtitle),
                 value: _termReturn,
                 onChanged: (value) => setState(() => _termReturn = value ?? false),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Ansvar'),
-                subtitle: const Text('Kjøper overtar ansvar fra overlevering'),
+                title: Text(l10n.termResponsibility),
+                subtitle: Text(l10n.termResponsibilitySubtitle),
                 value: _termResponsibility,
                 onChanged: (value) => setState(() => _termResponsibility = value ?? false),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Registrering'),
-                subtitle: const Text('Valpen registreres på ny eier'),
+                title: Text(l10n.termRegistration),
+                subtitle: Text(l10n.termRegistrationSubtitle),
                 value: _termRegistration,
                 onChanged: (value) => setState(() => _termRegistration = value ?? false),
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
 
               // Tilleggsvilkår
               Text(
-                'Tilleggsvilkår',
+                l10n.additionalTerms,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               CheckboxListTile(
-                title: const Text('Kastrering/sterilisering påkrevd'),
+                title: Text(l10n.neuteringRequired),
                 value: _spayNeuterRequired,
                 onChanged: (value) {
                   setState(() {
@@ -542,7 +547,7 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Returklausul inkludert'),
+                title: Text(l10n.returnClauseIncluded),
                 value: _returnClauseIncluded,
                 onChanged: (value) {
                   setState(() {
@@ -552,19 +557,19 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Dokumentasjon
               Text(
-                'Dokumentasjon',
+                l10n.documentation,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: AppSpacing.sm),
               CheckboxListTile(
-                title: const Text('Stamtavle leveres'),
-                subtitle: const Text('Stamtavle følger med ved overlevering'),
+                title: Text(l10n.pedigreeDeliveredLabel),
+                subtitle: Text(l10n.pedigreeDeliveredSubtitle),
                 value: _pedigreeDelivered,
                 onChanged: (value) {
                   setState(() {
@@ -575,8 +580,8 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Helseattest vedlagt'),
-                subtitle: const Text('Veterinærattest på helsestatus'),
+                title: Text(l10n.vetCertificateAttached),
+                subtitle: Text(l10n.vetCertificateAttachedSubtitle),
                 value: _vetCertificateAttached,
                 onChanged: (value) {
                   setState(() {
@@ -587,8 +592,8 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 controlAffinity: ListTileControlAffinity.leading,
               ),
               CheckboxListTile(
-                title: const Text('Forsikring overføres'),
-                subtitle: const Text('Valpens forsikring overføres til kjøper'),
+                title: Text(l10n.insuranceTransferred),
+                subtitle: Text(l10n.insuranceTransferredSubtitle),
                 value: _insuranceTransferred,
                 onChanged: (value) {
                   setState(() {
@@ -598,34 +603,34 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 contentPadding: EdgeInsets.zero,
                 controlAffinity: ListTileControlAffinity.leading,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Special Terms
               TextFormField(
                 controller: _specialTermsController,
                 decoration: InputDecoration(
-                  labelText: 'Spesielle vilkår (valgfritt)',
-                  hintText: 'Eventuelle spesielle avtaler mellom partene...',
+                  labelText: l10n.specialTermsOptional,
+                  hintText: l10n.specialTermsHint,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
                 maxLines: 4,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Additional Notes
               TextFormField(
                 controller: _notesController,
                 decoration: InputDecoration(
-                  labelText: 'Notater (valgfritt)',
+                  labelText: l10n.notesOptional,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
                 maxLines: 3,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
 
               // Save Button
               SizedBox(
@@ -633,15 +638,15 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                 child: ElevatedButton.icon(
                   onPressed: _saveContract,
                   icon: const Icon(Icons.save),
-                  label: const Text('Lagre kontrakt'),
+                  label: Text(l10n.saveContract),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
-                    foregroundColor: Colors.black87,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    foregroundColor: context.colors.textPrimary,
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.md),
 
               // Export PDF Button (only if contract is already saved)
               if (_contract.key != null)
@@ -650,9 +655,9 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
                   child: OutlinedButton.icon(
                     onPressed: () => _exportContractPDF(),
                     icon: const Icon(Icons.file_download),
-                    label: const Text('Last ned som PDF'),
+                    label: Text(l10n.downloadAsPdf),
                     style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     ),
                   ),
                 ),
@@ -665,14 +670,14 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: TextStyle(
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -693,10 +698,11 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
   }
 
   Future<void> _exportContractPDF() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       if (_selectedBuyer == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Velg kjøper før eksport')),
+          SnackBar(content: Text(l10n.selectBuyerBeforeExport)),
         );
         return;
       }
@@ -722,7 +728,7 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
       await file.writeAsBytes(await pdf.save());
 
       await NotificationService().showDownloadNotification(
-        title: 'PDF nedlastet',
+        title: l10n.pdfDownloaded,
         fileName: 'kontrakt_${widget.puppy.name}.pdf',
         filePath: file.path,
       );
@@ -730,7 +736,7 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('PDF lagret:\n${file.path}'),
+            content: Text(l10n.pdfSavedAt(file.path)),
             duration: const Duration(seconds: 4),
           ),
         );
@@ -738,7 +744,7 @@ class _PurchaseContractScreenState extends State<PurchaseContractScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil ved eksport: $e')),
+          SnackBar(content: Text(l10n.errorExporting(e.toString()))),
         );
       }
     }

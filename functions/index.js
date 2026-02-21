@@ -1,6 +1,8 @@
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { defineSecret } = require("firebase-functions/params");
+const { getFirestore, FieldValue } = require("firebase-admin/firestore");
+const { initializeApp } = require("firebase-admin/app");
 
 // Store API key as Firebase secret (set via: firebase functions:secrets:set GEMINI_API_KEY)
 const geminiApiKey = defineSecret("GEMINI_API_KEY");
@@ -11,14 +13,15 @@ IMPORTANT RULES:
 - The MAIN DOG (Hovedhund) is the dog this pedigree belongs to. Its name is usually at the top, often after a label like "Name:", "Navn:", "Nimi:", "Namn:", or in the title.
 - The SIRE (Far/Father) is marked with labels like "Sire:", "Far:", "Father:", "Fader:", "Isä:"
 - The DAM (Mor/Mother) is marked with labels like "Dam:", "Mor:", "Mother:", "Moder:", "Emä:"
-- Most pedigrees show 3 generations: parents, grandparents, and great-grandparents
-- Great-grandparents are the outermost/rightmost column in the pedigree tree
+- Pedigrees can show 3 to 5 generations: parents, grandparents, great-grandparents, and potentially 4th and 5th generation ancestors
+- The rightmost/outermost columns contain the oldest ancestors
 - Registration numbers look like "NO12345/2020", "FIN12345/20", "S12345/2020", etc.
 - Dates can be dd.mm.yyyy, dd/mm/yyyy, or yyyy-mm-dd format
 - Keep dates in the format you find them
 - If you cannot read a field clearly, set it to null
 - Names of dogs are typically multi-word, often including kennel names like "Kennel's Champion Name"
 - Gender must be exactly "Male" or "Female" or null
+- Extract as many generations as visible in the document (up to 5)
 
 Return ONLY valid JSON in this exact format (no markdown, no code blocks):
 {
@@ -53,7 +56,23 @@ Return ONLY valid JSON in this exact format (no markdown, no code blocks):
   "maternal_gf_father": {"name": "string or null", "registration_number": "string or null"},
   "maternal_gf_mother": {"name": "string or null", "registration_number": "string or null"},
   "maternal_gm_father": {"name": "string or null", "registration_number": "string or null"},
-  "maternal_gm_mother": {"name": "string or null", "registration_number": "string or null"}
+  "maternal_gm_mother": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gf_m_dam": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "p_gm_m_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gf_m_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_f_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_f_dam": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_m_sire": {"name": "string or null", "registration_number": "string or null"},
+  "m_gm_m_dam": {"name": "string or null", "registration_number": "string or null"}
 }`;
 
 exports.scanPedigree = onCall(
@@ -92,7 +111,7 @@ exports.scanPedigree = onCall(
         model: "gemini-2.0-flash",
         generationConfig: {
           temperature: 0.1,
-          maxOutputTokens: 4096,
+          maxOutputTokens: 8192,
         },
       });
 
@@ -125,5 +144,101 @@ exports.scanPedigree = onCall(
       if (error instanceof HttpsError) throw error;
       throw new HttpsError("internal", `Feil ved analyse av stamtavle: ${error.message}`);
     }
+  }
+);
+
+// Initialize Firebase Admin
+initializeApp();
+
+// =============================================================================
+// PROMO CODE MANAGEMENT (Admin only)
+// =============================================================================
+
+// Admin UIDs that can create promo codes — add your own Firebase Auth UID here
+const ADMIN_UIDS = [
+  // TODO: Replace with your Firebase Auth UID
+  // You can find it in Firebase Console > Authentication > Users
+];
+
+/**
+ * Create a promo code for friends and family
+ * 
+ * Call with:
+ * {
+ *   code: "VENNER2025",
+ *   type: "lifetime" | "months",
+ *   durationMonths: 3,       // required if type === "months"
+ *   maxUses: 5,              // optional, default unlimited
+ *   expiresAt: "2025-12-31"  // optional expiry for the code itself
+ * }
+ */
+exports.createPromoCode = onCall(
+  {
+    memory: "256MiB",
+    timeoutSeconds: 15,
+    maxInstances: 5,
+  },
+  async (request) => {
+    // Require authentication
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Du må være logget inn.");
+    }
+
+    // Check admin access
+    if (!ADMIN_UIDS.includes(request.auth.uid)) {
+      throw new HttpsError("permission-denied", "Du har ikke tilgang til å opprette kampanjekoder.");
+    }
+
+    const { code, type, durationMonths, maxUses, expiresAt } = request.data;
+
+    // Validate inputs
+    if (!code || typeof code !== "string" || code.length < 3) {
+      throw new HttpsError("invalid-argument", "Kode må være minst 3 tegn.");
+    }
+
+    if (!["lifetime", "months"].includes(type)) {
+      throw new HttpsError("invalid-argument", "Type må være 'lifetime' eller 'months'.");
+    }
+
+    if (type === "months" && (!durationMonths || durationMonths < 1)) {
+      throw new HttpsError("invalid-argument", "durationMonths må være minst 1.");
+    }
+
+    const db = getFirestore();
+    const codeRef = db.collection("promo_codes").doc(code.toUpperCase());
+
+    // Check if code already exists
+    const existing = await codeRef.get();
+    if (existing.exists) {
+      throw new HttpsError("already-exists", `Koden '${code}' finnes allerede.`);
+    }
+
+    // Create the promo code document
+    const promoData = {
+      code: code.toUpperCase(),
+      type: type,
+      maxUses: maxUses || null,
+      usedCount: 0,
+      usedBy: [],
+      createdAt: FieldValue.serverTimestamp(),
+      createdBy: request.auth.uid,
+      active: true,
+    };
+
+    if (type === "months") {
+      promoData.durationMonths = durationMonths;
+    }
+
+    if (expiresAt) {
+      promoData.expiresAt = new Date(expiresAt);
+    }
+
+    await codeRef.set(promoData);
+
+    return {
+      success: true,
+      message: `Kampanjekode '${code.toUpperCase()}' opprettet.`,
+      code: code.toUpperCase(),
+    };
   }
 );

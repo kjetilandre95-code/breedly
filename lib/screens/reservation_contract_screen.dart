@@ -11,6 +11,8 @@ import '../models/reservation_contract.dart';
 import '../services/pdf_contract_service.dart';
 import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class ReservationContractScreen extends StatefulWidget {
   final Puppy? preselectedPuppy;
@@ -115,15 +117,16 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
 
   Future<void> _generatePdf() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedPuppy == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Velg en valp')),
+        SnackBar(content: Text(l10n.selectPuppy)),
       );
       return;
     }
     if (_selectedBuyer == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Velg en kjøper')),
+        SnackBar(content: Text(l10n.selectBuyer)),
       );
       return;
     }
@@ -178,18 +181,18 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(isEditing ? 'Reservasjonsavtale oppdatert!' : 'Reservasjonsavtale opprettet!')),
+          SnackBar(content: Text(isEditing ? l10n.reservationContractUpdated : l10n.reservationContractCreated)),
         );
         
         await Share.shareXFiles(
           [XFile(file.path)],
-          subject: 'Reservasjonsavtale - ${_selectedPuppy!.name}',
+          subject: '${l10n.reservationContract} - ${_selectedPuppy!.name}',
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil: $e')),
+          SnackBar(content: Text(l10n.genericError(e.toString()))),
         );
       }
     } finally {
@@ -201,37 +204,38 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reservasjonsavtale'),
+        title: Text(l10n.reservationContract),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Form(
               key: _formKey,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Puppy selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Valp',
+                              l10n.puppy,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Puppy>(
                               isExpanded: true,
                               initialValue: _selectedPuppy,
-                              decoration: const InputDecoration(
-                                labelText: 'Velg valp',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.selectPuppy,
+                                border: const OutlineInputBorder(),
                               ),
                               items: _allPuppies.map((puppy) {
                                 final mother = _getMotherForPuppy(puppy);
@@ -247,17 +251,17 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                                 setState(() => _selectedPuppy = puppy);
                               },
                               validator: (value) =>
-                                  value == null ? 'Påkrevd' : null,
+                                  value == null ? l10n.required : null,
                             ),
                             if (_selectedPuppy != null) ...[
-                              const SizedBox(height: 12),
+                              const SizedBox(height: AppSpacing.md),
                               Text(
-                                'Kjønn: ${_selectedPuppy!.gender == 'male' ? 'Hannhund' : 'Tispe'}',
+                                '${l10n.gender}: ${_selectedPuppy!.gender == 'male' ? l10n.maleDog : l10n.female}',
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               if (_selectedPuppy!.color.isNotEmpty)
                                 Text(
-                                  'Farge: ${_selectedPuppy!.color}',
+                                  '${l10n.color}: ${_selectedPuppy!.color}',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                             ],
@@ -265,26 +269,26 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Buyer selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Kjøper',
+                              l10n.buyer,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Buyer>(
                               isExpanded: true,
                               initialValue: _selectedBuyer,
-                              decoration: const InputDecoration(
-                                labelText: 'Velg kjøper',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.selectBuyer,
+                                border: const OutlineInputBorder(),
                               ),
                               items: _allBuyers.map((buyer) {
                                 return DropdownMenuItem(
@@ -299,22 +303,22 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                                 setState(() => _selectedBuyer = buyer);
                               },
                               validator: (value) =>
-                                  value == null ? 'Påkrevd' : null,
+                                  value == null ? l10n.required : null,
                             ),
                             if (_selectedBuyer != null) ...[
-                              const SizedBox(height: 12),
+                              const SizedBox(height: AppSpacing.md),
                               Text(
-                                'Adresse: ${_selectedBuyer!.address}',
+                                '${l10n.address}: ${_selectedBuyer!.address}',
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               if (_selectedBuyer!.phone != null)
                                 Text(
-                                  'Telefon: ${_selectedBuyer!.phone}',
+                                  '${l10n.phone}: ${_selectedBuyer!.phone}',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               if (_selectedBuyer!.email != null)
                                 Text(
-                                  'E-post: ${_selectedBuyer!.email}',
+                                  '${l10n.email}: ${_selectedBuyer!.email}',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                             ],
@@ -322,56 +326,56 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Price info
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Priser',
+                              l10n.prices,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _reservationFeeController,
-                              decoration: const InputDecoration(
-                                labelText: 'Reservasjonsgebyr (kr)',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.reservationFeeLabel,
+                                border: const OutlineInputBorder(),
                                 prefixText: 'kr ',
                               ),
                               keyboardType: TextInputType.number,
                               validator: (value) {
-                                if (value?.isEmpty ?? true) return 'Påkrevd';
+                                if (value?.isEmpty ?? true) return l10n.required;
                                 if (double.tryParse(value!) == null) {
-                                  return 'Ugyldig beløp';
+                                  return l10n.invalidAmount;
                                 }
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _totalPriceController,
-                              decoration: const InputDecoration(
-                                labelText: 'Total pris for valpen (kr)',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.totalPriceForPuppy,
+                                border: const OutlineInputBorder(),
                                 prefixText: 'kr ',
                               ),
                               keyboardType: TextInputType.number,
                               validator: (value) {
-                                if (value?.isEmpty ?? true) return 'Påkrevd';
+                                if (value?.isEmpty ?? true) return l10n.required;
                                 if (double.tryParse(value!) == null) {
-                                  return 'Ugyldig beløp';
+                                  return l10n.invalidAmount;
                                 }
                                 return null;
                               },
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             Text(
-                              'Restbeløp: kr ${((double.tryParse(_totalPriceController.text) ?? 0) - (double.tryParse(_reservationFeeController.text) ?? 0)).toStringAsFixed(0)},-',
+                              l10n.remainingAmount(((double.tryParse(_totalPriceController.text) ?? 0) - (double.tryParse(_reservationFeeController.text) ?? 0)).toStringAsFixed(0)),
                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
@@ -380,26 +384,26 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Notes
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Merknader',
+                              l10n.remarks,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _notesController,
-                              decoration: const InputDecoration(
-                                labelText: 'Merknader (valgfritt)',
-                                hintText: 'Skriv inn eventuelle merknader...',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.remarksOptional,
+                                hintText: l10n.remarksHint,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 5,
                             ),
@@ -407,7 +411,7 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
 
                     // Generate button
                     SizedBox(
@@ -415,13 +419,13 @@ class _ReservationContractScreenState extends State<ReservationContractScreen> {
                       child: ElevatedButton.icon(
                         onPressed: _generatePdf,
                         icon: const Icon(Icons.picture_as_pdf),
-                        label: const Text('Generer reservasjonsavtale'),
+                        label: Text(l10n.generateReservationContract),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                   ],
                 ),
               ),

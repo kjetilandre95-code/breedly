@@ -8,6 +8,7 @@ import 'package:breedly/models/puppy.dart';
 import 'package:breedly/utils/id_generator.dart';
 import 'package:breedly/utils/ui_helpers.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
@@ -39,16 +40,16 @@ class _BuyersScreenState extends State<BuyersScreen> {
     final localizations = AppLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: widget.showAppBar ? AppBar(
         title: _showSearch
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
-                style: TextStyle(color: AppColors.neutral900),
+                style: TextStyle(color: context.colors.textPrimary),
                 decoration: InputDecoration(
-                  hintText: localizations?.search ?? 'Søk etter kjøper...',
-                  hintStyle: TextStyle(color: AppColors.neutral500),
+                  hintText: localizations?.searchBuyer ?? 'Search buyer...',
+                  hintStyle: TextStyle(color: context.colors.textCaption),
                   border: InputBorder.none,
                 ),
                 onChanged: (value) {
@@ -58,17 +59,17 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 },
               )
             : Text(
-                localizations?.buyers ?? 'Kjøpere',
+                localizations?.buyers ?? 'Buyers',
                 style: AppTypography.headlineLarge.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           IconButton(
             icon: Icon(_showSearch ? Icons.close : Icons.search),
@@ -85,7 +86,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
           IconButton(
             icon: const Icon(Icons.person_add),
             onPressed: () => _addBuyer(context),
-            tooltip: localizations?.addBuyer ?? 'Ny kjøper',
+            tooltip: localizations?.addBuyer ?? 'Add buyer',
           ),
         ],
       ) : null,
@@ -96,7 +97,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
               // Custom header når app bar er skjult
               Container(
                 padding: const EdgeInsets.all(AppSpacing.lg),
-                color: AppColors.surface,
+                color: context.colors.surface,
                 child: Row(
                   children: [
                     Expanded(
@@ -104,10 +105,10 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           ? TextField(
                               controller: _searchController,
                               autofocus: true,
-                              style: TextStyle(color: AppColors.neutral900),
+                              style: TextStyle(color: context.colors.textPrimary),
                               decoration: InputDecoration(
-                                hintText: 'Søk etter kjøper...',
-                                hintStyle: TextStyle(color: AppColors.neutral500),
+                                hintText: AppLocalizations.of(context)?.searchBuyer ?? 'Search buyer...',
+                                hintStyle: TextStyle(color: context.colors.textCaption),
                                 border: InputBorder.none,
                               ),
                               onChanged: (value) {
@@ -117,9 +118,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                               },
                             )
                           : Text(
-                              'Kjøpere',
+                              AppLocalizations.of(context)?.buyers ?? 'Buyers',
                               style: AppTypography.headlineLarge.copyWith(
-                                color: AppColors.neutral900,
+                                color: context.colors.textPrimary,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
@@ -130,7 +131,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                         IconButton(
                           icon: Icon(
                             _showSearch ? Icons.close : Icons.search,
-                            color: AppColors.neutral600,
+                            color: context.colors.textMuted,
                           ),
                           onPressed: () {
                             setState(() {
@@ -143,9 +144,9 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.person_add, color: AppColors.neutral600),
+                          icon: Icon(Icons.person_add, color: context.colors.textMuted),
                           onPressed: () => _addBuyer(context),
-                          tooltip: 'Ny kjøper',
+                          tooltip: AppLocalizations.of(context)?.newBuyer ?? 'New buyer',
                         ),
                       ],
                     ),
@@ -227,22 +228,22 @@ class _BuyersScreenState extends State<BuyersScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.search_off, size: 64, color: Colors.grey[400]),
-                const SizedBox(height: 16),
+                Icon(Icons.search_off, size: 64, color: context.colors.textDisabled),
+                const SizedBox(height: AppSpacing.lg),
                 Text(
                   _searchQuery.isNotEmpty 
-                      ? 'Ingen treff på "$_searchQuery"'
+                      ? AppLocalizations.of(context)!.noMatchesForQuery(_searchQuery)
                       : _selectedLitterFilter != null
-                          ? 'Ingen kjøpere for dette kullet'
-                          : 'Ingen kjøpere registrert',
+                          ? AppLocalizations.of(context)!.noBuyersForLitter
+                          : AppLocalizations.of(context)!.noBuyersRegistered,
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                 ),
                 if (_selectedLitterFilter != null)
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(top: AppSpacing.lg),
                     child: TextButton.icon(
                       onPressed: () {
                         setState(() {
@@ -250,7 +251,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                         });
                       },
                       icon: const Icon(Icons.clear),
-                      label: const Text('Fjern filter'),
+                      label: Text(AppLocalizations.of(context)!.removeFilter),
                     ),
                   ),
               ],
@@ -258,18 +259,22 @@ class _BuyersScreenState extends State<BuyersScreen> {
           );
         }
 
-        return ListView(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 100),
-          children: [
-            // Kull-filter
-            _buildLitterFilter(primaryColor),
-            
-            // Seksjon: Levert
-            if (delivered.isNotEmpty) ...[
+        return RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
+          },
+          child: ListView(
+            padding: const EdgeInsets.only(left: AppSpacing.sm, right: AppSpacing.sm, top: AppSpacing.sm, bottom: 100),
+            children: [
+              // Kull-filter
+              _buildLitterFilter(primaryColor),
+              
+              // Seksjon: Levert
+              if (delivered.isNotEmpty) ...[
               _buildSectionHeader(
-                'Levert',
+                AppLocalizations.of(context)!.deliveredStatus,
                 Icons.check_circle,
-                Colors.blue,
+                AppColors.info,
                 delivered.length,
               ),
               ...delivered.map((buyer) => _buildBuyerCard(buyer, primaryColor)),
@@ -277,11 +282,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
             
             // Seksjon: Med reservasjon
             if (withReservation.isNotEmpty) ...[
-              if (delivered.isNotEmpty) const SizedBox(height: 16),
+              if (delivered.isNotEmpty) const SizedBox(height: AppSpacing.lg),
               _buildSectionHeader(
-                'Med reservasjon',
+                AppLocalizations.of(context)!.withReservationSection,
                 Icons.bookmark,
-                Colors.green,
+                AppColors.success,
                 withReservation.length,
               ),
               ...withReservation.map((buyer) => _buildBuyerCard(buyer, primaryColor)),
@@ -289,16 +294,17 @@ class _BuyersScreenState extends State<BuyersScreen> {
             
             // Seksjon: Uten reservasjon (interessenter)
             if (withoutReservation.isNotEmpty) ...[
-              if (delivered.isNotEmpty || withReservation.isNotEmpty) const SizedBox(height: 16),
+              if (delivered.isNotEmpty || withReservation.isNotEmpty) const SizedBox(height: AppSpacing.lg),
               _buildSectionHeader(
-                'Interessenter',
+                AppLocalizations.of(context)!.interestedParties,
                 Icons.person_outline,
                 primaryColor,
                 withoutReservation.length,
               ),
               ...withoutReservation.map((buyer) => _buildBuyerCard(buyer, primaryColor)),
+              ],
             ],
-          ],
+          ),
         );
       },
     );
@@ -313,13 +319,13 @@ class _BuyersScreenState extends State<BuyersScreen> {
         if (litters.isEmpty) return const SizedBox.shrink();
         
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey[300]!),
+              color: context.colors.neutral100,
+              borderRadius: AppRadius.mdAll,
+              border: Border.all(color: context.colors.neutral300),
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String?>(
@@ -327,18 +333,18 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 isExpanded: true,
                 hint: Row(
                   children: [
-                    Icon(Icons.filter_list, color: Colors.grey[600], size: 20),
-                    const SizedBox(width: 8),
+                    Icon(Icons.filter_list, color: context.colors.textMuted, size: 20),
+                    const SizedBox(width: AppSpacing.sm),
                     Text(
-                      'Filtrer på kull',
-                      style: TextStyle(color: Colors.grey[600]),
+                      AppLocalizations.of(context)!.filterByLitter,
+                      style: TextStyle(color: context.colors.textMuted),
                     ),
                   ],
                 ),
                 items: [
-                  const DropdownMenuItem<String?>(
+                  DropdownMenuItem<String?>(
                     value: null,
-                    child: Text('Alle kull'),
+                    child: Text(AppLocalizations.of(context)!.allLitters),
                   ),
                   ...litters.map((litter) {
                     return DropdownMenuItem<String?>(
@@ -365,14 +371,14 @@ class _BuyersScreenState extends State<BuyersScreen> {
 
   Widget _buildSectionHeader(String title, IconData icon, Color color, int count) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.sm, AppSpacing.lg, AppSpacing.sm, AppSpacing.sm),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
               color: color.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadius.smAll,
             ),
             child: Icon(icon, color: color, size: 18),
           ),
@@ -382,15 +388,15 @@ class _BuyersScreenState extends State<BuyersScreen> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[800],
+              color: context.colors.textSecondary,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xxs),
             decoration: BoxDecoration(
               color: color.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.mdAll,
             ),
             child: Text(
               '$count',
@@ -413,36 +419,36 @@ class _BuyersScreenState extends State<BuyersScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             decoration: BoxDecoration(
               color: primaryColor.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: AppRadius.lgAll,
             ),
             child: Icon(
               Icons.people_outline,
               size: 64,
-              color: Colors.grey[400],
+              color: context.colors.textDisabled,
             ),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xxl),
           Text(
-            localizations?.noBuyersRegistered ?? 'Ingen kjøpere registrert',
+            localizations?.noBuyersRegistered ?? 'No buyers registered',
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           Text(
-            localizations?.addPotentialBuyers ?? 'Legg til potensielle kjøpere',
-            style: const TextStyle(color: Colors.grey, fontSize: 15),
+            localizations?.addPotentialBuyers ?? 'Add potential buyers',
+            style: TextStyle(color: context.colors.textCaption, fontSize: 15),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: AppSpacing.xxl),
           ElevatedButton.icon(
             onPressed: () => _addBuyer(context),
             icon: const Icon(Icons.add),
-            label: Text(localizations?.newBuyer ?? 'Ny kjøper'),
+            label: Text(localizations?.newBuyer ?? 'New buyer'),
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md, horizontal: AppSpacing.xxl),
             ),
           ),
         ],
@@ -473,26 +479,26 @@ class _BuyersScreenState extends State<BuyersScreen> {
     
     // Determine colors and icons based on status
     Color statusColor = isDelivered 
-        ? Colors.blue 
-        : (hasReservation ? Colors.green : primaryColor);
+        ? AppColors.info 
+        : (hasReservation ? AppColors.success : primaryColor);
     
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.sm),
       elevation: 2,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
       ),
       child: InkWell(
         onTap: () => _showBuyerDetails(context, buyer),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
           leading: Container(
             width: 56,
             height: 56,
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: ThemeOpacity.medium(context)),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.mdAll,
             ),
             child: Icon(
               isDelivered 
@@ -515,19 +521,19 @@ class _BuyersScreenState extends State<BuyersScreen> {
               ),
               if (hasReservation)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
                   decoration: BoxDecoration(
                     color: isDelivered 
-                        ? Colors.blue.withValues(alpha: ThemeOpacity.medium(context))
-                        : Colors.green.withValues(alpha: ThemeOpacity.medium(context)),
-                    borderRadius: BorderRadius.circular(8),
+                        ? AppColors.info.withValues(alpha: ThemeOpacity.medium(context))
+                        : AppColors.success.withValues(alpha: ThemeOpacity.medium(context)),
+                    borderRadius: AppRadius.smAll,
                   ),
                   child: Text(
-                    isDelivered ? 'Levert' : 'Reservert',
+                    isDelivered ? AppLocalizations.of(context)!.deliveredStatus : AppLocalizations.of(context)!.reserved,
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: isDelivered ? Colors.blue : Colors.green,
+                      color: isDelivered ? AppColors.info : AppColors.success,
                     ),
                   ),
                 ),
@@ -540,12 +546,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (buyer.phone != null && buyer.phone!.isNotEmpty)
                 Row(
                   children: [
-                    Icon(Icons.phone, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
+                    Icon(Icons.phone, size: 14, color: context.colors.textMuted),
+                    const SizedBox(width: AppSpacing.xs),
                     Text(
                       buyer.phone!,
                       style: TextStyle(
-                        color: Colors.grey[600],
+                        color: context.colors.textMuted,
                         fontSize: 13,
                       ),
                     ),
@@ -554,13 +560,13 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (buyer.email != null && buyer.email!.isNotEmpty)
                 Row(
                   children: [
-                    Icon(Icons.email, size: 14, color: Colors.grey[600]),
-                    const SizedBox(width: 4),
+                    Icon(Icons.email, size: 14, color: context.colors.textMuted),
+                    const SizedBox(width: AppSpacing.xs),
                     Expanded(
                       child: Text(
                         buyer.email!,
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color: context.colors.textMuted,
                           fontSize: 13,
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -588,14 +594,14 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     if (litter.id.isEmpty) return const SizedBox.shrink();
                     return Row(
                       children: [
-                        Icon(Icons.pets, size: 14, color: Colors.blue[600]),
-                        const SizedBox(width: 4),
+                        Icon(Icons.pets, size: 14, color: AppColors.info),
+                        const SizedBox(width: AppSpacing.xs),
                         Expanded(
                           child: Text(
                             '${litter.damName} × ${litter.sireName}',
                             style: TextStyle(
                               fontSize: 12,
-                              color: Colors.blue[600],
+                              color: AppColors.info,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -622,12 +628,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     if (puppy.id.isEmpty) return const SizedBox.shrink();
                     return Row(
                       children: [
-                        FaIcon(FontAwesomeIcons.bone, size: 14, color: Colors.green[600]),
-                        const SizedBox(width: 4),
+                        FaIcon(FontAwesomeIcons.bone, size: 14, color: AppColors.success),
+                        const SizedBox(width: AppSpacing.xs),
                         Text(
-                          'Valp: ${puppy.name}',
+                          AppLocalizations.of(context)!.puppyLabelWithName(puppy.name),
                           style: TextStyle(
-                            color: Colors.green[600],
+                            color: AppColors.success,
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
                           ),
@@ -664,11 +670,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 // Toggle reservation option
                 if (hasReservation)
                   PopupMenuItem(
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.cancel, size: 20, color: Colors.orange),
-                        SizedBox(width: 8),
-                        Text('Fjern reservasjon', style: TextStyle(color: Colors.orange)),
+                        const Icon(Icons.cancel, size: 20, color: AppColors.warning),
+                        const SizedBox(width: AppSpacing.sm),
+                        Text(AppLocalizations.of(context)!.removeReservation, style: const TextStyle(color: AppColors.warning)),
                       ],
                     ),
                     onTap: () {
@@ -681,11 +687,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   )
                 else if (buyer.litterId != null && buyer.litterId!.isNotEmpty)
                   PopupMenuItem(
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.bookmark_add, size: 20, color: Colors.green),
-                        SizedBox(width: 8),
-                        Text('Legg til reservasjon', style: TextStyle(color: Colors.green)),
+                        const Icon(Icons.bookmark_add, size: 20, color: AppColors.success),
+                        const SizedBox(width: AppSpacing.sm),
+                        Text(AppLocalizations.of(context)!.addReservation, style: const TextStyle(color: AppColors.success)),
                       ],
                     ),
                     onTap: () {
@@ -699,11 +705,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 // Mark as delivered option (only if reservation exists and not yet delivered)
                 if (hasReservation && !isDelivered)
                   PopupMenuItem(
-                    child: const Row(
+                    child: Row(
                       children: [
-                        Icon(Icons.check_circle, size: 20, color: Colors.blue),
-                        SizedBox(width: 8),
-                        Text('Marker som levert', style: TextStyle(color: Colors.blue)),
+                        const Icon(Icons.check_circle, size: 20, color: AppColors.info),
+                        const SizedBox(width: AppSpacing.sm),
+                        Text(AppLocalizations.of(context)!.markAsDelivered, style: const TextStyle(color: AppColors.info)),
                       ],
                     ),
                     onTap: () {
@@ -715,11 +721,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     },
                   ),
                 PopupMenuItem(
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.edit, size: 20),
-                      SizedBox(width: 8),
-                      Text('Rediger'),
+                      const Icon(Icons.edit, size: 20),
+                      const SizedBox(width: AppSpacing.sm),
+                      Text(AppLocalizations.of(context)!.edit),
                     ],
                   ),
                   onTap: () {
@@ -731,11 +737,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   },
                 ),
                 PopupMenuItem(
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Icon(Icons.delete, size: 20, color: Colors.red),
-                      SizedBox(width: 8),
-                      Text('Slett', style: TextStyle(color: Colors.red)),
+                      const Icon(Icons.delete, size: 20, color: AppColors.error),
+                      const SizedBox(width: AppSpacing.sm),
+                      Text(AppLocalizations.of(context)!.delete, style: const TextStyle(color: AppColors.error)),
                     ],
                   ),
                   onTap: () {
@@ -755,12 +761,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(localizations?.removeReservation ?? 'Fjern reservasjon'),
-        content: Text(localizations?.confirmRemoveReservation ?? 'Er du sikker på at du vil fjerne reservasjonen for denne kjøperen?'),
+        title: Text(localizations?.removeReservation ?? 'Remove reservation'),
+        content: Text(localizations?.confirmRemoveReservation ?? 'Are you sure you want to remove the reservation for this buyer?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(localizations?.cancel ?? 'Avbryt'),
+            child: Text(localizations?.cancel ?? 'Cancel'),
           ),
           TextButton(
             onPressed: () async {
@@ -806,11 +812,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Reservasjon fjernet')),
+                  SnackBar(content: Text(localizations?.reservationRemoved ?? 'Reservation removed')),
                 );
               }
             },
-            child: const Text('Fjern'),
+            child: Text(localizations?.remove ?? 'Remove'),
           ),
         ],
       ),
@@ -825,7 +831,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text(localizations?.addReservation ?? 'Legg til reservasjon'),
+          title: Text(localizations?.addReservation ?? 'Add reservation'),
           content: ValueListenableBuilder(
             valueListenable: Hive.box<Puppy>('puppies').listenable(),
             builder: (context, Box<Puppy> puppyBox, _) {
@@ -837,19 +843,19 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   .toList();
               
               if (availablePuppies.isEmpty) {
-                return Text(localizations?.noAvailablePuppiesInLitter ?? 'Ingen ledige valper i dette kullet.');
+                return Text(localizations?.noAvailablePuppiesInLitter ?? 'No available puppies in this litter.');
               }
               
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(localizations?.selectPuppyToReserve ?? 'Velg en valp å reservere:'),
-                  const SizedBox(height: 16),
+                  Text(localizations?.selectPuppyToReserve ?? 'Select a puppy to reserve:'),
+                  const SizedBox(height: AppSpacing.lg),
                   DropdownButtonFormField<String>(
                     isExpanded: true,
                     initialValue: selectedPuppyId,
                     decoration: InputDecoration(
-                      labelText: localizations?.selectPuppy ?? 'Velg valp',
+                      labelText: localizations?.selectPuppy ?? 'Select puppy',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -858,7 +864,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                       return DropdownMenuItem(
                         value: puppy.id,
                         child: Text(
-                          '${puppy.name} (${puppy.gender == 'Male' ? (localizations?.male ?? 'Hann') : (localizations?.female ?? 'Tispe')})',
+                          '${puppy.name} (${puppy.gender == 'Male' ? (localizations?.male ?? 'Male') : (localizations?.female ?? 'Female')})',
                           overflow: TextOverflow.ellipsis,
                         ),
                       );
@@ -876,13 +882,13 @@ class _BuyersScreenState extends State<BuyersScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(localizations?.cancel ?? 'Avbryt'),
+              child: Text(localizations?.cancel ?? 'Cancel'),
             ),
             TextButton(
               onPressed: () async {
                 if (selectedPuppyId == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Vennligst velg en valp')),
+                    SnackBar(content: Text(localizations?.pleaseSelectPuppy ?? 'Please select a puppy')),
                   );
                   return;
                 }
@@ -927,11 +933,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(localizations?.reservationAdded ?? 'Reservasjon lagt til')),
+                    SnackBar(content: Text(localizations?.reservationAdded ?? 'Reservation added')),
                   );
                 }
               },
-              child: Text(localizations?.save ?? 'Lagre'),
+              child: Text(localizations?.save ?? 'Save'),
             ),
           ],
         ),
@@ -944,12 +950,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(localizations?.markAsDelivered ?? 'Marker som levert'),
-        content: Text(localizations?.confirmDelivery ?? 'Bekreft at valpen er levert til kjøperen. Dette vil markere valpen som levert.'),
+        title: Text(localizations?.markAsDelivered ?? 'Mark as delivered'),
+        content: Text(localizations?.confirmDelivery ?? 'Confirm that the puppy has been delivered to the buyer. This will mark the puppy as delivered.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(localizations?.cancel ?? 'Avbryt'),
+            child: Text(localizations?.cancel ?? 'Cancel'),
           ),
           TextButton(
             onPressed: () async {
@@ -991,11 +997,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(localizations?.puppyMarkedAsDelivered ?? 'Valp markert som levert!')),
+                  SnackBar(content: Text(localizations?.puppyMarkedAsDelivered ?? 'Puppy marked as delivered!')),
                 );
               }
             },
-            child: Text(localizations?.confirmDeliveryButton ?? 'Bekreft levering'),
+            child: Text(localizations?.confirmDeliveryButton ?? 'Confirm delivery'),
           ),
         ],
       ),
@@ -1003,6 +1009,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
   }
 
   void _showBuyerDetails(BuildContext context, Buyer buyer) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -1013,21 +1020,21 @@ class _BuyersScreenState extends State<BuyersScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (buyer.email != null && buyer.email!.isNotEmpty)
-                UIHelpers.buildDetailRow('E-post', buyer.email!),
+                UIHelpers.buildDetailRow(l10n.email, buyer.email!),
               if (buyer.phone != null && buyer.phone!.isNotEmpty)
-                UIHelpers.buildDetailRow('Telefon', buyer.phone!),
+                UIHelpers.buildDetailRow(l10n.phone, buyer.phone!),
               if (buyer.address != null && buyer.address!.isNotEmpty)
-                UIHelpers.buildDetailRow('Adresse', buyer.address!),
+                UIHelpers.buildDetailRow(l10n.address, buyer.address!),
               if (buyer.preferences != null && buyer.preferences!.isNotEmpty)
-                UIHelpers.buildDetailRow('Preferanser', buyer.preferences!),
+                UIHelpers.buildDetailRow(l10n.preferences, buyer.preferences!),
               if (buyer.puppyReserved != null &&
                   buyer.puppyReserved!.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                UIHelpers.buildDetailRow('Reservert valp', buyer.puppyReserved!),
+                const SizedBox(height: AppSpacing.md),
+                UIHelpers.buildDetailRow(l10n.reservedPuppy, buyer.puppyReserved!),
               ],
               if (buyer.notes != null && buyer.notes!.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                UIHelpers.buildDetailRow('Notater', buyer.notes!),
+                const SizedBox(height: AppSpacing.md),
+                UIHelpers.buildDetailRow(l10n.notes, buyer.notes!),
               ],
             ],
           ),
@@ -1035,7 +1042,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Lukk'),
+            child: Text(l10n.close),
           ),
         ],
       ),
@@ -1058,7 +1065,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text(localizations?.addBuyer ?? 'Legg til kjøper'),
+          title: Text(localizations?.addBuyer ?? 'Add buyer'),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -1068,7 +1075,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      labelText: '${localizations?.name ?? 'Navn'} *',
+                      labelText: '${localizations?.name ?? 'Name'} *',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1079,7 +1086,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(
-                      labelText: localizations?.email ?? 'E-post',
+                      labelText: localizations?.email ?? 'Email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1090,7 +1097,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: phoneController,
                     decoration: InputDecoration(
-                      labelText: localizations?.phone ?? 'Telefon',
+                      labelText: localizations?.phone ?? 'Phone',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1101,7 +1108,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: addressController,
                     decoration: InputDecoration(
-                      labelText: localizations?.address ?? 'Adresse',
+                      labelText: localizations?.address ?? 'Address',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1112,7 +1119,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: preferencesController,
                     decoration: InputDecoration(
-                      labelText: localizations?.preferences ?? 'Preferanser (kjønn/lynne)',
+                      labelText: localizations?.preferences ?? 'Preferences (gender/temperament)',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1124,7 +1131,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: notesController,
                     decoration: InputDecoration(
-                      labelText: 'Notater',
+                      labelText: localizations?.notes ?? 'Notes',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1132,12 +1139,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     ),
                     maxLines: 2,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   const Divider(),
                   const SizedBox(height: 10),
-                  const Text(
-                    'Knytt til kull og valp',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  Text(
+                    localizations?.linkToLitterAndPuppy ?? 'Link to litter and puppy',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                   ),
                   const SizedBox(height: 10),
                   ValueListenableBuilder(
@@ -1147,16 +1154,16 @@ class _BuyersScreenState extends State<BuyersScreen> {
                         isExpanded: true,
                         initialValue: selectedLitterId,
                         decoration: InputDecoration(
-                          labelText: 'Velg kull (valgfritt)',
+                          labelText: localizations?.selectLitterOptional ?? 'Select litter (optional)',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(6),
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         ),
                         items: [
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: null,
-                            child: Text('Ingen'),
+                            child: Text(localizations?.none ?? 'None'),
                           ),
                           ...litterBox.values.map((litter) {
                             return DropdownMenuItem(
@@ -1190,22 +1197,22 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           isExpanded: true,
                           initialValue: selectedPuppyId,
                           decoration: InputDecoration(
-                            labelText: 'Velg valp (valgfritt)',
+                            labelText: localizations?.selectPuppyOptional ?? 'Select puppy (optional)',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                           ),
                           items: [
-                            const DropdownMenuItem(
+                            DropdownMenuItem(
                               value: null,
-                              child: Text('Ingen'),
+                              child: Text(localizations?.none ?? 'None'),
                             ),
                             ...litterPuppies.map((puppy) {
                               return DropdownMenuItem(
                                 value: puppy.id,
                                 child: Text(
-                                  '${puppy.name} (${puppy.gender == 'Male' ? 'Hann' : 'Tispe'})',
+                                  '${puppy.name} (${puppy.gender == 'Male' ? (localizations?.male ?? 'Male') : (localizations?.female ?? 'Female')})',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               );
@@ -1226,13 +1233,13 @@ class _BuyersScreenState extends State<BuyersScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(localizations?.cancel ?? 'Cancel'),
             ),
             TextButton(
               onPressed: () async {
                 if (nameController.text.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Navn er påkrevd')),
+                    SnackBar(content: Text(localizations?.nameRequired ?? 'Name is required')),
                   );
                   return;
                 }
@@ -1279,11 +1286,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Kjøper lagt til')),
+                    SnackBar(content: Text(localizations?.buyerAdded ?? 'Buyer added')),
                   );
                 }
               },
-              child: const Text('Lagre'),
+              child: Text(localizations?.save ?? 'Save'),
             ),
           ],
         ),
@@ -1313,7 +1320,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setState) => AlertDialog(
-          title: Text(localizations?.editBuyer ?? 'Rediger kjøper'),
+          title: Text(localizations?.editBuyer ?? 'Edit buyer'),
           content: SizedBox(
             width: double.maxFinite,
             child: SingleChildScrollView(
@@ -1323,7 +1330,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      labelText: 'Navn',
+                      labelText: localizations?.name ?? 'Name',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1334,7 +1341,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: emailController,
                     decoration: InputDecoration(
-                      labelText: 'E-post',
+                      labelText: localizations?.email ?? 'Email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1345,7 +1352,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: phoneController,
                     decoration: InputDecoration(
-                      labelText: 'Telefon',
+                      labelText: localizations?.phone ?? 'Phone',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1356,7 +1363,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: addressController,
                     decoration: InputDecoration(
-                      labelText: 'Adresse',
+                      labelText: localizations?.address ?? 'Address',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1367,7 +1374,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: preferencesController,
                     decoration: InputDecoration(
-                      labelText: 'Preferanser (kjønn/lynne)',
+                      labelText: localizations?.preferences ?? 'Preferences (gender/temperament)',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1379,7 +1386,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
                   TextFormField(
                     controller: notesController,
                     decoration: InputDecoration(
-                      labelText: 'Notater',
+                      labelText: localizations?.notes ?? 'Notes',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
@@ -1387,12 +1394,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
                     ),
                     maxLines: 2,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: AppSpacing.lg),
                   const Divider(),
                   const SizedBox(height: 10),
-                  const Text(
-                    'Knytt til kull og valp',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  Text(
+                    localizations?.linkToLitterAndPuppy ?? 'Link to litter and puppy',
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                   ),
                   const SizedBox(height: 10),
                   ValueListenableBuilder(
@@ -1402,16 +1409,16 @@ class _BuyersScreenState extends State<BuyersScreen> {
                         isExpanded: true,
                         initialValue: selectedLitterId,
                         decoration: InputDecoration(
-                          labelText: 'Velg kull (valgfritt)',
+                          labelText: localizations?.selectLitterOptional ?? 'Select litter (optional)',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(6),
                           ),
                           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         ),
                         items: [
-                          const DropdownMenuItem(
+                          DropdownMenuItem(
                             value: null,
-                            child: Text('Ingen'),
+                            child: Text(localizations?.none ?? 'None'),
                           ),
                           ...litterBox.values.map((litter) {
                             return DropdownMenuItem(
@@ -1445,22 +1452,22 @@ class _BuyersScreenState extends State<BuyersScreen> {
                           isExpanded: true,
                           initialValue: selectedPuppyId,
                           decoration: InputDecoration(
-                            labelText: 'Velg valp (valgfritt)',
+                            labelText: localizations?.selectPuppyOptional ?? 'Select puppy (optional)',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
                             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                           ),
                           items: [
-                            const DropdownMenuItem(
+                            DropdownMenuItem(
                               value: null,
-                              child: Text('Ingen'),
+                              child: Text(localizations?.none ?? 'None'),
                             ),
                             ...litterPuppies.map((puppy) {
                               return DropdownMenuItem(
                                 value: puppy.id,
                                 child: Text(
-                                  '${puppy.name} (${puppy.gender == 'Male' ? 'Hann' : 'Tispe'})',
+                                  '${puppy.name} (${puppy.gender == 'Male' ? (localizations?.male ?? 'Male') : (localizations?.female ?? 'Female')})',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               );
@@ -1481,7 +1488,7 @@ class _BuyersScreenState extends State<BuyersScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Avbryt'),
+              child: Text(localizations?.cancel ?? 'Cancel'),
             ),
             TextButton(
               onPressed: () async {
@@ -1527,11 +1534,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(localizations?.buyerUpdated ?? 'Kjøper oppdatert')),
+                    SnackBar(content: Text(localizations?.buyerUpdated ?? 'Buyer updated')),
                   );
                 }
               },
-              child: Text(localizations?.save ?? 'Lagre'),
+              child: Text(localizations?.save ?? 'Save'),
             ),
           ],
         ),
@@ -1544,12 +1551,12 @@ class _BuyersScreenState extends State<BuyersScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(localizations?.deleteBuyer ?? 'Slett kjøper?'),
-        content: Text(localizations?.confirmDeleteBuyer(buyer.name) ?? 'Er du sikker på at du vil slette ${buyer.name}?'),
+        title: Text(localizations?.deleteBuyer ?? 'Delete buyer?'),
+        content: Text(localizations?.confirmDeleteBuyer(buyer.name) ?? 'Are you sure you want to delete ${buyer.name}?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(localizations?.cancel ?? 'Avbryt'),
+            child: Text(localizations?.cancel ?? 'Cancel'),
           ),
           TextButton(
             onPressed: () async {
@@ -1566,11 +1573,11 @@ class _BuyersScreenState extends State<BuyersScreen> {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(localizations?.buyerDeleted ?? 'Kjøper slettet')),
+                  SnackBar(content: Text(localizations?.buyerDeleted ?? 'Buyer deleted')),
                 );
               }
             },
-            child: Text(localizations?.delete ?? 'Slett'),
+            child: Text(localizations?.delete ?? 'Delete'),
           ),
         ],
       ),

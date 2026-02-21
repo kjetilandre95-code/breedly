@@ -9,11 +9,14 @@ import 'package:intl/intl.dart';
 import 'package:breedly/utils/pdf_generator.dart';
 import 'package:breedly/utils/notification_service.dart';
 import 'package:breedly/utils/constants.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'dart:io' show Directory, File;
 import 'package:path_provider/path_provider.dart';
 import 'package:breedly/utils/app_bar_builder.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class PuppyContractListScreen extends StatefulWidget {
   final Puppy puppy;
@@ -72,43 +75,44 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
   Color _getStatusColor(String? status) {
     switch (status) {
       case 'Draft':
-        return Colors.grey;
+        return AppColors.neutral500;
       case 'Active':
-        return Colors.blue;
+        return AppColors.info;
       case 'Completed':
-        return Colors.green;
+        return AppColors.success;
       case 'Cancelled':
-        return Colors.red;
+        return AppColors.error;
       default:
-        return Colors.grey;
+        return AppColors.neutral500;
     }
   }
 
-  String _getStatusLabel(String? status) {
+  String _getStatusLabel(String? status, AppLocalizations l10n) {
     switch (status) {
       case 'Draft':
-        return 'Utkast';
+        return l10n.statusDraft;
       case 'Active':
-        return 'Aktiv';
+        return l10n.statusActive;
       case 'Completed':
-        return 'Fullført';
+        return l10n.statusCompleted;
       case 'Cancelled':
-        return 'Kansellert';
+        return l10n.statusCancelled;
       default:
-        return status ?? 'Utkast';
+        return status ?? l10n.statusDraft;
     }
   }
 
   void _deleteContract(PurchaseContract contract) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Slett kontrakt'),
-        content: const Text('Er du sikker på at du vil slette denne kontrakten?'),
+        title: Text(l10n.deleteContract),
+        content: Text(l10n.confirmDeleteContract),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Avbryt'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () async {
@@ -125,11 +129,11 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
               if (context.mounted) {
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Kontrakt slettet')),
+                  SnackBar(content: Text(l10n.contractDeleted)),
                 );
               }
             },
-            child: const Text('Slett', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.delete, style: const TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -138,9 +142,10 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
-        title: 'Kontrakter',
+        title: l10n.contracts,
         context: context,
       ),
       body: SafeArea(
@@ -159,31 +164,31 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                       height: 80,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.blue.withValues(alpha: ThemeOpacity.low(context)),
+                        color: AppColors.info.withValues(alpha: ThemeOpacity.low(context)),
                       ),
                       child: Icon(
                         Icons.description_outlined,
                         size: 40,
-                        color: Colors.blue.withValues(alpha: 0.5),
+                        color: AppColors.info.withValues(alpha: 0.5),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Ingen kontrakter',
-                      style: TextStyle(
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(
+                      l10n.noContracts,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: AppSpacing.sm),
                     Text(
-                      'Opprett en kjøpekontrakt for denne valpen',
+                      l10n.createPurchaseContractForPuppy,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey[600],
+                        color: context.colors.textMuted,
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
                     ElevatedButton.icon(
                       onPressed: () async {
                         await Navigator.push(
@@ -197,10 +202,10 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                         setState(() {});
                       },
                       icon: const Icon(Icons.add),
-                      label: const Text('Lag kontrakt'),
+                      label: Text(l10n.createContract),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).primaryColor,
-                        foregroundColor: Colors.black87,
+                        foregroundColor: context.colors.textPrimary,
                       ),
                     ),
                   ],
@@ -209,16 +214,16 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
             }
 
             return ListView.builder(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 88),
+              padding: const EdgeInsets.only(left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg, bottom: 88),
               itemCount: contracts.length,
               itemBuilder: (context, index) {
                 final contract = contracts[index];
                 final buyer = _getBuyer(contract.buyerId);
 
                 return Card(
-                  margin: const EdgeInsets.only(bottom: 12),
+                  margin: const EdgeInsets.only(bottom: AppSpacing.md),
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -237,12 +242,12 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                                         fontWeight: FontWeight.w700,
                                       ),
                                     ),
-                                  const SizedBox(height: 4),
+                                  const SizedBox(height: AppSpacing.xs),
                                   Text(
-                                    'Kontrakt nr. ${contract.contractNumber ?? "—"}',
+                                    l10n.contractNumberLabel(contract.contractNumber ?? '—'),
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color: context.colors.textMuted,
                                     ),
                                   ),
                                 ],
@@ -250,7 +255,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                             ),
                             Container(
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
+                                horizontal: AppSpacing.md,
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
@@ -259,10 +264,10 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                                 border: Border.all(
                                   color: _getStatusColor(contract.status),
                                 ),
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: AppRadius.xlAll,
                               ),
                               child: Text(
-                                _getStatusLabel(contract.status),
+                                _getStatusLabel(contract.status, l10n),
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
@@ -272,42 +277,42 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         const Divider(),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         _buildDetailRow(
-                          'Pris',
+                          l10n.price,
                           _formatPrice(contract.price, context),
                         ),
                         _buildDetailRow(
-                          'Opprettet',
+                          l10n.createdDate,
                           DateFormat('d. MMM yyyy', 'nb_NO')
                               .format(contract.contractDate),
                         ),
                         if (contract.purchaseDate != null)
                           _buildDetailRow(
-                            'Kjøpt',
+                            l10n.purchasedDate,
                             DateFormat('d. MMM yyyy', 'nb_NO')
                                 .format(contract.purchaseDate!),
                           ),
                         if (contract.paymentTerms != null)
                           _buildDetailRow(
-                            'Betalingsbetingelser',
+                            l10n.paymentTerms,
                             contract.paymentTerms!,
                           ),
                         if (contract.spayNeuterRequired ||
                             contract.returnClauseIncluded)
                           Padding(
-                            padding: const EdgeInsets.only(top: 12),
+                            padding: const EdgeInsets.only(top: AppSpacing.md),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Vilkår:',
+                                  l10n.termsLabel,
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w700,
-                                    color: Colors.grey[700],
+                                    color: context.colors.textTertiary,
                                   ),
                                 ),
                                 const SizedBox(height: 6),
@@ -319,12 +324,12 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                                         Icon(
                                           Icons.check_circle,
                                           size: 16,
-                                          color: Colors.green[700],
+                                          color: AppColors.success,
                                         ),
-                                        const SizedBox(width: 8),
-                                        const Text(
-                                          'Kastrering/sterilisering påkrevd',
-                                          style: TextStyle(fontSize: 12),
+                                        const SizedBox(width: AppSpacing.sm),
+                                        Text(
+                                          l10n.spayNeuterRequired,
+                                          style: const TextStyle(fontSize: 12),
                                         ),
                                       ],
                                     ),
@@ -337,12 +342,12 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                                         Icon(
                                           Icons.check_circle,
                                           size: 16,
-                                          color: Colors.green[700],
+                                          color: AppColors.success,
                                         ),
-                                        const SizedBox(width: 8),
-                                        const Text(
-                                          'Returklausul inkludert',
-                                          style: TextStyle(fontSize: 12),
+                                        const SizedBox(width: AppSpacing.sm),
+                                        Text(
+                                          l10n.returnClauseIncluded,
+                                          style: const TextStyle(fontSize: 12),
                                         ),
                                       ],
                                     ),
@@ -350,7 +355,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                               ],
                             ),
                           ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: AppSpacing.lg),
                         Row(
                           children: [
                             Expanded(
@@ -368,10 +373,10 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                                   setState(() {});
                                 },
                                 icon: const Icon(Icons.edit),
-                                label: const Text('Rediger'),
+                                label: Text(l10n.edit),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: AppSpacing.sm),
                             Expanded(
                               child: OutlinedButton.icon(
                                 onPressed: () => _exportContractPDF(contract),
@@ -379,15 +384,15 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
                                 label: const Text('PDF'),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: AppSpacing.sm),
                             Expanded(
                               child: OutlinedButton.icon(
                                 onPressed: () => _deleteContract(contract),
                                 icon: const Icon(Icons.delete),
-                                label: const Text('Slett'),
+                                label: Text(l10n.delete),
                                 style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.red,
-                                  side: const BorderSide(color: Colors.red),
+                                  foregroundColor: AppColors.error,
+                                  side: const BorderSide(color: AppColors.error),
                                 ),
                               ),
                             ),
@@ -405,12 +410,13 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showContractTypeDialog(),
         icon: const Icon(Icons.add),
-        label: const Text('Ny kontrakt'),
+        label: Text(l10n.newContract),
       ),
     );
   }
 
   void _showContractTypeDialog() {
+    final l10n = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       builder: (context) => SafeArea(
@@ -419,8 +425,8 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.shopping_cart),
-              title: const Text('Kjøpekontrakt'),
-              subtitle: const Text('Full salgskontrakt for valpen'),
+              title: Text(l10n.purchaseContract),
+              subtitle: Text(l10n.fullSalesContract),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
@@ -435,8 +441,8 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.bookmark_border),
-              title: const Text('Reservasjonsavtale'),
-              subtitle: const Text('Reserver valpen med depositum'),
+              title: Text(l10n.reservationAgreement),
+              subtitle: Text(l10n.reserveWithDeposit),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(
@@ -456,11 +462,12 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
   }
 
   Future<void> _exportContractPDF(PurchaseContract contract) async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final buyer = _getBuyer(contract.buyerId);
       if (buyer == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kjøperinformasjon ikke funnet')),
+          SnackBar(content: Text(l10n.buyerInfoNotFound)),
         );
         return;
       }
@@ -486,7 +493,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
       await file.writeAsBytes(await pdf.save());
 
       await NotificationService().showDownloadNotification(
-        title: 'PDF nedlastet',
+        title: l10n.pdfDownloaded,
         fileName: 'kontrakt_${widget.puppy.name}.pdf',
         filePath: file.path,
       );
@@ -494,7 +501,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('PDF lagret:\n${file.path}'),
+            content: Text(l10n.pdfSavedAt(file.path)),
             duration: const Duration(seconds: 4),
           ),
         );
@@ -502,7 +509,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil ved eksport: $e')),
+          SnackBar(content: Text(l10n.exportErrorGeneric(e.toString()))),
         );
       }
     }
@@ -510,7 +517,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -518,7 +525,7 @@ class _PuppyContractListScreenState extends State<PuppyContractListScreen> {
             label,
             style: TextStyle(
               fontSize: 13,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
               fontWeight: FontWeight.w600,
             ),
           ),

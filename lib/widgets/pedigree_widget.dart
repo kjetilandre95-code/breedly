@@ -7,10 +7,12 @@ import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/utils/pdf_generator.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 
-/// Widget for displaying a visual pedigree (3 generations)
+/// Widget for displaying a visual pedigree (up to 5 generations)
 class PedigreeWidget extends StatefulWidget {
   final String? dogId;
   final Dog? dog;
@@ -20,7 +22,7 @@ class PedigreeWidget extends StatefulWidget {
     super.key,
     this.dogId,
     this.dog,
-    this.generations = 3,
+    this.generations = 4,
   });
 
   @override
@@ -43,7 +45,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
       scrollDirection: Axis.horizontal,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: _buildPedigreeTree(context, currentDog),
         ),
       ),
@@ -80,6 +82,26 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
     final pmGrandfather = _getDogById(paternalGrandmother?.sireId);
     final pfGrandmother = _getDogById(paternalGrandfather?.damId);
     final pfGrandfather = _getDogById(paternalGrandfather?.sireId);
+
+    // Great-great-grandparents (generation 4) — 16 dogs
+    // Paternal side
+    final pfFather = _getDogById(pfGrandfather?.sireId);
+    final pfMother = _getDogById(pfGrandfather?.damId);
+    final pfmFather = _getDogById(pfGrandmother?.sireId);
+    final pfmMother = _getDogById(pfGrandmother?.damId);
+    final pmfFather = _getDogById(pmGrandfather?.sireId);
+    final pmfMother = _getDogById(pmGrandfather?.damId);
+    final pmmFather = _getDogById(pmGrandmother?.sireId);
+    final pmmMother = _getDogById(pmGrandmother?.damId);
+    // Maternal side
+    final mfFather = _getDogById(mfGrandfather?.sireId);
+    final mfMother = _getDogById(mfGrandfather?.damId);
+    final mfmFather = _getDogById(mfGrandmother?.sireId);
+    final mfmMother = _getDogById(mfGrandmother?.damId);
+    final mmfFather = _getDogById(mmGrandfather?.sireId);
+    final mmfMother = _getDogById(mmGrandfather?.damId);
+    final mmmFather = _getDogById(mmGrandmother?.sireId);
+    final mmmMother = _getDogById(mmGrandmother?.damId);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,6 +166,50 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
             ],
           ),
         ],
+
+        if (widget.generations >= 4) ...[
+          const SizedBox(width: 14),
+          _buildConnector(),
+          const SizedBox(width: 14),
+          
+          // Column 5: Great-great-grandparents (gen 4)
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildDogCard(context, pfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, pfmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pfmMother, small: true, mini: true),
+              const SizedBox(height: 8),
+              _buildDogCard(context, pmfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pmfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, pmmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, pmmMother, small: true, mini: true),
+              const SizedBox(height: 12),
+              _buildDogCard(context, mfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, mfmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mfmMother, small: true, mini: true),
+              const SizedBox(height: 8),
+              _buildDogCard(context, mmfFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mmfMother, small: true, mini: true),
+              const SizedBox(height: 6),
+              _buildDogCard(context, mmmFather, small: true, mini: true),
+              const SizedBox(height: 2),
+              _buildDogCard(context, mmmMother, small: true, mini: true),
+            ],
+          ),
+        ],
       ],
     );
   }
@@ -166,9 +232,9 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey[300]!),
+          color: context.colors.neutral100,
+          borderRadius: AppRadius.smAll,
+          border: Border.all(color: context.colors.divider),
         ),
         child: Center(
           child: Column(
@@ -179,14 +245,14 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
                   label,
                   style: TextStyle(
                     fontSize: fontSize - 2,
-                    color: Colors.grey[500],
+                    color: context.colors.textCaption,
                   ),
                 ),
               Text(
                 l10n.unknown,
                 style: TextStyle(
                   fontSize: fontSize,
-                  color: Colors.grey[400],
+                  color: context.colors.textDisabled,
                   fontStyle: FontStyle.italic,
                 ),
               ),
@@ -197,9 +263,9 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
     }
 
     final isFemale = dog.gender == 'Female';
-    final color = isFemale ? Colors.pink[100] : Colors.blue[100];
-    final borderColor = isFemale ? Colors.pink[300] : Colors.blue[300];
-    final iconColor = isFemale ? Colors.pink[700] : Colors.blue[700];
+    final color = isFemale ? AppColors.female.withValues(alpha: 0.15) : AppColors.male.withValues(alpha: 0.15);
+    final borderColor = isFemale ? AppColors.female : AppColors.male;
+    final iconColor = isFemale ? AppColors.female : AppColors.male;
 
     return GestureDetector(
       onTap: () {
@@ -211,8 +277,8 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
         height: height,
         decoration: BoxDecoration(
           color: color,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: borderColor!, width: isMain ? 2 : 1),
+          borderRadius: AppRadius.smAll,
+          border: Border.all(color: borderColor, width: isMain ? 2 : 1),
           boxShadow: isMain
               ? [
                   BoxShadow(
@@ -264,7 +330,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
                   dog.registrationNumber!,
                   style: TextStyle(
                     fontSize: fontSize - 3,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -279,7 +345,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
     return Container(
       width: 2,
       height: 200,
-      color: Colors.grey[300],
+      color: context.colors.divider,
     );
   }
 
@@ -293,7 +359,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
             children: [
               Icon(
                 dog.gender == 'Female' ? Icons.female : Icons.male,
-                color: dog.gender == 'Female' ? Colors.pink : Colors.blue,
+                color: dog.gender == 'Female' ? AppColors.female : AppColors.male,
               ),
               const SizedBox(width: 8),
               Expanded(child: Text(dog.name, overflow: TextOverflow.ellipsis)),
@@ -329,7 +395,7 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
                           dog.isPedigreeOnly
                               ? l10n.pedigreeOnlyDescription
                               : l10n.visibleInDogListDescription,
-                          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                          style: TextStyle(fontSize: 12, color: context.colors.textMuted),
                         ),
                       ],
                     ),
@@ -396,9 +462,9 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
             width: 80,
             child: Text(
               '$label:',
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color: context.colors.textCaption,
               ),
             ),
           ),
@@ -433,7 +499,7 @@ class PedigreeScreen extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(l10n.couldNotGeneratePdf(e.toString())),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
           ),
         );
       }
@@ -487,7 +553,7 @@ class PedigreeScreen extends StatelessWidget {
       body: PedigreeWidget(
         dog: dog,
 
-        generations: 3,
+        generations: 4,
       ),
     );
   }

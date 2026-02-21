@@ -5,6 +5,7 @@ import 'package:breedly/models/dog.dart';
 import 'package:breedly/screens/dog_detail_screen.dart';
 import 'package:breedly/screens/add_dog_screen.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/modern_widgets.dart';
 import 'package:breedly/utils/page_info_helper.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
@@ -89,7 +90,7 @@ class _DogsScreenState extends State<DogsScreen> with TickerProviderStateMixin {
     final localizations = AppLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: widget.showAppBar ? _buildAppBar(primaryColor, localizations) : null,
       body: ValueListenableBuilder(
         valueListenable: Hive.box<Dog>('dogs').listenable(),
@@ -185,15 +186,15 @@ class _DogsScreenState extends State<DogsScreen> with TickerProviderStateMixin {
       title: Text(
         localizations?.dogs ?? 'Mine hunder',
         style: AppTypography.headlineLarge.copyWith(
-          color: AppColors.neutral900,
+          color: context.colors.textPrimary,
           fontWeight: FontWeight.bold,
         ),
       ),
       centerTitle: true,
-      backgroundColor: AppColors.surface,
+      backgroundColor: context.colors.surface,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      foregroundColor: AppColors.neutral900,
+      foregroundColor: context.colors.textPrimary,
       actions: [
         PageInfoHelper.buildInfoButton(
           context,
@@ -218,7 +219,7 @@ class _DogsScreenState extends State<DogsScreen> with TickerProviderStateMixin {
         child: Text(
           localizations?.myDogs ?? 'Mine hunder',
           style: AppTypography.headlineLarge.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -236,19 +237,24 @@ class _DogsScreenState extends State<DogsScreen> with TickerProviderStateMixin {
           return _buildEmptyState(filter, primaryColor, localizations);
         }
 
-        return ListView.separated(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.lg,
-            AppSpacing.sm,
-            AppSpacing.lg,
-            AppSpacing.huge + 60, // Extra space for FAB
-          ),
-          itemCount: filteredDogs.length,
-          separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
-          itemBuilder: (context, index) {
-            final dog = filteredDogs[index];
-            return _buildDogCard(dog);
+        return RefreshIndicator(
+          onRefresh: () async {
+            setState(() {});
           },
+          child: ListView.separated(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.sm,
+              AppSpacing.lg,
+              AppSpacing.huge + 60, // Extra space for FAB
+            ),
+            itemCount: filteredDogs.length,
+            separatorBuilder: (context, index) => const SizedBox(height: AppSpacing.md),
+            itemBuilder: (context, index) {
+              final dog = filteredDogs[index];
+              return _buildDogCard(dog);
+            },
+          ),
         );
       },
     );
@@ -266,7 +272,7 @@ class _DogsScreenState extends State<DogsScreen> with TickerProviderStateMixin {
       badges = [
         StatusBadge(
           text: 'Avdød',
-          color: Colors.grey,
+          color: context.colors.neutral500,
           icon: Icons.pets,
         ),
       ];
@@ -301,7 +307,7 @@ class _DogsScreenState extends State<DogsScreen> with TickerProviderStateMixin {
         ? AppColors.male
         : filter == 'Female'
         ? AppColors.female
-        : AppColors.neutral400;
+        : context.colors.neutral400;
 
     String title;
     String subtitle;

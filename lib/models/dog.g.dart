@@ -33,13 +33,14 @@ class DogAdapter extends TypeAdapter<Dog> {
       championships: (fields[13] as List).cast<String>(),
       deathDate: fields[14] as DateTime?,
       isPedigreeOnly: fields[15] as bool,
+      tilleggskravCompleted: fields[16] == null ? false : fields[16] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Dog obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -71,7 +72,9 @@ class DogAdapter extends TypeAdapter<Dog> {
       ..writeByte(14)
       ..write(obj.deathDate)
       ..writeByte(15)
-      ..write(obj.isPedigreeOnly);
+      ..write(obj.isPedigreeOnly)
+      ..writeByte(16)
+      ..write(obj.tilleggskravCompleted);
   }
 
   @override

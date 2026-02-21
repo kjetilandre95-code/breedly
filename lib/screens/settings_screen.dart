@@ -4,29 +4,27 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/providers/language_provider.dart';
 import 'package:breedly/providers/theme_provider.dart';
+import 'package:breedly/providers/subscription_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/data_sync_service.dart';
+import 'package:breedly/screens/paywall_screen.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/buyer.dart';
 import 'package:breedly/models/puppy.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/utils/constants.dart';
 import 'package:breedly/utils/notification_service.dart';
 import 'package:breedly/services/reminder_manager.dart';
 import 'package:breedly/screens/statistics_screen.dart';
 import 'package:breedly/screens/annual_report_screen.dart';
 import 'package:breedly/screens/pedigree_scanner_test_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsScreen extends StatefulWidget {
-  final LanguageProvider languageProvider;
-  final ThemeProvider themeProvider;
-
-  const SettingsScreen({
-    super.key,
-    required this.languageProvider,
-    required this.themeProvider,
-  });
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -43,13 +41,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
         title: Text(localizations.settings),
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -94,6 +92,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           const SizedBox(height: AppSpacing.lg),
 
+          // Subscription Section
+          _buildSectionCard(
+            title: localizations.subscription,
+            subtitle: localizations.manageSubscription,
+            icon: Icons.workspace_premium_rounded,
+            child: _buildSubscriptionSection(),
+          ),
+
+          const SizedBox(height: AppSpacing.lg),
+
           // Notifications Section
           _buildSectionCard(
             title: localizations.notifications,
@@ -133,9 +141,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Text(
                         title,
                         style: AppTypography.titleMedium.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                         ),
                       ),
                       Text(subtitle, style: AppTypography.caption),
@@ -189,7 +197,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       {'code': 'en', 'name': 'English', 'flag': '🇬🇧'},
     ];
 
-    final currentLanguage = widget.languageProvider.currentLocale.languageCode;
+    final currentLanguage = context.read<LanguageProvider>().currentLocale.languageCode;
     final primaryColor = Theme.of(context).primaryColor;
 
     return Column(
@@ -202,7 +210,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             color: Colors.transparent,
             child: InkWell(
               onTap: () async {
-                await widget.languageProvider.setLanguage(lang['code']!);
+                await context.read<LanguageProvider>().setLanguage(lang['code']!);
                 setState(() {});
               },
               borderRadius: AppRadius.mdAll,
@@ -214,7 +222,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 decoration: BoxDecoration(
                   color: isSelected
                       ? primaryColor.withValues(alpha: ThemeOpacity.medium(context))
-                      : AppColors.surfaceVariant,
+                      : context.colors.surfaceVariant,
                   borderRadius: AppRadius.mdAll,
                   border: Border.all(
                     color: isSelected ? primaryColor : Colors.transparent,
@@ -231,7 +239,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: AppTypography.titleSmall.copyWith(
                           color: isSelected
                               ? primaryColor
-                              : AppColors.neutral800,
+                              : context.colors.textSecondary,
                           fontWeight: isSelected
                               ? FontWeight.w600
                               : FontWeight.normal,
@@ -256,9 +264,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildThemeColorGrid() {
     final themes = ThemeProvider.availableThemes;
-    final selectedIndex = widget.themeProvider.selectedThemeIndex;
+    final selectedIndex = context.read<ThemeProvider>().selectedThemeIndex;
     final localizations = AppLocalizations.of(context);
-    final isEnglish = widget.languageProvider.currentLocale.languageCode == 'en';
+    final isEnglish = context.read<LanguageProvider>().currentLocale.languageCode == 'en';
 
     return GridView.builder(
       shrinkWrap: true,
@@ -290,7 +298,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
         return GestureDetector(
           onTap: () async {
-            await widget.themeProvider.setTheme(index);
+            await context.read<ThemeProvider>().setTheme(index);
             setState(() {});
           },
           child: Column(
@@ -311,7 +319,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: isSelected
-                        ? AppColors.neutral900
+                        ? context.colors.textPrimary
                         : Colors.transparent,
                     width: 3,
                   ),
@@ -329,7 +337,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Text(
                 themeName,
                 style: AppTypography.labelSmall.copyWith(
-                  color: isSelected ? theme.primaryColor : AppColors.neutral600,
+                  color: isSelected ? theme.primaryColor : context.colors.textMuted,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 ),
                 textAlign: TextAlign.center,
@@ -345,8 +353,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildDarkModeSection(AppLocalizations localizations) {
     final primaryColor = Theme.of(context).primaryColor;
-    final useSystemTheme = widget.themeProvider.useSystemTheme;
-    final isDarkMode = widget.themeProvider.isDarkMode;
+    final useSystemTheme = context.read<ThemeProvider>().useSystemTheme;
+    final isDarkMode = context.read<ThemeProvider>().isDarkMode;
 
     return Column(
       children: [
@@ -355,7 +363,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           color: Colors.transparent,
           child: InkWell(
             onTap: () async {
-              await widget.themeProvider.setUseSystemTheme(!useSystemTheme);
+              await context.read<ThemeProvider>().setUseSystemTheme(!useSystemTheme);
               setState(() {});
             },
             borderRadius: AppRadius.mdAll,
@@ -407,7 +415,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Switch(
                     value: useSystemTheme,
                     onChanged: (value) async {
-                      await widget.themeProvider.setUseSystemTheme(value);
+                      await context.read<ThemeProvider>().setUseSystemTheme(value);
                       setState(() {});
                     },
                     activeThumbColor: primaryColor,
@@ -430,7 +438,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () async {
-                  await widget.themeProvider.setDarkMode(!isDarkMode);
+                  await context.read<ThemeProvider>().setDarkMode(!isDarkMode);
                   setState(() {});
                 },
                 borderRadius: AppRadius.mdAll,
@@ -483,7 +491,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onChanged: useSystemTheme 
                             ? null 
                             : (value) async {
-                                await widget.themeProvider.setDarkMode(value);
+                                await context.read<ThemeProvider>().setDarkMode(value);
                                 setState(() {});
                               },
                         activeThumbColor: primaryColor,
@@ -492,6 +500,208 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubscriptionSection() {
+    final subProvider = context.watch<SubscriptionProvider>();
+    final primaryColor = Theme.of(context).primaryColor;
+
+    if (subProvider.isPremium) {
+      // Show active subscription info
+      final l10n = AppLocalizations.of(context)!;
+      final source = subProvider.subscriptionSource == 'promo_code'
+          ? l10n.promoCode
+          : l10n.subscription;
+      final expiry = subProvider.expirationDate;
+      final expiryText = expiry != null
+          ? '${expiry.day}.${expiry.month}.${expiry.year}'
+          : l10n.lifetimeAccess;
+
+      return Column(
+        children: [
+          // Status badge
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  AppColors.secondary.withValues(alpha: 0.15),
+                  AppColors.primary.withValues(alpha: 0.08),
+                ],
+              ),
+              borderRadius: AppRadius.mdAll,
+              border: Border.all(
+                color: AppColors.secondary.withValues(alpha: 0.3),
+              ),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.workspace_premium_rounded,
+                  color: AppColors.secondary,
+                  size: 28,
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Breedly Premium',
+                        style: AppTypography.titleMedium.copyWith(
+                          color: context.colors.textPrimary,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.xxs),
+                      Text(
+                        l10n.subscriptionExpiresInfo(source, expiryText),
+                        style: AppTypography.bodySmall.copyWith(
+                          color: context.colors.textMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: AppSpacing.xxs,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.success,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: Text(
+                    l10n.activeStatus,
+                    style: AppTypography.labelSmall.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // Restore purchases
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () async {
+                await subProvider.restorePurchases();
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n.purchasesRestored),
+                    ),
+                  );
+                }
+              },
+              icon: const Icon(Icons.restore_rounded),
+              label: Text(l10n.restorePurchases),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: primaryColor,
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                side: BorderSide(color: primaryColor),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    // Not premium — show upgrade prompt
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          decoration: BoxDecoration(
+            color: context.colors.surfaceVariant,
+            borderRadius: AppRadius.mdAll,
+          ),
+          child: Column(
+            children: [
+              Icon(
+                Icons.lock_outline_rounded,
+                color: context.colors.textCaption,
+                size: 32,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                AppLocalizations.of(context)!.usingFreeVersion,
+                style: AppTypography.titleSmall.copyWith(
+                  color: context.colors.textTertiary,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                AppLocalizations.of(context)!.upgradeForUnlimited,
+                style: AppTypography.bodySmall.copyWith(
+                  color: context.colors.textCaption,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.md),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => PaywallScreen(
+                    allowDismiss: true,
+                    onSubscribed: () {
+                      setState(() {});
+                    },
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.workspace_premium_rounded),
+            label: Text(AppLocalizations.of(context)!.upgradeToPremium),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.secondary,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+            ),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            onPressed: () async {
+              await subProvider.restorePurchases();
+              if (mounted) {
+                final msg = subProvider.isPremium
+                    ? AppLocalizations.of(context)!.premiumRestored
+                    : AppLocalizations.of(context)!.noPreviousPurchases;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(msg)),
+                );
+              }
+            },
+            icon: const Icon(Icons.restore_rounded),
+            label: Text(AppLocalizations.of(context)!.restorePurchases),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: primaryColor,
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+              side: BorderSide(color: primaryColor),
             ),
           ),
         ),
@@ -542,18 +752,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            color: Colors.blue.withValues(alpha: 0.1),
+            color: AppColors.info.withValues(alpha: 0.1),
             borderRadius: AppRadius.mdAll,
           ),
           child: Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+              const Icon(Icons.info_outline, color: AppColors.info, size: 20),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   localizations.syncInfo,
                   style: AppTypography.caption.copyWith(
-                    color: Colors.blue[800],
+                    color: AppColors.info,
                   ),
                 ),
               ),
@@ -700,18 +910,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Container(
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            color: Colors.blue.withValues(alpha: 0.1),
+            color: AppColors.info.withValues(alpha: 0.1),
             borderRadius: AppRadius.mdAll,
           ),
           child: Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+              const Icon(Icons.info_outline, color: AppColors.info, size: 20),
               const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
                   localizations.notificationsInfo,
                   style: AppTypography.caption.copyWith(
-                    color: Colors.blue[800],
+                    color: AppColors.info,
                   ),
                 ),
               ),
@@ -780,9 +990,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
       ),
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
@@ -806,7 +1016,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Text(
                 localizations.dataInApp,
                 style: AppTypography.titleMedium.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ],
@@ -899,14 +1109,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Text(
               label,
               style: AppTypography.bodyMedium.copyWith(
-                color: AppColors.neutral700,
+                color: context.colors.textTertiary,
               ),
             ),
           ),
           Text(
             value,
             style: AppTypography.titleSmall.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
         ],
@@ -917,9 +1127,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildAppInfoCard(AppLocalizations localizations) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
-        border: Border.all(color: AppColors.neutral200),
+        border: Border.all(color: context.colors.border),
       ),
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
@@ -943,7 +1153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Text(
                 localizations.aboutApp,
                 style: AppTypography.titleMedium.copyWith(
-                  color: AppColors.neutral900,
+                  color: context.colors.textPrimary,
                 ),
               ),
             ],
@@ -955,7 +1165,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Text(
             localizations.welcomeMessage,
             style: AppTypography.bodySmall.copyWith(
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
+            ),
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          const Divider(height: 1),
+          const SizedBox(height: AppSpacing.md),
+          InkWell(
+            onTap: () {
+              launchUrl(
+                Uri.parse('https://littermate-f0eb9.web.app/privacy-policy.html'),
+                mode: LaunchMode.externalApplication,
+              );
+            },
+            borderRadius: AppRadius.mdAll,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              child: Row(
+                children: [
+                  Icon(Icons.privacy_tip_outlined, size: 18, color: context.colors.textMuted),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          localizations.privacyPolicy,
+                          style: AppTypography.bodyMedium.copyWith(
+                            color: context.colors.textPrimary,
+                          ),
+                        ),
+                        Text(
+                          localizations.privacyPolicyDescription,
+                          style: AppTypography.bodySmall.copyWith(
+                            color: context.colors.textMuted,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.open_in_new, size: 16, color: context.colors.textMuted),
+                ],
+              ),
             ),
           ),
         ],
@@ -972,13 +1224,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Text(
             label,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.neutral600,
+              color: context.colors.textMuted,
             ),
           ),
           Text(
             value,
             style: AppTypography.titleSmall.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
         ],
@@ -995,13 +1247,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           title: Text(
             localizations.logOut,
             style: AppTypography.headlineSmall.copyWith(
-              color: AppColors.neutral900,
+              color: context.colors.textPrimary,
             ),
           ),
           content: Text(
             localizations.logOutConfirm,
             style: AppTypography.bodyMedium.copyWith(
-              color: AppColors.neutral700,
+              color: context.colors.textTertiary,
             ),
           ),
           actions: [
@@ -1010,7 +1262,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Text(
                 localizations.cancel,
                 style: AppTypography.labelLarge.copyWith(
-                  color: AppColors.neutral600,
+                  color: context.colors.textMuted,
                 ),
               ),
             ),
@@ -1038,7 +1290,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildDeveloperSection(AppLocalizations localizations) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         borderRadius: AppRadius.lgAll,
         border: Border.all(color: Colors.orange[200]!),
       ),
@@ -1058,23 +1310,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: const Icon(Icons.science_outlined, color: Colors.orange, size: 22),
                 ),
                 const SizedBox(width: AppSpacing.md),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Utvikler & Testing',
-                        style: TextStyle(
+                        localizations.developerAndTesting,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: AppSpacing.xxs),
                       Text(
-                        'Test nye funksjoner',
+                        localizations.testNewFeatures,
                         style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.neutral600,
+                          color: context.colors.textMuted,
                         ),
                       ),
                     ],
@@ -1086,30 +1338,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const Divider(height: 1),
           ListTile(
             leading: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(AppSpacing.sm),
               decoration: BoxDecoration(
-                color: Colors.blue.withValues(alpha: 0.1),
+                color: AppColors.info.withValues(alpha: 0.1),
                 borderRadius: AppRadius.smAll,
               ),
-              child: const Icon(Icons.document_scanner, color: Colors.blue, size: 20),
+              child: const Icon(Icons.document_scanner, color: AppColors.info, size: 20),
             ),
-            title: const Text(
-              'Test stamtavle-skanner',
-              style: TextStyle(fontWeight: FontWeight.w500),
+            title: Text(
+              localizations.testPedigreeScanner,
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
-            subtitle: const Text(
-              'Google ML Kit OCR - Skann stamtavler med AI',
-              style: TextStyle(fontSize: 12),
+            subtitle: Text(
+              localizations.pedigreeScannerSubtitleSettings,
+              style: const TextStyle(fontSize: 12),
             ),
             trailing: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
               decoration: BoxDecoration(
                 color: Colors.green.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
                 border: Border.all(color: Colors.green, width: 1),
               ),
-              child: const Text(
-                'NY',
+              child: Text(
+                localizations.newBadge,
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.bold,

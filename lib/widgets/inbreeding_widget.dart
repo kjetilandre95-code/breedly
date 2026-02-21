@@ -4,6 +4,8 @@ import 'package:breedly/utils/constants.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/models/dog.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 /// Widget for displaying and calculating inbreeding coefficient
 class InbreedingWidget extends StatefulWidget {
@@ -83,19 +85,19 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
   }
 
   Color _getRiskColor() {
-    if (_risk == null) return Colors.grey;
+    if (_risk == null) return context.colors.textDisabled;
     
     switch (_risk!) {
       case InbreedingRisk.veryLow:
-        return Colors.green;
+        return AppColors.success;
       case InbreedingRisk.low:
         return Colors.lightGreen;
       case InbreedingRisk.moderate:
-        return Colors.amber;
+        return AppColors.warning;
       case InbreedingRisk.high:
-        return Colors.orange;
+        return AppColors.warning;
       case InbreedingRisk.veryHigh:
-        return Colors.red;
+        return AppColors.error;
     }
   }
 
@@ -120,21 +122,21 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
   Widget _buildPlaceholder() {
     final l10n = AppLocalizations.of(context)!;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[300]!),
+        color: context.colors.neutral100,
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: context.colors.divider),
       ),
       child: Row(
         children: [
-          Icon(Icons.calculate_outlined, color: Colors.grey[400], size: 32),
-          const SizedBox(width: 12),
+          Icon(Icons.calculate_outlined, color: context.colors.textDisabled, size: 32),
+          const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
               l10n.selectBothForInbreeding,
               style: TextStyle(
-                color: Colors.grey[600],
+                color: context.colors.textMuted,
                 fontSize: 14,
               ),
             ),
@@ -149,10 +151,10 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
     final percentage = (_coi ?? 0) * 100;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
         color: _getRiskColor().withValues(alpha: ThemeOpacity.low(context)),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
         border: Border.all(color: _getRiskColor().withValues(alpha: ThemeOpacity.high(context))),
       ),
       child: Column(
@@ -161,10 +163,10 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(AppSpacing.sm),
                 decoration: BoxDecoration(
                   color: _getRiskColor().withValues(alpha: ThemeOpacity.medium(context)),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AppRadius.smAll,
                 ),
                 child: Icon(
                   _getIcon(),
@@ -172,16 +174,16 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
                   size: 24,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       l10n.inbreedingCoefficientCoi,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey,
+                        color: context.colors.textCaption,
                       ),
                     ),
                     Text(
@@ -197,12 +199,12 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
+                  horizontal: AppSpacing.md,
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
                   color: _getRiskColor(),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: AppRadius.xlAll,
                 ),
                 child: Text(
                   _risk?.label ?? l10n.unknown,
@@ -215,22 +217,22 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.md),
           Text(
             _risk?.description ?? '',
             style: TextStyle(
               fontSize: 13,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
             ),
           ),
           if (_commonAncestors.isNotEmpty) ...[
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
             const Divider(),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
-                const Icon(Icons.account_tree_outlined, size: 18, color: Colors.grey),
-                const SizedBox(width: 8),
+                Icon(Icons.account_tree_outlined, size: 18, color: context.colors.textCaption),
+                const SizedBox(width: AppSpacing.sm),
                 Text(
                   l10n.commonAncestors(_commonAncestors.length),
                   style: const TextStyle(
@@ -240,7 +242,7 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             ..._commonAncestors.take(3).map((ancestor) => _buildAncestorTile(ancestor)),
             if (_commonAncestors.length > 3)
               TextButton(
@@ -248,7 +250,7 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
                 child: Text(l10n.seeAllAncestors(_commonAncestors.length)),
               ),
           ],
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           _buildInfoButton(),
         ],
       ),
@@ -274,15 +276,15 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
 
   Widget _buildAncestorTile(CommonAncestor ancestor) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
       child: Row(
         children: [
           Icon(
             ancestor.dog.gender == 'Female' ? Icons.female : Icons.male,
             size: 16,
-            color: ancestor.dog.gender == 'Female' ? Colors.pink : Colors.blue,
+            color: ancestor.dog.gender == 'Female' ? AppColors.female : AppColors.male,
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,7 +297,7 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
                   ancestor.relationship,
                   style: TextStyle(
                     fontSize: 11,
-                    color: Colors.grey[600],
+                    color: context.colors.textMuted,
                   ),
                 ),
               ],
@@ -339,11 +341,11 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              _buildLevelRow('< 3%', l10n.veryLow, Colors.green),
+              _buildLevelRow('< 3%', l10n.veryLow, AppColors.success),
               _buildLevelRow('3-6%', l10n.low, Colors.lightGreen),
-              _buildLevelRow('6-12%', l10n.moderate, Colors.amber),
-              _buildLevelRow('12-25%', l10n.high, Colors.orange),
-              _buildLevelRow('> 25%', l10n.veryHigh, Colors.red),
+              _buildLevelRow('6-12%', l10n.moderate, AppColors.warning),
+              _buildLevelRow('12-25%', l10n.high, AppColors.warning),
+              _buildLevelRow('> 25%', l10n.veryHigh, AppColors.error),
               const SizedBox(height: 16),
               Text(
                 l10n.highInbreedingConsequences,
@@ -378,7 +380,7 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
 
   Widget _buildLevelRow(String range, String label, Color color) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxs),
       child: Row(
         children: [
           Container(
@@ -386,10 +388,10 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
             height: 16,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: AppRadius.xsAll,
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: AppSpacing.sm),
           Text('$range: $label'),
         ],
       ),
@@ -439,13 +441,13 @@ class _InbreedingWidgetState extends State<InbreedingWidget> {
                   return ListTile(
                     leading: CircleAvatar(
                       backgroundColor: ancestor.dog.gender == 'Female'
-                          ? Colors.pink[100]
-                          : Colors.blue[100],
+                          ? AppColors.female.withValues(alpha: 0.15)
+                          : AppColors.male.withValues(alpha: 0.15),
                       child: Icon(
                         ancestor.dog.gender == 'Female' ? Icons.female : Icons.male,
                         color: ancestor.dog.gender == 'Female'
-                            ? Colors.pink[700]
-                            : Colors.blue[700],
+                            ? AppColors.female
+                            : AppColors.male,
                       ),
                     ),
                     title: Text(ancestor.dog.name),
@@ -581,9 +583,9 @@ class _InbreedingComparisonScreenState
             ),
           ),
           if (_options.isEmpty && _selectedFemaleId != null)
-            const Expanded(
+            Expanded(
               child: Center(
-                child: Text('Ingen hannhunder registrert'),
+                child: Text(l10n.noMalesRegistered),
               ),
             )
           else
@@ -625,7 +627,7 @@ class _InbreedingComparisonScreenState
         ),
         subtitle: Text(
           option.male.breed,
-          style: TextStyle(color: Colors.grey[600]),
+          style: TextStyle(color: context.colors.textMuted),
         ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -655,15 +657,15 @@ class _InbreedingComparisonScreenState
   Color _getRiskColor(InbreedingRisk risk) {
     switch (risk) {
       case InbreedingRisk.veryLow:
-        return Colors.green;
+        return AppColors.success;
       case InbreedingRisk.low:
         return Colors.lightGreen;
       case InbreedingRisk.moderate:
-        return Colors.amber;
+        return AppColors.warning;
       case InbreedingRisk.high:
-        return Colors.orange;
+        return AppColors.warning;
       case InbreedingRisk.veryHigh:
-        return Colors.red;
+        return AppColors.error;
     }
   }
 }

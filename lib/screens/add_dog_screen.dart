@@ -15,6 +15,8 @@ import 'package:breedly/utils/logger.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:breedly/widgets/pedigree_scanner_widget.dart';
 import 'package:breedly/services/pedigree_scanner_service.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 class AddDogScreen extends StatefulWidget {
   final Dog? dogToEdit;
@@ -157,12 +159,14 @@ class _AddDogScreenState extends State<AddDogScreen> {
     return showDialog<String>(
       context: ctx,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
         title: Row(
           children: [
-            Icon(Icons.people_alt, color: Colors.orange[700]),
-            const SizedBox(width: 8),
-            const Expanded(child: Text('Hunden finnes allerede')),
+            Icon(Icons.people_alt, color: AppColors.warning),
+            SizedBox(width: AppSpacing.sm),
+            Expanded(child: Text(l10n.dogAlreadyExists)),
           ],
         ),
         content: SingleChildScrollView(
@@ -174,47 +178,48 @@ class _AddDogScreenState extends State<AddDogScreen> {
                 '«${scanned.name}» ser ut til å matche en hund som allerede er lagt til:',
                 style: const TextStyle(fontSize: 14),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: AppSpacing.md),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: EdgeInsets.all(AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
+                  color: context.colors.neutral100,
+                  borderRadius: AppRadius.smAll,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(existing.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                     if (existing.registrationNumber != null)
-                      Text('Reg.nr: ${existing.registrationNumber}', style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-                    Text('Rase: ${existing.breed}', style: TextStyle(color: Colors.grey[600], fontSize: 13)),
+                      Text('${l10n.regNo}: ${existing.registrationNumber}', style: TextStyle(color: context.colors.textMuted, fontSize: 13)),
+                    Text('${l10n.breed}: ${existing.breed}', style: TextStyle(color: context.colors.textMuted, fontSize: 13)),
                     Text(
                       existing.isPedigreeOnly ? '(Stamtavlehund)' : '(Fullverdig hund)',
-                      style: TextStyle(color: Colors.blue[600], fontSize: 12, fontStyle: FontStyle.italic),
+                      style: TextStyle(color: AppColors.info, fontSize: 12, fontStyle: FontStyle.italic),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 12),
-              const Text('Hva vil du gjøre?', style: TextStyle(fontWeight: FontWeight.w500)),
+              SizedBox(height: AppSpacing.md),
+              Text(l10n.whatDoYouWantToDo, style: const TextStyle(fontWeight: FontWeight.w500)),
             ],
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, 'new'),
-            child: const Text('Opprett ny'),
+            child: Text(l10n.createNew),
           ),
           OutlinedButton(
             onPressed: () => Navigator.pop(context, 'use'),
-            child: const Text('Bruk eksisterende'),
+            child: Text(l10n.useExisting),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, 'update'),
-            child: const Text('Oppdater data'),
+            child: Text(l10n.updateData),
           ),
         ],
-      ),
+      );
+      },
     );
   }
 
@@ -299,6 +304,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     ScaffoldMessengerState messenger,
     NavigatorState navigator,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     final box = Hive.box<Dog>('dogs');
     final authService = AuthService();
     final offlineManager = OfflineModeManager();
@@ -315,17 +321,33 @@ class _AddDogScreenState extends State<AddDogScreen> {
     for (final ggp in scanResult.greatGrandparents) {
       if (ggp.position != null) ggpMap[ggp.position!] = ggp;
     }
+    final gggpMap = <String, ScannedDog>{};
+    for (final gggp in scanResult.greatGreatGrandparents) {
+      if (gggp.position != null) gggpMap[gggp.position!] = gggp;
+    }
 
-    // 1. Create great-grandparents (no parents of their own from scan)
-    final ggpIds = <String, String>{}; // position → id
-    for (final entry in ggpMap.entries) {
+    // 1. Create great-great-grandparents (no parents of their own from scan)
+    final gggpIds = <String, String>{}; // position → id
+    for (final entry in gggpMap.entries) {
       if (!mounted) return;
-      ggpIds[entry.key] = await _getOrCreateDog(
+      gggpIds[entry.key] = await _getOrCreateDog(
         entry.value, box: box, defaultBreed: defaultBreed, dialogContext: context,
       );
     }
 
-    // 2. Create grandparents, linked to their great-grandparents
+    // 2. Create great-grandparents, linked to their great-great-grandparents
+    final ggpIds = <String, String>{}; // position → id
+    for (final pos in ['Farfars far', 'Farfars mor', 'Farmors far', 'Farmors mor',
+                        'Morfars far', 'Morfars mor', 'Mormors far', 'Mormors mor']) {
+      if (ggpMap.containsKey(pos) && mounted) {
+        ggpIds[pos] = await _getOrCreateDog(
+          ggpMap[pos]!, box: box, defaultBreed: defaultBreed, dialogContext: context,
+          sireId: gggpIds['${pos}s far'], damId: gggpIds['${pos}s mor'],
+        );
+      }
+    }
+
+    // 3. Create grandparents, linked to their great-grandparents
     final gpIds = <String, String>{}; // position → id
     for (final pos in ['Farfar', 'Farmor', 'Morfar', 'Mormor']) {
       if (gpMap.containsKey(pos) && mounted) {
@@ -371,7 +393,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     }
 
     // 5. Sync to Firebase if authenticated
-    final allIds = <String>{mainId, ...ggpIds.values, ...gpIds.values};
+    final allIds = <String>{mainId, ...gggpIds.values, ...ggpIds.values, ...gpIds.values};
     if (sireId != null) allIds.add(sireId);
     if (damId != null) allIds.add(damId);
 
@@ -390,12 +412,14 @@ class _AddDogScreenState extends State<AddDogScreen> {
     }
 
     final totalCreated = 1 + scanResult.parents.length +
-        scanResult.grandparents.length + scanResult.greatGrandparents.length;
+        scanResult.grandparents.length + scanResult.greatGrandparents.length +
+        scanResult.greatGreatGrandparents.length;
 
     messenger.showSnackBar(
       SnackBar(
-        content: Text('${scannedDog.name} lagt til med stamtavle ($totalCreated hunder totalt)'),
-        backgroundColor: Colors.green,
+        content: Text(l10n.dogAddedWithPedigree(scannedDog.name, totalCreated)),
+        // ignore: use_build_context_synchronously
+        backgroundColor: Theme.of(context).primaryColor,
         duration: const Duration(seconds: 4),
       ),
     );
@@ -405,6 +429,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
   }
 
   void _saveDog() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_formKey.currentState!.validate()) {
       final box = Hive.box<Dog>('dogs');
       final authService = AuthService();
@@ -444,7 +469,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
         
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Hund oppdatert')),
+            SnackBar(content: Text(l10n.dogUpdated)),
           );
           Navigator.pop(context, true);
         }
@@ -483,7 +508,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Hund lagt til')),
+            SnackBar(content: Text(l10n.dogAdded)),
           );
 
           Navigator.pop(context, true);
@@ -494,6 +519,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBarBuilder.buildAppBar(
         title: _isEditMode ? 'Rediger hund' : 'Legg til ny hund',
@@ -503,7 +529,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(AppSpacing.lg),
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
             // Pedigree Scanner - Show only when adding new dog
@@ -529,90 +555,90 @@ class _AddDogScreenState extends State<AddDogScreen> {
                   }
                 },
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: AppSpacing.xxl),
               const Divider(),
-              const SizedBox(height: 16),
+              SizedBox(height: AppSpacing.lg),
             ],
             
             // Name
             TextFormField(
               controller: _nameCtrl,
               decoration: InputDecoration(
-                labelText: 'Navn',
+                labelText: l10n.name,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
               ),
               onChanged: (value) => _name = value,
               validator: (value) => FormValidators.required(value, fieldName: 'Navn'),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Breed
             _buildSearchableBreedDropdown(),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Color
             TextFormField(
               controller: _colorCtrl,
               decoration: InputDecoration(
-                labelText: 'Farge',
+                labelText: l10n.color,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
               ),
               onChanged: (value) => _color = value,
               validator: (value) => FormValidators.required(value, fieldName: 'Farge'),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Gender
             DropdownButtonFormField<String>(
               key: ValueKey('gender_$_gender'),
               initialValue: _gender,
-              items: const [
-                DropdownMenuItem(value: 'Male', child: Text('Hann')),
-                DropdownMenuItem(value: 'Female', child: Text('Tispe')),
+              items: [
+                DropdownMenuItem(value: 'Male', child: Text(l10n.male)),
+                DropdownMenuItem(value: 'Female', child: Text(l10n.female)),
               ],
               onChanged: (value) {
                 setState(() => _gender = value ?? 'Male');
               },
               decoration: InputDecoration(
-                labelText: 'Kjønn',
+                labelText: l10n.gender,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Date of Birth
             ListTile(
-              title: const Text('Fødselsdato'),
+              title: Text(l10n.dateOfBirth),
               subtitle: Text(DateFormat('yyyy-MM-dd').format(_dateOfBirth)),
               onTap: () async {
                 final picked = await showDatePicker(
@@ -626,11 +652,11 @@ class _AddDogScreenState extends State<AddDogScreen> {
                 }
               },
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Death Date (optional)
             ListTile(
-              title: const Text('Dødsdato (valgfritt)'),
+              title: Text(l10n.dateOfDeathOptional),
               subtitle: Text(
                 _deathDate != null 
                     ? DateFormat('yyyy-MM-dd').format(_deathDate!)
@@ -654,18 +680,18 @@ class _AddDogScreenState extends State<AddDogScreen> {
                 }
               },
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Pedigree Only Checkbox
             CheckboxListTile(
-              title: const Text('Kun stamtavle'),
-              subtitle: const Text('Hunden vises kun i stamtavler, ikke i hovedlisten'),
+              title: Text(l10n.pedigreeOnly),
+              subtitle: Text(l10n.pedigreeOnlyDescription),
               value: _isPedigreeOnly,
               onChanged: (value) {
                 setState(() => _isPedigreeOnly = value ?? false);
               },
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Mother (Dam)
             _buildParentDropdown(
@@ -674,7 +700,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
               onChanged: (value) => setState(() => _damId = value),
               requiredGender: 'Female',
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Father (Sire)
             _buildParentDropdown(
@@ -683,17 +709,17 @@ class _AddDogScreenState extends State<AddDogScreen> {
               onChanged: (value) => setState(() => _sireId = value),
               requiredGender: 'Male',
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Heat Cycles - Only for females
             if (_gender == 'Female')
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -704,12 +730,12 @@ class _AddDogScreenState extends State<AddDogScreen> {
                           fontSize: 16,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: AppSpacing.md),
                       if (_heatCycles.isEmpty)
                         Text(
                           'Ingen løpetidsdatoer registrert',
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: context.colors.textMuted,
                             fontStyle: FontStyle.italic,
                           ),
                         )
@@ -720,7 +746,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                             final index = entry.key;
                             final date = entry.value;
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
+                              padding: EdgeInsets.only(bottom: AppSpacing.sm),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -741,7 +767,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                             );
                           }).toList(),
                         ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: AppSpacing.md),
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
@@ -760,7 +786,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                             }
                           },
                           icon: const Icon(Icons.add),
-                          label: const Text('Legg til løpetidsdato'),
+                          label: Text(l10n.addHeatCycle),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
                             foregroundColor: Colors.white,
@@ -771,56 +797,56 @@ class _AddDogScreenState extends State<AddDogScreen> {
                   ),
                 ),
               ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Registration Number
             TextFormField(
               controller: _regCtrl,
               decoration: InputDecoration(
-                labelText: 'Registreringsnummer (valgfritt)',
+                labelText: l10n.registrationNumberOptional,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
               ),
               onChanged: (value) => _registrationNumber = value,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppSpacing.lg),
 
             // Notes
             TextFormField(
               controller: _notesCtrl,
               decoration: InputDecoration(
-                labelText: 'Notater (valgfritt)',
+                labelText: l10n.notesOptional,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                   borderSide: BorderSide(
                     color: Theme.of(context).primaryColor,
                     width: 2,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
               ),
               maxLines: 3,
               onChanged: (value) => _notes = value,
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: AppSpacing.xxl),
 
             // Save Button
             ElevatedButton(
               onPressed: _saveDog,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: AppSpacing.lg),
               ),
               child: Text(_isEditMode ? 'Oppdater hund' : 'Lagre hund'),
             ),
@@ -833,6 +859,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
   }
 
   Widget _buildSearchableBreedDropdown() {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () => _showBreedSearchDialog(),
       child: FormField<String>(
@@ -841,12 +868,12 @@ class _AddDogScreenState extends State<AddDogScreen> {
         builder: (FormFieldState<String> field) {
           return InputDecorator(
             decoration: InputDecoration(
-              labelText: 'Rase',
+              labelText: l10n.breed,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
                 borderSide: BorderSide(
                   color: Theme.of(context).primaryColor,
                   width: 2,
@@ -854,12 +881,12 @@ class _AddDogScreenState extends State<AddDogScreen> {
               ),
               errorText: field.errorText,
               suffixIcon: const Icon(Icons.arrow_drop_down),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
             ),
             child: Text(
-              _breed.isEmpty ? 'Velg rase' : _breed,
+              _breed.isEmpty ? l10n.selectBreed : _breed,
               style: TextStyle(
-                color: _breed.isEmpty ? Colors.grey : Colors.black,
+                color: _breed.isEmpty ? context.colors.textDisabled : context.colors.textPrimary,
               ),
             ),
           );
@@ -909,6 +936,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
     required Function(String?) onChanged,
     required String requiredGender,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     final dogBox = Hive.box<Dog>('dogs');
     final availableDogs = dogBox.values
         .where((dog) => dog.gender == requiredGender)
@@ -918,9 +946,9 @@ class _AddDogScreenState extends State<AddDogScreen> {
       key: ValueKey('parent_${label}_$selectedId'),
       initialValue: selectedId,
       items: [
-        const DropdownMenuItem<String?>(
+        DropdownMenuItem<String?>(
           value: null,
-          child: Text('Ingen valgt'),
+          child: Text(l10n.noneSelected),
         ),
         ...availableDogs.map((dog) {
           return DropdownMenuItem<String?>(
@@ -933,16 +961,16 @@ class _AddDogScreenState extends State<AddDogScreen> {
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadius.mdAll,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadius.mdAll,
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
             width: 2,
           ),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 14),
       ),
     );
   }
@@ -974,8 +1002,8 @@ class _AddDogScreenState extends State<AddDogScreen> {
       ],
       currentIndex: 0,
       selectedItemColor: primaryColor,
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white,
+      unselectedItemColor: context.colors.textDisabled,
+      backgroundColor: context.colors.surface,
       elevation: 8,
       type: BottomNavigationBarType.fixed,
       onTap: (index) {
@@ -1048,6 +1076,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final hasKennelBreeds = widget.kennelBreeds.isNotEmpty;
     
     return AlertDialog(
@@ -1055,15 +1084,15 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Velg rase'),
+          Text(l10n.selectBreed),
           if (hasKennelBreeds)
             Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: EdgeInsets.only(top: AppSpacing.xs),
               child: Text(
                 _showAllBreeds ? 'Viser alle raser' : 'Viser kennelens raser',
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[600],
+                  color: context.colors.textMuted,
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -1077,17 +1106,17 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
           children: [
             if (!hasKennelBreeds)
               Container(
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.all(AppSpacing.md),
+                margin: EdgeInsets.only(bottom: AppSpacing.md),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.orange.withValues(alpha: 0.5)),
+                  color: AppColors.warning.withValues(alpha: 0.15),
+                  borderRadius: AppRadius.smAll,
+                  border: Border.all(color: AppColors.warning.withValues(alpha: 0.5)),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.lightbulb_outline, color: Colors.orange, size: 20),
-                    const SizedBox(width: 8),
+                    Icon(Icons.lightbulb_outline, color: AppColors.warning, size: 20),
+                    SizedBox(width: AppSpacing.sm),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1096,12 +1125,12 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                             'Tips: Sett opp dine raser',
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                           ),
-                          const SizedBox(height: 2),
+                          SizedBox(height: AppSpacing.xxs),
                           const Text(
                             'Legg til raser i kennelprofilen for raskere valg.',
                             style: TextStyle(fontSize: 12),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: AppSpacing.xs + AppSpacing.xxs),
                           GestureDetector(
                             onTap: widget.onNavigateToKennelProfile,
                             child: Text(
@@ -1124,19 +1153,19 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
               controller: _searchController,
               onChanged: _filterBreeds,
               decoration: InputDecoration(
-                hintText: 'Søk rase...',
+                hintText: l10n.searchBreed,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AppRadius.smAll,
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: AppSpacing.sm),
             if (hasKennelBreeds)
               InkWell(
                 onTap: _toggleShowAllBreeds,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: Row(
                     children: [
                       Icon(
@@ -1144,7 +1173,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                         size: 18,
                         color: Theme.of(context).primaryColor,
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: AppSpacing.sm),
                       Text(
                         _showAllBreeds ? 'Vis kun kennelens raser' : 'Vis alle raser',
                         style: TextStyle(
@@ -1156,7 +1185,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
                   ),
                 ),
               ),
-            const SizedBox(height: 8),
+            SizedBox(height: AppSpacing.sm),
             Expanded(
               child: _filteredBreeds.isEmpty
                   ? Center(
@@ -1185,7 +1214,7 @@ class _BreedSearchDialogState extends State<BreedSearchDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
       ],
     );

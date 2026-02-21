@@ -3,8 +3,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/models/kennel_profile.dart';
 import 'package:breedly/utils/dog_breeds.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class KennelProfileScreen extends StatefulWidget {
   const KennelProfileScreen({super.key});
@@ -100,8 +102,9 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
       }
 
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kennelprofil lagret')),
+          SnackBar(content: Text(l10n.kennelProfileSaved)),
         );
       }
     }
@@ -125,20 +128,21 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: AppBar(
-        title: const Text('Kennelprofil'),
-        backgroundColor: AppColors.surface,
+        title: Text(l10n.kennelProfile),
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
             onPressed: _saveProfile,
-            tooltip: 'Lagre',
+            tooltip: l10n.save,
           ),
         ],
       ),
@@ -152,32 +156,32 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 48,
-                            height: 48,
+                            width: AppSpacing.huge,
+                            height: AppSpacing.huge,
                             decoration: BoxDecoration(
                               color: primaryColor.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: AppRadius.mdAll,
                             ),
                             child: Icon(
                               Icons.home_work_rounded,
                               color: primaryColor,
-                              size: 24,
+                              size: AppSpacing.xxl,
                             ),
                           ),
-                          const SizedBox(width: 16),
-                          const Expanded(
+                          const SizedBox(width: AppSpacing.lg),
+                          Expanded(
                             child: Text(
-                              'Kennelinformasjon',
+                              l10n.kennelInfo,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
@@ -186,17 +190,17 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: AppSpacing.xl),
                       TextFormField(
                         controller: _kennelNameController,
                         decoration: InputDecoration(
-                          labelText: 'Kennelnavn',
-                          hintText: 'F.eks. "Nordlys Kennel"',
+                          labelText: l10n.kennelNameFieldLabel,
+                          hintText: l10n.kennelNameHint,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: primaryColor,
                               width: 2,
@@ -205,18 +209,18 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                           prefixIcon: const Icon(Icons.badge_outlined),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       TextFormField(
                         controller: _descriptionController,
                         maxLines: 3,
                         decoration: InputDecoration(
-                          labelText: 'Beskrivelse (valgfritt)',
-                          hintText: 'Fortell litt om din kennel...',
+                          labelText: l10n.descriptionOptional,
+                          hintText: l10n.kennelDescriptionHint,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: primaryColor,
                               width: 2,
@@ -228,50 +232,50 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Breeds Card
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 48,
-                            height: 48,
+                            width: AppSpacing.huge,
+                            height: AppSpacing.huge,
                             decoration: BoxDecoration(
                               color: primaryColor.withValues(alpha: 0.3),
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: AppRadius.mdAll,
                             ),
                             child: Icon(
                               Icons.pets_rounded,
                               color: primaryColor,
-                              size: 24,
+                              size: AppSpacing.xxl,
                             ),
                           ),
-                          const SizedBox(width: 16),
-                          const Expanded(
+                          const SizedBox(width: AppSpacing.lg),
+                          Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Raser',
-                                  style: TextStyle(
+                                  l10n.breedsSection,
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
                                   ),
                                 ),
                                 Text(
-                                  'Velg rasene du er oppdretter av',
+                                  l10n.selectBreedsForBreeding,
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: context.colors.textCaption,
                                     fontSize: 13,
                                   ),
                                 ),
@@ -280,39 +284,39 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       InkWell(
                         onTap: _showBreedSelectionDialog,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadius.mdAll,
                         child: Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(AppSpacing.lg),
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: context.colors.border),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           child: Row(
                             children: [
                               Expanded(
                                 child: Text(
                                   _selectedBreeds.isEmpty
-                                      ? 'Trykk for å velge raser...'
-                                      : '${_selectedBreeds.length} ${_selectedBreeds.length == 1 ? 'rase' : 'raser'} valgt',
+                                      ? l10n.tapToSelectBreeds
+                                      : '${_selectedBreeds.length} ${_selectedBreeds.length == 1 ? l10n.breedSelectedSingular : l10n.breedsSelectedPlural}',
                                   style: TextStyle(
-                                    color: _selectedBreeds.isEmpty ? Colors.grey : Colors.black,
+                                    color: _selectedBreeds.isEmpty ? context.colors.textDisabled : context.colors.textPrimary,
                                   ),
                                 ),
                               ),
-                              const Icon(Icons.add_circle_outline, color: Colors.grey),
+                              Icon(Icons.add_circle_outline, color: context.colors.iconMuted),
                             ],
                           ),
                         ),
                       ),
                       if (_selectedBreeds.isNotEmpty) ...[
-                        const SizedBox(height: 12),
+                        const SizedBox(height: AppSpacing.md),
                         Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
+                          spacing: AppSpacing.sm,
+                          runSpacing: AppSpacing.sm,
                           children: _selectedBreeds.map((breed) {
                             return Chip(
                               label: Text(breed),
@@ -331,55 +335,55 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
 
               // Contact Info Card
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.mdAll,
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(AppSpacing.lg),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 48,
-                            height: 48,
+                            width: AppSpacing.huge,
+                            height: AppSpacing.huge,
                             decoration: BoxDecoration(
-                              color: Colors.blue.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(12),
+                              color: AppColors.info.withValues(alpha: 0.15),
+                              borderRadius: AppRadius.mdAll,
                             ),
                             child: const Icon(
                               Icons.contact_mail_rounded,
-                              color: Colors.blue,
-                              size: 24,
+                              color: AppColors.info,
+                              size: AppSpacing.xxl,
                             ),
                           ),
-                          const SizedBox(width: 16),
-                          const Text(
-                            'Kontaktinformasjon',
-                            style: TextStyle(
+                          const SizedBox(width: AppSpacing.lg),
+                          Text(
+                            l10n.contactInfo,
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: AppSpacing.xl),
                       TextFormField(
                         controller: _contactEmailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          labelText: 'E-post (valgfritt)',
+                          labelText: l10n.emailOptional,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: primaryColor,
                               width: 2,
@@ -388,17 +392,17 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                           prefixIcon: const Icon(Icons.email_outlined),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       TextFormField(
                         controller: _contactPhoneController,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          labelText: 'Telefon (valgfritt)',
+                          labelText: l10n.phoneOptional,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: primaryColor,
                               width: 2,
@@ -407,16 +411,16 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                           prefixIcon: const Icon(Icons.phone_outlined),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       TextFormField(
                         controller: _addressController,
                         decoration: InputDecoration(
-                          labelText: 'Adresse (valgfritt)',
+                          labelText: l10n.addressOptional,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: primaryColor,
                               width: 2,
@@ -425,17 +429,17 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                           prefixIcon: const Icon(Icons.location_on_outlined),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: AppSpacing.lg),
                       TextFormField(
                         controller: _websiteController,
                         keyboardType: TextInputType.url,
                         decoration: InputDecoration(
-                          labelText: 'Nettside (valgfritt)',
+                          labelText: l10n.websiteOptional,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.mdAll,
                             borderSide: BorderSide(
                               color: primaryColor,
                               width: 2,
@@ -448,23 +452,23 @@ class _KennelProfileScreenState extends State<KennelProfileScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xxl),
 
               // Save Button
               ElevatedButton.icon(
                 onPressed: _saveProfile,
                 icon: const Icon(Icons.save),
-                label: const Text('Lagre kennelprofil'),
+                label: Text(l10n.saveKennelProfile),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primaryColor,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.lg),
             ],
           ),
         ),
@@ -522,35 +526,36 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Velg raser'),
+      title: Text(l10n.selectBreeds),
       content: SizedBox(
         width: double.maxFinite,
-        height: 400,
+        height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           children: [
             TextField(
               controller: _searchController,
               onChanged: _filterBreeds,
               decoration: InputDecoration(
-                hintText: 'Søk rase...',
+                hintText: l10n.searchBreed,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AppRadius.smAll,
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Text(
-              '${_selected.length} valgt',
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              l10n.nSelected(_selected.length.toString()),
+              style: TextStyle(color: context.colors.textMuted, fontSize: 12),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: AppSpacing.sm),
             Expanded(
               child: _filteredBreeds.isEmpty
                   ? Center(
                       child: Text(
-                        'Ingen raser funnet for "${_searchController.text}"',
+                        l10n.noBreedsFoundFor(_searchController.text),
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -582,7 +587,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Avbryt'),
+          child: Text(l10n.cancel),
         ),
         ElevatedButton(
           onPressed: () {
@@ -592,7 +597,7 @@ class _BreedSelectionDialogState extends State<BreedSelectionDialog> {
           style: ElevatedButton.styleFrom(
             backgroundColor: Theme.of(context).primaryColor,
           ),
-          child: const Text('Bekreft', style: TextStyle(color: Colors.white)),
+          child: Text(l10n.confirm, style: const TextStyle(color: Colors.white)),
         ),
       ],
     );

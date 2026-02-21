@@ -10,6 +10,7 @@ import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/utils/logger.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class FinanceScreen extends StatefulWidget {
@@ -44,25 +45,25 @@ class _FinanceScreenState extends State<FinanceScreen>
     final localizations = AppLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: widget.showAppBar ? AppBar(
         title: Text(
           localizations?.finance ?? 'Økonomi',
           style: AppTypography.headlineLarge.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: primaryColor,
           labelColor: primaryColor,
-          unselectedLabelColor: AppColors.neutral500,
+          unselectedLabelColor: context.colors.textCaption,
           tabs: [
             Tab(icon: const Icon(Icons.analytics_outlined), text: localizations?.overview ?? 'Oversikt'),
             Tab(icon: const Icon(Icons.trending_down), text: localizations?.expenses ?? 'Utgifter'),
@@ -77,14 +78,14 @@ class _FinanceScreenState extends State<FinanceScreen>
               // Custom header når app bar er skjult
               Container(
                 padding: const EdgeInsets.all(AppSpacing.lg),
-                color: AppColors.surface,
+                color: context.colors.surface,
                 child: Column(
                   children: [
                     Center(
                       child: Text(
                         localizations?.finance ?? 'Økonomi',
                         style: AppTypography.headlineLarge.copyWith(
-                          color: AppColors.neutral900,
+                          color: context.colors.textPrimary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -94,7 +95,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                       controller: _tabController,
                       indicatorColor: primaryColor,
                       labelColor: primaryColor,
-                      unselectedLabelColor: AppColors.neutral500,
+                      unselectedLabelColor: context.colors.textCaption,
                       tabs: [
                         Tab(icon: const Icon(Icons.analytics_outlined), text: localizations?.overview ?? 'Oversikt'),
                         Tab(icon: const Icon(Icons.trending_down), text: localizations?.expenses ?? 'Utgifter'),
@@ -125,8 +126,8 @@ class _FinanceScreenState extends State<FinanceScreen>
                             decoration: BoxDecoration(
                               color: _selectedLitterId == null
                                   ? AppColors.primary
-                                  : AppColors.surface,
-                              borderRadius: BorderRadius.circular(999),
+                                : context.colors.surface,
+                              borderRadius: BorderRadius.circular(AppRadius.full),
                               border: Border.all(
                                 color: AppColors.primary,
                               ),
@@ -154,8 +155,8 @@ class _FinanceScreenState extends State<FinanceScreen>
                               padding:
                                   const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
                               decoration: BoxDecoration(
-                                color: isSelected ? AppColors.primary : AppColors.surface,
-                                borderRadius: BorderRadius.circular(999),
+                                color: isSelected ? AppColors.primary : context.colors.surface,
+                                borderRadius: BorderRadius.circular(AppRadius.full),
                                 border: Border.all(
                                   color: AppColors.primary,
                                 ),
@@ -255,7 +256,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                                 Text(
                                   localizations?.totalIncome ?? 'Total inntekt',
                                   style: AppTypography.labelMedium.copyWith(
-                                    color: AppColors.neutral500,
+                                    color: context.colors.textCaption,
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xs),
@@ -303,7 +304,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                                 Text(
                                   localizations?.totalExpense ?? 'Total utgift',
                                   style: AppTypography.labelMedium.copyWith(
-                                    color: AppColors.neutral500,
+                                    color: context.colors.textCaption,
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xs),
@@ -357,7 +358,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                                 Text(
                                   localizations?.netResult ?? 'Netto resultat',
                                   style: AppTypography.labelMedium.copyWith(
-                                    color: AppColors.neutral500,
+                                    color: context.colors.textCaption,
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xs),
@@ -382,7 +383,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                     child: Text(
                       localizations?.statistics ?? 'Statistikk',
                       style: AppTypography.titleMedium.copyWith(
-                        color: AppColors.neutral900,
+                        color: context.colors.textPrimary,
                       ),
                     ),
                   ),
@@ -391,7 +392,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadius.lgAll,
-                      side: BorderSide(color: AppColors.neutral200),
+                      side: BorderSide(color: context.colors.border),
                     ),
                     child: Column(
                       children: [
@@ -404,7 +405,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                             ),
                           ),
                         ),
-                        Divider(height: 1, color: AppColors.neutral200),
+                        Divider(height: 1, color: context.colors.border),
                         ListTile(
                           title: Text(localizations?.numberOfIncomes ?? 'Antall inntekter', style: AppTypography.bodyMedium),
                           trailing: Text(
@@ -443,16 +444,16 @@ class _FinanceScreenState extends State<FinanceScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.receipt_long, size: 80, color: AppColors.neutral300),
+                Icon(Icons.receipt_long, size: 80, color: context.colors.divider),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
                   localizations?.noExpensesRegistered ?? 'Ingen utgifter registrert',
-                  style: AppTypography.titleSmall.copyWith(color: AppColors.neutral900),
+                  style: AppTypography.titleSmall.copyWith(color: context.colors.textPrimary),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   localizations?.addFirstExpense ?? 'Legg inn første utgift for å få oversikt',
-                  style: AppTypography.bodySmall.copyWith(color: AppColors.neutral500),
+                  style: AppTypography.bodySmall.copyWith(color: context.colors.textCaption),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 ElevatedButton.icon(
@@ -480,7 +481,7 @@ class _FinanceScreenState extends State<FinanceScreen>
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.lgAll,
-                side: BorderSide(color: AppColors.neutral200),
+                side: BorderSide(color: context.colors.border),
               ),
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(
@@ -488,7 +489,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                   vertical: AppSpacing.md,
                 ),
                 leading: Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: AppColors.error.withValues(alpha: 0.1),
                     borderRadius: AppRadius.smAll,
@@ -502,7 +503,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                 title: Text(
                   expense.category,
                   style: AppTypography.labelLarge.copyWith(
-                    color: AppColors.neutral900,
+                    color: context.colors.textPrimary,
                   ),
                 ),
                 subtitle: Column(
@@ -512,7 +513,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                     Text(
                       DateFormat('dd.MM.yyyy').format(expense.date),
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.neutral500,
+                        color: context.colors.textCaption,
                       ),
                     ),
                     if (expense.description != null &&
@@ -521,7 +522,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                       Text(
                         expense.description!,
                         style: AppTypography.caption.copyWith(
-                          color: AppColors.neutral400,
+                          color: context.colors.textDisabled,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -561,16 +562,16 @@ class _FinanceScreenState extends State<FinanceScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.attach_money, size: 80, color: AppColors.neutral300),
+                Icon(Icons.attach_money, size: 80, color: context.colors.divider),
                 const SizedBox(height: AppSpacing.lg),
                 Text(
                   localizations?.noIncomesRegistered ?? 'Ingen inntekter registrert',
-                  style: AppTypography.titleSmall.copyWith(color: AppColors.neutral900),
+                  style: AppTypography.titleSmall.copyWith(color: context.colors.textPrimary),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   localizations?.addFirstIncome ?? 'Legg inn første inntekt for å få oversikt',
-                  style: AppTypography.bodySmall.copyWith(color: AppColors.neutral500),
+                  style: AppTypography.bodySmall.copyWith(color: context.colors.textCaption),
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 ElevatedButton.icon(
@@ -598,7 +599,7 @@ class _FinanceScreenState extends State<FinanceScreen>
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.lgAll,
-                side: BorderSide(color: AppColors.neutral200),
+                side: BorderSide(color: context.colors.border),
               ),
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(
@@ -606,7 +607,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                   vertical: AppSpacing.md,
                 ),
                 leading: Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(AppSpacing.sm),
                   decoration: BoxDecoration(
                     color: AppColors.success.withValues(alpha: 0.1),
                     borderRadius: AppRadius.smAll,
@@ -620,7 +621,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                 title: Text(
                   income.buyerName ?? 'Inntekt',
                   style: AppTypography.labelLarge.copyWith(
-                    color: AppColors.neutral900,
+                    color: context.colors.textPrimary,
                   ),
                 ),
                 subtitle: Column(
@@ -630,7 +631,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                     Text(
                       DateFormat('dd.MM.yyyy').format(income.date),
                       style: AppTypography.bodySmall.copyWith(
-                        color: AppColors.neutral500,
+                        color: context.colors.textCaption,
                       ),
                     ),
                     if (income.description != null &&
@@ -639,7 +640,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                       Text(
                         income.description!,
                         style: AppTypography.caption.copyWith(
-                          color: AppColors.neutral400,
+                          color: context.colors.textDisabled,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -712,7 +713,7 @@ class _FinanceScreenState extends State<FinanceScreen>
                       );
                     },
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   DropdownButtonFormField<String>(
                     isExpanded: true,
                     decoration: InputDecoration(labelText: localizations?.category ?? 'Kategori'),
@@ -726,13 +727,13 @@ class _FinanceScreenState extends State<FinanceScreen>
                       categoryController.text = value ?? '';
                     },
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: amountController,
                     decoration: InputDecoration(labelText: localizations?.amount ?? 'Beløp (kr)'),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: descriptionController,
                     decoration: InputDecoration(labelText: localizations?.description ?? 'Beskrivelse'),
@@ -842,18 +843,18 @@ class _FinanceScreenState extends State<FinanceScreen>
                       );
                     },
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: amountController,
                     decoration: InputDecoration(labelText: localizations?.amount ?? 'Beløp (kr)'),
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: buyerNameController,
                     decoration: InputDecoration(labelText: localizations?.buyerOptional ?? 'Kjøper (valgfritt)'),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: descriptionController,
                     decoration: InputDecoration(labelText: localizations?.description ?? 'Beskrivelse'),

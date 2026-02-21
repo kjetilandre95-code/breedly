@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:async';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/services/global_search_service.dart';
 import 'package:breedly/screens/dog_detail_screen.dart';
 import 'package:breedly/screens/litter_detail_screen.dart';
@@ -128,13 +130,13 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
   Color _getTypeColor(SearchResultType type) {
     switch (type) {
       case SearchResultType.dog:
-        return Colors.blue;
+        return AppColors.info;
       case SearchResultType.litter:
-        return Colors.green;
+        return AppColors.success;
       case SearchResultType.puppy:
-        return Colors.orange;
+        return AppColors.warning;
       case SearchResultType.buyer:
-        return Colors.purple;
+        return AppColors.accent5;
     }
   }
 
@@ -219,14 +221,14 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           Icon(
             Icons.search,
             size: 80,
-            color: Colors.grey[300],
+            color: context.colors.border,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           Text(
-            'Søk etter hunder, kull, valper eller kjøpere',
+            l10n.searchPrompt,
             style: TextStyle(
               fontSize: 16,
-              color: Colors.grey[600],
+              color: context.colors.textMuted,
             ),
             textAlign: TextAlign.center,
           ),
@@ -243,23 +245,23 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           Icon(
             Icons.search_off,
             size: 80,
-            color: Colors.grey[300],
+            color: context.colors.border,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.lg),
           Text(
             l10n.noResults,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[700],
+              color: context.colors.textTertiary,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.tryDifferentSearch,
             style: TextStyle(
               fontSize: 14,
-              color: Colors.grey[600],
+              color: context.colors.textMuted,
             ),
           ),
         ],
@@ -275,7 +277,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppSpacing.lg),
       itemCount: groupedResults.length,
       itemBuilder: (context, index) {
         final type = groupedResults.keys.elementAt(index);
@@ -285,17 +287,17 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               child: Row(
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.xs,
                     ),
                     decoration: BoxDecoration(
                       color: _getTypeColor(type).withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.mdAll,
                     ),
                     child: Text(
                       _getTypeLabel(type, l10n),
@@ -306,11 +308,11 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: AppSpacing.sm),
                   Text(
                     '(${results.length})',
                     style: TextStyle(
-                      color: Colors.grey[600],
+                      color: context.colors.textMuted,
                       fontSize: 12,
                     ),
                   ),
@@ -318,7 +320,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
               ),
             ),
             ...results.map((result) => _buildResultCard(result)),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.lg),
           ],
         );
       },
@@ -327,7 +329,7 @@ class _GlobalSearchScreenState extends State<GlobalSearchScreen> {
 
   Widget _buildResultCard(SearchResult result) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: _getTypeColor(result.type).withValues(alpha: 0.1),

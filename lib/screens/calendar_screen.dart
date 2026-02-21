@@ -6,17 +6,21 @@ import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/models/treatment_plan.dart';
 import 'package:breedly/models/puppy.dart';
+import 'package:breedly/models/vaccine.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 /// Calendar event types
 enum CalendarEventType {
   heatCycle, // Løpetid
   expectedHeat, // Forventet løpetid
+  matingWindow, // Parringsvindu (beregnet fra løpetid)
   expectedBirth, // Forventet fødsel
   delivery, // Leveringsdato
   treatment, // Behandling (vaksinering, ormekur)
+  vaccine, // Vaksine for voksen hund
   birthday, // Hundens bursdag
 }
 
@@ -59,7 +63,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   // Event filter
   Set<CalendarEventType> _enabledEventTypes = CalendarEventType.values.toSet();
 
-  List<CalendarEvent> _getAllEvents() {
+  List<CalendarEvent> _getAllEvents(AppLocalizations l10n) {
     final events = <CalendarEvent>[];
 
     final dogBox = Hive.box<Dog>('dogs');
@@ -75,10 +79,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
           events.add(
             CalendarEvent(
               id: 'heat_${dog.id}_$i',
-              title: '${dog.name} - Løpetid',
+              title: l10n.dogHeatCycle(dog.name),
               date: cycleDate,
               type: CalendarEventType.heatCycle,
-              color: Colors.pink,
+              color: AppColors.female,
               dogId: dog.id,
             ),
           );
@@ -91,10 +95,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
           events.add(
             CalendarEvent(
               id: 'expected_heat_${dog.id}',
-              title: '${dog.name} - Forventet løpetid',
+              title: l10n.dogExpectedHeat(dog.name),
               date: expectedHeat,
               type: CalendarEventType.expectedHeat,
-              color: Colors.pink.shade200,
+              color: AppColors.female,
               dogId: dog.id,
             ),
           );
@@ -108,11 +112,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
       events.add(
         CalendarEvent(
           id: 'birth_${litter.id}',
-          title: '${litter.damName} fødte',
-          subtitle: '${litter.numberOfPuppies} valper',
+          title: l10n.dogGaveBirth(litter.damName),
+          subtitle: l10n.puppiesCount(litter.numberOfPuppies),
           date: litter.dateOfBirth,
           type: CalendarEventType.birthday,
-          color: Colors.green,
+          color: AppColors.success,
           litterId: litter.id,
         ),
       );
@@ -122,11 +126,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
       events.add(
         CalendarEvent(
           id: 'delivery_${litter.id}',
-          title: 'Levering: ${litter.damName} kull',
-          subtitle: '8 uker gammel',
+          title: l10n.litterDeliveryEvent(litter.damName),
+          subtitle: l10n.eightWeeksOld,
           date: deliveryDate,
           type: CalendarEventType.delivery,
-          color: Colors.orange,
+          color: AppColors.warning,
           litterId: litter.id,
         ),
       );
@@ -142,7 +146,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           (p) => p.id == plan.puppyId,
           orElse: () => Puppy(
             id: '',
-            name: 'Ukjent',
+            name: l10n.unknownDog,
             gender: '',
             color: '',
             dateOfBirth: DateTime.now(),
@@ -156,10 +160,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'vaccine1_${plan.id}',
-                title: '${puppy.name} - 1. vaksinering',
+                title: l10n.puppyVaccination(puppy.name, '1'),
                 date: plan.vaccineDate1!,
                 type: CalendarEventType.treatment,
-                color: Colors.blue,
+                color: AppColors.accent1,
               ),
             );
           }
@@ -167,10 +171,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'vaccine2_${plan.id}',
-                title: '${puppy.name} - 2. vaksinering',
+                title: l10n.puppyVaccination(puppy.name, '2'),
                 date: plan.vaccineDate2!,
                 type: CalendarEventType.treatment,
-                color: Colors.blue,
+                color: AppColors.accent1,
               ),
             );
           }
@@ -180,10 +184,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'wormer1_${plan.id}',
-                title: '${puppy.name} - 1. ormekur',
+                title: l10n.puppyDeworming(puppy.name, '1'),
                 date: plan.wormerDate1!,
                 type: CalendarEventType.treatment,
-                color: Colors.teal,
+                color: AppColors.accent2,
               ),
             );
           }
@@ -191,10 +195,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'wormer2_${plan.id}',
-                title: '${puppy.name} - 2. ormekur',
+                title: l10n.puppyDeworming(puppy.name, '2'),
                 date: plan.wormerDate2!,
                 type: CalendarEventType.treatment,
-                color: Colors.teal,
+                color: AppColors.accent2,
               ),
             );
           }
@@ -204,10 +208,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
             events.add(
               CalendarEvent(
                 id: 'microchip_${plan.id}',
-                title: '${puppy.name} - ID-merking',
+                title: l10n.puppyMicrochip(puppy.name),
                 date: plan.microchipDate!,
                 type: CalendarEventType.treatment,
-                color: Colors.indigo,
+                color: AppColors.accent5,
               ),
             );
           }
@@ -215,6 +219,77 @@ class _CalendarScreenState extends State<CalendarScreen> {
       }
     } catch (e) {
       // Treatment plan box might not exist
+    }
+
+    // Mating window (optimal days 10-14 after expected heat)
+    for (final dog in dogBox.values) {
+      if (dog.gender == 'Female' && dog.heatCycles.isNotEmpty) {
+        final lastCycle = dog.heatCycles.reduce((a, b) => a.isAfter(b) ? a : b);
+        final expectedHeat = lastCycle.add(const Duration(days: 180));
+        if (expectedHeat.isAfter(DateTime.now())) {
+          // Mating window: days 10-14 after heat start
+          for (int day = 10; day <= 14; day++) {
+            final matingDay = expectedHeat.add(Duration(days: day));
+            events.add(
+              CalendarEvent(
+                id: 'mating_${dog.id}_day$day',
+                title: l10n.matingWindow(dog.name),
+                subtitle: '${l10n.msgDaySingular} $day',
+                date: matingDay,
+                type: CalendarEventType.matingWindow,
+                color: AppColors.accent4,
+                dogId: dog.id,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    // Expected birth date from litters with estimatedDueDate
+    for (final litter in litterBox.values) {
+      if (litter.estimatedDueDate != null &&
+          litter.estimatedDueDate!.isAfter(DateTime.now().subtract(const Duration(days: 7)))) {
+        events.add(
+          CalendarEvent(
+            id: 'expected_birth_${litter.id}',
+            title: l10n.estimatedBirthColon(litter.damName),
+            date: litter.estimatedDueDate!,
+            type: CalendarEventType.expectedBirth,
+            color: AppColors.accent5,
+            litterId: litter.id,
+          ),
+        );
+      }
+    }
+
+    // Vaccine reminders for adult dogs
+    try {
+      final vaccineBox = Hive.box<Vaccine>('vaccines');
+      for (final vaccine in vaccineBox.values) {
+        if (vaccine.nextDueDate != null && vaccine.reminderEnabled) {
+          // Find dog name
+          final dog = dogBox.values.where((d) => d.id == vaccine.dogId).firstOrNull;
+          final dogName = dog?.name ?? l10n.unknownDog;
+
+          // Show vaccine due date
+          events.add(
+            CalendarEvent(
+              id: 'vaccine_due_${vaccine.id}',
+              title: '${vaccine.name} – $dogName',
+              subtitle: vaccine.isOverdue()
+                  ? l10n.overdueLabel
+                  : null,
+              date: vaccine.nextDueDate!,
+              type: CalendarEventType.vaccine,
+              color: vaccine.isOverdue() ? AppColors.error : AppColors.accent1,
+              dogId: vaccine.dogId,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      // Vaccine box might not exist
     }
 
     // Dog birthdays
@@ -240,10 +315,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
       events.add(
         CalendarEvent(
           id: 'birthday_${dog.id}_$age',
-          title: '${dog.name} fyller $age år',
+          title: l10n.dogBirthdayAge(dog.name, age.toString()),
           date: birthday,
           type: CalendarEventType.birthday,
-          color: Colors.amber,
+          color: AppColors.accent3,
           dogId: dog.id,
         ),
       );
@@ -252,8 +327,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return events;
   }
 
-  List<CalendarEvent> _getEventsForDay(DateTime day) {
-    final allEvents = _getAllEvents();
+  List<CalendarEvent> _getEventsForDay(DateTime day, [AppLocalizations? l10n]) {
+    l10n ??= AppLocalizations.of(context)!;
+    final allEvents = _getAllEvents(l10n);
     return allEvents.where((event) {
       if (!_enabledEventTypes.contains(event.type)) return false;
       return isSameDay(event.date, day);
@@ -268,7 +344,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
     final theme = Theme.of(context);
     final selectedEvents = _selectedDay != null
-        ? _getEventsForDay(_selectedDay!)
+        ? _getEventsForDay(_selectedDay!, l10n)
         : [];
 
     return Scaffold(
@@ -276,15 +352,15 @@ class _CalendarScreenState extends State<CalendarScreen> {
         title: Text(
           l10n.calendar,
           style: AppTypography.headlineLarge.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           IconButton(
             icon: const Icon(Icons.filter_list),
@@ -309,7 +385,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             lastDay: DateTime.utc(2030, 12, 31),
             focusedDay: _focusedDay,
             calendarFormat: _calendarFormat,
-            eventLoader: _getEventsForDay,
+            eventLoader: (day) => _getEventsForDay(day, l10n),
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
@@ -335,7 +411,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 shape: BoxShape.circle,
               ),
               markerDecoration: const BoxDecoration(color: Colors.transparent),
-              cellMargin: const EdgeInsets.all(4),
+              cellMargin: const EdgeInsets.all(AppSpacing.xs),
               outsideDaysVisible: false,
             ),
             rowHeight: 48,
@@ -364,7 +440,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             headerStyle: HeaderStyle(
               formatButtonDecoration: BoxDecoration(
                 border: Border.all(color: AppColors.primary),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.mdAll,
               ),
               formatButtonTextStyle: TextStyle(color: AppColors.primary),
             ),
@@ -382,7 +458,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         Icon(
                           Icons.event_available,
                           size: 48,
-                          color: AppColors.neutral400,
+                          color: context.colors.textDisabled,
                         ),
                         const SizedBox(height: AppSpacing.md),
                         Text(
@@ -390,7 +466,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               ? l10n.noUpcomingEvents
                               : l10n.noUpcomingEvents,
                           style: theme.textTheme.bodyLarge?.copyWith(
-                            color: AppColors.neutral600,
+                            color: context.colors.textMuted,
                           ),
                         ),
                       ],
@@ -465,32 +541,40 @@ class _CalendarScreenState extends State<CalendarScreen> {
       case CalendarEventType.heatCycle:
         return l10n.heatCycles;
       case CalendarEventType.expectedHeat:
-        return '${l10n.heatCycles} (forventet)';
+        return l10n.expectedHeatCycles;
+      case CalendarEventType.matingWindow:
+        return l10n.matingWindows;
       case CalendarEventType.expectedBirth:
-        return 'Estimert dato for fødsel';
+        return l10n.estimatedBirthDate;
       case CalendarEventType.delivery:
         return l10n.deliveryDate;
       case CalendarEventType.treatment:
-        return 'Behandlinger';
+        return l10n.treatments;
+      case CalendarEventType.vaccine:
+        return l10n.vaccinesTab;
       case CalendarEventType.birthday:
-        return 'Bursdager';
+        return l10n.birthdays;
     }
   }
 
   Color _getEventTypeColor(CalendarEventType type) {
     switch (type) {
       case CalendarEventType.heatCycle:
-        return Colors.pink;
+        return AppColors.female;
       case CalendarEventType.expectedHeat:
-        return Colors.pink.shade200;
+        return AppColors.female;
+      case CalendarEventType.matingWindow:
+        return AppColors.accent4;
       case CalendarEventType.expectedBirth:
-        return Colors.purple;
+        return AppColors.accent5;
       case CalendarEventType.delivery:
-        return Colors.orange;
+        return AppColors.warning;
       case CalendarEventType.treatment:
-        return Colors.blue;
+        return AppColors.accent1;
+      case CalendarEventType.vaccine:
+        return AppColors.accent1;
       case CalendarEventType.birthday:
-        return Colors.amber;
+        return AppColors.accent3;
     }
   }
 }
@@ -506,12 +590,16 @@ class _EventCard extends StatelessWidget {
       case CalendarEventType.heatCycle:
       case CalendarEventType.expectedHeat:
         return Icons.favorite;
+      case CalendarEventType.matingWindow:
+        return Icons.favorite_border;
       case CalendarEventType.expectedBirth:
         return Icons.pets;
       case CalendarEventType.delivery:
         return Icons.local_shipping;
       case CalendarEventType.treatment:
         return Icons.medical_services;
+      case CalendarEventType.vaccine:
+        return Icons.vaccines;
       case CalendarEventType.birthday:
         return Icons.cake;
     }
@@ -529,7 +617,7 @@ class _EventCard extends StatelessWidget {
           height: 40,
           decoration: BoxDecoration(
             color: event.color.withValues(alpha: ThemeOpacity.high(context)),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.smAll,
           ),
           child: Icon(_getEventIcon(), color: event.color),
         ),
@@ -543,14 +631,14 @@ class _EventCard extends StatelessWidget {
             ? Text(
                 event.subtitle!,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.neutral600,
+                  color: context.colors.textMuted,
                 ),
               )
             : null,
         trailing: Text(
           dateFormat.format(event.date),
           style: theme.textTheme.bodySmall?.copyWith(
-            color: AppColors.neutral500,
+            color: context.colors.textCaption,
           ),
         ),
       ),

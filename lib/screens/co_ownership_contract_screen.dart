@@ -8,6 +8,8 @@ import '../models/co_ownership_contract.dart';
 import '../services/pdf_contract_service.dart';
 import '../services/auth_service.dart';
 import '../services/cloud_sync_service.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 class CoOwnershipContractScreen extends StatefulWidget {
   final Dog? preselectedDog;
@@ -99,9 +101,10 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
 
   Future<void> _generatePdf() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
     if (_selectedDog == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Velg en hund')),
+        SnackBar(content: Text(l10n.selectDog)),
       );
       return;
     }
@@ -165,19 +168,19 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Medeieravtale opprettet!')),
+          SnackBar(content: Text(l10n.coOwnershipContractCreated)),
         );
         
         // Show share dialog
         await Share.shareXFiles(
           [XFile(file.path)],
-          subject: 'Medeieravtale - ${_selectedDog!.name}',
+          subject: '${l10n.coOwnershipContract} - ${_selectedDog!.name}',
         );
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil: $e')),
+          SnackBar(content: Text(l10n.genericError(e.toString()))),
         );
       }
     } finally {
@@ -189,36 +192,37 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Medeieravtale'),
+        title: Text(l10n.coOwnershipContract),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : Form(
               key: _formKey,
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Dog selection
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hund',
+                              l10n.dog,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             DropdownButtonFormField<Dog>(
                               initialValue: _selectedDog,
-                              decoration: const InputDecoration(
-                                labelText: 'Velg hund',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.selectDog,
+                                border: const OutlineInputBorder(),
                               ),
                               items: _allDogs.map((dog) {
                                 return DropdownMenuItem(
@@ -230,109 +234,109 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                                 setState(() => _selectedDog = dog);
                               },
                               validator: (value) =>
-                                  value == null ? 'Påkrevd' : null,
+                                  value == null ? l10n.required : null,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Owner 1
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Eier 1',
+                              l10n.owner1,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _owner1NameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Navn',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.name,
+                                border: const OutlineInputBorder(),
                               ),
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _owner1AddressController,
-                              decoration: const InputDecoration(
-                                labelText: 'Adresse',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.address,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 2,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Owner 2
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Eier 2',
+                              l10n.owner2,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _owner2NameController,
-                              decoration: const InputDecoration(
-                                labelText: 'Navn',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.name,
+                                border: const OutlineInputBorder(),
                               ),
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _owner2AddressController,
-                              decoration: const InputDecoration(
-                                labelText: 'Adresse',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.address,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 2,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Ownership percentage
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Eierandel',
+                              l10n.ownershipShare,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             Row(
                               children: [
                                 Expanded(
-                                  child: Text('Eier 1: $_owner1Percentage%'),
+                                  child: Text('${l10n.owner1}: $_owner1Percentage%'),
                                 ),
                                 Expanded(
-                                  child: Text('Eier 2: ${100 - _owner1Percentage}%'),
+                                  child: Text('${l10n.owner2}: ${100 - _owner1Percentage}%'),
                                 ),
                               ],
                             ),
@@ -346,25 +350,25 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                                 setState(() => _owner1Percentage = value.round());
                               },
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             DropdownButtonFormField<String>(
                               initialValue: _primaryCaretaker,
-                              decoration: const InputDecoration(
-                                labelText: 'Hovedomsorgsperson',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.primaryCaretaker,
+                                border: const OutlineInputBorder(),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: 'Eier 1',
-                                  child: Text('Eier 1'),
+                                  child: Text(l10n.owner1),
                                 ),
                                 DropdownMenuItem(
                                   value: 'Eier 2',
-                                  child: Text('Eier 2'),
+                                  child: Text(l10n.owner2),
                                 ),
                                 DropdownMenuItem(
                                   value: 'Delt',
-                                  child: Text('Delt ansvar'),
+                                  child: Text(l10n.sharedResponsibility),
                                 ),
                               ],
                               onChanged: (value) {
@@ -375,76 +379,76 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Rights and responsibilities
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Rettigheter og ansvar',
+                              l10n.rightsAndResponsibilities,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _breedingRightsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Avlsrettigheter',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.breedingRights,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 3,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _showRightsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Utstillingsrettigheter',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.showRights,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 3,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: AppSpacing.md),
                             TextFormField(
                               controller: _expenseSharingController,
-                              decoration: const InputDecoration(
-                                labelText: 'Utgiftsfordeling',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.expenseSharing,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 3,
                               validator: (value) =>
-                                  value?.isEmpty ?? true ? 'Påkrevd' : null,
+                                  value?.isEmpty ?? true ? l10n.required : null,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
 
                     // Additional terms
                     Card(
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(AppSpacing.lg),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Tilleggsvilkår',
+                              l10n.additionalTerms,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: AppSpacing.sm),
                             TextFormField(
                               controller: _additionalTermsController,
-                              decoration: const InputDecoration(
-                                labelText: 'Tilleggsvilkår (valgfritt)',
-                                hintText: 'Skriv inn eventuelle tilleggsvilkår...',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: l10n.additionalTermsOptional,
+                                hintText: l10n.additionalTermsHintText,
+                                border: const OutlineInputBorder(),
                               ),
                               maxLines: 5,
                             ),
@@ -452,7 +456,7 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: AppSpacing.xxl),
 
                     // Generate button
                     SizedBox(
@@ -460,13 +464,13 @@ class _CoOwnershipContractScreenState extends State<CoOwnershipContractScreen> {
                       child: ElevatedButton.icon(
                         onPressed: _generatePdf,
                         icon: const Icon(Icons.picture_as_pdf),
-                        label: const Text('Generer medeieravtale'),
+                        label: Text(l10n.generateCoOwnershipContract),
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: AppSpacing.lg),
                   ],
                 ),
               ),

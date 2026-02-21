@@ -282,6 +282,7 @@ class ReminderManager {
     for (final dog in dogBox.values) {
       await scheduleDogTreatmentReminders(dog);
       await scheduleDogVetFollowUpReminders(dog);
+      await scheduleBirthdayReminder(dog);
     }
 
     AppLogger.debug('All reminders refreshed');
@@ -443,6 +444,63 @@ class ReminderManager {
   /// Cancel reminder for a specific vet visit follow-up
   Future<void> cancelVetVisitFollowUpReminder(String visitId) async {
     final baseId = visitId.hashCode + 600;
+    await _notificationService.cancelNotification(baseId);
+    await _notificationService.cancelNotification(baseId + 1);
+  }
+
+  /// Schedule yearly birthday reminder for a dog
+  Future<void> scheduleBirthdayReminder(Dog dog) async {
+    // Don't schedule for deceased dogs
+    if (dog.deathDate != null) return;
+
+    final now = DateTime.now();
+    final baseId = dog.id.hashCode + 700;
+
+    // Calculate next birthday
+    var nextBirthday = DateTime(
+      now.year,
+      dog.dateOfBirth.month,
+      dog.dateOfBirth.day,
+      9, 0, // 09:00 in the morning
+    );
+
+    // If birthday has already passed this year, schedule for next year
+    if (nextBirthday.isBefore(now)) {
+      nextBirthday = DateTime(
+        now.year + 1,
+        dog.dateOfBirth.month,
+        dog.dateOfBirth.day,
+        9, 0,
+      );
+    }
+
+    final age = nextBirthday.year - dog.dateOfBirth.year;
+
+    // Reminder on the birthday
+    await _scheduleCustomReminder(
+      id: baseId,
+      title: 'Gratulerer med dagen! \uD83C\uDF82',
+      body: '${dog.name} fyller $age år i dag! \uD83C\uDF89',
+      scheduledDate: nextBirthday,
+    );
+
+    // Reminder 1 day before
+    final dayBefore = nextBirthday.subtract(const Duration(days: 1));
+    if (dayBefore.isAfter(now)) {
+      await _scheduleCustomReminder(
+        id: baseId + 1,
+        title: 'Bursdag i morgen!',
+        body: '${dog.name} fyller $age år i morgen!',
+        scheduledDate: dayBefore,
+      );
+    }
+
+    AppLogger.debug('Scheduled birthday reminder for ${dog.name} on $nextBirthday (turns $age)');
+  }
+
+  /// Cancel birthday reminders for a dog
+  Future<void> cancelBirthdayReminder(String dogId) async {
+    final baseId = dogId.hashCode + 700;
     await _notificationService.cancelNotification(baseId);
     await _notificationService.cancelNotification(baseId + 1);
   }

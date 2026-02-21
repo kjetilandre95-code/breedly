@@ -13,6 +13,8 @@ import 'package:breedly/models/dog.dart';
 import 'package:breedly/models/show_result.dart';
 import 'package:breedly/models/kennel_profile.dart';
 import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
 
 /// Generates a shareable show result card image
 class ShowResultCardScreen extends StatefulWidget {
@@ -93,8 +95,9 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
       final boundary = _cardKey.currentContext?.findRenderObject() as RenderRepaintBoundary?;
       if (boundary == null) {
         if (mounted) {
+          final l10n = AppLocalizations.of(context)!;
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Kunne ikke generere bilde')),
+            SnackBar(content: Text(l10n.couldNotGenerateImage)),
           );
         }
         return;
@@ -116,8 +119,9 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
       );
     } catch (e) {
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Feil ved deling: $e')),
+          SnackBar(content: Text(l10n.errorSharing(e.toString()))),
         );
       }
     } finally {
@@ -140,13 +144,39 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
   /// Active theme — user override or auto-detected
   _CardTheme get _theme => _selectedTheme ?? _autoTheme;
 
+  String _localizedPatternName(_CardPattern pattern) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (pattern) {
+      case _CardPattern.none: return l10n.patternNone;
+      case _CardPattern.geometric: return l10n.patternGeometric;
+      case _CardPattern.circles: return l10n.patternCircles;
+      case _CardPattern.lines: return l10n.patternLines;
+      case _CardPattern.dots: return l10n.patternDots;
+      case _CardPattern.waves: return l10n.patternWaves;
+      case _CardPattern.elegant: return l10n.patternElegant;
+    }
+  }
+
+  String _localizedFontName(_CardFont font) {
+    final l10n = AppLocalizations.of(context)!;
+    switch (font) {
+      case _CardFont.standard: return l10n.fontStandard;
+      case _CardFont.serif: return l10n.fontSerif;
+      case _CardFont.elegant: return l10n.fontElegant;
+      case _CardFont.modern: return l10n.fontModern;
+      case _CardFont.classic: return l10n.fontClassic;
+      case _CardFont.handwritten: return l10n.fontHandwritten;
+    }
+  }
+
   Widget _buildOptionsBar() {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: context.colors.surface,
         border: Border(
-          top: BorderSide(color: AppColors.neutral200),
+          top: BorderSide(color: context.colors.border),
         ),
       ),
       child: Column(
@@ -155,36 +185,36 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
         children: [
           // 1. Content toggles
           Text(
-            'INNHOLD',
+            l10n.contentSection,
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.sm),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildToggle('Rase', _showBreed, (v) => setState(() => _showBreed = v)),
+                _buildToggle(l10n.breedLabel, _showBreed, (v) => setState(() => _showBreed = v)),
                 const SizedBox(width: 8),
-                _buildToggle('Kennel', _showKennel, (v) => setState(() => _showKennel = v)),
+                _buildToggle(l10n.kennel, _showKennel, (v) => setState(() => _showKennel = v)),
                 const SizedBox(width: 8),
-                _buildToggle('Dommer', _showJudge, (v) => setState(() => _showJudge = v)),
+                _buildToggle(l10n.judge, _showJudge, (v) => setState(() => _showJudge = v)),
                 const SizedBox(width: 8),
-                _buildToggle('Dato', _showDate, (v) => setState(() => _showDate = v)),
+                _buildToggle(l10n.dateLabel, _showDate, (v) => setState(() => _showDate = v)),
                 const SizedBox(width: 8),
-                _buildToggle('Detaljer', _showDetails, (v) => setState(() => _showDetails = v)),
+                _buildToggle(l10n.detailsToggle, _showDetails, (v) => setState(() => _showDetails = v)),
               ],
             ),
           ),
           const SizedBox(height: 10),
           // 2. Background theme
           Text(
-            'BAKGRUNN',
+            l10n.backgroundSection,
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
@@ -194,30 +224,30 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildThemeChip(null, 'Auto'),
+                _buildThemeChip(null, l10n.autoTheme),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.bis, 'Gull & Sort'),
+                _buildThemeChip(_CardTheme.bis, l10n.themeGoldBlack),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.group, 'Navy & Gull'),
+                _buildThemeChip(_CardTheme.group, l10n.themeNavyGold),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.bir, 'Teal & Rav'),
+                _buildThemeChip(_CardTheme.bir, l10n.themeTealAmber),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.bim, 'Skifer & Sølv'),
+                _buildThemeChip(_CardTheme.bim, l10n.themeSlateSilver),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.ck, 'Skog & Jade'),
+                _buildThemeChip(_CardTheme.ck, l10n.themeForestJade),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.excellent, 'Indigo'),
+                _buildThemeChip(_CardTheme.excellent, l10n.themeIndigo),
                 const SizedBox(width: 8),
-                _buildThemeChip(_CardTheme.standard, 'Klassisk'),
+                _buildThemeChip(_CardTheme.standard, l10n.themeClassic),
               ],
             ),
           ),
           const SizedBox(height: 10),
           // 3. Pattern
           Text(
-            'MØNSTER',
+            l10n.patternSection,
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
@@ -237,12 +267,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? _theme.accentColor.withValues(alpha: 0.12)
-                            : AppColors.surface,
-                        borderRadius: BorderRadius.circular(20),
+                            : context.colors.surface,
+                        borderRadius: AppRadius.xlAll,
                         border: Border.all(
                           color: isSelected
                               ? _theme.accentColor.withValues(alpha: 0.4)
-                              : AppColors.neutral300,
+                              : context.colors.divider,
                         ),
                       ),
                       child: Row(
@@ -254,11 +284,11 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            pattern.displayName,
+                            _localizedPatternName(pattern),
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                              color: isSelected ? _theme.accentColor : AppColors.neutral600,
+                              color: isSelected ? _theme.accentColor : context.colors.textMuted,
                             ),
                           ),
                         ],
@@ -272,9 +302,9 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           const SizedBox(height: 10),
           // 4. Font type
           Text(
-            'SKRIFTTYPE',
+            l10n.fontTypeSection,
             style: AppTypography.labelSmall.copyWith(
-              color: AppColors.neutral500,
+              color: context.colors.textCaption,
               letterSpacing: 1.0,
               fontSize: 10,
             ),
@@ -294,18 +324,18 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? _theme.accentColor.withValues(alpha: 0.12)
-                            : AppColors.surface,
-                        borderRadius: BorderRadius.circular(20),
+                            : context.colors.surface,
+                        borderRadius: AppRadius.xlAll,
                         border: Border.all(
                           color: isSelected
                               ? _theme.accentColor.withValues(alpha: 0.4)
-                              : AppColors.neutral300,
+                              : context.colors.divider,
                         ),
                       ),
                       child: Text(
-                        font.displayName,
+                        _localizedFontName(font),
                         style: font.textStyle(14).copyWith(
-                          color: isSelected ? _theme.accentColor : AppColors.neutral600,
+                          color: isSelected ? _theme.accentColor : context.colors.textMuted,
                           fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                         ),
                       ),
@@ -320,9 +350,9 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           Row(
             children: [
               Text(
-                'STØRRELSE',
+                l10n.fontSizeSection,
                 style: AppTypography.labelSmall.copyWith(
-                  color: AppColors.neutral500,
+                  color: context.colors.textCaption,
                   letterSpacing: 1.0,
                   fontSize: 10,
                 ),
@@ -371,13 +401,13 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
       labelStyle: TextStyle(
         fontSize: 13,
         fontWeight: value ? FontWeight.w600 : FontWeight.w400,
-        color: value ? theme.accentColor : AppColors.neutral500,
+        color: value ? theme.accentColor : context.colors.textCaption,
       ),
       side: BorderSide(
-        color: value ? theme.accentColor.withValues(alpha: 0.3) : AppColors.neutral300,
+        color: value ? theme.accentColor.withValues(alpha: 0.3) : context.colors.divider,
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      backgroundColor: AppColors.surface,
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.xlAll),
+      backgroundColor: context.colors.surface,
       padding: const EdgeInsets.symmetric(horizontal: 4),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       visualDensity: VisualDensity.compact,
@@ -394,12 +424,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
         decoration: BoxDecoration(
           color: isSelected
               ? accentColor.withValues(alpha: 0.12)
-              : AppColors.surface,
-          borderRadius: BorderRadius.circular(20),
+              : context.colors.surface,
+          borderRadius: AppRadius.xlAll,
           border: Border.all(
             color: isSelected
                 ? accentColor.withValues(alpha: 0.5)
-                : AppColors.neutral300,
+                : context.colors.divider,
           ),
         ),
         child: Row(
@@ -414,11 +444,11 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: AppRadius.xsAll,
                 border: Border.all(
                   color: isSelected
                       ? accentColor.withValues(alpha: 0.5)
-                      : AppColors.neutral300,
+                      : context.colors.divider,
                   width: 1,
                 ),
               ),
@@ -429,7 +459,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: isSelected ? accentColor : AppColors.neutral600,
+                color: isSelected ? accentColor : context.colors.textMuted,
               ),
             ),
           ],
@@ -440,38 +470,39 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: const Color(0xFFF0EDEA),
+      backgroundColor: context.colors.background,
       appBar: AppBar(
         title: Text(
-          'Resultatkort',
+          l10n.resultCardTitle,
           style: AppTypography.headlineLarge.copyWith(
-            color: AppColors.neutral900,
+            color: context.colors.textPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.surface,
+        backgroundColor: context.colors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.neutral900,
+        foregroundColor: context.colors.textPrimary,
         actions: [
           if (_showPhoto != null)
             IconButton(
               icon: const Icon(Icons.delete_outline),
-              tooltip: 'Fjern bilde',
+              tooltip: l10n.removePhoto,
               onPressed: () => setState(() => _showPhoto = null),
             ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.add_photo_alternate_outlined),
-            tooltip: 'Legg til bilde',
+            tooltip: l10n.addPhoto,
             onSelected: (value) {
               if (value == 'gallery') _pickPhoto();
               if (value == 'camera') _takePhoto();
             },
             itemBuilder: (_) => [
-              const PopupMenuItem(value: 'gallery', child: ListTile(leading: Icon(Icons.photo_library), title: Text('Velg fra galleri'))),
-              const PopupMenuItem(value: 'camera', child: ListTile(leading: Icon(Icons.camera_alt), title: Text('Ta bilde'))),
+              PopupMenuItem(value: 'gallery', child: ListTile(leading: const Icon(Icons.photo_library), title: Text(l10n.selectFromGallery))),
+              PopupMenuItem(value: 'camera', child: ListTile(leading: const Icon(Icons.camera_alt), title: Text(l10n.takePhoto))),
             ],
           ),
         ],
@@ -503,11 +534,11 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                   icon: _isGenerating
                       ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                       : const Icon(Icons.share_rounded),
-                  label: Text(_isGenerating ? 'Genererer...' : 'Del resultatkort'),
+                  label: Text(_isGenerating ? l10n.generating : l10n.shareResultCard),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _theme.accentColor,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
                     textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, letterSpacing: 0.3),
                     elevation: 0,
                   ),
@@ -521,19 +552,23 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
   }
 
   Widget _buildCard() {
+    final l10n = AppLocalizations.of(context)!;
     final theme = _theme;
-    final dateFormat = DateFormat('dd. MMMM yyyy', 'nb_NO');
+    final locale = Localizations.localeOf(context).toString();
+    final dateFormat = DateFormat.yMMMMd(locale);
     final r = widget.result;
     final dog = widget.dog;
     final baseFontStyle = _selectedFont.textStyle;
     TextStyle fontStyle(double size) => baseFontStyle(size * _fontScale);
 
-    return Container(
-      width: 400,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 400),
+      child: Container(
+      width: double.infinity,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: theme.cardBg,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: AppRadius.xxlAll,
         boxShadow: [
           BoxShadow(
             color: theme.gradientColors.first.withValues(alpha: 0.25),
@@ -606,7 +641,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       if (_showJudge && r.judge != null && r.judge!.isNotEmpty) ...[
                         const SizedBox(height: 4),
                         Text(
-                          'Rasedommer: ${r.judge!}',
+                          l10n.breedJudgeWithName(r.judge!),
                           style: fontStyle(11).copyWith(
                             color: theme.textColor.withValues(alpha: 0.45),
                             fontWeight: FontWeight.w400,
@@ -617,7 +652,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       if (_showJudge && r.groupResult != null && r.groupJudge != null && r.groupJudge!.isNotEmpty) ...[
                         const SizedBox(height: 2),
                         Text(
-                          'Gruppedommer: ${r.groupJudge!}',
+                          l10n.groupJudgeWithName(r.groupJudge!),
                           style: fontStyle(11).copyWith(
                             color: theme.textColor.withValues(alpha: 0.45),
                             fontWeight: FontWeight.w400,
@@ -628,7 +663,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                       if (_showJudge && r.bisResult != null && r.bisJudge != null && r.bisJudge!.isNotEmpty) ...[
                         const SizedBox(height: 2),
                         Text(
-                          'BIS-dommer: ${r.bisJudge!}',
+                          l10n.bisJudgeWithName(r.bisJudge!),
                           style: fontStyle(11).copyWith(
                             color: theme.textColor.withValues(alpha: 0.45),
                             fontWeight: FontWeight.w400,
@@ -701,12 +736,14 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           if (_showPhoto != null)
             Stack(
               children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 300,
-                  child: Image.file(
-                    _showPhoto!,
-                    fit: BoxFit.cover,
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 300),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Image.file(
+                      _showPhoto!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 // Top gradient fade from header
@@ -805,12 +842,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                     _buildDetailChip(r.showClass, theme, icon: Icons.class_rounded),
                     _buildDetailChip(r.quality, theme, icon: Icons.grade_rounded, highlight: r.quality == 'Excellent'),
                     if (r.classPlacement != null)
-                      _buildDetailChip('Kl. ${r.classPlacement}', theme, icon: Icons.format_list_numbered_rounded),
+                      _buildDetailChip(l10n.classPlacementAbbr(r.classPlacement.toString()), theme, icon: Icons.format_list_numbered_rounded),
                     if (r.hasCK)
                       _buildDetailChip('CK', theme, icon: Icons.verified_rounded, highlight: true),
                     if (r.bestOfSexPlacement != null)
                       _buildDetailChip(
-                        '${dog.gender == 'Male' ? 'BHK' : 'BTK'}: ${r.bestOfSexPlacement}',
+                        '${dog.gender == 'Male' ? l10n.bestMaleAbbrev : l10n.bestFemaleAbbrev}: ${r.bestOfSexPlacement}',
                         theme,
                         icon: Icons.workspace_premium_rounded,
                       ),
@@ -864,6 +901,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           ),
         ],
       ),
+    ),
     );
   }
 

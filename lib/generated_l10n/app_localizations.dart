@@ -380,7 +380,7 @@ abstract class AppLocalizations {
   /// **'Select breed'**
   String get selectBreedTitle;
 
-  /// Placeholder for breed search field
+  /// Hint for breed search field
   ///
   /// In en, this message translates to:
   /// **'Search breed...'**
@@ -505,6 +505,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upcoming events'**
   String get upcomingEvents;
+
+  /// Label for action cards section on dashboard
+  ///
+  /// In en, this message translates to:
+  /// **'Needs attention'**
+  String get attentionNeeded;
 
   /// Button label for adding new dog
   ///
@@ -1244,6 +1250,12 @@ abstract class AppLocalizations {
   /// **'Mating window: {dogName}'**
   String matingWindow(String dogName);
 
+  /// Filter label for mating window events
+  ///
+  /// In en, this message translates to:
+  /// **'Mating windows'**
+  String get matingWindows;
+
   /// Event title for due date
   ///
   /// In en, this message translates to:
@@ -1358,7 +1370,7 @@ abstract class AppLocalizations {
   /// **'Join'**
   String get joinKennel;
 
-  /// Button label to change role
+  /// Button to change member role
   ///
   /// In en, this message translates to:
   /// **'Change role'**
@@ -1376,7 +1388,7 @@ abstract class AppLocalizations {
   /// **'Code copied to clipboard'**
   String get codeCopied;
 
-  /// Button label to invite member
+  /// Button to invite a member
   ///
   /// In en, this message translates to:
   /// **'Invite member'**
@@ -1388,7 +1400,7 @@ abstract class AppLocalizations {
   /// **'Create invite code'**
   String get createInviteCode;
 
-  /// Button label to create new kennel
+  /// Button to create a new kennel
   ///
   /// In en, this message translates to:
   /// **'Create new kennel'**
@@ -1400,7 +1412,7 @@ abstract class AppLocalizations {
   /// **'Use invite code'**
   String get joinWithCode;
 
-  /// Button label to leave kennel
+  /// Button to leave a kennel
   ///
   /// In en, this message translates to:
   /// **'Leave kennel'**
@@ -1418,7 +1430,7 @@ abstract class AppLocalizations {
   /// **'Name is required'**
   String get nameRequired;
 
-  /// Message requiring login
+  /// Error message when not logged in
   ///
   /// In en, this message translates to:
   /// **'You must be logged in'**
@@ -2570,7 +2582,7 @@ abstract class AppLocalizations {
   /// **'Group final'**
   String get groupFinal;
 
-  /// Title for delete measurement dialog
+  /// Confirmation for deleting measurement
   ///
   /// In en, this message translates to:
   /// **'Delete measurement?'**
@@ -2582,7 +2594,7 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to delete this measurement?'**
   String get confirmDeleteMeasurement;
 
-  /// Title for delete vaccine dialog
+  /// Confirmation for deleting vaccine
   ///
   /// In en, this message translates to:
   /// **'Delete vaccine?'**
@@ -2660,7 +2672,7 @@ abstract class AppLocalizations {
   /// **'Product name is required'**
   String get productNameRequired;
 
-  /// Validation message for test name
+  /// Validation for test name
   ///
   /// In en, this message translates to:
   /// **'Test name is required'**
@@ -2762,10 +2774,10 @@ abstract class AppLocalizations {
   /// **'Sire must be a male'**
   String get fatherMustBeMale;
 
-  /// Label for birth date field in edit dialog
+  /// Label for birth date
   ///
   /// In en, this message translates to:
-  /// **'Date of birth'**
+  /// **'Birth date'**
   String get birthDateLabel;
 
   /// Button label to register birth
@@ -2792,7 +2804,7 @@ abstract class AppLocalizations {
   /// **'Open temperature log'**
   String get openTemperatureLog;
 
-  /// Button label to add measurement
+  /// Button to add measurement
   ///
   /// In en, this message translates to:
   /// **'Add measurement'**
@@ -2870,7 +2882,7 @@ abstract class AppLocalizations {
   /// **'Buyer information not found'**
   String get buyerInfoNotFound;
 
-  /// Validation for code length
+  /// Validation for invitation code length
   ///
   /// In en, this message translates to:
   /// **'Code must be 6 characters'**
@@ -2894,7 +2906,7 @@ abstract class AppLocalizations {
   /// **'Could not open email client'**
   String get couldNotOpenEmailClient;
 
-  /// Error message for email
+  /// Error when opening email
   ///
   /// In en, this message translates to:
   /// **'Error opening email: {error}'**
@@ -2924,7 +2936,7 @@ abstract class AppLocalizations {
   /// **'Temperature measurement registered'**
   String get temperatureMeasurementRegistered;
 
-  /// Title for delete mating dialog
+  /// Button to delete mating
   ///
   /// In en, this message translates to:
   /// **'Delete mating'**
@@ -3134,10 +3146,10 @@ abstract class AppLocalizations {
   /// **'Select sire'**
   String get selectSire;
 
-  /// Label for common DNA tests section
+  /// Label for common tests
   ///
   /// In en, this message translates to:
-  /// **'Common tests'**
+  /// **'Common tests:'**
   String get commonTests;
 
   /// Label for test name field
@@ -3812,7 +3824,7 @@ abstract class AppLocalizations {
   /// **'Estimated due date'**
   String get estimatedDueDate;
 
-  /// Label for progesterone section
+  /// Section title for progesterone
   ///
   /// In en, this message translates to:
   /// **'Progesterone measurements'**
@@ -3968,7 +3980,7 @@ abstract class AppLocalizations {
   /// **'Add temperature reading'**
   String get addTemperatureReading;
 
-  /// Label for date/time field
+  /// Label for date and time
   ///
   /// In en, this message translates to:
   /// **'Date and time'**
@@ -3980,7 +3992,7 @@ abstract class AppLocalizations {
   /// **'Temperature (°C)'**
   String get temperatureCelsius;
 
-  /// Label for optional notes
+  /// Optional notes field
   ///
   /// In en, this message translates to:
   /// **'Notes (optional)'**
@@ -4022,11 +4034,11 @@ abstract class AppLocalizations {
   /// **'User with email {email} not found'**
   String userNotFoundByEmail(String email);
 
-  /// Sharing error
+  /// Error when sharing
   ///
   /// In en, this message translates to:
   /// **'Error sharing: {error}'**
-  String errorSharing(Object error);
+  String errorSharing(String error);
 
   /// Dialog title
   ///
@@ -4508,7 +4520,7 @@ abstract class AppLocalizations {
   /// **'Confidence: {confidence}'**
   String confidencePercent(String confidence);
 
-  /// Position label for main dog in pedigree
+  /// Label for main dog
   ///
   /// In en, this message translates to:
   /// **'Main dog'**
@@ -4759,6 +4771,4926 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add dog'**
   String get addDogLabel;
+
+  /// Sign up page title
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// Sign up header text
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get registerYourself;
+
+  /// Sign up subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to get started'**
+  String get createAccountSubtitle;
+
+  /// Full name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get fullName;
+
+  /// Full name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'John Doe'**
+  String get fullNameHint;
+
+  /// Email address label
+  ///
+  /// In en, this message translates to:
+  /// **'Email address'**
+  String get emailAddressLabel;
+
+  /// Email field hint
+  ///
+  /// In en, this message translates to:
+  /// **'name@example.com'**
+  String get emailHint;
+
+  /// Password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordLabel;
+
+  /// Password field hint
+  ///
+  /// In en, this message translates to:
+  /// **'At least 6 characters'**
+  String get passwordHintText;
+
+  /// Confirm password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get confirmPasswordLabel;
+
+  /// Confirm password hint
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat the password'**
+  String get repeatPasswordHint;
+
+  /// Terms checkbox prefix
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the '**
+  String get iAgreeToThe;
+
+  /// Terms link text
+  ///
+  /// In en, this message translates to:
+  /// **'terms of use'**
+  String get termsOfUse;
+
+  /// Create account button
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccountButton;
+
+  /// Login link prefix
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? '**
+  String get alreadyHaveAccountQuestion;
+
+  /// Login link text
+  ///
+  /// In en, this message translates to:
+  /// **'Log in'**
+  String get logIn;
+
+  /// Name validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get pleaseEnterNameValidation;
+
+  /// Email validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter an email address'**
+  String get pleaseEnterEmailValidation;
+
+  /// Invalid email error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get invalidEmailValidation;
+
+  /// Password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password'**
+  String get pleaseEnterPasswordValidation;
+
+  /// Password too short error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMin6Chars;
+
+  /// Password mismatch error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatchValidation;
+
+  /// Terms not accepted error
+  ///
+  /// In en, this message translates to:
+  /// **'You must accept the terms of use'**
+  String get mustAcceptTerms;
+
+  /// Gen 4: paternal grandfather's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.GF\'s sire'**
+  String get gen4PGFSire;
+
+  /// Gen 4: paternal grandfather's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.GF\'s dam'**
+  String get gen4PGFDam;
+
+  /// Gen 4: paternal grandfather's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.GM\'s sire'**
+  String get gen4PGMSire;
+
+  /// Gen 4: paternal grandfather's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.GM\'s dam'**
+  String get gen4PGMDam;
+
+  /// Gen 4: paternal grandmother's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.MF\'s sire'**
+  String get gen4PMFSire;
+
+  /// Gen 4: paternal grandmother's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.MF\'s dam'**
+  String get gen4PMFDam;
+
+  /// Gen 4: paternal grandmother's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'P.MM\'s sire'**
+  String get gen4PMMSire;
+
+  /// Gen 4: paternal grandmother's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'P.MM\'s dam'**
+  String get gen4PMMDam;
+
+  /// Gen 4: maternal grandfather's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.GF\'s sire'**
+  String get gen4MGFSire;
+
+  /// Gen 4: maternal grandfather's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.GF\'s dam'**
+  String get gen4MGFDam;
+
+  /// Gen 4: maternal grandfather's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.GM\'s sire'**
+  String get gen4MGMSire;
+
+  /// Gen 4: maternal grandfather's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.GM\'s dam'**
+  String get gen4MGMDam;
+
+  /// Gen 4: maternal grandmother's father's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.MF\'s sire'**
+  String get gen4MMFSire;
+
+  /// Gen 4: maternal grandmother's father's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.MF\'s dam'**
+  String get gen4MMFDam;
+
+  /// Gen 4: maternal grandmother's mother's sire
+  ///
+  /// In en, this message translates to:
+  /// **'M.MM\'s sire'**
+  String get gen4MMMSire;
+
+  /// Gen 4: maternal grandmother's mother's dam
+  ///
+  /// In en, this message translates to:
+  /// **'M.MM\'s dam'**
+  String get gen4MMMDam;
+
+  /// Title for pedigree scanner test screen
+  ///
+  /// In en, this message translates to:
+  /// **'Test Pedigree Scanner'**
+  String get testPedigreeScanner;
+
+  /// Title for scan result section
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Result'**
+  String get scanResult;
+
+  /// Total dogs found count
+  ///
+  /// In en, this message translates to:
+  /// **'Total found: {count} dogs'**
+  String totalDogsFound(int count);
+
+  /// Scan successful status
+  ///
+  /// In en, this message translates to:
+  /// **'Successful: {value}'**
+  String scanSuccessful(String value);
+
+  /// Label for scan confidence
+  ///
+  /// In en, this message translates to:
+  /// **'Confidence'**
+  String get scanConfidence;
+
+  /// Label for test instructions section
+  ///
+  /// In en, this message translates to:
+  /// **'Test instructions'**
+  String get testInstructions;
+
+  /// Info about testing pedigree scanner
+  ///
+  /// In en, this message translates to:
+  /// **'Testing pedigree scanner'**
+  String get testingScannerInfo;
+
+  /// Info about what scanner uses
+  ///
+  /// In en, this message translates to:
+  /// **'This function uses Google ML Kit for:'**
+  String get scannerUsesInfo;
+
+  /// Scanner capability: OCR
+  ///
+  /// In en, this message translates to:
+  /// **'Read text from images (OCR)'**
+  String get readTextFromImages;
+
+  /// Scanner capability: registration numbers
+  ///
+  /// In en, this message translates to:
+  /// **'Find registration numbers'**
+  String get findRegistrationNumbers;
+
+  /// Scanner capability: dog names
+  ///
+  /// In en, this message translates to:
+  /// **'Identify dog names'**
+  String get identifyDogNames;
+
+  /// Scanner capability: parents
+  ///
+  /// In en, this message translates to:
+  /// **'Recognize parents (Sire/Dam)'**
+  String get recognizeParents;
+
+  /// Scanner capability: birth dates
+  ///
+  /// In en, this message translates to:
+  /// **'Extract birth dates'**
+  String get extractBirthDates;
+
+  /// Tip for using scanner
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: Use a clear image of a pedigree for best results.'**
+  String get tipClearImage;
+
+  /// Step 1 instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of a pedigree'**
+  String get step1TakePhoto;
+
+  /// Step 2 instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Wait while ML Kit processes the image'**
+  String get step2WaitProcessing;
+
+  /// Step 3 instruction
+  ///
+  /// In en, this message translates to:
+  /// **'See results and accuracy'**
+  String get step3SeeResults;
+
+  /// Step 4 instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Edit data if necessary'**
+  String get step4EditData;
+
+  /// Step 5 instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Save dog(s) to the database'**
+  String get step5SaveDogs;
+
+  /// Label for example data section
+  ///
+  /// In en, this message translates to:
+  /// **'Example data that can be recognized'**
+  String get exampleDataRecognized;
+
+  /// Label for keywords section
+  ///
+  /// In en, this message translates to:
+  /// **'Keywords'**
+  String get keywords;
+
+  /// Label for debug information section
+  ///
+  /// In en, this message translates to:
+  /// **'Debug information'**
+  String get debugInfo;
+
+  /// Label for parents section
+  ///
+  /// In en, this message translates to:
+  /// **'Parents'**
+  String get parents;
+
+  /// Label for grandparents section
+  ///
+  /// In en, this message translates to:
+  /// **'Grandparents'**
+  String get grandparents;
+
+  /// Number of dogs found
+  ///
+  /// In en, this message translates to:
+  /// **'{count} dogs found'**
+  String dogsFound(int count);
+
+  /// Message when dog already exists
+  ///
+  /// In en, this message translates to:
+  /// **'Dog already exists'**
+  String get dogAlreadyExists;
+
+  /// Prompt for user action
+  ///
+  /// In en, this message translates to:
+  /// **'What do you want to do?'**
+  String get whatDoYouWantToDo;
+
+  /// Option to create new entry
+  ///
+  /// In en, this message translates to:
+  /// **'Create new'**
+  String get createNew;
+
+  /// Option to use existing entry
+  ///
+  /// In en, this message translates to:
+  /// **'Use existing'**
+  String get useExisting;
+
+  /// Option to update data
+  ///
+  /// In en, this message translates to:
+  /// **'Update data'**
+  String get updateData;
+
+  /// Dog added with pedigree message
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added with pedigree ({count} dogs total)'**
+  String dogAddedWithPedigree(String name, int count);
+
+  /// Message when dog is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Dog updated'**
+  String get dogUpdated;
+
+  /// Label for optional date of death field
+  ///
+  /// In en, this message translates to:
+  /// **'Date of death (optional)'**
+  String get dateOfDeathOptional;
+
+  /// Placeholder when nothing is selected
+  ///
+  /// In en, this message translates to:
+  /// **'None selected'**
+  String get noneSelected;
+
+  /// Message when puppy is added
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy added'**
+  String get puppyAdded;
+
+  /// Label for puppy name field
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy name'**
+  String get puppyNameLabel;
+
+  /// Label for birth weight in grams
+  ///
+  /// In en, this message translates to:
+  /// **'Birth weight (grams)'**
+  String get birthWeightGrams;
+
+  /// Label for birth notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Birth notes (e.g. assistance required)'**
+  String get birthNotes;
+
+  /// Label for status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// Section label for health and documentation
+  ///
+  /// In en, this message translates to:
+  /// **'Health & documentation'**
+  String get healthAndDocumentation;
+
+  /// Label for vaccinated status
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinated'**
+  String get vaccinated;
+
+  /// Label for dewormed status
+  ///
+  /// In en, this message translates to:
+  /// **'Dewormed'**
+  String get dewormed;
+
+  /// Label for microchipped status
+  ///
+  /// In en, this message translates to:
+  /// **'Microchipped'**
+  String get microchipped;
+
+  /// Button label to save puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Save puppy'**
+  String get savePuppy;
+
+  /// Title for contracts screen
+  ///
+  /// In en, this message translates to:
+  /// **'Contracts'**
+  String get contracts;
+
+  /// Label for purchase contracts
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Contracts'**
+  String get purchaseContracts;
+
+  /// Label for reservations
+  ///
+  /// In en, this message translates to:
+  /// **'Reservations'**
+  String get reservations;
+
+  /// Label for breeding contracts
+  ///
+  /// In en, this message translates to:
+  /// **'Breeding Contracts'**
+  String get breedingContracts;
+
+  /// Label for co-ownership
+  ///
+  /// In en, this message translates to:
+  /// **'Co-Ownership'**
+  String get coOwnership;
+
+  /// Label for foster contracts
+  ///
+  /// In en, this message translates to:
+  /// **'Foster Contracts'**
+  String get fosterContracts;
+
+  /// Message when purchase contract is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase contract deleted'**
+  String get purchaseContractDeleted;
+
+  /// Message when reservation contract is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation contract deleted'**
+  String get reservationContractDeleted;
+
+  /// Message when breeding contract is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Breeding contract deleted'**
+  String get breedingContractDeleted;
+
+  /// Message when co-ownership contract is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Co-ownership contract deleted'**
+  String get coOwnershipContractDeleted;
+
+  /// Message when foster contract is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Foster contract deleted'**
+  String get fosterContractDeleted;
+
+  /// Prompt to select sire and dam
+  ///
+  /// In en, this message translates to:
+  /// **'Select sire and dam'**
+  String get selectSireAndDam;
+
+  /// Prompt to enter stud fee
+  ///
+  /// In en, this message translates to:
+  /// **'Enter stud fee'**
+  String get enterStudFee;
+
+  /// Error message during generation
+  ///
+  /// In en, this message translates to:
+  /// **'Error generating: {error}'**
+  String errorGenerating(String error);
+
+  /// Message when contract is generated
+  ///
+  /// In en, this message translates to:
+  /// **'Contract generated!'**
+  String get contractGenerated;
+
+  /// Prompt to select stud dog
+  ///
+  /// In en, this message translates to:
+  /// **'Select stud dog'**
+  String get selectStud;
+
+  /// Label for stud owner name
+  ///
+  /// In en, this message translates to:
+  /// **'Stud owner (name)'**
+  String get studOwnerName;
+
+  /// Prompt to select dam for contract
+  ///
+  /// In en, this message translates to:
+  /// **'Select dam'**
+  String get selectDamForContract;
+
+  /// Label for dam owner name
+  ///
+  /// In en, this message translates to:
+  /// **'Dam owner (name)'**
+  String get damOwnerName;
+
+  /// Label for amount in NOK
+  ///
+  /// In en, this message translates to:
+  /// **'Amount (NOK)'**
+  String get amountNok;
+
+  /// Hint for payment terms field
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. \"Payment at mating\"'**
+  String get paymentTermsHint;
+
+  /// Hint for additional terms field
+  ///
+  /// In en, this message translates to:
+  /// **'Add special terms...'**
+  String get additionalTermsHint;
+
+  /// Placeholder for buyer search field
+  ///
+  /// In en, this message translates to:
+  /// **'Search buyer...'**
+  String get searchBuyer;
+
+  /// Button to remove filter
+  ///
+  /// In en, this message translates to:
+  /// **'Remove filter'**
+  String get removeFilter;
+
+  /// Label for all litters option
+  ///
+  /// In en, this message translates to:
+  /// **'All litters'**
+  String get allLitters;
+
+  /// Message when reservation is removed
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation removed'**
+  String get reservationRemoved;
+
+  /// Prompt to select a puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a puppy'**
+  String get pleaseSelectPuppy;
+
+  /// Button label to delete a dog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete dog'**
+  String get deleteDog;
+
+  /// Button label to add heat date
+  ///
+  /// In en, this message translates to:
+  /// **'Add heat date'**
+  String get addHeatDate;
+
+  /// Button label to create breeding contract
+  ///
+  /// In en, this message translates to:
+  /// **'Create contract for mating services'**
+  String get createBreedingContract;
+
+  /// Label for co-ownership agreement
+  ///
+  /// In en, this message translates to:
+  /// **'Co-ownership agreement'**
+  String get coOwnershipAgreement;
+
+  /// Button to create co-ownership agreement
+  ///
+  /// In en, this message translates to:
+  /// **'Create agreement for shared ownership'**
+  String get createCoOwnershipAgreement;
+
+  /// Label for foster agreement
+  ///
+  /// In en, this message translates to:
+  /// **'Foster agreement'**
+  String get fosterAgreement;
+
+  /// Button to create foster agreement
+  ///
+  /// In en, this message translates to:
+  /// **'Create agreement for foster care'**
+  String get createFosterAgreement;
+
+  /// Message when heat date is added
+  ///
+  /// In en, this message translates to:
+  /// **'Heat date added'**
+  String get heatDateAdded;
+
+  /// Confirmation for deleting heat date
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this heat date?'**
+  String get confirmDeleteHeatDate;
+
+  /// Message when heat date is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Heat date deleted'**
+  String get heatDateDeleted;
+
+  /// Button to add championship
+  ///
+  /// In en, this message translates to:
+  /// **'Add championship'**
+  String get addChampionship;
+
+  /// Prompt to enter other title
+  ///
+  /// In en, this message translates to:
+  /// **'Enter other title'**
+  String get enterOtherTitle;
+
+  /// Option to select from list
+  ///
+  /// In en, this message translates to:
+  /// **'Select from list'**
+  String get selectFromList;
+
+  /// Message when title already exists
+  ///
+  /// In en, this message translates to:
+  /// **'This title is already registered'**
+  String get titleAlreadyRegistered;
+
+  /// Button to remove championship
+  ///
+  /// In en, this message translates to:
+  /// **'Remove championship'**
+  String get removeChampionship;
+
+  /// Confirm remove championship dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove \"{title}\"?'**
+  String confirmRemoveChampionship(String title);
+
+  /// Button to add mating
+  ///
+  /// In en, this message translates to:
+  /// **'Add mating'**
+  String get addMating;
+
+  /// Label for external dam
+  ///
+  /// In en, this message translates to:
+  /// **'External dam'**
+  String get externalDam;
+
+  /// Message when mating is added
+  ///
+  /// In en, this message translates to:
+  /// **'Mating added'**
+  String get matingAdded;
+
+  /// Button to edit mating
+  ///
+  /// In en, this message translates to:
+  /// **'Edit mating'**
+  String get editMating;
+
+  /// Message when mating is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Mating updated'**
+  String get matingUpdated;
+
+  /// Message when mating is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Mating deleted'**
+  String get matingDeleted;
+
+  /// Health screen title with dog name
+  ///
+  /// In en, this message translates to:
+  /// **'Health - {name}'**
+  String healthTitle(String name);
+
+  /// Tab label for health status
+  ///
+  /// In en, this message translates to:
+  /// **'Health Status'**
+  String get healthStatusTab;
+
+  /// Tab label for vaccines
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccines'**
+  String get vaccinesTab;
+
+  /// Tab label for veterinary
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinary'**
+  String get vetTab;
+
+  /// Tab label for treatments
+  ///
+  /// In en, this message translates to:
+  /// **'Treatments'**
+  String get treatmentsTab;
+
+  /// Tab label for DNA tests
+  ///
+  /// In en, this message translates to:
+  /// **'DNA Tests'**
+  String get dnaTestsTab;
+
+  /// Tab label for weight
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weightTab;
+
+  /// Tab label for hormones
+  ///
+  /// In en, this message translates to:
+  /// **'Hormones'**
+  String get hormonesTab;
+
+  /// Button to add health information
+  ///
+  /// In en, this message translates to:
+  /// **'Add health information'**
+  String get addHealthInfo;
+
+  /// Message when health info is not found
+  ///
+  /// In en, this message translates to:
+  /// **'Health information not found'**
+  String get healthInfoNotFound;
+
+  /// Button to add vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'Add vaccine'**
+  String get addVaccine;
+
+  /// Confirmation for deleting health info
+  ///
+  /// In en, this message translates to:
+  /// **'Delete health information?'**
+  String get deleteHealthInfo;
+
+  /// Message when changes are saved locally offline
+  ///
+  /// In en, this message translates to:
+  /// **'Offline - changes saved locally'**
+  String get offlineChangesLocal;
+
+  /// Label for registration number with colon
+  ///
+  /// In en, this message translates to:
+  /// **'Registration number:'**
+  String get registrationNumberColon;
+
+  /// Optional registration number field
+  ///
+  /// In en, this message translates to:
+  /// **'Registration number (optional)'**
+  String get registrationNumberOptional;
+
+  /// Title for add puppy screen
+  ///
+  /// In en, this message translates to:
+  /// **'Add puppy'**
+  String get addPuppy;
+
+  /// Label for birth time
+  ///
+  /// In en, this message translates to:
+  /// **'Birth time'**
+  String get birthTimeLabel;
+
+  /// Label for optional birth time
+  ///
+  /// In en, this message translates to:
+  /// **'Birth time (optional)'**
+  String get birthTimeOptional;
+
+  /// Validation for color field
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a color'**
+  String get pleaseEnterColor;
+
+  /// Message when dog is deleted
+  ///
+  /// In en, this message translates to:
+  /// **'«{name}» was deleted'**
+  String dogWasDeleted(String name);
+
+  /// Error message when delete fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not delete: {error}'**
+  String couldNotDelete(String error);
+
+  /// Confirmation message for deleting a dog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete «{name}»?\n\nThis removes the dog and all associated data. This action cannot be undone.'**
+  String confirmDeleteDogMessage(String name);
+
+  /// Section title for health information
+  ///
+  /// In en, this message translates to:
+  /// **'Health information'**
+  String get healthInformation;
+
+  /// Empty state message for health info
+  ///
+  /// In en, this message translates to:
+  /// **'No health information registered'**
+  String get noHealthInfoRegistered;
+
+  /// Subtitle for adding health info
+  ///
+  /// In en, this message translates to:
+  /// **'Add health information for {name}'**
+  String addHealthInfoFor(String name);
+
+  /// Card title for health status
+  ///
+  /// In en, this message translates to:
+  /// **'Health status'**
+  String get healthStatus;
+
+  /// Label for remarks section
+  ///
+  /// In en, this message translates to:
+  /// **'Remarks'**
+  String get remarks;
+
+  /// Date label with value
+  ///
+  /// In en, this message translates to:
+  /// **'Date: {date}'**
+  String dateWithValue(String date);
+
+  /// Empty state for vaccines
+  ///
+  /// In en, this message translates to:
+  /// **'No vaccines registered'**
+  String get noVaccinesRegistered;
+
+  /// Subtitle for adding vaccines
+  ///
+  /// In en, this message translates to:
+  /// **'Add vaccines for {name}'**
+  String addVaccinesFor(String name);
+
+  /// Vaccine taken date
+  ///
+  /// In en, this message translates to:
+  /// **'Taken: {value}'**
+  String takenWithDate(String value);
+
+  /// Badge label for overdue
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get overdueLabel;
+
+  /// Badge label for alert
+  ///
+  /// In en, this message translates to:
+  /// **'Alert'**
+  String get alertLabel;
+
+  /// Next dose date
+  ///
+  /// In en, this message translates to:
+  /// **'Next dose: {value}'**
+  String nextDoseWithDate(String value);
+
+  /// Veterinarian with name
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinarian: {value}'**
+  String veterinarianWithName(String value);
+
+  /// Empty state for progesterone
+  ///
+  /// In en, this message translates to:
+  /// **'No progesterone measurements registered'**
+  String get noProgesteroneMeasurements;
+
+  /// Subtitle for progesterone tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Add progesterone measurements to track {name}\'s cycle'**
+  String addProgesteroneTracking(String name);
+
+  /// Confirm delete progesterone
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this progesterone measurement?'**
+  String get confirmDeleteProgesterone;
+
+  /// Section title for vet visits
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinary visits'**
+  String get vetVisits;
+
+  /// Tooltip for add visit
+  ///
+  /// In en, this message translates to:
+  /// **'Add visit'**
+  String get addVisit;
+
+  /// Empty state for vet visits
+  ///
+  /// In en, this message translates to:
+  /// **'No veterinary visits registered'**
+  String get noVetVisitsRegistered;
+
+  /// Subtitle for vet visits
+  ///
+  /// In en, this message translates to:
+  /// **'Add veterinary visits for {name}'**
+  String addVetVisitsFor(String name);
+
+  /// Visit type routine
+  ///
+  /// In en, this message translates to:
+  /// **'Routine check'**
+  String get visitTypeRoutine;
+
+  /// Visit type emergency
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get visitTypeEmergency;
+
+  /// Visit type surgery
+  ///
+  /// In en, this message translates to:
+  /// **'Surgery'**
+  String get visitTypeSurgery;
+
+  /// Visit type vaccination
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccination'**
+  String get visitTypeVaccination;
+
+  /// Visit type follow-up
+  ///
+  /// In en, this message translates to:
+  /// **'Follow-up'**
+  String get visitTypeFollowup;
+
+  /// Visit type other
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get visitTypeOther;
+
+  /// Reason with value
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {value}'**
+  String reasonWithValue(String value);
+
+  /// Diagnosis with value
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnosis: {value}'**
+  String diagnosisWithValue(String value);
+
+  /// Treatment with value
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment: {value}'**
+  String treatmentWithValue(String value);
+
+  /// Cost with value
+  ///
+  /// In en, this message translates to:
+  /// **'Cost: {value} kr'**
+  String costWithValue(String value);
+
+  /// Follow-up date with value
+  ///
+  /// In en, this message translates to:
+  /// **'Follow-up: {value}'**
+  String followUpWithDate(String value);
+
+  /// Tooltip for add treatment
+  ///
+  /// In en, this message translates to:
+  /// **'Add treatment'**
+  String get addTreatment;
+
+  /// Empty state for treatments
+  ///
+  /// In en, this message translates to:
+  /// **'No treatments registered'**
+  String get noTreatmentsRegistered;
+
+  /// Subtitle for treatments
+  ///
+  /// In en, this message translates to:
+  /// **'Add deworming, flea/tick treatments, etc.'**
+  String get addTreatmentsSubtitle;
+
+  /// Treatment type deworming
+  ///
+  /// In en, this message translates to:
+  /// **'Deworming'**
+  String get treatmentTypeDeworming;
+
+  /// Treatment type flea
+  ///
+  /// In en, this message translates to:
+  /// **'Flea treatment'**
+  String get treatmentTypeFlea;
+
+  /// Treatment type tick
+  ///
+  /// In en, this message translates to:
+  /// **'Tick treatment'**
+  String get treatmentTypeTick;
+
+  /// Treatment type medication
+  ///
+  /// In en, this message translates to:
+  /// **'Medication'**
+  String get treatmentTypeMedication;
+
+  /// Treatment type supplement
+  ///
+  /// In en, this message translates to:
+  /// **'Supplement'**
+  String get treatmentTypeSupplement;
+
+  /// Treatment type other
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get treatmentTypeOther;
+
+  /// Menu item register new dose
+  ///
+  /// In en, this message translates to:
+  /// **'Register new dose'**
+  String get registerNewDose;
+
+  /// Last given date
+  ///
+  /// In en, this message translates to:
+  /// **'Last given: {value}'**
+  String lastGivenWithDate(String value);
+
+  /// Dosage with value
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage: {value}'**
+  String dosageWithValue(String value);
+
+  /// Manufacturer with value
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer: {value}'**
+  String manufacturerWithValue(String value);
+
+  /// Next date
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {value}'**
+  String nextWithDate(String value);
+
+  /// Snackbar for new dose
+  ///
+  /// In en, this message translates to:
+  /// **'New dose of {name} registered'**
+  String newDoseRegistered(String name);
+
+  /// Empty state for DNA tests
+  ///
+  /// In en, this message translates to:
+  /// **'No DNA tests registered'**
+  String get noDnaTestsRegistered;
+
+  /// Tooltip for add DNA test
+  ///
+  /// In en, this message translates to:
+  /// **'Add DNA test'**
+  String get addDnaTest;
+
+  /// Subtitle for DNA tests
+  ///
+  /// In en, this message translates to:
+  /// **'Add genetic tests for {name}'**
+  String addGeneticTestsFor(String name);
+
+  /// Tested date
+  ///
+  /// In en, this message translates to:
+  /// **'Tested: {value}'**
+  String testedWithDate(String value);
+
+  /// Laboratory with name
+  ///
+  /// In en, this message translates to:
+  /// **'Laboratory: {value}'**
+  String laboratoryWithValue(String value);
+
+  /// Certificate number
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate no: {value}'**
+  String certificateNoWithValue(String value);
+
+  /// Section title for weight history
+  ///
+  /// In en, this message translates to:
+  /// **'Weight history'**
+  String get weightHistory;
+
+  /// Tooltip for add weight
+  ///
+  /// In en, this message translates to:
+  /// **'Add weight'**
+  String get addWeight;
+
+  /// Empty state for weight
+  ///
+  /// In en, this message translates to:
+  /// **'No weight records'**
+  String get noWeightRecords;
+
+  /// Subtitle for weight tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Track {name}\'s weight development'**
+  String trackWeightFor(String name);
+
+  /// Label for current weight
+  ///
+  /// In en, this message translates to:
+  /// **'Current weight'**
+  String get currentWeight;
+
+  /// Button label for change
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get changeLabel;
+
+  /// Delete weight record title
+  ///
+  /// In en, this message translates to:
+  /// **'Delete weight record?'**
+  String get deleteWeightRecord;
+
+  /// Confirm delete weight record
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this record?'**
+  String get confirmDeleteWeightRecord;
+
+  /// Confirm delete health info
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this health information?'**
+  String get confirmDeleteHealthInfo;
+
+  /// Label for HD date
+  ///
+  /// In en, this message translates to:
+  /// **'HD date'**
+  String get hdDateLabel;
+
+  /// AD status grade 0
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 0 (Clear)'**
+  String get adGrade0;
+
+  /// AD status grade 1
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 1 (Mild)'**
+  String get adGrade1;
+
+  /// AD status grade 2
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 2 (Moderate)'**
+  String get adGrade2;
+
+  /// AD status grade 3
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 3 (Severe)'**
+  String get adGrade3;
+
+  /// Hint for AD status dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select AD Status'**
+  String get selectAdStatus;
+
+  /// Dropdown option to remove selection
+  ///
+  /// In en, this message translates to:
+  /// **'None (remove selection)'**
+  String get noneRemoveSelection;
+
+  /// Label for AD date
+  ///
+  /// In en, this message translates to:
+  /// **'AD date'**
+  String get adDateLabel;
+
+  /// Patella grade 0
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 0 (Normal)'**
+  String get patellaGrade0;
+
+  /// Patella grade 1
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 1'**
+  String get patellaGrade1;
+
+  /// Patella grade 2
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 2'**
+  String get patellaGrade2;
+
+  /// Patella grade 3
+  ///
+  /// In en, this message translates to:
+  /// **'Grade 3'**
+  String get patellaGrade3;
+
+  /// Hint for Patella dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Select Patella Status'**
+  String get selectPatellaStatus;
+
+  /// Label for Patella date
+  ///
+  /// In en, this message translates to:
+  /// **'Patella date'**
+  String get patellaDateLabel;
+
+  /// Generic select hint
+  ///
+  /// In en, this message translates to:
+  /// **'Select {label}'**
+  String selectStatus(String label);
+
+  /// Dialog title for vaccine
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccine'**
+  String get vaccineDialogTitle;
+
+  /// Hint for vaccine name
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccine name (e.g. DHPPL, Rabies)'**
+  String get vaccineNameHint;
+
+  /// Taken date
+  ///
+  /// In en, this message translates to:
+  /// **'Taken date: {value}'**
+  String takenDateWithValue(String value);
+
+  /// Next date
+  ///
+  /// In en, this message translates to:
+  /// **'Next date: {value}'**
+  String nextDateWithValue(String value);
+
+  /// When date is not set
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// Label for enable reminder
+  ///
+  /// In en, this message translates to:
+  /// **'Enable reminder'**
+  String get enableReminder;
+
+  /// Label for optional vet field
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinarian (optional)'**
+  String get veterinarianOptional;
+
+  /// Label for optional remarks
+  ///
+  /// In en, this message translates to:
+  /// **'Remarks (optional)'**
+  String get remarksOptional;
+
+  /// Validation for vaccine name
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter vaccine name'**
+  String get pleaseEnterVaccineName;
+
+  /// Dialog title add progesterone
+  ///
+  /// In en, this message translates to:
+  /// **'Add progesterone measurement'**
+  String get addProgesteroneMeasurement;
+
+  /// Dialog title edit measurement
+  ///
+  /// In en, this message translates to:
+  /// **'Edit measurement'**
+  String get editMeasurementTitle;
+
+  /// Label for progesterone input
+  ///
+  /// In en, this message translates to:
+  /// **'Progesterone value (ng/mL) *'**
+  String get progesteroneValueLabel;
+
+  /// Hint for progesterone value
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 5.2'**
+  String get progesteroneHint;
+
+  /// Validation for progesterone
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid progesterone value'**
+  String get invalidProgesteroneValue;
+
+  /// Dialog title new vet visit
+  ///
+  /// In en, this message translates to:
+  /// **'New veterinary visit'**
+  String get newVetVisit;
+
+  /// Dialog title edit visit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit visit'**
+  String get editVisit;
+
+  /// Label for visit type
+  ///
+  /// In en, this message translates to:
+  /// **'Visit type'**
+  String get visitTypeLabel;
+
+  /// Label for reason field
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reasonLabel;
+
+  /// Label for diagnosis field
+  ///
+  /// In en, this message translates to:
+  /// **'Diagnosis'**
+  String get diagnosisLabel;
+
+  /// Label for treatment field
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment'**
+  String get treatmentFieldLabel;
+
+  /// Label for prescription field
+  ///
+  /// In en, this message translates to:
+  /// **'Prescription/medication'**
+  String get prescriptionLabel;
+
+  /// Label for veterinarian field
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinarian'**
+  String get veterinarianFieldLabel;
+
+  /// Label for clinic
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic'**
+  String get clinicLabel;
+
+  /// Label for cost field
+  ///
+  /// In en, this message translates to:
+  /// **'Cost (kr)'**
+  String get costKrLabel;
+
+  /// Dialog title new treatment
+  ///
+  /// In en, this message translates to:
+  /// **'New treatment'**
+  String get newTreatment;
+
+  /// Dialog title edit treatment
+  ///
+  /// In en, this message translates to:
+  /// **'Edit treatment'**
+  String get editTreatment;
+
+  /// Label for product name
+  ///
+  /// In en, this message translates to:
+  /// **'Product name*'**
+  String get productNameLabel;
+
+  /// Label for date given
+  ///
+  /// In en, this message translates to:
+  /// **'Date given'**
+  String get dateGivenLabel;
+
+  /// Label for dosage field
+  ///
+  /// In en, this message translates to:
+  /// **'Dosage'**
+  String get dosageLabel;
+
+  /// Label for manufacturer field
+  ///
+  /// In en, this message translates to:
+  /// **'Manufacturer'**
+  String get manufacturerLabel;
+
+  /// Label for batch number
+  ///
+  /// In en, this message translates to:
+  /// **'Batch number'**
+  String get batchNumberLabel;
+
+  /// Label for interval
+  ///
+  /// In en, this message translates to:
+  /// **'Interval (days)'**
+  String get intervalDaysLabel;
+
+  /// Dialog title new DNA test
+  ///
+  /// In en, this message translates to:
+  /// **'New DNA test'**
+  String get newDnaTest;
+
+  /// Dialog title edit DNA test
+  ///
+  /// In en, this message translates to:
+  /// **'Edit DNA test'**
+  String get editDnaTest;
+
+  /// Label for test name
+  ///
+  /// In en, this message translates to:
+  /// **'Test name*'**
+  String get testNameLabel;
+
+  /// Label for test date
+  ///
+  /// In en, this message translates to:
+  /// **'Test date'**
+  String get testDateLabel;
+
+  /// Dialog title register weight
+  ///
+  /// In en, this message translates to:
+  /// **'Register weight'**
+  String get registerWeight;
+
+  /// Dialog title edit weight
+  ///
+  /// In en, this message translates to:
+  /// **'Edit weight'**
+  String get editWeight;
+
+  /// Label for weight input
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (kg)*'**
+  String get weightKgLabel;
+
+  /// Validation for weight
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid weight'**
+  String get invalidWeight;
+
+  /// Message when search has no matches
+  ///
+  /// In en, this message translates to:
+  /// **'No matches for \"{query}\"'**
+  String noMatchesForQuery(String query);
+
+  /// Message when no buyers for selected litter
+  ///
+  /// In en, this message translates to:
+  /// **'No buyers for this litter'**
+  String get noBuyersForLitter;
+
+  /// Placeholder for litter filter dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by litter'**
+  String get filterByLitter;
+
+  /// Status label for delivered
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get deliveredStatus;
+
+  /// Section header for buyers with reservation
+  ///
+  /// In en, this message translates to:
+  /// **'With reservation'**
+  String get withReservationSection;
+
+  /// Section header for interested buyers without reservation
+  ///
+  /// In en, this message translates to:
+  /// **'Interested parties'**
+  String get interestedParties;
+
+  /// Label showing puppy name
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy: {name}'**
+  String puppyLabelWithName(String name);
+
+  /// Label for subscription section
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get subscription;
+
+  /// Subtitle for subscription section
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your Breedly subscription'**
+  String get manageSubscription;
+
+  /// Label for promo code source
+  ///
+  /// In en, this message translates to:
+  /// **'Promo code'**
+  String get promoCode;
+
+  /// Label for lifetime subscription
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime'**
+  String get lifetimeAccess;
+
+  /// Subscription source and expiry info
+  ///
+  /// In en, this message translates to:
+  /// **'{source} • Expires: {expiry}'**
+  String subscriptionExpiresInfo(String source, String expiry);
+
+  /// Status badge for active subscription
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get activeStatus;
+
+  /// SnackBar message when purchases restored
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases restored.'**
+  String get purchasesRestored;
+
+  /// Button label to restore purchases
+  ///
+  /// In en, this message translates to:
+  /// **'Restore purchases'**
+  String get restorePurchases;
+
+  /// Message when user is on free plan
+  ///
+  /// In en, this message translates to:
+  /// **'You are using the free version'**
+  String get usingFreeVersion;
+
+  /// Upgrade prompt description
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade for unlimited access to all features.'**
+  String get upgradeForUnlimited;
+
+  /// Button label to upgrade
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade to Premium'**
+  String get upgradeToPremium;
+
+  /// SnackBar message when premium restored
+  ///
+  /// In en, this message translates to:
+  /// **'Premium restored!'**
+  String get premiumRestored;
+
+  /// SnackBar message when no purchases found
+  ///
+  /// In en, this message translates to:
+  /// **'No previous purchases found.'**
+  String get noPreviousPurchases;
+
+  /// Title for developer section
+  ///
+  /// In en, this message translates to:
+  /// **'Developer & Testing'**
+  String get developerAndTesting;
+
+  /// Subtitle for developer section
+  ///
+  /// In en, this message translates to:
+  /// **'Test new features'**
+  String get testNewFeatures;
+
+  /// Subtitle for pedigree scanner in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Google ML Kit OCR - Scan pedigrees with AI'**
+  String get pedigreeScannerSubtitleSettings;
+
+  /// Badge label for new features
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get newBadge;
+
+  /// Empty state for certificates
+  ///
+  /// In en, this message translates to:
+  /// **'No Cert/Cacib yet'**
+  String get noCertCacibYet;
+
+  /// Judge statistics summary line
+  ///
+  /// In en, this message translates to:
+  /// **'{showCount} exhibitions • {excellentCount} Excellent • {ckCount} CK'**
+  String judgeStatsSummary(int showCount, int excellentCount, int ckCount);
+
+  /// Tooltip/button to share result card
+  ///
+  /// In en, this message translates to:
+  /// **'Share result card'**
+  String get shareResultCard;
+
+  /// Chip label for group judge
+  ///
+  /// In en, this message translates to:
+  /// **'Group judge: {name}'**
+  String groupJudgeWithName(String name);
+
+  /// Chip label for BIS judge
+  ///
+  /// In en, this message translates to:
+  /// **'BIS judge: {name}'**
+  String bisJudgeWithName(String name);
+
+  /// Helper text when quality locks placements
+  ///
+  /// In en, this message translates to:
+  /// **'No placement or certificates available with this quality grade'**
+  String get noPlacementWithQuality;
+
+  /// Helper text for HP requirement
+  ///
+  /// In en, this message translates to:
+  /// **'Requires Highly promising'**
+  String get requiresHighlyPromising;
+
+  /// Helper text when HP qualifies
+  ///
+  /// In en, this message translates to:
+  /// **'Qualifies for best male puppy/female puppy'**
+  String get qualifiesForBestPuppy;
+
+  /// Helper text for CK requirement
+  ///
+  /// In en, this message translates to:
+  /// **'Requires Excellent'**
+  String get requiresExcellent;
+
+  /// Label for best male puppy placement
+  ///
+  /// In en, this message translates to:
+  /// **'Best male puppy'**
+  String get bestMalePuppy;
+
+  /// Label for best female puppy placement
+  ///
+  /// In en, this message translates to:
+  /// **'Best female puppy'**
+  String get bestFemalePuppy;
+
+  /// Helper text when qualified
+  ///
+  /// In en, this message translates to:
+  /// **'Qualified for BIR/BIM Puppy'**
+  String get qualifiedForBIRBIMPuppy;
+
+  /// Helper text for puppy BIR requirement
+  ///
+  /// In en, this message translates to:
+  /// **'Requires 1st place with HP to participate'**
+  String get requiresFirstWithHP;
+
+  /// Helper text for puppy BIR/BIM
+  ///
+  /// In en, this message translates to:
+  /// **'Requires being best male/female puppy'**
+  String get requiresBestPuppy;
+
+  /// Helper text for Nordic BIR/BIM rules
+  ///
+  /// In en, this message translates to:
+  /// **'BHK/BTK 1st required for BIR/BIM in Nordic countries'**
+  String get requiresBHKBTKFirstNordic;
+
+  /// Dropdown option for winning best puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Yes - Won'**
+  String get yesWon;
+
+  /// Label for group judge field
+  ///
+  /// In en, this message translates to:
+  /// **'Group judge'**
+  String get groupJudge;
+
+  /// Label for BIS judge field
+  ///
+  /// In en, this message translates to:
+  /// **'BIS judge'**
+  String get bisJudge;
+
+  /// SnackBar message when result saved
+  ///
+  /// In en, this message translates to:
+  /// **'Result saved!'**
+  String get resultSaved;
+
+  /// Label for HP checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'HP (Hopeful Puppy)'**
+  String get hpAward;
+
+  /// Label for puppy BIR/BIM dropdown
+  ///
+  /// In en, this message translates to:
+  /// **'BIR/BIM Puppy'**
+  String get birBimPuppy;
+
+  /// Abbreviation for class in chips
+  ///
+  /// In en, this message translates to:
+  /// **'Cl'**
+  String get classAbbrev;
+
+  /// Abbreviation for best male
+  ///
+  /// In en, this message translates to:
+  /// **'BM'**
+  String get bestMaleAbbrev;
+
+  /// Abbreviation for best female
+  ///
+  /// In en, this message translates to:
+  /// **'BF'**
+  String get bestFemaleAbbrev;
+
+  /// Abbreviation for best of sex
+  ///
+  /// In en, this message translates to:
+  /// **'BOS'**
+  String get bestOfSexAbbrev;
+
+  /// Validation message for price
+  ///
+  /// In en, this message translates to:
+  /// **'Enter price'**
+  String get enterPrice;
+
+  /// Success message for contract save
+  ///
+  /// In en, this message translates to:
+  /// **'Contract saved'**
+  String get contractSaved;
+
+  /// Error message for save
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving: {error}'**
+  String errorSaving(String error);
+
+  /// Section header for buyer info
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer information'**
+  String get buyerInformation;
+
+  /// Section header for contract details
+  ///
+  /// In en, this message translates to:
+  /// **'Contract details'**
+  String get contractDetails;
+
+  /// Label for optional deposit field
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit (optional)'**
+  String get depositOptional;
+
+  /// Hint for deposit field
+  ///
+  /// In en, this message translates to:
+  /// **'Amount already paid as advance'**
+  String get amountAlreadyPaidAsAdvance;
+
+  /// Label for optional contract number
+  ///
+  /// In en, this message translates to:
+  /// **'Contract number (optional)'**
+  String get contractNumberOptional;
+
+  /// Hint for payment terms
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. Full payment at pickup'**
+  String get paymentTermsExampleHint;
+
+  /// Label for optional delivery location
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery location (optional)'**
+  String get deliveryLocationOptional;
+
+  /// Hint for delivery location
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. Breeder\'s address'**
+  String get deliveryLocationHint;
+
+  /// Section header for contract terms
+  ///
+  /// In en, this message translates to:
+  /// **'Contract terms'**
+  String get contractTerms;
+
+  /// Instruction for selecting terms
+  ///
+  /// In en, this message translates to:
+  /// **'Select which terms to include in the contract'**
+  String get selectTermsToInclude;
+
+  /// Contract term: general
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get termGeneral;
+
+  /// Subtitle for general terms
+  ///
+  /// In en, this message translates to:
+  /// **'Basic purchase and sale terms'**
+  String get termGeneralSubtitle;
+
+  /// Contract term: health
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get termHealth;
+
+  /// Subtitle for health terms
+  ///
+  /// In en, this message translates to:
+  /// **'Guarantee of healthy puppy and vet check'**
+  String get termHealthSubtitle;
+
+  /// Contract term: vaccinations
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinations and treatments'**
+  String get termVaccinations;
+
+  /// Subtitle for vaccination terms
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinated and dewormed per guidelines'**
+  String get termVaccinationsSubtitle;
+
+  /// Contract term: return
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get termReturn;
+
+  /// Subtitle for return terms
+  ///
+  /// In en, this message translates to:
+  /// **'Seller contacted first for rehoming'**
+  String get termReturnSubtitle;
+
+  /// Contract term: responsibility
+  ///
+  /// In en, this message translates to:
+  /// **'Responsibility'**
+  String get termResponsibility;
+
+  /// Subtitle for responsibility terms
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer takes over responsibility from handover'**
+  String get termResponsibilitySubtitle;
+
+  /// Contract term: registration
+  ///
+  /// In en, this message translates to:
+  /// **'Registration'**
+  String get termRegistration;
+
+  /// Subtitle for registration terms
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy registered to new owner'**
+  String get termRegistrationSubtitle;
+
+  /// Contract term for return clause
+  ///
+  /// In en, this message translates to:
+  /// **'Return clause included'**
+  String get returnClauseIncluded;
+
+  /// Section header for documentation
+  ///
+  /// In en, this message translates to:
+  /// **'Documentation'**
+  String get documentation;
+
+  /// Checkbox for pedigree delivery
+  ///
+  /// In en, this message translates to:
+  /// **'Pedigree delivered'**
+  String get pedigreeDeliveredLabel;
+
+  /// Subtitle for pedigree delivery
+  ///
+  /// In en, this message translates to:
+  /// **'Pedigree included at handover'**
+  String get pedigreeDeliveredSubtitle;
+
+  /// Checkbox for vet certificate
+  ///
+  /// In en, this message translates to:
+  /// **'Vet certificate attached'**
+  String get vetCertificateAttached;
+
+  /// Subtitle for vet certificate
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinary certificate on health status'**
+  String get vetCertificateAttachedSubtitle;
+
+  /// Checkbox for insurance transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance transferred'**
+  String get insuranceTransferred;
+
+  /// Subtitle for insurance transfer
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy insurance transferred to buyer'**
+  String get insuranceTransferredSubtitle;
+
+  /// Label for special terms
+  ///
+  /// In en, this message translates to:
+  /// **'Special terms (optional)'**
+  String get specialTermsOptional;
+
+  /// Hint for special terms
+  ///
+  /// In en, this message translates to:
+  /// **'Any special agreements between the parties...'**
+  String get specialTermsHint;
+
+  /// Button to save contract
+  ///
+  /// In en, this message translates to:
+  /// **'Save contract'**
+  String get saveContract;
+
+  /// Button to download PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Download as PDF'**
+  String get downloadAsPdf;
+
+  /// Success message for PDF save with path
+  ///
+  /// In en, this message translates to:
+  /// **'PDF saved:\n{path}'**
+  String pdfSavedAt(String path);
+
+  /// Error message for export
+  ///
+  /// In en, this message translates to:
+  /// **'Error exporting: {error}'**
+  String errorExporting(String error);
+
+  /// Gender label for male puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Male puppy'**
+  String get malePuppy;
+
+  /// Gender label for female puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Female puppy'**
+  String get femalePuppy;
+
+  /// Success message for co-ownership
+  ///
+  /// In en, this message translates to:
+  /// **'Co-ownership agreement created!'**
+  String get coOwnershipContractCreated;
+
+  /// Label for dog
+  ///
+  /// In en, this message translates to:
+  /// **'Dog'**
+  String get dog;
+
+  /// Section header for ownership
+  ///
+  /// In en, this message translates to:
+  /// **'Ownership share'**
+  String get ownershipShare;
+
+  /// Option for shared care
+  ///
+  /// In en, this message translates to:
+  /// **'Shared responsibility'**
+  String get sharedResponsibility;
+
+  /// Section header
+  ///
+  /// In en, this message translates to:
+  /// **'Rights and responsibilities'**
+  String get rightsAndResponsibilities;
+
+  /// Label for optional additional terms
+  ///
+  /// In en, this message translates to:
+  /// **'Additional terms (optional)'**
+  String get additionalTermsOptional;
+
+  /// Hint for additional terms
+  ///
+  /// In en, this message translates to:
+  /// **'Enter any additional terms...'**
+  String get additionalTermsHintText;
+
+  /// Button to generate co-ownership PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Generate co-ownership agreement'**
+  String get generateCoOwnershipContract;
+
+  /// Success message for foster contract
+  ///
+  /// In en, this message translates to:
+  /// **'Foster agreement created!'**
+  String get fosterContractCreated;
+
+  /// Section header for period
+  ///
+  /// In en, this message translates to:
+  /// **'Contract period'**
+  String get contractPeriod;
+
+  /// Checkbox for end date
+  ///
+  /// In en, this message translates to:
+  /// **'Has definite end date'**
+  String get hasDefiniteEndDate;
+
+  /// Prompt to select date
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get selectDate;
+
+  /// Section header for terms
+  ///
+  /// In en, this message translates to:
+  /// **'Terms'**
+  String get contractTermsSection;
+
+  /// Label for breeding terms
+  ///
+  /// In en, this message translates to:
+  /// **'Breeding terms'**
+  String get breedingTerms;
+
+  /// Button to generate foster PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Generate foster agreement'**
+  String get generateFosterContract;
+
+  /// Success for reservation creation
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation agreement created!'**
+  String get reservationContractCreated;
+
+  /// Success for reservation update
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation agreement updated!'**
+  String get reservationContractUpdated;
+
+  /// Section header for prices
+  ///
+  /// In en, this message translates to:
+  /// **'Prices'**
+  String get prices;
+
+  /// Label for reservation fee
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation fee (kr)'**
+  String get reservationFeeLabel;
+
+  /// Label for total puppy price
+  ///
+  /// In en, this message translates to:
+  /// **'Total price for puppy (kr)'**
+  String get totalPriceForPuppy;
+
+  /// Validation for invalid amount
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid amount'**
+  String get invalidAmount;
+
+  /// Display remaining amount
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining: kr {amount},-'**
+  String remainingAmount(String amount);
+
+  /// Hint for remarks field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter any remarks...'**
+  String get remarksHint;
+
+  /// Button to generate reservation PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Generate reservation agreement'**
+  String get generateReservationContract;
+
+  /// Notification title for PDF download
+  ///
+  /// In en, this message translates to:
+  /// **'PDF downloaded'**
+  String get pdfDownloaded;
+
+  /// Calendar event for dog heat cycle
+  ///
+  /// In en, this message translates to:
+  /// **'{dogName} - Heat cycle'**
+  String dogHeatCycle(String dogName);
+
+  /// Calendar event for expected heat cycle
+  ///
+  /// In en, this message translates to:
+  /// **'{dogName} - Expected heat'**
+  String dogExpectedHeat(String dogName);
+
+  /// Calendar event for dog giving birth
+  ///
+  /// In en, this message translates to:
+  /// **'{dogName} gave birth'**
+  String dogGaveBirth(String dogName);
+
+  /// Calendar event for litter delivery
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery: {damName} litter'**
+  String litterDeliveryEvent(String damName);
+
+  /// Label for 8 weeks old puppies
+  ///
+  /// In en, this message translates to:
+  /// **'8 weeks old'**
+  String get eightWeeksOld;
+
+  /// Placeholder for unknown dog name
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknownDog;
+
+  /// Calendar event for puppy vaccination
+  ///
+  /// In en, this message translates to:
+  /// **'{puppyName} - Vaccination {number}'**
+  String puppyVaccination(String puppyName, String number);
+
+  /// Calendar event for puppy deworming
+  ///
+  /// In en, this message translates to:
+  /// **'{puppyName} - Deworming {number}'**
+  String puppyDeworming(String puppyName, String number);
+
+  /// Calendar event for puppy microchipping
+  ///
+  /// In en, this message translates to:
+  /// **'{puppyName} - Microchipping'**
+  String puppyMicrochip(String puppyName);
+
+  /// Calendar event for dog birthday
+  ///
+  /// In en, this message translates to:
+  /// **'{dogName} turns {age} years'**
+  String dogBirthdayAge(String dogName, String age);
+
+  /// Filter label for expected heat cycles
+  ///
+  /// In en, this message translates to:
+  /// **'Heat cycles (expected)'**
+  String get expectedHeatCycles;
+
+  /// Filter label for estimated birth date
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated birth date'**
+  String get estimatedBirthDate;
+
+  /// Label for kennel selector
+  ///
+  /// In en, this message translates to:
+  /// **'Select kennel'**
+  String get selectKennel;
+
+  /// Singular form of member
+  ///
+  /// In en, this message translates to:
+  /// **'member'**
+  String get memberSingular;
+
+  /// Plural form of members
+  ///
+  /// In en, this message translates to:
+  /// **'members'**
+  String get membersPlural;
+
+  /// Section header for members
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get membersSection;
+
+  /// Label indicating current user
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get youLabel;
+
+  /// Owner role label
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get ownerRole;
+
+  /// Administrator role label
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get administratorRole;
+
+  /// Member role label
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get memberRole;
+
+  /// Button to remove member
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeLabel;
+
+  /// Section header for pending invitations
+  ///
+  /// In en, this message translates to:
+  /// **'Pending invitations'**
+  String get pendingInvitations;
+
+  /// Invitation expiration info
+  ///
+  /// In en, this message translates to:
+  /// **'Open invitation • Expires in {days} days'**
+  String openInvitationExpires(String days);
+
+  /// Snackbar message when code copied
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied to clipboard'**
+  String get codeCopiedToClipboard;
+
+  /// Section header for actions
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actionsSection;
+
+  /// Subtitle for invite member button
+  ///
+  /// In en, this message translates to:
+  /// **'Create invitation code'**
+  String get createInvitationCode;
+
+  /// Button to join a kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Join kennel'**
+  String get joinKennelLabel;
+
+  /// Subtitle for join kennel button
+  ///
+  /// In en, this message translates to:
+  /// **'Use invitation code'**
+  String get useInvitationCode;
+
+  /// Button to delete a kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Delete kennel'**
+  String get deleteKennelLabel;
+
+  /// Required kennel name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel name *'**
+  String get kennelNameRequired;
+
+  /// Validation message for required name
+  ///
+  /// In en, this message translates to:
+  /// **'Name is required'**
+  String get nameIsRequired;
+
+  /// Create button label
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get createButton;
+
+  /// Instruction for entering invitation code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the invitation code you received:'**
+  String get enterInvitationCodeMessage;
+
+  /// Label for invitation code field
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation code'**
+  String get invitationCode;
+
+  /// Hint for invitation code field
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. ABC123'**
+  String get invitationCodeHint;
+
+  /// Success message when joining kennel
+  ///
+  /// In en, this message translates to:
+  /// **'You have joined the kennel!'**
+  String get joinedKennelSuccess;
+
+  /// Join button label
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get joinButton;
+
+  /// Dialog title for editing kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Edit kennel'**
+  String get editKennel;
+
+  /// Label for kennel name field
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel name'**
+  String get kennelNameLabel;
+
+  /// Success message when kennel updated
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel updated!'**
+  String get kennelUpdated;
+
+  /// Dialog title for changing role
+  ///
+  /// In en, this message translates to:
+  /// **'Change role for {name}'**
+  String changeRoleFor(String name);
+
+  /// Dialog title for removing member
+  ///
+  /// In en, this message translates to:
+  /// **'Remove member?'**
+  String get removeMemberQuestion;
+
+  /// Confirmation for removing member
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove {name} from the kennel?'**
+  String confirmRemoveMember(String name);
+
+  /// Success message when member removed
+  ///
+  /// In en, this message translates to:
+  /// **'Member removed'**
+  String get memberRemoved;
+
+  /// Dialog title for leaving kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Leave kennel?'**
+  String get leaveKennelQuestion;
+
+  /// Confirmation for leaving kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to leave {name}? You will lose access to all data.'**
+  String confirmLeaveKennel(String name);
+
+  /// Success message when left kennel
+  ///
+  /// In en, this message translates to:
+  /// **'You have left the kennel'**
+  String get leftKennel;
+
+  /// Leave button label
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get leaveButton;
+
+  /// Dialog title for deleting kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Delete kennel?'**
+  String get deleteKennelQuestion;
+
+  /// Confirmation for deleting kennel
+  ///
+  /// In en, this message translates to:
+  /// **'Are you ABSOLUTELY sure you want to delete {name}? This cannot be undone!'**
+  String confirmDeleteKennel(String name);
+
+  /// Success message when kennel deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel deleted'**
+  String get kennelDeleted;
+
+  /// Description for invitation creation
+  ///
+  /// In en, this message translates to:
+  /// **'You can create an invitation code that others can use to join the kennel.'**
+  String get invitationCodeDescription;
+
+  /// Label for optional email field
+  ///
+  /// In en, this message translates to:
+  /// **'Email address (optional)'**
+  String get emailOptional;
+
+  /// Placeholder for email field
+  ///
+  /// In en, this message translates to:
+  /// **'user@example.com'**
+  String get emailPlaceholder;
+
+  /// Helper text for email field
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty for open invitation'**
+  String get leaveEmptyForOpen;
+
+  /// Label for role selection
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get roleLabel;
+
+  /// Description for member role
+  ///
+  /// In en, this message translates to:
+  /// **'Can view and edit data'**
+  String get canViewAndEdit;
+
+  /// Description for admin role
+  ///
+  /// In en, this message translates to:
+  /// **'Can also invite members'**
+  String get canAlsoInvite;
+
+  /// Button to create invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Create invitation'**
+  String get createInvitation;
+
+  /// Success message when invitation created
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation created!'**
+  String get invitationCreated;
+
+  /// Instruction for sharing invitation code
+  ///
+  /// In en, this message translates to:
+  /// **'Share this code with the person you want to invite:'**
+  String get shareCodeMessage;
+
+  /// Invitation validity period
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for 7 days'**
+  String get validFor7Days;
+
+  /// Label for share options
+  ///
+  /// In en, this message translates to:
+  /// **'Share the invitation:'**
+  String get shareInvitationLabel;
+
+  /// Copy button label
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copyLabel;
+
+  /// Email button label
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailButtonLabel;
+
+  /// Share button label
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareButtonLabel;
+
+  /// Done/Finished button label
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get finishedButton;
+
+  /// Email subject for invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Invitation to {kennelName} on Breedly'**
+  String invitationEmailSubject(String kennelName);
+
+  /// Email body for invitation
+  ///
+  /// In en, this message translates to:
+  /// **'Hi!\n\nYou have been invited to join {kennelName} on the Breedly app.\n\nYour invitation code is: {code}\n\nHow to join:\n1. Download the Breedly app if you don\'t have it\n2. Log in or create an account\n3. Go to Settings → Kennel Management\n4. Tap \"Join kennel\"\n5. Enter the code: {code}\n\nThe code is valid for 7 days.\n\nWelcome!\n'**
+  String invitationEmailBody(String kennelName, String code);
+
+  /// Error when email client cannot be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open email client'**
+  String get couldNotOpenEmail;
+
+  /// Share message for invitation
+  ///
+  /// In en, this message translates to:
+  /// **'You have been invited to {kennelName} on Breedly!\n\n🐕 Invitation code: {code}\n\nOpen the Breedly app, go to Settings → Kennel Management → \"Join kennel\" and enter the code.\n\nThe code is valid for 7 days.'**
+  String invitationShareMessage(String kennelName, String code);
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorGeneric(String error);
+
+  /// Success message when kennel created
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel created!'**
+  String get kennelCreatedSuccess;
+
+  /// Title for kennel profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel Profile'**
+  String get kennelProfile;
+
+  /// Success message when kennel profile saved
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel profile saved'**
+  String get kennelProfileSaved;
+
+  /// Section header for kennel info
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel Information'**
+  String get kennelInfo;
+
+  /// Label for kennel name input field
+  ///
+  /// In en, this message translates to:
+  /// **'Kennel name'**
+  String get kennelNameFieldLabel;
+
+  /// Hint for kennel name field
+  ///
+  /// In en, this message translates to:
+  /// **'E.g. \"Nordlys Kennel\"'**
+  String get kennelNameHint;
+
+  /// Label for optional description field
+  ///
+  /// In en, this message translates to:
+  /// **'Description (optional)'**
+  String get descriptionOptional;
+
+  /// Hint for kennel description field
+  ///
+  /// In en, this message translates to:
+  /// **'Tell a little about your kennel...'**
+  String get kennelDescriptionHint;
+
+  /// Section header for breeds
+  ///
+  /// In en, this message translates to:
+  /// **'Breeds'**
+  String get breedsSection;
+
+  /// Instruction for selecting breeds
+  ///
+  /// In en, this message translates to:
+  /// **'Select the breeds you breed'**
+  String get selectBreedsForBreeding;
+
+  /// Placeholder for breed selection
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to select breeds...'**
+  String get tapToSelectBreeds;
+
+  /// Singular breed selected count
+  ///
+  /// In en, this message translates to:
+  /// **'breed selected'**
+  String get breedSelectedSingular;
+
+  /// Plural breeds selected count
+  ///
+  /// In en, this message translates to:
+  /// **'breeds selected'**
+  String get breedsSelectedPlural;
+
+  /// Section header for contact info
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get contactInfo;
+
+  /// Label for optional phone field
+  ///
+  /// In en, this message translates to:
+  /// **'Phone (optional)'**
+  String get phoneOptional;
+
+  /// Label for optional address field
+  ///
+  /// In en, this message translates to:
+  /// **'Address (optional)'**
+  String get addressOptional;
+
+  /// Label for optional website field
+  ///
+  /// In en, this message translates to:
+  /// **'Website (optional)'**
+  String get websiteOptional;
+
+  /// Button to save kennel profile
+  ///
+  /// In en, this message translates to:
+  /// **'Save kennel profile'**
+  String get saveKennelProfile;
+
+  /// Dialog title for breed selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select breeds'**
+  String get selectBreeds;
+
+  /// Count of selected items
+  ///
+  /// In en, this message translates to:
+  /// **'{count} selected'**
+  String nSelected(String count);
+
+  /// Message when no breeds match search
+  ///
+  /// In en, this message translates to:
+  /// **'No breeds found for \"{query}\"'**
+  String noBreedsFoundFor(String query);
+
+  /// Empty state for gallery
+  ///
+  /// In en, this message translates to:
+  /// **'No images yet'**
+  String get noImagesYet;
+
+  /// Instruction to add photos
+  ///
+  /// In en, this message translates to:
+  /// **'Tap + to add photos'**
+  String get tapToAddPhotos;
+
+  /// Dialog title for image details
+  ///
+  /// In en, this message translates to:
+  /// **'Image details'**
+  String get imageDetails;
+
+  /// File size display
+  ///
+  /// In en, this message translates to:
+  /// **'File size: {size} MB'**
+  String fileSizeLabel(String size);
+
+  /// Description label with value
+  ///
+  /// In en, this message translates to:
+  /// **'Description: {value}'**
+  String descriptionWithValue(String value);
+
+  /// Dialog title for editing image notes
+  ///
+  /// In en, this message translates to:
+  /// **'Edit image notes'**
+  String get editImageNotes;
+
+  /// Label for description field
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// Success message when image notes updated
+  ///
+  /// In en, this message translates to:
+  /// **'Image notes updated'**
+  String get imageNotesUpdated;
+
+  /// Dialog title for deleting image
+  ///
+  /// In en, this message translates to:
+  /// **'Delete image'**
+  String get deleteImage;
+
+  /// Success message when image deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Image deleted'**
+  String get imageDeleted;
+
+  /// Prompt text for global search
+  ///
+  /// In en, this message translates to:
+  /// **'Search for dogs, litters, puppies or buyers'**
+  String get searchPrompt;
+
+  /// Title for export screen
+  ///
+  /// In en, this message translates to:
+  /// **'Export data'**
+  String get exportData;
+
+  /// Loading text during export
+  ///
+  /// In en, this message translates to:
+  /// **'Exporting {item}...'**
+  String exportingItem(String item);
+
+  /// Success message when export completed
+  ///
+  /// In en, this message translates to:
+  /// **'Export completed!'**
+  String get exportCompleted;
+
+  /// Error message during export
+  ///
+  /// In en, this message translates to:
+  /// **'Export error: {error}'**
+  String exportError(String error);
+
+  /// Success message when item exported
+  ///
+  /// In en, this message translates to:
+  /// **'{item} exported!'**
+  String itemExported(String item);
+
+  /// Info card title for export
+  ///
+  /// In en, this message translates to:
+  /// **'About export'**
+  String get aboutExport;
+
+  /// Description of export format
+  ///
+  /// In en, this message translates to:
+  /// **'Data is exported as CSV files that can be opened in Excel, Google Sheets or other spreadsheet programs. Files use UTF-8 with BOM to support special characters.'**
+  String get exportDescription;
+
+  /// Button to export all data
+  ///
+  /// In en, this message translates to:
+  /// **'Export all'**
+  String get exportAll;
+
+  /// Label for individual export section
+  ///
+  /// In en, this message translates to:
+  /// **'Or export individually'**
+  String get orExportIndividually;
+
+  /// Description for dogs export
+  ///
+  /// In en, this message translates to:
+  /// **'All registered dogs with pedigree info'**
+  String get exportDogsDesc;
+
+  /// Description for litters export
+  ///
+  /// In en, this message translates to:
+  /// **'All litters with parents and puppy status'**
+  String get exportLittersDesc;
+
+  /// Description for puppies export
+  ///
+  /// In en, this message translates to:
+  /// **'All puppies with details and sales status'**
+  String get exportPuppiesDesc;
+
+  /// Description for expenses export
+  ///
+  /// In en, this message translates to:
+  /// **'All expenses sorted by date'**
+  String get exportExpensesDesc;
+
+  /// Description for income export
+  ///
+  /// In en, this message translates to:
+  /// **'All income sorted by date'**
+  String get exportIncomeDesc;
+
+  /// Description for financial summary export
+  ///
+  /// In en, this message translates to:
+  /// **'Annual overview of results'**
+  String get exportFinancialSummaryDesc;
+
+  /// Description for litter statistics export
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics per breed'**
+  String get exportLitterStatsDesc;
+
+  /// Label for all data in export
+  ///
+  /// In en, this message translates to:
+  /// **'all data'**
+  String get allData;
+
+  /// Empty state for contracts
+  ///
+  /// In en, this message translates to:
+  /// **'No contracts'**
+  String get noContracts;
+
+  /// Instruction to create contract
+  ///
+  /// In en, this message translates to:
+  /// **'Create a purchase contract for this puppy'**
+  String get createPurchaseContractForPuppy;
+
+  /// Contract number display
+  ///
+  /// In en, this message translates to:
+  /// **'Contract no. {number}'**
+  String contractNumberLabel(String number);
+
+  /// Draft status label
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get statusDraft;
+
+  /// Active status label
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusActive;
+
+  /// Completed status label
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statusCompleted;
+
+  /// Cancelled status label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
+
+  /// Dialog title for deleting contract
+  ///
+  /// In en, this message translates to:
+  /// **'Delete contract'**
+  String get deleteContract;
+
+  /// Success message when contract deleted
+  ///
+  /// In en, this message translates to:
+  /// **'Contract deleted'**
+  String get contractDeleted;
+
+  /// Label for creation date
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get createdDate;
+
+  /// Label for purchase date
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased'**
+  String get purchasedDate;
+
+  /// Label for terms section
+  ///
+  /// In en, this message translates to:
+  /// **'Terms:'**
+  String get termsLabel;
+
+  /// Contract term for spay/neuter requirement
+  ///
+  /// In en, this message translates to:
+  /// **'Spay/neuter required'**
+  String get spayNeuterRequired;
+
+  /// Button to create new contract
+  ///
+  /// In en, this message translates to:
+  /// **'New contract'**
+  String get newContract;
+
+  /// Description for purchase contract option
+  ///
+  /// In en, this message translates to:
+  /// **'Full sales contract for the puppy'**
+  String get fullSalesContract;
+
+  /// Description for reservation contract option
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve the puppy with a deposit'**
+  String get reserveWithDeposit;
+
+  /// Title for reservation contract option
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation agreement'**
+  String get reservationAgreement;
+
+  /// Generic export error message
+  ///
+  /// In en, this message translates to:
+  /// **'Export error: {error}'**
+  String exportErrorGeneric(String error);
+
+  /// Title for photo gallery screen
+  ///
+  /// In en, this message translates to:
+  /// **'{damName} - Photo Gallery'**
+  String photoGalleryTitle(String damName);
+
+  /// Menu item for edit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editMenu;
+
+  /// Menu item to delete litter
+  ///
+  /// In en, this message translates to:
+  /// **'Delete litter'**
+  String get deleteLitterMenu;
+
+  /// Tab label for puppies
+  ///
+  /// In en, this message translates to:
+  /// **'Puppies'**
+  String get tabPuppies;
+
+  /// Tab label for registration
+  ///
+  /// In en, this message translates to:
+  /// **'Registration'**
+  String get tabRegistration;
+
+  /// Label for planned litter
+  ///
+  /// In en, this message translates to:
+  /// **'Planned litter'**
+  String get plannedLitterLabel;
+
+  /// Label for litter info
+  ///
+  /// In en, this message translates to:
+  /// **'Litter info'**
+  String get litterInfoLabel;
+
+  /// Label for dam/mother
+  ///
+  /// In en, this message translates to:
+  /// **'Dam'**
+  String get damLabel;
+
+  /// Label for sire/father
+  ///
+  /// In en, this message translates to:
+  /// **'Sire'**
+  String get sireLabel;
+
+  /// Label for breed
+  ///
+  /// In en, this message translates to:
+  /// **'Breed'**
+  String get breedLabel;
+
+  /// Label for age
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get ageLabel;
+
+  /// Label for total puppies count
+  ///
+  /// In en, this message translates to:
+  /// **'Total puppies'**
+  String get totalPuppiesLabel;
+
+  /// Label for males
+  ///
+  /// In en, this message translates to:
+  /// **'Males'**
+  String get malesLabel;
+
+  /// Label for females
+  ///
+  /// In en, this message translates to:
+  /// **'Females'**
+  String get femalesLabel;
+
+  /// Label for mating date
+  ///
+  /// In en, this message translates to:
+  /// **'Mating date'**
+  String get matingDateLabel;
+
+  /// Label for estimated due date
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated due date'**
+  String get estimatedDueDateLabel;
+
+  /// Label for days until whelping
+  ///
+  /// In en, this message translates to:
+  /// **'Days until whelping'**
+  String get daysUntilWhelpingLabel;
+
+  /// Days to estimated birth
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days to estimated birth'**
+  String daysToEstimatedBirth(int days);
+
+  /// When estimated date is in the past
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated due date has passed'**
+  String get estimatedDatePassed;
+
+  /// When no mating date is set
+  ///
+  /// In en, this message translates to:
+  /// **'Set mating date to calculate due date'**
+  String get setMatingDateToCalculate;
+
+  /// Button to register birth
+  ///
+  /// In en, this message translates to:
+  /// **'Register birth'**
+  String get registerBirthButton;
+
+  /// Label for planning tools section
+  ///
+  /// In en, this message translates to:
+  /// **'Planning tools'**
+  String get planningToolsLabel;
+
+  /// Label for temperature
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get temperatureLabel;
+
+  /// Label for progesterone
+  ///
+  /// In en, this message translates to:
+  /// **'Progesterone'**
+  String get progesteroneLabel;
+
+  /// Label for edit
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editLabel;
+
+  /// Label for birth
+  ///
+  /// In en, this message translates to:
+  /// **'Birth'**
+  String get birthLabel;
+
+  /// Mating date with value
+  ///
+  /// In en, this message translates to:
+  /// **'Mating date: {date}'**
+  String matingDateColon(String date);
+
+  /// When no mating date is set
+  ///
+  /// In en, this message translates to:
+  /// **'No mating date set'**
+  String get noMatingDateSet;
+
+  /// Button label for set date
+  ///
+  /// In en, this message translates to:
+  /// **'Set date'**
+  String get setDateLabel;
+
+  /// Estimated birth with date
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated birth: {date}'**
+  String estimatedBirthColon(String date);
+
+  /// Days remaining
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days left'**
+  String daysLeft(int days);
+
+  /// Help text for mating date picker
+  ///
+  /// In en, this message translates to:
+  /// **'Select mating date'**
+  String get selectMatingDateLabel;
+
+  /// Snackbar after setting mating date
+  ///
+  /// In en, this message translates to:
+  /// **'Mating date set to {matingDate}. Estimated birth: {dueDate}'**
+  String matingDateSetSnackbar(String matingDate, String dueDate);
+
+  /// Error when dam not found
+  ///
+  /// In en, this message translates to:
+  /// **'Could not find the dam'**
+  String get couldNotFindDam;
+
+  /// Dialog title for register birth
+  ///
+  /// In en, this message translates to:
+  /// **'Register birth'**
+  String get registerBirthTitle;
+
+  /// Birth confirmation text
+  ///
+  /// In en, this message translates to:
+  /// **'The litter is now born! Do you want to update the birth date to today?'**
+  String get litterBornConfirmText;
+
+  /// Info text after birth registration
+  ///
+  /// In en, this message translates to:
+  /// **'You can then add puppies manually.'**
+  String get canThenAddPuppies;
+
+  /// Cancel button label
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelLabel;
+
+  /// Register button label
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get registerLabel;
+
+  /// Snackbar after birth registered
+  ///
+  /// In en, this message translates to:
+  /// **'Birth registered! You can now add puppies.'**
+  String get birthRegisteredSnackbar;
+
+  /// When no puppies in litter
+  ///
+  /// In en, this message translates to:
+  /// **'No puppies yet'**
+  String get noPuppiesYet;
+
+  /// Hint to add puppies
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Puppies tab to add puppies'**
+  String get goToPuppiesTabHint;
+
+  /// Puppies with count
+  ///
+  /// In en, this message translates to:
+  /// **'Puppies ({count})'**
+  String puppiesCount2(int count);
+
+  /// Label for available status
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get availableLabel;
+
+  /// Label for reserved status
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved'**
+  String get reservedLabel;
+
+  /// Label for sold status
+  ///
+  /// In en, this message translates to:
+  /// **'Sold'**
+  String get soldLabel;
+
+  /// Section label for quick actions
+  ///
+  /// In en, this message translates to:
+  /// **'Quick actions'**
+  String get quickActionsLabel;
+
+  /// Label for weighing
+  ///
+  /// In en, this message translates to:
+  /// **'Weighing'**
+  String get weighingLabel;
+
+  /// Label for adding new puppy
+  ///
+  /// In en, this message translates to:
+  /// **'New puppy'**
+  String get newPuppyLabel;
+
+  /// Label for treatment overview
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment overview'**
+  String get treatmentOverviewLabel;
+
+  /// Label for vaccinated
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinated'**
+  String get vaccinatedLabel;
+
+  /// Label for dewormed
+  ///
+  /// In en, this message translates to:
+  /// **'Dewormed'**
+  String get dewormedLabel;
+
+  /// Label for microchipped
+  ///
+  /// In en, this message translates to:
+  /// **'Microchipped'**
+  String get microchippedLabel;
+
+  /// Day/days unit
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{day} other{days}}'**
+  String dayUnit(int count);
+
+  /// Week/weeks unit
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{week} other{weeks}}'**
+  String weekUnit(int count);
+
+  /// Weeks and days format
+  ///
+  /// In en, this message translates to:
+  /// **'{weeks} {weekLabel} and {days} {dayLabel}'**
+  String weeksAndDays(int weeks, String weekLabel, int days, String dayLabel);
+
+  /// Today in parentheses
+  ///
+  /// In en, this message translates to:
+  /// **'(today)'**
+  String get todayParens;
+
+  /// Tomorrow in parentheses
+  ///
+  /// In en, this message translates to:
+  /// **'(tomorrow)'**
+  String get tomorrowParens;
+
+  /// Yesterday in parentheses
+  ///
+  /// In en, this message translates to:
+  /// **'(yesterday)'**
+  String get yesterdayParens;
+
+  /// Label for summary
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summaryLabel;
+
+  /// Button label for adding puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Add puppy'**
+  String get addPuppyLabel;
+
+  /// Label for total
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get totalLabel;
+
+  /// Label for puppy list
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy list'**
+  String get puppyListLabel;
+
+  /// Empty state for puppy list
+  ///
+  /// In en, this message translates to:
+  /// **'No puppies registered yet'**
+  String get noPuppiesRegisteredYet;
+
+  /// Puppy color and age
+  ///
+  /// In en, this message translates to:
+  /// **'Color: {color} • Age: {weeks} weeks'**
+  String colorAge(String color, int weeks);
+
+  /// Section label for basic info
+  ///
+  /// In en, this message translates to:
+  /// **'Basic info'**
+  String get basicInfoLabel;
+
+  /// Label for gender
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get genderLabel;
+
+  /// Label for birth weight
+  ///
+  /// In en, this message translates to:
+  /// **'Birth weight'**
+  String get birthWeightLabel;
+
+  /// Section label for treatments
+  ///
+  /// In en, this message translates to:
+  /// **'Treatments'**
+  String get treatmentsLabel;
+
+  /// Yes label
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yesLabel;
+
+  /// No label
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get noLabel;
+
+  /// Section label for buyer
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer'**
+  String get buyerLabel;
+
+  /// Label for name
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// Label for contact
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get contactLabel;
+
+  /// Section label for notes
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesLabel;
+
+  /// Button label for weight
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weightButton;
+
+  /// Button label for plan
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get planButton;
+
+  /// Button label for contract
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get contractButton;
+
+  /// Button label for health certificate
+  ///
+  /// In en, this message translates to:
+  /// **'Health cert.'**
+  String get healthCertificateButton;
+
+  /// Button label for share
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get shareButton;
+
+  /// Label for temperature registration section
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature registration'**
+  String get temperatureRegistrationLabel;
+
+  /// Description for temp registration
+  ///
+  /// In en, this message translates to:
+  /// **'Register temperature on the dam before estimated birth'**
+  String get registerTempBeforeBirth;
+
+  /// Button to open temperature log
+  ///
+  /// In en, this message translates to:
+  /// **'Open temperature log'**
+  String get openTemperatureLogButton;
+
+  /// Label for puppy weight section
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy weight'**
+  String get puppyWeightLabel;
+
+  /// Button to register weight for all
+  ///
+  /// In en, this message translates to:
+  /// **'Register weight for all puppies'**
+  String get registerWeightForAll;
+
+  /// Short empty state for puppies
+  ///
+  /// In en, this message translates to:
+  /// **'No puppies registered'**
+  String get noPuppiesRegisteredShort;
+
+  /// Dialog title for editing puppy
+  ///
+  /// In en, this message translates to:
+  /// **'Edit puppy'**
+  String get editPuppyTitle;
+
+  /// Label for status
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusLabel;
+
+  /// Label for birth weight in grams
+  ///
+  /// In en, this message translates to:
+  /// **'Birth weight (grams)'**
+  String get birthWeightGramsLabel;
+
+  /// Label for birth note
+  ///
+  /// In en, this message translates to:
+  /// **'Birth note'**
+  String get birthNoteLabel;
+
+  /// Label for buyer name
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer name'**
+  String get buyerNameLabel;
+
+  /// Label for buyer contact
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer contact'**
+  String get buyerContactLabel;
+
+  /// Label for notes field
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesFieldLabel;
+
+  /// Save button label
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveLabel;
+
+  /// Snackbar after puppy update
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy updated'**
+  String get puppyUpdatedSnackbar;
+
+  /// Weight curve dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'{name} - Weight curve'**
+  String weightCurveTitle(String name);
+
+  /// Note for birth weight entry
+  ///
+  /// In en, this message translates to:
+  /// **'Birth weight'**
+  String get birthWeightNote;
+
+  /// X-axis label for weight chart
+  ///
+  /// In en, this message translates to:
+  /// **'Days since birth'**
+  String get daysSinceBirthAxis;
+
+  /// Y-axis label for weight chart
+  ///
+  /// In en, this message translates to:
+  /// **'Gram'**
+  String get gramAxis;
+
+  /// Empty state for weight chart
+  ///
+  /// In en, this message translates to:
+  /// **'No weight measurements or birth weight registered'**
+  String get noWeightOrBirthWeight;
+
+  /// Label for measurement list
+  ///
+  /// In en, this message translates to:
+  /// **'Registered measurements:'**
+  String get registeredMeasurements;
+
+  /// Weight in grams
+  ///
+  /// In en, this message translates to:
+  /// **'{weight} gram'**
+  String gramUnit(String weight);
+
+  /// Day and date label
+  ///
+  /// In en, this message translates to:
+  /// **'Day {day} - {date}'**
+  String dayDateLabel(int day, String date);
+
+  /// Snackbar after weight deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Weight measurement deleted'**
+  String get weightMeasurementDeleted;
+
+  /// Button to add measurement
+  ///
+  /// In en, this message translates to:
+  /// **'Add measurement'**
+  String get addMeasurementButton;
+
+  /// Close button label
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeButton;
+
+  /// Dialog title for adding weight
+  ///
+  /// In en, this message translates to:
+  /// **'Add weight measurement'**
+  String get addWeightMeasurementTitle;
+
+  /// Label for date
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateLabel;
+
+  /// Label for time/clock
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get clockLabel;
+
+  /// Label for weight in grams
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (grams)'**
+  String get weightGramsLabel;
+
+  /// Snackbar after weight added
+  ///
+  /// In en, this message translates to:
+  /// **'Weight measurement added'**
+  String get weightMeasurementAddedSnackbar;
+
+  /// Dialog title for bulk weight
+  ///
+  /// In en, this message translates to:
+  /// **'Register weight for all puppies'**
+  String get registerWeightForAllTitle;
+
+  /// Label for optional notes
+  ///
+  /// In en, this message translates to:
+  /// **'Notes (optional)'**
+  String get notesOptionalLabel;
+
+  /// Button label for save all
+  ///
+  /// In en, this message translates to:
+  /// **'Save all'**
+  String get saveAllLabel;
+
+  /// Snackbar after bulk weight save
+  ///
+  /// In en, this message translates to:
+  /// **'{count} weight measurements saved'**
+  String weightMeasurementsSavedSnackbar(int count);
+
+  /// Dialog title for editing weight
+  ///
+  /// In en, this message translates to:
+  /// **'Edit weight measurement'**
+  String get editWeightMeasurementTitle;
+
+  /// Snackbar after weight update
+  ///
+  /// In en, this message translates to:
+  /// **'Weight measurement updated'**
+  String get weightMeasurementUpdatedSnackbar;
+
+  /// Treatment plan dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'{name} - Treatment plan'**
+  String treatmentPlanTitle(String name);
+
+  /// Section label for deworming
+  ///
+  /// In en, this message translates to:
+  /// **'Deworming:'**
+  String get dewormingLabel;
+
+  /// First deworming label
+  ///
+  /// In en, this message translates to:
+  /// **'1st deworming (approx. 2 weeks)'**
+  String get deworming1;
+
+  /// Second deworming label
+  ///
+  /// In en, this message translates to:
+  /// **'2nd deworming (approx. 4 weeks)'**
+  String get deworming2;
+
+  /// Third deworming label
+  ///
+  /// In en, this message translates to:
+  /// **'3rd deworming (approx. 6 weeks)'**
+  String get deworming3;
+
+  /// Section label for vaccines
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccines:'**
+  String get vaccinesLabel;
+
+  /// First vaccination label
+  ///
+  /// In en, this message translates to:
+  /// **'1st vaccination (8 weeks)'**
+  String get vaccine1;
+
+  /// Second vaccination label
+  ///
+  /// In en, this message translates to:
+  /// **'2nd vaccination (12 weeks)'**
+  String get vaccine2;
+
+  /// Third vaccination label
+  ///
+  /// In en, this message translates to:
+  /// **'3rd vaccination (16 weeks)'**
+  String get vaccine3;
+
+  /// Section label for other
+  ///
+  /// In en, this message translates to:
+  /// **'Other:'**
+  String get otherLabel;
+
+  /// Label for ID marking
+  ///
+  /// In en, this message translates to:
+  /// **'ID marking'**
+  String get idMarkingLabel;
+
+  /// Label for ID marking number
+  ///
+  /// In en, this message translates to:
+  /// **'ID marking number'**
+  String get idMarkingNumberLabel;
+
+  /// Placeholder for date selection
+  ///
+  /// In en, this message translates to:
+  /// **'Select date'**
+  String get selectDateLabel;
+
+  /// Snackbar after treatment plan saved
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment plan updated and reminders scheduled'**
+  String get treatmentPlanUpdatedSnackbar;
+
+  /// Notification title for PDF download
+  ///
+  /// In en, this message translates to:
+  /// **'PDF downloaded'**
+  String get pdfDownloadedTitle;
+
+  /// Snackbar for PDF save
+  ///
+  /// In en, this message translates to:
+  /// **'PDF saved:\n{path}'**
+  String pdfSavedSnackbar(String path);
+
+  /// Error for PDF generation
+  ///
+  /// In en, this message translates to:
+  /// **'Error generating PDF: {error}'**
+  String errorGeneratingPdf(String error);
+
+  /// Title for health certificate dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Health certificate'**
+  String get healthCertificateTitle;
+
+  /// Subtitle for health cert
+  ///
+  /// In en, this message translates to:
+  /// **'Generate health certificate for {name}'**
+  String generateHealthCertFor(String name);
+
+  /// Section label for health exam
+  ///
+  /// In en, this message translates to:
+  /// **'Health examination'**
+  String get healthExaminationLabel;
+
+  /// Hint for adding notes
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an item to add a note'**
+  String get tapToAddNote;
+
+  /// Health check: general condition
+  ///
+  /// In en, this message translates to:
+  /// **'General condition'**
+  String get generalConditionLabel;
+
+  /// Health check: eyes
+  ///
+  /// In en, this message translates to:
+  /// **'Eyes'**
+  String get eyesLabel;
+
+  /// Health check: ears
+  ///
+  /// In en, this message translates to:
+  /// **'Ears'**
+  String get earsLabel;
+
+  /// Health check: heart
+  ///
+  /// In en, this message translates to:
+  /// **'Heart'**
+  String get heartLabel;
+
+  /// Health check: lungs
+  ///
+  /// In en, this message translates to:
+  /// **'Lungs'**
+  String get lungsLabel;
+
+  /// Health check: skin/coat
+  ///
+  /// In en, this message translates to:
+  /// **'Skin/coat'**
+  String get skinCoatLabel;
+
+  /// Health check: teeth/mouth
+  ///
+  /// In en, this message translates to:
+  /// **'Teeth/mouth'**
+  String get teethMouthLabel;
+
+  /// Health check: abdomen
+  ///
+  /// In en, this message translates to:
+  /// **'Abdomen'**
+  String get abdomenLabel;
+
+  /// Health check: limbs/joints
+  ///
+  /// In en, this message translates to:
+  /// **'Limbs/joints'**
+  String get limbsJointsLabel;
+
+  /// Label for vet info section
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinary information (optional):'**
+  String get vetInfoOptional;
+
+  /// Label for vet name
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinarian name'**
+  String get vetNameLabel;
+
+  /// Label for phone
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneLabel;
+
+  /// Label for general notes
+  ///
+  /// In en, this message translates to:
+  /// **'General notes'**
+  String get generalNotesLabel;
+
+  /// Button to generate PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Generate PDF'**
+  String get generatePdfButton;
+
+  /// Hint for adding note
+  ///
+  /// In en, this message translates to:
+  /// **'Add note for {label}...'**
+  String addNoteFor(String label);
+
+  /// Notification for health cert download
+  ///
+  /// In en, this message translates to:
+  /// **'Health certificate downloaded'**
+  String get healthCertificateDownloaded;
+
+  /// Snackbar for health cert save
+  ///
+  /// In en, this message translates to:
+  /// **'Health certificate saved:\n{path}'**
+  String healthCertSavedSnackbar(String path);
+
+  /// Error for health cert generation
+  ///
+  /// In en, this message translates to:
+  /// **'Error generating health certificate: {error}'**
+  String errorGeneratingHealthCert(String error);
+
+  /// Dialog title for sharing update
+  ///
+  /// In en, this message translates to:
+  /// **'Share update'**
+  String get shareUpdateTitle;
+
+  /// Subtitle for share dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Share update about {name} with buyer'**
+  String shareUpdateAbout(String name);
+
+  /// Label for message inclusions
+  ///
+  /// In en, this message translates to:
+  /// **'Include in message:'**
+  String get includeInMessage;
+
+  /// Checkbox label for age
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get ageCheckbox;
+
+  /// Checkbox label for weight
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weightCheckbox;
+
+  /// Checkbox label for treatments
+  ///
+  /// In en, this message translates to:
+  /// **'Treatments'**
+  String get treatmentsCheckbox;
+
+  /// Label for custom message
+  ///
+  /// In en, this message translates to:
+  /// **'Custom message (optional)'**
+  String get customMessageOptional;
+
+  /// Hint for greeting field
+  ///
+  /// In en, this message translates to:
+  /// **'Write a personal greeting...'**
+  String get personalGreetingHint;
+
+  /// Subject for update message
+  ///
+  /// In en, this message translates to:
+  /// **'Update about {name}'**
+  String updateAbout(String name);
+
+  /// Dialog title for editing litter
+  ///
+  /// In en, this message translates to:
+  /// **'Edit litter'**
+  String get editLitterTitle;
+
+  /// Label for dam field
+  ///
+  /// In en, this message translates to:
+  /// **'Dam (Female) *'**
+  String get damFemaleLabel;
+
+  /// Label for sire field
+  ///
+  /// In en, this message translates to:
+  /// **'Sire (Male) *'**
+  String get sireMaleLabel;
+
+  /// Label for puppy count section
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy count (based on registered puppies):'**
+  String get puppyCountBasedOnRegistered;
+
+  /// Info about automatic count update
+  ///
+  /// In en, this message translates to:
+  /// **'These numbers update automatically when you add or delete puppies.'**
+  String get updatesAutomatically;
+
+  /// Validation for dam/sire fields
+  ///
+  /// In en, this message translates to:
+  /// **'Dam and Sire are required'**
+  String get damAndSireRequired;
+
+  /// Snackbar after litter update
+  ///
+  /// In en, this message translates to:
+  /// **'Litter updated'**
+  String get litterUpdatedSnackbar;
+
+  /// Dialog title for deleting litter
+  ///
+  /// In en, this message translates to:
+  /// **'Delete litter?'**
+  String get deleteLitterTitle;
+
+  /// Confirmation for litter deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the litter from {damName} x {sireName}?\n\nNote: This will also delete all puppies in the litter!'**
+  String confirmDeleteLitterText(String damName, String sireName);
+
+  /// Delete button label
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteLabel;
+
+  /// Snackbar after litter deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Litter deleted'**
+  String get litterDeletedSnackbar;
+
+  /// Label for placed percentage
+  ///
+  /// In en, this message translates to:
+  /// **'placed'**
+  String get placedLabel;
+
+  /// Role label for owner
+  ///
+  /// In en, this message translates to:
+  /// **'Owner'**
+  String get ownerRoleLabel;
+
+  /// Button to skip onboarding
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skipButton;
+
+  /// Button to get started
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get getStartedButton;
+
+  /// Onboarding page 1 title
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Breedly'**
+  String get onboardingWelcomeTitle;
+
+  /// Onboarding page 1 description
+  ///
+  /// In en, this message translates to:
+  /// **'Your complete solution for breeding management. Keep track of dogs, litters, buyers and much more.'**
+  String get onboardingWelcomeDesc;
+
+  /// Onboarding page 2 title
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your dogs'**
+  String get onboardingDogsTitle;
+
+  /// Onboarding page 2 description
+  ///
+  /// In en, this message translates to:
+  /// **'Add dogs with pedigree, health information, show results and photos. All in one place.'**
+  String get onboardingDogsDesc;
+
+  /// Onboarding page 3 title
+  ///
+  /// In en, this message translates to:
+  /// **'Track litters and puppies'**
+  String get onboardingLittersTitle;
+
+  /// Onboarding page 3 description
+  ///
+  /// In en, this message translates to:
+  /// **'Register litters, follow puppy development with weight logs, and generate contracts for buyers.'**
+  String get onboardingLittersDesc;
+
+  /// Onboarding page 4 title
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar and reminders'**
+  String get onboardingCalendarTitle;
+
+  /// Onboarding page 4 description
+  ///
+  /// In en, this message translates to:
+  /// **'Never forget important dates. Get notifications for vaccinations, vet visits and other events.'**
+  String get onboardingCalendarDesc;
+
+  /// Onboarding page 5 title
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics and reports'**
+  String get onboardingStatsTitle;
+
+  /// Onboarding page 5 description
+  ///
+  /// In en, this message translates to:
+  /// **'Get insights into your breeding with detailed statistics, financial overview and annual reports.'**
+  String get onboardingStatsDesc;
+
+  /// Tab label for info
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get tabInfo;
+
+  /// Label for optional vet info section
+  ///
+  /// In en, this message translates to:
+  /// **'Veterinary information (optional):'**
+  String get veterinaryInfoOptional;
+
+  /// Confirmation message for deleting litter
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the litter from {damName} x {sireName}?\n\nNOTE: This will also delete all puppies in the litter!'**
+  String deleteLitterConfirmMessage(String damName, String sireName);
+
+  /// Error when image generation fails
+  ///
+  /// In en, this message translates to:
+  /// **'Could not generate image'**
+  String get couldNotGenerateImage;
+
+  /// Section header for content toggles
+  ///
+  /// In en, this message translates to:
+  /// **'CONTENT'**
+  String get contentSection;
+
+  /// Toggle label for details section
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get detailsToggle;
+
+  /// Section header for background themes
+  ///
+  /// In en, this message translates to:
+  /// **'BACKGROUND'**
+  String get backgroundSection;
+
+  /// Auto-detect theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Auto'**
+  String get autoTheme;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Gold & Black'**
+  String get themeGoldBlack;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Navy & Gold'**
+  String get themeNavyGold;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Teal & Amber'**
+  String get themeTealAmber;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Slate & Silver'**
+  String get themeSlateSilver;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Forest & Jade'**
+  String get themeForestJade;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Indigo'**
+  String get themeIndigo;
+
+  /// Theme name
+  ///
+  /// In en, this message translates to:
+  /// **'Classic'**
+  String get themeClassic;
+
+  /// Section header for pattern selection
+  ///
+  /// In en, this message translates to:
+  /// **'PATTERN'**
+  String get patternSection;
+
+  /// No pattern option
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get patternNone;
+
+  /// Geometric pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Geometric'**
+  String get patternGeometric;
+
+  /// Circles pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Circles'**
+  String get patternCircles;
+
+  /// Lines pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Lines'**
+  String get patternLines;
+
+  /// Dots pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Dots'**
+  String get patternDots;
+
+  /// Waves pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Waves'**
+  String get patternWaves;
+
+  /// Elegant pattern
+  ///
+  /// In en, this message translates to:
+  /// **'Elegant'**
+  String get patternElegant;
+
+  /// Section header for font type selection
+  ///
+  /// In en, this message translates to:
+  /// **'FONT TYPE'**
+  String get fontTypeSection;
+
+  /// Standard font
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get fontStandard;
+
+  /// Serif font
+  ///
+  /// In en, this message translates to:
+  /// **'Serif'**
+  String get fontSerif;
+
+  /// Elegant font
+  ///
+  /// In en, this message translates to:
+  /// **'Elegant'**
+  String get fontElegant;
+
+  /// Modern font
+  ///
+  /// In en, this message translates to:
+  /// **'Modern'**
+  String get fontModern;
+
+  /// Classic font
+  ///
+  /// In en, this message translates to:
+  /// **'Classic'**
+  String get fontClassic;
+
+  /// Handwriting font
+  ///
+  /// In en, this message translates to:
+  /// **'Handwriting'**
+  String get fontHandwritten;
+
+  /// Section header for font size
+  ///
+  /// In en, this message translates to:
+  /// **'SIZE'**
+  String get fontSizeSection;
+
+  /// Title for result card screen
+  ///
+  /// In en, this message translates to:
+  /// **'Result card'**
+  String get resultCardTitle;
+
+  /// Tooltip to remove photo
+  ///
+  /// In en, this message translates to:
+  /// **'Remove photo'**
+  String get removePhoto;
+
+  /// Tooltip to add photo
+  ///
+  /// In en, this message translates to:
+  /// **'Add photo'**
+  String get addPhoto;
+
+  /// Option to select from gallery
+  ///
+  /// In en, this message translates to:
+  /// **'Select from gallery'**
+  String get selectFromGallery;
+
+  /// Breed judge label with name
+  ///
+  /// In en, this message translates to:
+  /// **'Breed judge: {name}'**
+  String breedJudgeWithName(String name);
+
+  /// Abbreviated class placement
+  ///
+  /// In en, this message translates to:
+  /// **'Cl. {placement}'**
+  String classPlacementAbbr(String placement);
+
+  /// Privacy policy title
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// Privacy policy description
+  ///
+  /// In en, this message translates to:
+  /// **'Read about how we handle your data'**
+  String get privacyPolicyDescription;
+
+  /// Label for SMS share option
+  ///
+  /// In en, this message translates to:
+  /// **'Send SMS'**
+  String get sendSmsLabel;
+
+  /// Label for email share option
+  ///
+  /// In en, this message translates to:
+  /// **'Send email'**
+  String get sendEmailLabel;
+
+  /// Label for sharing via other apps
+  ///
+  /// In en, this message translates to:
+  /// **'Share via other apps'**
+  String get shareViaOtherApps;
+
+  /// Subtitle for other apps share option
+  ///
+  /// In en, this message translates to:
+  /// **'Messenger, WhatsApp, etc.'**
+  String get messengerWhatsappEtc;
+
+  /// Label for copy to clipboard option
+  ///
+  /// In en, this message translates to:
+  /// **'Copy text'**
+  String get copyTextLabel;
+
+  /// Snackbar message when text is copied
+  ///
+  /// In en, this message translates to:
+  /// **'Text copied to clipboard'**
+  String get textCopiedToClipboard;
+
+  /// Error when SMS app cannot be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open SMS app'**
+  String get couldNotOpenSms;
+
+  /// Default subject for puppy update email
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy update'**
+  String get puppyUpdateSubject;
+
+  /// Header for puppy update message
+  ///
+  /// In en, this message translates to:
+  /// **'Update from {kennelName}'**
+  String msgUpdateFromKennel(String kennelName);
+
+  /// Fallback kennel name when none is set
+  ///
+  /// In en, this message translates to:
+  /// **'The kennel'**
+  String get msgDefaultKennelName;
+
+  /// Puppy name line in message
+  ///
+  /// In en, this message translates to:
+  /// **'Puppy: {name}'**
+  String msgPuppy(String name);
+
+  /// Breed line in message
+  ///
+  /// In en, this message translates to:
+  /// **'Breed: {breed}'**
+  String msgBreed(String breed);
+
+  /// Age with weeks and days
+  ///
+  /// In en, this message translates to:
+  /// **'Age: {weeks} weeks and {days} days'**
+  String msgAgeWeeksAndDays(int weeks, int days);
+
+  /// Age with weeks only
+  ///
+  /// In en, this message translates to:
+  /// **'Age: {weeks} weeks'**
+  String msgAgeWeeks(int weeks);
+
+  /// Birth weight line in message
+  ///
+  /// In en, this message translates to:
+  /// **'Birth weight: {weight} g'**
+  String msgBirthWeight(String weight);
+
+  /// Status section header
+  ///
+  /// In en, this message translates to:
+  /// **'Status:'**
+  String get msgStatusHeader;
+
+  /// Vaccination status line
+  ///
+  /// In en, this message translates to:
+  /// **'Vaccinated: {status}'**
+  String msgVaccinated(String status);
+
+  /// Deworming status line
+  ///
+  /// In en, this message translates to:
+  /// **'Dewormed: {status}'**
+  String msgDewormed(String status);
+
+  /// ID tagging status line
+  ///
+  /// In en, this message translates to:
+  /// **'ID tagged: {status}'**
+  String msgIdTagged(String status);
+
+  /// Message section header
+  ///
+  /// In en, this message translates to:
+  /// **'Message:'**
+  String get msgMessageHeader;
+
+  /// Closing salutation
+  ///
+  /// In en, this message translates to:
+  /// **'Best regards,'**
+  String get msgBestRegards;
+
+  /// Contact phone line
+  ///
+  /// In en, this message translates to:
+  /// **'Contact: {phone}'**
+  String msgContact(String phone);
+
+  /// Header for litter update message
+  ///
+  /// In en, this message translates to:
+  /// **'Litter update from {kennelName}'**
+  String msgLitterUpdateFromKennel(String kennelName);
+
+  /// Litter parents line
+  ///
+  /// In en, this message translates to:
+  /// **'Litter: {damName} × {sireName}'**
+  String msgLitter(String damName, String sireName);
+
+  /// Puppy count line
+  ///
+  /// In en, this message translates to:
+  /// **'Number of puppies: {count}'**
+  String msgPuppyCount(int count);
+
+  /// Treatment status section header
+  ///
+  /// In en, this message translates to:
+  /// **'Treatment status:'**
+  String get msgTreatmentStatus;
+
+  /// Header for delivery reminder message
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery reminder from {kennelName}'**
+  String msgDeliveryReminder(String kennelName);
+
+  /// Puppy ready to move home
+  ///
+  /// In en, this message translates to:
+  /// **'{puppyName} is ready to move home to you!'**
+  String msgReadyToMoveHome(String puppyName);
+
+  /// Delivery date line
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery date: {date}'**
+  String msgDeliveryDate(String date);
+
+  /// Countdown line
+  ///
+  /// In en, this message translates to:
+  /// **'In {count} {dayWord}'**
+  String msgInDays(int count, String dayWord);
+
+  /// Singular form of day
+  ///
+  /// In en, this message translates to:
+  /// **'day'**
+  String get msgDaySingular;
+
+  /// Plural form of day
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get msgDayPlural;
+
+  /// Delivery is today
+  ///
+  /// In en, this message translates to:
+  /// **'Today!'**
+  String get msgToday;
+
+  /// Checklist header
+  ///
+  /// In en, this message translates to:
+  /// **'Remember to bring:'**
+  String get msgRememberToBring;
+
+  /// Checklist item
+  ///
+  /// In en, this message translates to:
+  /// **'Transport crate/carrier'**
+  String get msgTransportCrate;
+
+  /// Checklist item
+  ///
+  /// In en, this message translates to:
+  /// **'Blanket with home scent'**
+  String get msgBlanketWithHomeScent;
+
+  /// Checklist item
+  ///
+  /// In en, this message translates to:
+  /// **'Water for the trip'**
+  String get msgWaterForTrip;
+
+  /// Address line
+  ///
+  /// In en, this message translates to:
+  /// **'Address: {address}'**
+  String msgAddress(String address);
+
+  /// Closing line for delivery reminder
+  ///
+  /// In en, this message translates to:
+  /// **'We look forward to seeing you!'**
+  String get msgLookingForward;
+
+  /// Feed screen title
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get feedTitle;
+
+  /// Feed tab for followed kennels
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get feedFollowing;
+
+  /// Feed tab for all posts
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get feedAll;
+
+  /// Empty state for following feed
+  ///
+  /// In en, this message translates to:
+  /// **'No news from kennels you follow yet'**
+  String get feedNoFollowing;
+
+  /// Empty state for all feed
+  ///
+  /// In en, this message translates to:
+  /// **'No news yet'**
+  String get feedNoNews;
+
+  /// Hint for kennel search
+  ///
+  /// In en, this message translates to:
+  /// **'Search for kennels to follow'**
+  String get feedSearchKennels;
+
+  /// Delete feed post confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this post?'**
+  String get feedDeleteConfirm;
+
+  /// Filter option for show results
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get feedShowResults;
+
+  /// Filter option for champion titles
+  ///
+  /// In en, this message translates to:
+  /// **'Champion titles'**
+  String get feedChampionTitles;
+
+  /// Filter option for litter announcements
+  ///
+  /// In en, this message translates to:
+  /// **'Litter announcements'**
+  String get feedLitterAnnouncements;
+
+  /// Filter option for available puppies
+  ///
+  /// In en, this message translates to:
+  /// **'Puppies available'**
+  String get feedPuppiesAvailable;
+
+  /// Time ago in minutes
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min ago'**
+  String feedMinutesAgo(int minutes);
+
+  /// Time ago in hours
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h ago'**
+  String feedHoursAgo(int hours);
+
+  /// Time ago in days
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d ago'**
+  String feedDaysAgo(int days);
+
+  /// Visibility label for followers-only posts
+  ///
+  /// In en, this message translates to:
+  /// **'Followers only'**
+  String get feedFollowersOnly;
+
+  /// Kennel search sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Find kennels'**
+  String get feedSearchKennelsTitle;
+
+  /// Kennel search placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Search kennel name...'**
+  String get feedSearchKennelsHint;
+
+  /// Prompt before searching
+  ///
+  /// In en, this message translates to:
+  /// **'Search for kennels by name'**
+  String get feedSearchKennelsPrompt;
+
+  /// Followers count label
+  ///
+  /// In en, this message translates to:
+  /// **'followers'**
+  String get feedFollowers;
+
+  /// Follow button text
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get feedFollow;
+
+  /// Unfollow button text
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow'**
+  String get feedUnfollow;
+
+  /// Share to feed dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Share on Breedly?'**
+  String get feedShareTitle;
+
+  /// Success message after sharing
+  ///
+  /// In en, this message translates to:
+  /// **'Shared on Breedly!'**
+  String get feedPostPublished;
+
+  /// Visibility selector label
+  ///
+  /// In en, this message translates to:
+  /// **'Visibility'**
+  String get feedVisibility;
+
+  /// Public visibility option
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone'**
+  String get feedPublic;
+
+  /// Skip sharing button
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get feedSkip;
+
+  /// Publish to feed button
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get feedPublish;
+
+  /// See all link text
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get seeAll;
 }
 
 class _AppLocalizationsDelegate

@@ -4,6 +4,7 @@ import 'package:breedly/models/buyer.dart';
 import 'package:breedly/models/litter.dart';
 import 'package:breedly/utils/app_theme.dart';
 import 'package:breedly/utils/constants.dart';
+import 'package:breedly/utils/theme_colors.dart';
 import 'package:breedly/generated_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -125,7 +126,7 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
                 context,
               ).showSnackBar(SnackBar(content: Text(l10n.removedFromWaitlist)));
             },
-            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
             child: Text(l10n.delete),
           ),
         ],
@@ -136,19 +137,19 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
   Color _getStatusColor(String? status) {
     switch (status) {
       case 'pending':
-        return Colors.orange;
+        return AppColors.warning;
       case 'contacted':
-        return Colors.blue;
+        return AppColors.info;
       case 'reserved':
-        return Colors.purple;
+        return AppColors.accent5;
       case 'purchased':
-        return Colors.green;
+        return AppColors.success;
       case 'declined':
-        return Colors.red;
+        return AppColors.error;
       case 'cancelled':
-        return Colors.grey;
+        return AppColors.neutral500;
       default:
-        return Colors.grey;
+        return AppColors.neutral500;
     }
   }
 
@@ -185,7 +186,7 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
       appBar: AppBar(
         title: Text(l10n.waitlist),
         backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        foregroundColor: context.colors.surface,
       ),
       body: Column(
         children: [
@@ -199,7 +200,7 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
                 decoration: InputDecoration(
                   labelText: l10n.litters,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderRadius: AppRadius.mdAll,
                   ),
                 ),
                 items: [
@@ -226,7 +227,7 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: ThemeOpacity.low(context)),
-              borderRadius: BorderRadius.circular(AppRadius.md),
+              borderRadius: AppRadius.mdAll,
             ),
             child: Row(
               children: [
@@ -236,7 +237,7 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
                   child: Text(
                     l10n.waitlistInfo,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppColors.neutral700,
+                      color: context.colors.textTertiary,
                     ),
                   ),
                 ),
@@ -256,13 +257,13 @@ class _WaitlistScreenState extends State<WaitlistScreen> {
                         Icon(
                           Icons.list_alt,
                           size: 64,
-                          color: AppColors.neutral400,
+                          color: context.colors.textDisabled,
                         ),
                         const SizedBox(height: AppSpacing.md),
                         Text(
                           l10n.waitlistEmpty,
                           style: theme.textTheme.bodyLarge?.copyWith(
-                            color: AppColors.neutral600,
+                            color: context.colors.textMuted,
                           ),
                         ),
                       ],
@@ -361,13 +362,13 @@ class _WaitlistCard extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: AppColors.primary,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadius.xlAll,
               ),
               alignment: Alignment.center,
               child: Text(
                 '#$position',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: context.colors.surface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -388,12 +389,12 @@ class _WaitlistCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   if (buyer.phone != null)
                     Text(
                       buyer.phone!,
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.neutral600,
+                        color: context.colors.textMuted,
                       ),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -402,25 +403,25 @@ class _WaitlistCard extends StatelessWidget {
                     Text(
                       '${l10n.waitlistDate}: ${dateFormat.format(buyer.waitlistDate!)}',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.neutral500,
+                        color: context.colors.textCaption,
                       ),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: AppSpacing.sm),
                   Wrap(
-                    spacing: 8,
-                    runSpacing: 4,
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.xs,
                     children: [
                       // Status chip
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
+                          horizontal: AppSpacing.sm,
+                          vertical: AppSpacing.xs,
                         ),
                         decoration: BoxDecoration(
                           color: statusColor.withValues(alpha: ThemeOpacity.high(context)),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: AppRadius.mdAll,
                         ),
                         child: Text(
                           statusText,
@@ -438,8 +439,8 @@ class _WaitlistCard extends StatelessWidget {
                               ? Icons.male
                               : Icons.female,
                           color: buyer.preferredGender == 'Male'
-                              ? Colors.blue
-                              : Colors.pink,
+                              ? AppColors.male
+                              : AppColors.female,
                         ),
                     ],
                   ),
@@ -495,7 +496,7 @@ class _WaitlistCard extends StatelessWidget {
                           size: 12,
                           color: _getStatusColor(status),
                         ),
-                        const SizedBox(width: 8),
+                        const SizedBox(width: AppSpacing.sm),
                         Text(_getStatusText(status, l10n)),
                       ],
                     ),
@@ -506,11 +507,11 @@ class _WaitlistCard extends StatelessWidget {
                   value: 'remove',
                   child: Row(
                     children: [
-                      const Icon(Icons.delete, color: Colors.red, size: 20),
-                      const SizedBox(width: 8),
+                      const Icon(Icons.delete, color: AppColors.error, size: 20),
+                      const SizedBox(width: AppSpacing.sm),
                       Text(
                         l10n.removeFromWaitlist,
-                        style: const TextStyle(color: Colors.red),
+                        style: const TextStyle(color: AppColors.error),
                       ),
                     ],
                   ),
@@ -526,19 +527,19 @@ class _WaitlistCard extends StatelessWidget {
   Color _getStatusColor(String? status) {
     switch (status) {
       case 'pending':
-        return Colors.orange;
+        return AppColors.warning;
       case 'contacted':
-        return Colors.blue;
+        return AppColors.info;
       case 'reserved':
-        return Colors.purple;
+        return AppColors.accent5;
       case 'purchased':
-        return Colors.green;
+        return AppColors.success;
       case 'declined':
-        return Colors.red;
+        return AppColors.error;
       case 'cancelled':
-        return Colors.grey;
+        return AppColors.neutral500;
       default:
-        return Colors.grey;
+        return AppColors.neutral500;
     }
   }
 
@@ -571,10 +572,10 @@ class _PreferenceChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(AppSpacing.xs),
       decoration: BoxDecoration(
         color: color.withValues(alpha: ThemeOpacity.high(context)),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.mdAll,
       ),
       child: Icon(icon, size: 16, color: color),
     );
