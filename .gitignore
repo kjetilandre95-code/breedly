@@ -1,6 +1,9 @@
 # Miscellaneous
 *.class
 *.log
+
+# Nested repo copy (avoid accidental submodule)
+/breedly/
 *.pyc
 *.swp
 .DS_Store

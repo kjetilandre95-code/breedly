@@ -1,0 +1,40 @@
+rules_version = '2';
+// Breedly Firestore Security Rules
+// Deploy: firebase deploy --only firestore:rules
+// Keeps client access working after Firestore "test mode" ends.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ——— User document (profile) and all user data subcollections
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ——— Breeding groups (kennels): create allowed for any authenticated user; read/write only for members
+    match /breeding_groups/{kennelId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if request.auth != null
+        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+    }
+    // So the first member can be added when creating a kennel (you add yourself)
+    match /breeding_groups/{kennelId}/members/{memberId} {
+      allow read, write: if request.auth != null
+        && (request.auth.uid == memberId
+            || exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid)));
+    }
+    // All other subcollections at any depth (dogs, litters, puppies, weight_logs, buyers, etc.)
+    match /breeding_groups/{kennelId}/{path=**} {
+      allow read, write: if request.auth != null
+        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+    }
+
+    // ——— Invitations (join-by-code): authenticated users only
+    match /invitations/{inviteId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
