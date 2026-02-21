@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "871797340538-nsvmrur30g71jolnguglhepsrqia0tus.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.breedly.app",
+            "certificate_hash": "6f7acbd4288eb4c22b2bc53a058e932a24eacbd1"
+          }
+        },
+        {
           "client_id": "871797340538-c1or2sipbs5b3bf1v1lijrupeon3dlnj.apps.googleusercontent.com",
           "client_type": 3
         }
