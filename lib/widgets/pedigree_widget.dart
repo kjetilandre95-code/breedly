@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:breedly/models/dog.dart';
+import 'package:breedly/screens/add_dog_screen.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/services/offline_mode_manager.dart';
@@ -362,6 +363,22 @@ class _PedigreeWidgetState extends State<PedigreeWidget> {
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
               child: Text(l10n.close),
+            ),
+            FilledButton.icon(
+              onPressed: () async {
+                Navigator.pop(dialogContext);
+                final result = await Navigator.push<bool>(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddDogScreen(dogToEdit: dog),
+                  ),
+                );
+                if (result == true && mounted) {
+                  setState(() {});
+                }
+              },
+              icon: const Icon(Icons.edit_rounded, size: 18),
+              label: Text(l10n.edit),
             ),
           ],
         ),
