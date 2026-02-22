@@ -31,6 +31,14 @@ Breedly har nå implementert:
 3. Velg region (f.eks. `europe-west1`)
 4. Velg **Start in test mode** (senere oppdater sikkerhet)
 
+**Viktig – test mode utløper:** Etter testperioden (f.eks. 30 dager) vil Firebase **stenge alle klientforespørsler** inntil du har deployet egne regler. Deploy regler før fristen slik at appen fortsatt fungerer:
+```bash
+# Fra prosjektrot (der firestore.rules og firebase.json ligger)
+firebase use littermate-f0eb9   # hvis du har flere prosjekter
+firebase deploy --only firestore:rules
+```
+Reglene i `firestore.rules` begrenser tilgang til kun innlogget bruker og kennel-medlemskap.
+
 #### Steg 4: Hent Firebase-konfigurasjonen
 1. Gå til **Project Settings**
 2. Under **Your apps**, velg Android/iOS
