@@ -52,7 +52,7 @@ functions/node_modules/
 # Firebase config files (contains API keys)
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
-lib/firebase_options.dart
+# lib/firebase_options.dart - Committed for solo project (API keys are client-side/public anyway)
 
 # Environment & secrets
 *.env
