@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'dart:async';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
-import 'dart:io' show Platform;
 
 /// Service for managing RevenueCat subscriptions
 class SubscriptionService {
@@ -10,28 +10,52 @@ class SubscriptionService {
   SubscriptionService._internal();
 
   bool _isInitialized = false;
+  final StreamController<bool> _isSubscribedController =
+      StreamController<bool>.broadcast();
+  bool _isSubscribed = false;
+
+  // ── Toggle this to true when you're ready to enable RevenueCat payments ──
+  static const bool enabled = true;
 
   // RevenueCat API keys
   static const String _androidApiKey = 'test_BvGLLzGJKLxWELbbsqPPMGWgRDn';
   static const String _iosApiKey = 'test_BvGLLzGJKLxWELbbsqPPMGWgRDn';
 
   // Product identifiers - must match what you create in App Store Connect / Google Play Console
-  static const String monthlyProductId = 'breedly_monthly_69';
-  static const String yearlyProductId = 'breedly_yearly_690';
+  static const String monthlyProductId = 'peddex_monthly_69';
+  static const String yearlyProductId = 'peddex_yearly_690';
 
   // Entitlement identifier - must match RevenueCat dashboard
-  static const String entitlementId = 'Breedly Pro';
+  static const String entitlementId = 'Peddex Pro';
+
+  Stream<bool> get isSubscribed => _isSubscribedController.stream;
+  bool get currentIsSubscribed => _isSubscribed;
+
+  void _emitSubscriptionState(bool value) {
+    _isSubscribed = value;
+    _isSubscribedController.add(value);
+  }
 
   /// Initialize RevenueCat SDK
   Future<void> initialize() async {
+    if (!enabled) {
+      debugPrint('RevenueCat: payments paused (SubscriptionService.enabled = false)');
+      return;
+    }
     if (_isInitialized) return;
 
     try {
+      // RevenueCat only supports Android and iOS
+      if (kIsWeb) {
+        debugPrint('RevenueCat: Web platform not supported');
+        return;
+      }
+
       late PurchasesConfiguration configuration;
 
-      if (Platform.isAndroid) {
+      if (defaultTargetPlatform == TargetPlatform.android) {
         configuration = PurchasesConfiguration(_androidApiKey);
-      } else if (Platform.isIOS) {
+      } else if (defaultTargetPlatform == TargetPlatform.iOS) {
         configuration = PurchasesConfiguration(_iosApiKey);
       } else {
         debugPrint('RevenueCat: Platform not supported for purchases');
@@ -39,6 +63,13 @@ class SubscriptionService {
       }
 
       await Purchases.configure(configuration);
+      Purchases.addCustomerInfoUpdateListener((customerInfo) {
+        _emitSubscriptionState(
+          customerInfo.entitlements.active.containsKey(entitlementId),
+        );
+      });
+      final info = await Purchases.getCustomerInfo();
+      _emitSubscriptionState(info.entitlements.active.containsKey(entitlementId));
       _isInitialized = true;
       debugPrint('RevenueCat initialized successfully');
     } catch (e) {
@@ -51,6 +82,8 @@ class SubscriptionService {
     if (!_isInitialized) return;
     try {
       await Purchases.logIn(userId);
+      final info = await Purchases.getCustomerInfo();
+      _emitSubscriptionState(info.entitlements.active.containsKey(entitlementId));
       debugPrint('RevenueCat: User logged in: $userId');
     } catch (e) {
       debugPrint('RevenueCat login error: $e');
@@ -62,6 +95,7 @@ class SubscriptionService {
     if (!_isInitialized) return;
     try {
       await Purchases.logOut();
+      _emitSubscriptionState(false);
     } catch (e) {
       debugPrint('RevenueCat logout error: $e');
     }
@@ -72,7 +106,9 @@ class SubscriptionService {
     if (!_isInitialized) return false;
     try {
       final customerInfo = await Purchases.getCustomerInfo();
-      return customerInfo.entitlements.active.containsKey(entitlementId);
+      final premium = customerInfo.entitlements.active.containsKey(entitlementId);
+      _emitSubscriptionState(premium);
+      return premium;
     } catch (e) {
       debugPrint('RevenueCat check premium error: $e');
       return false;
@@ -132,8 +168,11 @@ class SubscriptionService {
   Future<bool> purchasePackage(Package package) async {
     if (!_isInitialized) return false;
     try {
-      final customerInfo = await Purchases.purchasePackage(package);
-      return customerInfo.entitlements.active.containsKey(entitlementId);
+      final result = await Purchases.purchase(PurchaseParams.package(package));
+      final premium =
+          result.customerInfo.entitlements.active.containsKey(entitlementId);
+      _emitSubscriptionState(premium);
+      return premium;
     } catch (e) {
       debugPrint('RevenueCat purchase error: $e');
       return false;
@@ -145,7 +184,9 @@ class SubscriptionService {
     if (!_isInitialized) return false;
     try {
       final customerInfo = await Purchases.restorePurchases();
-      return customerInfo.entitlements.active.containsKey(entitlementId);
+      final premium = customerInfo.entitlements.active.containsKey(entitlementId);
+      _emitSubscriptionState(premium);
+      return premium;
     } catch (e) {
       debugPrint('RevenueCat restore error: $e');
       return false;
@@ -194,4 +235,5 @@ class SubscriptionService {
       return false;
     }
   }
+
 }

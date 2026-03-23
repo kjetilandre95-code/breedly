@@ -1,20 +1,24 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:peddex/utils/platform_image.dart';
+import 'package:peddex/utils/web_download.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:breedly/models/dog.dart';
-import 'package:breedly/models/show_result.dart';
-import 'package:breedly/models/kennel_profile.dart';
-import 'package:breedly/utils/app_theme.dart';
-import 'package:breedly/utils/theme_colors.dart';
-import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:peddex/models/dog.dart';
+import 'package:peddex/models/show_result.dart';
+import 'package:peddex/services/auth_service.dart';
+import 'package:peddex/services/cloud_sync_service.dart';
+import 'package:peddex/utils/app_theme.dart';
+import 'package:peddex/utils/theme_colors.dart';
+import 'package:peddex/generated_l10n/app_localizations.dart';
+import 'package:peddex/utils/performance_telemetry.dart';
 
 /// Generates a shareable show result card image
 class ShowResultCardScreen extends StatefulWidget {
@@ -33,7 +37,7 @@ class ShowResultCardScreen extends StatefulWidget {
 
 class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
   final GlobalKey _cardKey = GlobalKey();
-  File? _showPhoto;
+  String? _showPhotoPath;
   bool _isGenerating = false;
   String? _kennelName;
 
@@ -48,6 +52,12 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
   _CardTheme? _selectedTheme; // null = auto-detect
   _CardPattern _selectedPattern = _CardPattern.geometric;
 
+  double _safePixelRatio(BuildContext context) {
+    final dpr = MediaQuery.of(context).devicePixelRatio;
+    // Cap render scale to protect low/mid-range devices from OOM/jank.
+    return dpr.clamp(1.0, 2.0);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,12 +65,18 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
   }
 
   void _loadKennelName() {
-    try {
-      final box = Hive.box<KennelProfile>('kennel_profile');
-      if (box.isNotEmpty) {
-        _kennelName = box.getAt(0)?.kennelName;
-      }
-    } catch (_) {}
+    final userId = AuthService().currentUserId;
+    if (userId == null) return;
+    FirestoreService()
+        .baseQuery('kennel_profile', userId)
+        .limit(1)
+        .get()
+        .then((snap) {
+      if (!mounted || snap.docs.isEmpty) return;
+      setState(() {
+        _kennelName = snap.docs.first.data()['kennelName'] as String?;
+      });
+    }).catchError((_) {});
   }
 
   Future<void> _pickPhoto() async {
@@ -70,24 +86,27 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
       imageQuality: 85,
     );
     if (image != null) {
-      setState(() => _showPhoto = File(image.path));
+      setState(() => _showPhotoPath = image.path);
     }
   }
 
   Future<void> _takePhoto() async {
+    if (kIsWeb) return; // Camera not supported on web
     final picker = ImagePicker();
     final image = await picker.pickImage(
       source: ImageSource.camera,
       imageQuality: 85,
     );
     if (image != null) {
-      setState(() => _showPhoto = File(image.path));
+      setState(() => _showPhotoPath = image.path);
     }
   }
 
   Future<void> _shareCard() async {
     setState(() => _isGenerating = true);
+    final exportTimer = Stopwatch()..start();
 
+    ui.Image? renderedImage;
     try {
       // Wait for the widget to render
       await Future.delayed(const Duration(milliseconds: 100));
@@ -103,20 +122,25 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
         return;
       }
 
-      final image = await boundary.toImage(pixelRatio: 3.0);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      renderedImage = await boundary.toImage(pixelRatio: _safePixelRatio(context));
+      final byteData =
+          await renderedImage.toByteData(format: ui.ImageByteFormat.png);
       if (byteData == null) return;
 
       final Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      final tempDir = await getTemporaryDirectory();
-      final file = File('${tempDir.path}/show_result_${widget.result.id}.png');
-      await file.writeAsBytes(pngBytes);
+      if (kIsWeb) {
+        downloadBytes(pngBytes, 'show_result_${widget.result.id}.png');
+      } else {
+        final tempDir = await getTemporaryDirectory();
+        final file = File('${tempDir.path}/show_result_${widget.result.id}.png');
+        await file.writeAsBytes(pngBytes);
 
-      await Share.shareXFiles(
-        [XFile(file.path)],
-        text: '${widget.dog.name} - ${widget.result.showName} 🏆',
-      );
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile(file.path)],
+          text: '${widget.dog.name} - ${widget.result.showName} 🏆',
+        ));
+      }
     } catch (e) {
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
@@ -125,6 +149,13 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
         );
       }
     } finally {
+      exportTimer.stop();
+      PerformanceTelemetry.trackElapsed(
+        key: 'showResultExportMs',
+        stopwatch: exportTimer,
+        logLabel: 'Export',
+      );
+      renderedImage?.dispose();
       if (mounted) setState(() => _isGenerating = false);
     }
   }
@@ -487,22 +518,22 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
         elevation: 0,
         foregroundColor: context.colors.textPrimary,
         actions: [
-          if (_showPhoto != null)
+          if (_showPhotoPath != null)
             IconButton(
-              icon: const Icon(Icons.delete_outline),
+              icon: const Icon(LucideIcons.trash2),
               tooltip: l10n.removePhoto,
-              onPressed: () => setState(() => _showPhoto = null),
+              onPressed: () => setState(() => _showPhotoPath = null),
             ),
           PopupMenuButton<String>(
-            icon: const Icon(Icons.add_photo_alternate_outlined),
+            icon: const Icon(LucideIcons.imagePlus),
             tooltip: l10n.addPhoto,
             onSelected: (value) {
               if (value == 'gallery') _pickPhoto();
               if (value == 'camera') _takePhoto();
             },
             itemBuilder: (_) => [
-              PopupMenuItem(value: 'gallery', child: ListTile(leading: const Icon(Icons.photo_library), title: Text(l10n.selectFromGallery))),
-              PopupMenuItem(value: 'camera', child: ListTile(leading: const Icon(Icons.camera_alt), title: Text(l10n.takePhoto))),
+              PopupMenuItem(value: 'gallery', child: ListTile(leading: const Icon(LucideIcons.image), title: Text(l10n.selectFromGallery))),
+              PopupMenuItem(value: 'camera', child: ListTile(leading: const Icon(LucideIcons.camera), title: Text(l10n.takePhoto))),
             ],
           ),
         ],
@@ -533,7 +564,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                   onPressed: _isGenerating ? null : _shareCard,
                   icon: _isGenerating
                       ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : const Icon(Icons.share_rounded),
+                      : const Icon(LucideIcons.share2),
                   label: Text(_isGenerating ? l10n.generating : l10n.shareResultCard),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _theme.accentColor,
@@ -733,15 +764,15 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           ),
 
           // ─── Photo section ───
-          if (_showPhoto != null)
+          if (_showPhotoPath != null)
             Stack(
               children: [
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxHeight: 300),
                   child: SizedBox(
                     width: double.infinity,
-                    child: Image.file(
-                      _showPhoto!,
+                    child: imageFromFilePath(
+                      _showPhotoPath!,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -787,7 +818,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
           Container(
             width: double.infinity,
             color: theme.cardBg,
-            padding: EdgeInsets.fromLTRB(28, _showPhoto != null ? 8 : 24, 28, 20),
+            padding: EdgeInsets.fromLTRB(28, _showPhotoPath != null ? 8 : 24, 28, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -812,7 +843,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Icon(Icons.star_rounded, size: 14, color: theme.accentColor.withValues(alpha: 0.4)),
+                      child: Icon(LucideIcons.star, size: 14, color: theme.accentColor.withValues(alpha: 0.4)),
                     ),
                     Expanded(
                       child: Container(
@@ -838,21 +869,21 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
                   runSpacing: 8,
                   children: [
                     if (r.showType != null)
-                      _buildDetailChip(r.showType!, theme, icon: Icons.category_rounded),
-                    _buildDetailChip(r.showClass, theme, icon: Icons.class_rounded),
-                    _buildDetailChip(r.quality, theme, icon: Icons.grade_rounded, highlight: r.quality == 'Excellent'),
+                      _buildDetailChip(r.showType!, theme, icon: LucideIcons.tag),
+                    _buildDetailChip(r.showClass, theme, icon: LucideIcons.award),
+                    _buildDetailChip(r.quality, theme, icon: LucideIcons.star, highlight: r.quality == 'Excellent'),
                     if (r.classPlacement != null)
-                      _buildDetailChip(l10n.classPlacementAbbr(r.classPlacement.toString()), theme, icon: Icons.format_list_numbered_rounded),
+                      _buildDetailChip(l10n.classPlacementAbbr(r.classPlacement.toString()), theme, icon: LucideIcons.listOrdered),
                     if (r.hasCK)
-                      _buildDetailChip('CK', theme, icon: Icons.verified_rounded, highlight: true),
+                      _buildDetailChip('CK', theme, icon: LucideIcons.badgeCheck, highlight: true),
                     if (r.bestOfSexPlacement != null)
                       _buildDetailChip(
                         '${dog.gender == 'Male' ? l10n.bestMaleAbbrev : l10n.bestFemaleAbbrev}: ${r.bestOfSexPlacement}',
                         theme,
-                        icon: Icons.workspace_premium_rounded,
+                        icon: LucideIcons.trophy,
                       ),
                     if (r.certificates != null)
-                      ...r.certificates!.map((c) => _buildDetailChip(c, theme, icon: Icons.card_membership_rounded, highlight: true)),
+                      ...r.certificates!.map((c) => _buildDetailChip(c, theme, icon: LucideIcons.award, highlight: true)),
                   ],
                 ),
                 ],
@@ -874,7 +905,7 @@ class _ShowResultCardScreenState extends State<ShowResultCardScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'BREEDLY',
+                  'PEDDEX',
                   style: fontStyle(11).copyWith(
                     fontWeight: FontWeight.w800,
                     color: theme.footerTextColor,
@@ -1380,8 +1411,8 @@ enum _CardPattern {
   geometric('Geometrisk', '◇'),
   circles('Sirkler', '○'),
   lines('Linjer', '▤'),
-  dots('Prikker', '⁘'),
-  waves('Bølger', '∿'),
+  dots('Dots', '⁘'),
+  waves('Waves', '∿'),
   elegant('Elegant', '❧');
 
   final String displayName;
@@ -1395,7 +1426,7 @@ enum _CardFont {
   elegant('Elegant'),
   modern('Modern'),
   classic('Klassisk'),
-  handwritten('Håndskrift');
+  handwritten('Handwriting');
 
   final String displayName;
   const _CardFont(this.displayName);

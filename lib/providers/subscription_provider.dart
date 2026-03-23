@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:breedly/services/subscription_service.dart';
-import 'package:breedly/services/promo_code_service.dart';
+import 'package:peddex/services/subscription_service.dart';
+import 'package:peddex/services/promo_code_service.dart';
 
 /// Provider that manages subscription state across the app
 class SubscriptionProvider extends ChangeNotifier {
@@ -10,6 +10,7 @@ class SubscriptionProvider extends ChangeNotifier {
 
   bool _isPremium = false;
   bool _isLoading = false;
+  bool _isInitialized = false;
   String? _error;
   List<Package> _packages = [];
   DateTime? _expirationDate;
@@ -19,6 +20,7 @@ class SubscriptionProvider extends ChangeNotifier {
   // Getters
   bool get isPremium => _isPremium;
   bool get isLoading => _isLoading;
+  bool get isInitialized => _isInitialized;
   String? get error => _error;
   List<Package> get packages => _packages;
   DateTime? get expirationDate => _expirationDate;
@@ -33,6 +35,16 @@ class SubscriptionProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      // When RevenueCat is disabled, grant everyone premium access
+      if (!SubscriptionService.enabled) {
+        _isPremium = true;
+        _subscriptionSource = 'disabled';
+        _isLoading = false;
+        _isInitialized = true;
+        notifyListeners();
+        return;
+      }
+
       // Initialize RevenueCat
       await _subscriptionService.initialize();
       await _subscriptionService.setUserId(userId);
@@ -43,10 +55,11 @@ class SubscriptionProvider extends ChangeNotifier {
       // Load available packages
       await loadPackages();
     } catch (e) {
-      _error = 'Feil ved lasting av abonnement: $e';
+      _error = 'Error loading subscription: $e';
       debugPrint(_error);
     } finally {
       _isLoading = false;
+      _isInitialized = true;
       notifyListeners();
     }
   }
@@ -112,7 +125,7 @@ class SubscriptionProvider extends ChangeNotifier {
       }
       return success;
     } catch (e) {
-      _error = 'Kjøp feilet: $e';
+      _error = 'Purchase failed: $e';
       debugPrint(_error);
       return false;
     } finally {
@@ -136,7 +149,7 @@ class SubscriptionProvider extends ChangeNotifier {
       }
       return success;
     } catch (e) {
-      _error = 'Gjenoppretting feilet: $e';
+      _error = 'Restore failed: $e';
       debugPrint(_error);
       return false;
     } finally {
@@ -158,11 +171,11 @@ class SubscriptionProvider extends ChangeNotifier {
       }
       return result;
     } catch (e) {
-      _error = 'Feil ved innløsning: $e';
+      _error = 'Error redeeming code: $e';
       debugPrint(_error);
       return PromoCodeResult(
         success: false,
-        message: 'Noe gikk galt. Prøv igjen.',
+        message: 'Something went wrong. Please try again.',
       );
     } finally {
       _isLoading = false;
