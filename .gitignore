@@ -60,3 +60,4 @@ ios/Runner/GoogleService-Info.plist
 *.pem
 *.secret
 local.properties
+node_modules
