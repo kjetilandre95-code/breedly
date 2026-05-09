@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:peddex/services/subscription_service.dart';
-import 'package:peddex/services/promo_code_service.dart';
+import 'package:breedly/services/subscription_service.dart';
+import 'package:breedly/services/promo_code_service.dart';
 
 /// Provider that manages subscription state across the app
 class SubscriptionProvider extends ChangeNotifier {
@@ -31,6 +31,10 @@ class SubscriptionProvider extends ChangeNotifier {
   /// Initialize subscription state
   Future<void> initialize(String userId) async {
     _isLoading = true;
+    _isInitialized = false;
+    _isPremium = false;
+    _subscriptionSource = null;
+    _expirationDate = null;
     _error = null;
     notifyListeners();
 
@@ -187,6 +191,7 @@ class SubscriptionProvider extends ChangeNotifier {
   Future<void> logout() async {
     await _subscriptionService.logout();
     _isPremium = false;
+    _isInitialized = false;
     _subscriptionSource = null;
     _expirationDate = null;
     _packages = [];
