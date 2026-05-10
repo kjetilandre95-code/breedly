@@ -1813,7 +1813,7 @@ class FirestoreService {
           debugPrint('[MIGRATE] Error migrating dogs from ${baseDoc.path}: $e');
         }
 
-        // ── Litters (+ puppies subcollection) ────────────────────────────────
+        // ── Litters (+ child records) ────────────────────────────────────────
         try {
           final littersSnap = await baseDoc.collection('litters').get();
           for (final litterDoc in littersSnap.docs) {
@@ -1823,42 +1823,60 @@ class FirestoreService {
             await newLitterRef.set(data, SetOptions(merge: true));
             littersMigrated++;
 
-            // Migrate puppies subcollection
+            // Migrate puppies subcollection into the flat root collection.
             try {
               final puppiesSnap = await litterDoc.reference
                   .collection('puppies')
                   .get();
               for (final puppyDoc in puppiesSnap.docs) {
-                await newLitterRef
+                final puppyData = {
+                  ...puppyDoc.data(),
+                  ...ownership,
+                  'id': puppyDoc.id,
+                  'litterId': litterDoc.id,
+                };
+                await _firestore
                     .collection('puppies')
                     .doc(puppyDoc.id)
-                    .set(puppyDoc.data(), SetOptions(merge: true));
+                    .set(puppyData, SetOptions(merge: true));
               }
             } catch (_) {}
 
-            // Migrate temperature_records subcollection
+            // Migrate temperature_records subcollection into the flat root collection.
             try {
               final tempSnap = await litterDoc.reference
                   .collection('temperature_records')
                   .get();
               for (final tempDoc in tempSnap.docs) {
-                await newLitterRef
+                final tempData = {
+                  ...tempDoc.data(),
+                  ...ownership,
+                  'id': tempDoc.id,
+                  'litterId': litterDoc.id,
+                };
+                await _firestore
                     .collection('temperature_records')
                     .doc(tempDoc.id)
-                    .set(tempDoc.data(), SetOptions(merge: true));
+                    .set(tempData, SetOptions(merge: true));
               }
             } catch (_) {}
 
-            // Migrate gallery_images subcollection
+            // Migrate gallery_images subcollection into the flat root collection.
             try {
               final gallerySnap = await litterDoc.reference
                   .collection('gallery_images')
                   .get();
               for (final imgDoc in gallerySnap.docs) {
-                await newLitterRef
+                final imageData = {
+                  ...imgDoc.data(),
+                  ...ownership,
+                  'id': imgDoc.id,
+                  'litterId': litterDoc.id,
+                };
+                await _firestore
                     .collection('gallery_images')
                     .doc(imgDoc.id)
-                    .set(imgDoc.data(), SetOptions(merge: true));
+                    .set(imageData, SetOptions(merge: true));
               }
             } catch (_) {}
           }
