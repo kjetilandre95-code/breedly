@@ -18,7 +18,6 @@ import 'package:peddex/screens/login_screen.dart';
 import 'package:peddex/screens/sign_up_screen.dart';
 import 'package:peddex/screens/onboarding_screen.dart';
 import 'package:peddex/screens/web_landing_screen.dart';
-import 'package:peddex/services/subscription_service.dart';
 import 'package:peddex/screens/paywall_screen.dart';
 import 'package:peddex/utils/notification_service.dart';
 import 'package:peddex/providers/language_provider.dart';
@@ -410,7 +409,6 @@ class _MyAppState extends State<MyApp> {
           )
         : StartupGate(
             authService: _authService,
-            isSubscribedStream: SubscriptionService().isSubscribed,
             paywallBuilder: (context, user) => PaywallScreen(
               allowDismiss: false,
               onDismissed: () {},
