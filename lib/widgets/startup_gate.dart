@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:peddex/providers/kennel_provider.dart';
-import 'package:peddex/services/auth_service.dart';
+import 'package:breedly/providers/kennel_provider.dart';
+import 'package:breedly/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 typedef AuthenticatedBuilder = Widget Function(BuildContext context, User user);
