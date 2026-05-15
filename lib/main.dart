@@ -18,7 +18,6 @@ import 'package:breedly/screens/login_screen.dart';
 import 'package:breedly/screens/sign_up_screen.dart';
 import 'package:breedly/screens/onboarding_screen.dart';
 import 'package:breedly/screens/web_landing_screen.dart';
-import 'package:breedly/services/subscription_service.dart';
 import 'package:breedly/screens/paywall_screen.dart';
 import 'package:breedly/utils/notification_service.dart';
 import 'package:breedly/providers/language_provider.dart';
@@ -410,7 +409,6 @@ class _MyAppState extends State<MyApp> {
           )
         : StartupGate(
             authService: _authService,
-            isSubscribedStream: SubscriptionService().isSubscribed,
             paywallBuilder: (context, user) => PaywallScreen(
               allowDismiss: false,
               onDismissed: () {},
