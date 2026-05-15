@@ -28,7 +28,18 @@ class SubscriptionService {
   // Entitlement identifier - must match RevenueCat dashboard
   static const String entitlementId = 'Peddex Pro';
 
-  Stream<bool> get isSubscribed => _isSubscribedController.stream;
+  Stream<bool> get isSubscribed {
+    return Stream<bool>.multi((controller) {
+      controller.add(_isSubscribed);
+      final subscription = _isSubscribedController.stream.listen(
+        controller.add,
+        onError: controller.addError,
+        onDone: controller.close,
+      );
+      controller.onCancel = subscription.cancel;
+    }, isBroadcast: true);
+  }
+
   bool get currentIsSubscribed => _isSubscribed;
 
   void _emitSubscriptionState(bool value) {
@@ -36,10 +47,17 @@ class SubscriptionService {
     _isSubscribedController.add(value);
   }
 
+  /// Allows non-RevenueCat entitlement sources (for example promo codes) to
+  /// feed the startup gate's single subscription stream.
+  void setExternalSubscriptionState(bool value) {
+    _emitSubscriptionState(value);
+  }
+
   /// Initialize RevenueCat SDK
   Future<void> initialize() async {
     if (!enabled) {
       debugPrint('RevenueCat: payments paused (SubscriptionService.enabled = false)');
+      _emitSubscriptionState(true);
       return;
     }
     if (_isInitialized) return;
@@ -48,6 +66,7 @@ class SubscriptionService {
       // RevenueCat only supports Android and iOS
       if (kIsWeb) {
         debugPrint('RevenueCat: Web platform not supported');
+        _emitSubscriptionState(false);
         return;
       }
 
@@ -59,6 +78,7 @@ class SubscriptionService {
         configuration = PurchasesConfiguration(_iosApiKey);
       } else {
         debugPrint('RevenueCat: Platform not supported for purchases');
+        _emitSubscriptionState(false);
         return;
       }
 
@@ -74,6 +94,7 @@ class SubscriptionService {
       debugPrint('RevenueCat initialized successfully');
     } catch (e) {
       debugPrint('RevenueCat initialization error: $e');
+      _emitSubscriptionState(false);
     }
   }
 
@@ -87,6 +108,7 @@ class SubscriptionService {
       debugPrint('RevenueCat: User logged in: $userId');
     } catch (e) {
       debugPrint('RevenueCat login error: $e');
+      _emitSubscriptionState(false);
     }
   }
 
@@ -111,6 +133,7 @@ class SubscriptionService {
       return premium;
     } catch (e) {
       debugPrint('RevenueCat check premium error: $e');
+      _emitSubscriptionState(false);
       return false;
     }
   }

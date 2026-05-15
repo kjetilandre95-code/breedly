@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:peddex/providers/kennel_provider.dart';
-import 'package:peddex/services/auth_service.dart';
+import 'package:breedly/providers/kennel_provider.dart';
+import 'package:breedly/providers/subscription_provider.dart';
+import 'package:breedly/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 typedef AuthenticatedBuilder = Widget Function(BuildContext context, User user);
@@ -20,7 +21,6 @@ class StartupGate extends StatefulWidget {
   final UserInitCallback onAuthenticated;
   final AuthenticatedBuilder authenticatedBuilder;
   final UnauthenticatedBuilder unauthenticatedBuilder;
-  final Stream<bool> isSubscribedStream;
   final PaywallBuilder paywallBuilder;
   final UserGuard? guard;
 
@@ -30,7 +30,6 @@ class StartupGate extends StatefulWidget {
     required this.onAuthenticated,
     required this.authenticatedBuilder,
     required this.unauthenticatedBuilder,
-    required this.isSubscribedStream,
     required this.paywallBuilder,
     this.guard,
   });
@@ -85,29 +84,22 @@ class _StartupGateState extends State<StartupGate> {
           return const _StartupLoadingScreen();
         }
 
-        return Consumer<KennelProvider>(
-          builder: (context, kennelProvider, _) {
+        return Consumer2<KennelProvider, SubscriptionProvider>(
+          builder: (context, kennelProvider, subscriptionProvider, _) {
             if (kennelProvider.isLoading || _isInitializing) {
               return const _StartupLoadingScreen();
             }
             if (kDebugMode) {
               return widget.authenticatedBuilder(context, user);
             }
-            return StreamBuilder<bool>(
-              stream: widget.isSubscribedStream,
-              initialData: false,
-              builder: (context, subscriptionSnapshot) {
-                if (subscriptionSnapshot.connectionState ==
-                    ConnectionState.waiting) {
-                  return const _StartupLoadingScreen();
-                }
-                final isSubscribed = subscriptionSnapshot.data ?? false;
-                if (!isSubscribed) {
-                  return widget.paywallBuilder(context, user);
-                }
-                return widget.authenticatedBuilder(context, user);
-              },
-            );
+            if (subscriptionProvider.isLoading ||
+                !subscriptionProvider.isInitialized) {
+              return const _StartupLoadingScreen();
+            }
+            if (!subscriptionProvider.isPremium) {
+              return widget.paywallBuilder(context, user);
+            }
+            return widget.authenticatedBuilder(context, user);
           },
         );
       },
