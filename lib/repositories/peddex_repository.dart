@@ -171,6 +171,7 @@ class PeddexRepository<T> {
         data: {
           ...data,
           'id': id,
+          'isDeleted': data['isDeleted'] ?? false,
           'updatedAt': FieldValue.serverTimestamp(),
         },
       );
