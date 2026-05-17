@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:peddex/models/kennel_analytics.dart';
-import 'package:peddex/utils/logger.dart';
-import 'package:peddex/utils/ownership_helper.dart';
-import 'package:peddex/services/kennel_service.dart';
-import 'package:peddex/services/feed_service.dart';
-import 'package:peddex/repositories/generic_repository.dart';
-import 'package:peddex/repositories/peddex_repository.dart';
+import 'package:breedly/models/kennel_analytics.dart';
+import 'package:breedly/utils/logger.dart';
+import 'package:breedly/utils/ownership_helper.dart';
+import 'package:breedly/services/kennel_service.dart';
+import 'package:breedly/services/feed_service.dart';
+import 'package:breedly/repositories/generic_repository.dart';
+import 'package:breedly/repositories/peddex_repository.dart';
 
 class FirestoreService {
   static final FirestoreService _instance = FirestoreService._internal();
@@ -1050,6 +1050,7 @@ class FirestoreService {
       final data = {
         ...showResultData,
         ..._ownershipFields(userId),
+        'isDeleted': showResultData['isDeleted'] ?? false,
         'updatedAt': FieldValue.serverTimestamp(),
       };
       await _firestore
@@ -1389,6 +1390,13 @@ class FirestoreService {
           .doc(checklist.id)
           .set(data, SetOptions(merge: true));
     }, action: 'Error saving delivery checklist');
+  }
+
+  Future<RepositoryWriteResult> syncDeliveryChecklist(
+    dynamic checklist,
+    String userId,
+  ) {
+    return saveDeliveryChecklist(checklist, userId);
   }
 
   /// Get delivery checklist from cloud
@@ -2104,5 +2112,15 @@ class FirestoreService {
       );
     }
   }
+}
+
+class CloudSyncService extends FirestoreService {
+  static final CloudSyncService _instance = CloudSyncService._internal();
+
+  factory CloudSyncService() {
+    return _instance;
+  }
+
+  CloudSyncService._internal() : super._internal();
 }
 

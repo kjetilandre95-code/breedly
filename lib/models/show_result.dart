@@ -61,6 +61,15 @@ class ShowResult extends HiveObject {
   @HiveField(18)
   String? bisJudge; // BIS-dommer
 
+  @HiveField(19)
+  String? place; // Utstillingssted
+
+  @HiveField(20)
+  String? country; // Land utstillingen ble holdt i
+
+  @HiveField(21, defaultValue: false)
+  bool isDeleted = false;
+
   ShowResult({
     required this.id,
     required this.dogId,
@@ -81,6 +90,9 @@ class ShowResult extends HiveObject {
     this.bestOfSexPlacement,
     this.groupJudge,
     this.bisJudge,
+    this.place,
+    this.country,
+    this.isDeleted = false,
   });
 
   /// Sjekk om hunden ble BIR (kvalifisert for gruppefinale)
@@ -128,6 +140,9 @@ class ShowResult extends HiveObject {
       'bestOfSexPlacement': bestOfSexPlacement,
       'groupJudge': groupJudge,
       'bisJudge': bisJudge,
+      'place': place,
+      'country': country,
+      'isDeleted': isDeleted,
     };
   }
 
@@ -157,6 +172,9 @@ class ShowResult extends HiveObject {
       bestOfSexPlacement: json['bestOfSexPlacement'],
       groupJudge: json['groupJudge'],
       bisJudge: json['bisJudge'],
+      place: json['place'],
+      country: json['country'],
+      isDeleted: json['isDeleted'] ?? false,
     );
   }
 }

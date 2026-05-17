@@ -36,13 +36,16 @@ class ShowResultAdapter extends TypeAdapter<ShowResult> {
       bestOfSexPlacement: fields[16] as String?,
       groupJudge: fields[17] as String?,
       bisJudge: fields[18] as String?,
+      place: fields[19] as String?,
+      country: fields[20] as String?,
+      isDeleted: fields[21] == null ? false : fields[21] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, ShowResult obj) {
     writer
-      ..writeByte(19)
+      ..writeByte(22)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -80,7 +83,13 @@ class ShowResultAdapter extends TypeAdapter<ShowResult> {
       ..writeByte(17)
       ..write(obj.groupJudge)
       ..writeByte(18)
-      ..write(obj.bisJudge);
+      ..write(obj.bisJudge)
+      ..writeByte(19)
+      ..write(obj.place)
+      ..writeByte(20)
+      ..write(obj.country)
+      ..writeByte(21)
+      ..write(obj.isDeleted);
   }
 
   @override
