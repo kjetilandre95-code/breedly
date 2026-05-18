@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:peddex/repositories/generic_repository.dart';
-import 'package:peddex/utils/ownership_helper.dart';
+import 'package:breedly/repositories/generic_repository.dart';
+import 'package:breedly/utils/ownership_helper.dart';
 
 typedef PeddexFromJson<T> = T Function(Map<String, dynamic> json);
 typedef PeddexToJson<T> = Map<String, dynamic> Function(T entity);
@@ -171,6 +171,7 @@ class PeddexRepository<T> {
         data: {
           ...data,
           'id': id,
+          'isDeleted': data['isDeleted'] ?? false,
           'updatedAt': FieldValue.serverTimestamp(),
         },
       );

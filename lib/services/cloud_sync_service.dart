@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:peddex/models/kennel_analytics.dart';
-import 'package:peddex/utils/logger.dart';
-import 'package:peddex/utils/ownership_helper.dart';
-import 'package:peddex/services/kennel_service.dart';
-import 'package:peddex/services/feed_service.dart';
-import 'package:peddex/repositories/generic_repository.dart';
-import 'package:peddex/repositories/peddex_repository.dart';
+import 'package:breedly/models/kennel_analytics.dart';
+import 'package:breedly/utils/logger.dart';
+import 'package:breedly/utils/ownership_helper.dart';
+import 'package:breedly/services/kennel_service.dart';
+import 'package:breedly/services/feed_service.dart';
+import 'package:breedly/repositories/generic_repository.dart';
+import 'package:breedly/repositories/peddex_repository.dart';
 
 class FirestoreService {
   static final FirestoreService _instance = FirestoreService._internal();
@@ -68,12 +68,14 @@ class FirestoreService {
 
   /// Returns ownership fields to inject into every top-level document.
   /// `kennelId` is set when the user has an active kennel, otherwise null
-  /// (data belongs to the user's private profile).
+  /// (data belongs to the user's private profile). New root records must carry
+  /// an explicit active tombstone value because reads filter on isDeleted=false.
   Map<String, dynamic> _ownershipFields(String userId) {
     final kennelId = KennelService().activeKennelId;
     return {
       'ownerId': userId,
       'kennelId': (kennelId != null && kennelId.isNotEmpty) ? kennelId : null,
+      'isDeleted': false,
     };
   }
 
@@ -517,12 +519,12 @@ class FirestoreService {
       // the tombstone is preserved.
       return _executeWrite(() async {
         await _firestore.collection('puppies').doc(puppyId).set({
+          ..._ownershipFields(userId),
           'id': puppyId,
           'litterId': litterId,
           'isDeleted': true,
           'deletedAt': FieldValue.serverTimestamp(),
           'updatedAt': FieldValue.serverTimestamp(),
-          ..._ownershipFields(userId),
         }, SetOptions(merge: true));
       }, action: 'Error soft-deleting puppy');
     });
@@ -1050,6 +1052,7 @@ class FirestoreService {
       final data = {
         ...showResultData,
         ..._ownershipFields(userId),
+        'isDeleted': showResultData['isDeleted'] ?? false,
         'updatedAt': FieldValue.serverTimestamp(),
       };
       await _firestore
@@ -1389,6 +1392,13 @@ class FirestoreService {
           .doc(checklist.id)
           .set(data, SetOptions(merge: true));
     }, action: 'Error saving delivery checklist');
+  }
+
+  Future<RepositoryWriteResult> syncDeliveryChecklist(
+    dynamic checklist,
+    String userId,
+  ) {
+    return saveDeliveryChecklist(checklist, userId);
   }
 
   /// Get delivery checklist from cloud
@@ -1796,13 +1806,23 @@ class FirestoreService {
       int dogsMigrated = 0;
       int littersMigrated = 0;
       int showResultsMigrated = 0;
+      bool hadFailures = false;
+
+      void recordMigrationFailure(String message, Object error) {
+        hadFailures = true;
+        debugPrint('$message: $error');
+      }
 
       for (final baseDoc in oldBaseDocs) {
         // ── Dogs ────────────────────────────────────────────────────────────
         try {
           final dogsSnap = await baseDoc.collection('dogs').get();
           for (final dogDoc in dogsSnap.docs) {
-            final data = {...dogDoc.data(), ...ownership};
+            final data = {
+              ...dogDoc.data(),
+              ...ownership,
+              'isDeleted': dogDoc.data()['isDeleted'] ?? false,
+            };
             await _firestore
                 .collection('dogs')
                 .doc(dogDoc.id)
@@ -1810,67 +1830,117 @@ class FirestoreService {
             dogsMigrated++;
           }
         } catch (e) {
-          debugPrint('[MIGRATE] Error migrating dogs from ${baseDoc.path}: $e');
+          recordMigrationFailure(
+            '[MIGRATE] Error migrating dogs from ${baseDoc.path}',
+            e,
+          );
         }
 
-        // ── Litters (+ puppies subcollection) ────────────────────────────────
+        // ── Litters (+ child records) ────────────────────────────────────────
         try {
           final littersSnap = await baseDoc.collection('litters').get();
           for (final litterDoc in littersSnap.docs) {
-            final data = {...litterDoc.data(), ...ownership};
+            final data = {
+              ...litterDoc.data(),
+              ...ownership,
+              'isDeleted': litterDoc.data()['isDeleted'] ?? false,
+            };
             final newLitterRef =
                 _firestore.collection('litters').doc(litterDoc.id);
             await newLitterRef.set(data, SetOptions(merge: true));
             littersMigrated++;
 
-            // Migrate puppies subcollection
+            // Migrate puppies subcollection into the flat root collection.
             try {
               final puppiesSnap = await litterDoc.reference
                   .collection('puppies')
                   .get();
               for (final puppyDoc in puppiesSnap.docs) {
-                await newLitterRef
+                final puppyData = {
+                  ...puppyDoc.data(),
+                  ...ownership,
+                  'id': puppyDoc.id,
+                  'litterId': litterDoc.id,
+                  'isDeleted': puppyDoc.data()['isDeleted'] ?? false,
+                };
+                await _firestore
                     .collection('puppies')
                     .doc(puppyDoc.id)
-                    .set(puppyDoc.data(), SetOptions(merge: true));
+                    .set(puppyData, SetOptions(merge: true));
               }
-            } catch (_) {}
+            } catch (e) {
+              recordMigrationFailure(
+                '[MIGRATE] Error migrating puppies for ${litterDoc.reference.path}',
+                e,
+              );
+            }
 
-            // Migrate temperature_records subcollection
+            // Migrate temperature_records subcollection into the flat root collection.
             try {
               final tempSnap = await litterDoc.reference
                   .collection('temperature_records')
                   .get();
               for (final tempDoc in tempSnap.docs) {
-                await newLitterRef
+                final tempData = {
+                  ...tempDoc.data(),
+                  ...ownership,
+                  'id': tempDoc.id,
+                  'litterId': litterDoc.id,
+                  'isDeleted': tempDoc.data()['isDeleted'] ?? false,
+                };
+                await _firestore
                     .collection('temperature_records')
                     .doc(tempDoc.id)
-                    .set(tempDoc.data(), SetOptions(merge: true));
+                    .set(tempData, SetOptions(merge: true));
               }
-            } catch (_) {}
+            } catch (e) {
+              recordMigrationFailure(
+                '[MIGRATE] Error migrating temperature_records for ${litterDoc.reference.path}',
+                e,
+              );
+            }
 
-            // Migrate gallery_images subcollection
+            // Migrate gallery_images subcollection into the flat root collection.
             try {
               final gallerySnap = await litterDoc.reference
                   .collection('gallery_images')
                   .get();
               for (final imgDoc in gallerySnap.docs) {
-                await newLitterRef
+                final imageData = {
+                  ...imgDoc.data(),
+                  ...ownership,
+                  'id': imgDoc.id,
+                  'litterId': litterDoc.id,
+                  'isDeleted': imgDoc.data()['isDeleted'] ?? false,
+                };
+                await _firestore
                     .collection('gallery_images')
                     .doc(imgDoc.id)
-                    .set(imgDoc.data(), SetOptions(merge: true));
+                    .set(imageData, SetOptions(merge: true));
               }
-            } catch (_) {}
+            } catch (e) {
+              recordMigrationFailure(
+                '[MIGRATE] Error migrating gallery_images for ${litterDoc.reference.path}',
+                e,
+              );
+            }
           }
         } catch (e) {
-          debugPrint('[MIGRATE] Error migrating litters from ${baseDoc.path}: $e');
+          recordMigrationFailure(
+            '[MIGRATE] Error migrating litters from ${baseDoc.path}',
+            e,
+          );
         }
 
         // ── Show results ─────────────────────────────────────────────────────
         try {
           final showSnap = await baseDoc.collection('show_results').get();
           for (final showDoc in showSnap.docs) {
-            final data = {...showDoc.data(), ...ownership};
+            final data = {
+              ...showDoc.data(),
+              ...ownership,
+              'isDeleted': showDoc.data()['isDeleted'] ?? false,
+            };
             await _firestore
                 .collection('show_results')
                 .doc(showDoc.id)
@@ -1878,9 +1948,24 @@ class FirestoreService {
             showResultsMigrated++;
           }
         } catch (e) {
-          debugPrint(
-              '[MIGRATE] Error migrating show_results from ${baseDoc.path}: $e');
+          recordMigrationFailure(
+            '[MIGRATE] Error migrating show_results from ${baseDoc.path}',
+            e,
+          );
         }
+      }
+
+      if (hadFailures) {
+        await flagRef.set({
+          'done': false,
+          'lastAttemptAt': FieldValue.serverTimestamp(),
+          'dogsMigrated': dogsMigrated,
+          'littersMigrated': littersMigrated,
+          'showResultsMigrated': showResultsMigrated,
+        }, SetOptions(merge: true));
+        return RepositoryWriteResult.failure(
+          message: 'Migration incomplete; will retry on next startup',
+        );
       }
 
       // Mark migration as done
@@ -2104,5 +2189,15 @@ class FirestoreService {
       );
     }
   }
+}
+
+class CloudSyncService extends FirestoreService {
+  static final CloudSyncService _instance = CloudSyncService._internal();
+
+  factory CloudSyncService() {
+    return _instance;
+  }
+
+  CloudSyncService._internal() : super._internal();
 }
 
