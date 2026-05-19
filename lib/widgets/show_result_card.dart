@@ -6,19 +6,19 @@ import 'package:flutter/rendering.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:peddex/utils/platform_image.dart';
-import 'package:peddex/utils/web_download.dart';
+import 'package:breedly/utils/platform_image.dart';
+import 'package:breedly/utils/web_download.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:peddex/models/dog.dart';
-import 'package:peddex/models/show_result.dart';
-import 'package:peddex/services/auth_service.dart';
-import 'package:peddex/services/cloud_sync_service.dart';
-import 'package:peddex/utils/app_theme.dart';
-import 'package:peddex/utils/theme_colors.dart';
-import 'package:peddex/generated_l10n/app_localizations.dart';
-import 'package:peddex/utils/performance_telemetry.dart';
+import 'package:breedly/models/dog.dart';
+import 'package:breedly/models/show_result.dart';
+import 'package:breedly/services/auth_service.dart';
+import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/utils/performance_telemetry.dart';
 
 /// Generates a shareable show result card image
 class ShowResultCardScreen extends StatefulWidget {
