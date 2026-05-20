@@ -181,6 +181,9 @@ class SubscriptionService {
 
   /// Restore purchases (e.g. after reinstall)
   Future<bool> restorePurchases() async {
+    if (!_isInitialized) {
+      await initialize();
+    }
     if (!_isInitialized) return false;
     try {
       final customerInfo = await Purchases.restorePurchases();
