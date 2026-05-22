@@ -5,6 +5,62 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isKennelMember(kennelId) {
+      return kennelId is string
+        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+    }
+
+    function isPrivateOwner(data) {
+      return data.keys().hasAll(['ownerId'])
+        && data.ownerId == request.auth.uid
+        && (!data.keys().hasAny(['kennelId']) || data.kennelId == null);
+    }
+
+    function isKennelRecord(data) {
+      return data.keys().hasAll(['kennelId'])
+        && isKennelMember(data.kennelId);
+    }
+
+    function canAccessOwnedRecord(data) {
+      return signedIn() && (isPrivateOwner(data) || isKennelRecord(data));
+    }
+
+    function isFlatOwnedCollection(collectionId) {
+      return collectionId in [
+        'dogs',
+        'litters',
+        'puppies',
+        'buyers',
+        'show_results',
+        'expenses',
+        'income',
+        'health_info',
+        'vaccines',
+        'matings',
+        'vet_visits',
+        'medical_treatments',
+        'dna_tests',
+        'weight_records',
+        'progesterone_measurements',
+        'heat_cycles',
+        'gallery_images',
+        'puppy_weight_logs',
+        'temperature_records',
+        'contracts',
+        'treatment_plans',
+        'delivery_checklists',
+        'breeding_contracts',
+        'co_ownership_contracts',
+        'foster_contracts',
+        'reservation_contracts',
+        'custom_terms',
+        'kennel_settings'
+      ];
+    }
 
     // ——— User document (profile) and all user data subcollections
     match /users/{userId} {
@@ -35,6 +91,19 @@ service cloud.firestore {
     // ——— Invitations (join-by-code): authenticated users only
     match /invitations/{inviteId} {
       allow read, write: if request.auth != null;
+    }
+
+    // ——— Flat owned collections introduced by the client data-model migration
+    match /{collectionId}/{docId} {
+      allow read: if isFlatOwnedCollection(collectionId)
+        && canAccessOwnedRecord(resource.data);
+      allow create: if isFlatOwnedCollection(collectionId)
+        && canAccessOwnedRecord(request.resource.data);
+      allow update: if isFlatOwnedCollection(collectionId)
+        && canAccessOwnedRecord(resource.data)
+        && canAccessOwnedRecord(request.resource.data);
+      allow delete: if isFlatOwnedCollection(collectionId)
+        && canAccessOwnedRecord(resource.data);
     }
   }
 }
