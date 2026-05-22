@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:peddex/services/subscription_service.dart';
-import 'package:peddex/services/promo_code_service.dart';
+import 'package:breedly/services/subscription_service.dart';
+import 'package:breedly/services/promo_code_service.dart';
 
 /// Provider that manages subscription state across the app
 class SubscriptionProvider extends ChangeNotifier {

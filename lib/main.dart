@@ -12,29 +12,32 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:peddex/generated_l10n/app_localizations.dart';
-import 'package:peddex/screens/main_navigation_screen.dart';
-import 'package:peddex/screens/login_screen.dart';
-import 'package:peddex/screens/sign_up_screen.dart';
-import 'package:peddex/screens/onboarding_screen.dart';
-import 'package:peddex/screens/web_landing_screen.dart';
-import 'package:peddex/services/subscription_service.dart';
-import 'package:peddex/screens/paywall_screen.dart';
-import 'package:peddex/utils/notification_service.dart';
-import 'package:peddex/providers/language_provider.dart';
-import 'package:peddex/providers/theme_provider.dart';
-import 'package:peddex/providers/kennel_provider.dart';
-import 'package:peddex/services/auth_service.dart';
-import 'package:peddex/services/web_push_service.dart';
-import 'package:peddex/services/fcm_token_service.dart';
-import 'package:peddex/services/cloud_sync_service.dart';
-import 'package:peddex/providers/subscription_provider.dart';
-import 'package:peddex/providers/progesterone_unit_provider.dart';
-import 'package:peddex/widgets/startup_gate.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:breedly/generated_l10n/app_localizations.dart';
+import 'package:breedly/screens/main_navigation_screen.dart';
+import 'package:breedly/screens/login_screen.dart';
+import 'package:breedly/screens/sign_up_screen.dart';
+import 'package:breedly/screens/onboarding_screen.dart';
+import 'package:breedly/screens/web_landing_screen.dart';
+import 'package:breedly/services/subscription_service.dart';
+import 'package:breedly/screens/paywall_screen.dart';
+import 'package:breedly/utils/hive_initializer.dart';
+import 'package:breedly/utils/notification_service.dart';
+import 'package:breedly/providers/language_provider.dart';
+import 'package:breedly/providers/theme_provider.dart';
+import 'package:breedly/providers/kennel_provider.dart';
+import 'package:breedly/services/auth_service.dart';
+import 'package:breedly/services/offline_mode_manager.dart';
+import 'package:breedly/services/web_push_service.dart';
+import 'package:breedly/services/fcm_token_service.dart';
+import 'package:breedly/services/cloud_sync_service.dart';
+import 'package:breedly/providers/subscription_provider.dart';
+import 'package:breedly/providers/progesterone_unit_provider.dart';
+import 'package:breedly/widgets/startup_gate.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:peddex/services/web_reload_stub.dart'
-    if (dart.library.html) 'package:peddex/services/web_reload_web.dart' as web_reload;
+import 'package:breedly/services/web_reload_stub.dart'
+    if (dart.library.html) 'package:breedly/services/web_reload_web.dart' as web_reload;
 import 'firebase_options.dart';
 
 @pragma('vm:entry-point')
@@ -127,11 +130,31 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
 
+  // Existing screens still read Hive boxes directly; initialize them before UI.
+  await Hive.initFlutter();
+  try {
+    await initializeHive();
+  } catch (e) {
+    debugPrint('Hive initialization error: $e');
+    try {
+      await initializeHive();
+    } catch (e2) {
+      debugPrint('Hive re-initialization error: $e2');
+    }
+  }
+
   // Initialize notifications (wrapped in try-catch for release safety)
   try {
     await NotificationService().initialize();
   } catch (e) {
     debugPrint('Notification initialization error: $e');
+  }
+
+  final offlineModeManager = OfflineModeManager();
+  try {
+    await offlineModeManager.initialize();
+  } catch (e) {
+    debugPrint('OfflineModeManager initialization error: $e');
   }
   
   // Enable Firestore offline persistence as the sole offline mechanism.
@@ -170,6 +193,7 @@ void main() async {
         ChangeNotifierProvider.value(value: kennelProvider),
         ChangeNotifierProvider.value(value: subscriptionProvider),
         ChangeNotifierProvider.value(value: progesteroneUnitProvider),
+        Provider.value(value: offlineModeManager),
       ],
       child: const MyApp(),
     ),
@@ -381,8 +405,7 @@ class _MyAppState extends State<MyApp> {
                   if (_initializedForUserId != user.uid) {
                     _initializedForUserId = user.uid;
                     WidgetsBinding.instance.addPostFrameCallback((_) async {
-                      // Start subscription init immediately
-                      subscriptionProvider.initialize(user.uid);
+                      await subscriptionProvider.initialize(user.uid);
 
                       // Await kennel initialization
                       await kennelProvider.initialize(user.uid, user.email ?? '');
@@ -420,8 +443,7 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             onAuthenticated: (user) async {
-              // Start subscription initialization immediately.
-              subscriptionProvider.initialize(user.uid);
+              await subscriptionProvider.initialize(user.uid);
 
               // Block app content until kennel context is loaded.
               await kennelProvider.initialize(user.uid, user.email ?? '');
