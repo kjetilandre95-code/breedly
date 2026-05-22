@@ -1392,6 +1392,13 @@ class FirestoreService {
     }, action: 'Error saving delivery checklist');
   }
 
+  Future<RepositoryWriteResult> syncDeliveryChecklist(
+    dynamic checklist,
+    String userId,
+  ) {
+    return saveDeliveryChecklist(checklist, userId);
+  }
+
   /// Get delivery checklist from cloud
   Future<Map<String, dynamic>?> getDeliveryChecklist({
     required String userId,
