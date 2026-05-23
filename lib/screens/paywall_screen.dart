@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
-import 'package:peddex/services/auth_service.dart';
-import 'package:peddex/services/subscription_service.dart';
-import 'package:peddex/utils/app_theme.dart';
-import 'package:peddex/utils/theme_colors.dart';
+import 'package:breedly/utils/lucide_icons.dart';
+import 'package:breedly/services/auth_service.dart';
+import 'package:breedly/services/subscription_service.dart';
+import 'package:breedly/utils/app_theme.dart';
+import 'package:breedly/utils/theme_colors.dart';
 
 class PaywallScreen extends StatefulWidget {
   final VoidCallback? onSubscribed;

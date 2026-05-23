@@ -5,36 +5,184 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isKennelMember(kennelId) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+    }
+
+    function currentMember(kennelId) {
+      return get(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid)).data;
+    }
+
+    function isKennelAdmin(kennelId) {
+      return isKennelMember(kennelId)
+        && currentMember(kennelId).role in ['owner', 'admin'];
+    }
+
+    function isKennelOwner(kennelId) {
+      return isKennelMember(kennelId)
+        && currentMember(kennelId).role == 'owner';
+    }
+
+    function validMemberPayload(kennelId, memberId) {
+      return request.resource.data.userId == memberId
+        && request.resource.data.kennelId == kennelId
+        && request.resource.data.role in ['owner', 'admin', 'member'];
+    }
+
+    function isOwnerBootstrap(kennelId, memberId) {
+      return signedIn()
+        && request.auth.uid == memberId
+        && validMemberPayload(kennelId, memberId)
+        && request.resource.data.role == 'owner'
+        && get(/databases/$(database)/documents/breeding_groups/$(kennelId)).data.ownerId == request.auth.uid;
+    }
+
+    function invitedEmailMatches(invitation) {
+      return !('invitedEmail' in invitation)
+        || invitation.invitedEmail == null
+        || invitation.invitedEmail == ''
+        || invitation.invitedEmail == request.auth.token.email;
+    }
+
+    function canRedeemInvitation(invitation) {
+      return signedIn()
+        && invitation.isUsed == false
+        && invitedEmailMatches(invitation);
+    }
+
+    function invitePath(code) {
+      return /databases/$(database)/documents/invitations/$(code);
+    }
+
+    function validInvitationForMember(code, kennelId) {
+      let invitation = get(invitePath(code)).data;
+      let invitationAfter = getAfter(invitePath(code)).data;
+      return exists(invitePath(code))
+        && invitation.kennelId == kennelId
+        && invitation.role == request.resource.data.role
+        && canRedeemInvitation(invitation)
+        && invitationAfter.isUsed == true
+        && invitationAfter.usedByUserId == request.auth.uid;
+    }
+
+    function isInvitedMemberCreate(kennelId, memberId) {
+      return signedIn()
+        && request.auth.uid == memberId
+        && validMemberPayload(kennelId, memberId)
+        && request.resource.data.invitationCode is string
+        && validInvitationForMember(request.resource.data.invitationCode, kennelId);
+    }
+
+    function canAccessOwnedDoc(data) {
+      return signedIn()
+        && (
+          (data.ownerId == request.auth.uid
+            && (!('kennelId' in data) || data.kennelId == null || data.kennelId == ''))
+          || (data.kennelId is string
+            && data.kennelId != ''
+            && isKennelMember(data.kennelId))
+        );
+    }
+
+    function isFlatAppCollection(collection) {
+      return collection in [
+        'breeding_contracts',
+        'co_ownership_contracts',
+        'contracts',
+        'custom_terms',
+        'delivery_checklists',
+        'dna_tests',
+        'dogs',
+        'expenses',
+        'foster_contracts',
+        'gallery_images',
+        'health_info',
+        'heat_cycles',
+        'income',
+        'kennel_settings',
+        'litters',
+        'matings',
+        'medical_treatments',
+        'progesterone_measurements',
+        'puppies',
+        'puppy_weight_logs',
+        'reservation_contracts',
+        'show_results',
+        'temperature_records',
+        'treatment_plans',
+        'vaccines',
+        'vet_visits',
+        'weight_records'
+      ];
+    }
 
     // ——— User document (profile) and all user data subcollections
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if signedIn() && request.auth.uid == userId;
+    }
+    match /users/{userId}/kennels/{kennelId} {
+      allow read, write: if signedIn()
+        && (request.auth.uid == userId || isKennelAdmin(kennelId));
     }
     match /users/{userId}/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if signedIn() && request.auth.uid == userId;
     }
 
     // ——— Breeding groups (kennels): create allowed for any authenticated user; read/write only for members
     match /breeding_groups/{kennelId} {
-      allow create: if request.auth != null;
-      allow read, update, delete: if request.auth != null
-        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid;
+      allow read, update, delete: if isKennelMember(kennelId);
     }
-    // So the first member can be added when creating a kennel (you add yourself)
     match /breeding_groups/{kennelId}/members/{memberId} {
-      allow read, write: if request.auth != null
-        && (request.auth.uid == memberId
-            || exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid)));
+      allow get: if signedIn() && (request.auth.uid == memberId || isKennelMember(kennelId));
+      allow list: if isKennelMember(kennelId);
+      allow create: if isOwnerBootstrap(kennelId, memberId)
+        || isInvitedMemberCreate(kennelId, memberId);
+      allow update: if isKennelOwner(kennelId)
+        && resource.data.role != 'owner'
+        && validMemberPayload(kennelId, memberId);
+      allow delete: if isKennelOwner(kennelId)
+        || (signedIn() && request.auth.uid == memberId && resource.data.role != 'owner');
     }
     // All other subcollections at any depth (dogs, litters, puppies, weight_logs, buyers, etc.)
     match /breeding_groups/{kennelId}/{path=**} {
-      allow read, write: if request.auth != null
-        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+      allow read, write: if isKennelMember(kennelId);
     }
 
-    // ——— Invitations (join-by-code): authenticated users only
+    // ——— Invitations (join-by-code)
     match /invitations/{inviteId} {
-      allow read, write: if request.auth != null;
+      allow get: if isKennelMember(resource.data.kennelId)
+        || canRedeemInvitation(resource.data);
+      allow list: if isKennelMember(resource.data.kennelId);
+      allow create: if isKennelAdmin(request.resource.data.kennelId)
+        && request.resource.data.invitedByUserId == request.auth.uid
+        && request.resource.data.isUsed == false;
+      allow update: if isKennelAdmin(resource.data.kennelId)
+        || (
+          canRedeemInvitation(resource.data)
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['isUsed', 'usedByUserId', 'usedAt'])
+          && request.resource.data.isUsed == true
+          && request.resource.data.usedByUserId == request.auth.uid
+        );
+      allow delete: if isKennelAdmin(resource.data.kennelId);
+    }
+
+    // Flat app collections promoted by FirestoreService/PeddexRepository.
+    match /{collection}/{docId} {
+      allow create: if isFlatAppCollection(collection)
+        && canAccessOwnedDoc(request.resource.data);
+      allow read, delete: if isFlatAppCollection(collection)
+        && canAccessOwnedDoc(resource.data);
+      allow update: if isFlatAppCollection(collection)
+        && canAccessOwnedDoc(resource.data)
+        && canAccessOwnedDoc(request.resource.data);
     }
   }
 }
