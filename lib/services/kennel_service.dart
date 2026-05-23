@@ -342,20 +342,27 @@ class KennelService {
       photoUrl: user.photoURL,
     );
 
-    await _firestore
+    final normalizedCode = code.toUpperCase();
+    final batch = _firestore.batch();
+    final memberRef = _firestore
         .collection('breeding_groups')
         .doc(invitation.kennelId)
         .collection('members')
-        .doc(user.uid)
-        .set(member.toJson());
-
-    // Add kennel reference to user
-    await _firestore
+        .doc(user.uid);
+    final userKennelRef = _firestore
         .collection('users')
         .doc(user.uid)
         .collection('kennels')
-        .doc(invitation.kennelId)
-        .set({
+        .doc(invitation.kennelId);
+    final invitationRef = _firestore.collection('invitations').doc(normalizedCode);
+
+    batch.set(memberRef, {
+      ...member.toJson(),
+      'invitationCode': normalizedCode,
+    });
+
+    // Add kennel reference to user
+    batch.set(userKennelRef, {
       'kennelId': invitation.kennelId,
       'kennelName': invitation.kennelName,
       'role': invitation.role,
@@ -363,11 +370,13 @@ class KennelService {
     });
 
     // Mark invitation as used
-    await _firestore.collection('invitations').doc(code.toUpperCase()).update({
+    batch.update(invitationRef, {
       'isUsed': true,
       'usedByUserId': user.uid,
       'usedAt': DateTime.now().toIso8601String(),
     });
+
+    await batch.commit();
 
     // Set as active kennel
     _activeKennelId = invitation.kennelId;
