@@ -28,7 +28,17 @@ class SubscriptionService {
   // Entitlement identifier - must match RevenueCat dashboard
   static const String entitlementId = 'Peddex Pro';
 
-  Stream<bool> get isSubscribed => _isSubscribedController.stream;
+  Stream<bool> get isSubscribed {
+    return Stream<bool>.multi((controller) {
+      controller.add(_isSubscribed);
+      final subscription = _isSubscribedController.stream.listen(
+        controller.add,
+        onError: controller.addError,
+        onDone: controller.close,
+      );
+      controller.onCancel = subscription.cancel;
+    }, isBroadcast: true);
+  }
   bool get currentIsSubscribed => _isSubscribed;
 
   void _emitSubscriptionState(bool value) {
