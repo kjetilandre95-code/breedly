@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:peddex/providers/kennel_provider.dart';
-import 'package:peddex/services/auth_service.dart';
+import 'package:breedly/providers/kennel_provider.dart';
+import 'package:breedly/providers/subscription_provider.dart';
+import 'package:breedly/services/auth_service.dart';
+import 'package:breedly/services/subscription_service.dart';
 import 'package:provider/provider.dart';
 
 typedef AuthenticatedBuilder = Widget Function(BuildContext context, User user);
@@ -93,15 +95,21 @@ class _StartupGateState extends State<StartupGate> {
             if (kDebugMode) {
               return widget.authenticatedBuilder(context, user);
             }
+            final subscriptionProvider =
+                context.watch<SubscriptionProvider>();
+            final initialSubscribed =
+                SubscriptionService().currentIsSubscribed ||
+                    subscriptionProvider.isPremium;
             return StreamBuilder<bool>(
               stream: widget.isSubscribedStream,
-              initialData: false,
+              initialData: initialSubscribed,
               builder: (context, subscriptionSnapshot) {
                 if (subscriptionSnapshot.connectionState ==
                     ConnectionState.waiting) {
                   return const _StartupLoadingScreen();
                 }
-                final isSubscribed = subscriptionSnapshot.data ?? false;
+                final isSubscribed =
+                    subscriptionSnapshot.data ?? initialSubscribed;
                 if (!isSubscribed) {
                   return widget.paywallBuilder(context, user);
                 }

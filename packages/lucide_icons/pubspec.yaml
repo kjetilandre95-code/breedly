@@ -1,0 +1,11 @@
+name: lucide_icons
+description: Local compatibility shim for Lucide icon names used by Breedly.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.10.3
+
+dependencies:
+  flutter:
+    sdk: flutter
