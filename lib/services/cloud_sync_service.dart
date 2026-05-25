@@ -3,13 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:peddex/models/kennel_analytics.dart';
-import 'package:peddex/utils/logger.dart';
-import 'package:peddex/utils/ownership_helper.dart';
-import 'package:peddex/services/kennel_service.dart';
-import 'package:peddex/services/feed_service.dart';
-import 'package:peddex/repositories/generic_repository.dart';
-import 'package:peddex/repositories/peddex_repository.dart';
+import 'package:breedly/models/kennel_analytics.dart';
+import 'package:breedly/utils/logger.dart';
+import 'package:breedly/utils/ownership_helper.dart';
+import 'package:breedly/services/kennel_service.dart';
+import 'package:breedly/services/feed_service.dart';
+import 'package:breedly/repositories/generic_repository.dart';
+import 'package:breedly/repositories/peddex_repository.dart';
 
 class FirestoreService {
   static final FirestoreService _instance = FirestoreService._internal();
@@ -74,6 +74,18 @@ class FirestoreService {
     return {
       'ownerId': userId,
       'kennelId': (kennelId != null && kennelId.isNotEmpty) ? kennelId : null,
+    };
+  }
+
+  Map<String, dynamic> _activeData(
+    String userId,
+    Map<String, dynamic> data,
+  ) {
+    return {
+      ...data,
+      ..._ownershipFields(userId),
+      'isDeleted': data['isDeleted'] ?? false,
+      'updatedAt': FieldValue.serverTimestamp(),
     };
   }
 
@@ -325,11 +337,7 @@ class FirestoreService {
     required Map<String, dynamic> incomeData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...incomeData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, incomeData);
       await _firestore
           .collection('income')
           .doc(incomeId)
@@ -356,11 +364,7 @@ class FirestoreService {
     required Map<String, dynamic> expenseData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...expenseData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, expenseData);
       await _firestore
           .collection('expenses')
           .doc(expenseId)
@@ -426,11 +430,7 @@ class FirestoreService {
     required Map<String, dynamic> vaccineData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...vaccineData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, vaccineData);
       await _firestore
           .collection('vaccines')
           .doc(vaccineId)
@@ -607,11 +607,7 @@ class FirestoreService {
   }) async {
     return _executeWrite(() async {
       final docId = KennelService().activeKennelId ?? userId;
-      final data = {
-        ...profileData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, profileData);
       await _firestore
           .collection('kennel_settings')
           .doc(docId)
@@ -672,11 +668,7 @@ class FirestoreService {
     required Map<String, dynamic> matingData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...matingData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, matingData);
       await _firestore
           .collection('matings')
           .doc(matingId)
@@ -831,11 +823,7 @@ class FirestoreService {
     required Map<String, dynamic> contractData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...contractData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, contractData);
       await _firestore
           .collection('contracts')
           .doc(contractId)
@@ -874,13 +862,11 @@ class FirestoreService {
     required Map<String, dynamic> logData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...logData,
         'puppyId': puppyId,
         'litterId': litterId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('puppy_weight_logs')
           .doc(logId)
@@ -944,12 +930,10 @@ class FirestoreService {
     required Map<String, dynamic> measurementData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...measurementData,
         'dogId': dogId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('progesterone_measurements')
           .doc(measurementId)
@@ -997,12 +981,10 @@ class FirestoreService {
     required Map<String, dynamic> heatCycleData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...heatCycleData,
         'dogId': dogId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('heat_cycles')
           .doc(heatCycleId)
@@ -1047,11 +1029,7 @@ class FirestoreService {
     required Map<String, dynamic> showResultData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...showResultData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, showResultData);
       await _firestore
           .collection('show_results')
           .doc(showResultId)
@@ -1132,12 +1110,10 @@ class FirestoreService {
     required Map<String, dynamic> visitData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...visitData,
         'dogId': dogId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('vet_visits')
           .doc(visitId)
@@ -1195,12 +1171,10 @@ class FirestoreService {
     required Map<String, dynamic> treatmentData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...treatmentData,
         'dogId': dogId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('medical_treatments')
           .doc(treatmentId)
@@ -1258,12 +1232,10 @@ class FirestoreService {
     required Map<String, dynamic> testData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...testData,
         'dogId': dogId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('dna_tests')
           .doc(testId)
@@ -1321,12 +1293,10 @@ class FirestoreService {
     required Map<String, dynamic> recordData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...recordData,
         'dogId': dogId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('weight_records')
           .doc(recordId)
@@ -1380,15 +1350,22 @@ class FirestoreService {
     String userId,
   ) async {
     return _executeWrite(() async {
-      final data = <String, dynamic>{
-        ...(checklist.toJson() as Map<String, dynamic>),
-        ..._ownershipFields(userId),
-      };
+      final data = _activeData(
+        userId,
+        checklist.toJson() as Map<String, dynamic>,
+      );
       await _firestore
           .collection('delivery_checklists')
           .doc(checklist.id)
           .set(data, SetOptions(merge: true));
     }, action: 'Error saving delivery checklist');
+  }
+
+  Future<RepositoryWriteResult> syncDeliveryChecklist(
+    dynamic checklist,
+    String userId,
+  ) {
+    return saveDeliveryChecklist(checklist, userId);
   }
 
   /// Get delivery checklist from cloud
@@ -1431,11 +1408,7 @@ class FirestoreService {
     required Map<String, dynamic> treatmentPlanData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...treatmentPlanData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, treatmentPlanData);
       await _firestore
           .collection('treatment_plans')
           .doc(treatmentPlanId)
@@ -1472,11 +1445,7 @@ class FirestoreService {
     required Map<String, dynamic> contractData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...contractData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, contractData);
       await _firestore
           .collection('breeding_contracts')
           .doc(contractId)
@@ -1513,11 +1482,7 @@ class FirestoreService {
     required Map<String, dynamic> contractData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...contractData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, contractData);
       await _firestore
           .collection('co_ownership_contracts')
           .doc(contractId)
@@ -1554,11 +1519,7 @@ class FirestoreService {
     required Map<String, dynamic> contractData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...contractData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, contractData);
       await _firestore
           .collection('foster_contracts')
           .doc(contractId)
@@ -1595,11 +1556,7 @@ class FirestoreService {
     required Map<String, dynamic> contractData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...contractData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, contractData);
       await _firestore
           .collection('reservation_contracts')
           .doc(contractId)
@@ -1636,11 +1593,7 @@ class FirestoreService {
     required Map<String, dynamic> termData,
   }) async {
     return _executeWrite(() async {
-      final data = {
-        ...termData,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      final data = _activeData(userId, termData);
       await _firestore
           .collection('custom_terms')
           .doc(termId)
@@ -1679,12 +1632,10 @@ class FirestoreService {
     required Map<String, dynamic> imageData,
   }) async {
     return _executeWrite(() async {
-      final data = {
+      final data = _activeData(userId, {
         ...imageData,
         'litterId': litterId,
-        ..._ownershipFields(userId),
-        'updatedAt': FieldValue.serverTimestamp(),
-      };
+      });
       await _firestore
           .collection('gallery_images')
           .doc(imageId)
@@ -1756,6 +1707,119 @@ class FirestoreService {
 
   // ============ ONE-TIME MIGRATION ============
 
+  static const List<String> _flatCollectionsWithSoftDelete = [
+    'dogs',
+    'litters',
+    'puppies',
+    'buyers',
+    'show_results',
+    'income',
+    'expenses',
+    'health_info',
+    'vaccines',
+    'matings',
+    'contracts',
+    'puppy_weight_logs',
+    'progesterone_measurements',
+    'heat_cycles',
+    'vet_visits',
+    'medical_treatments',
+    'dna_tests',
+    'weight_records',
+    'delivery_checklists',
+    'treatment_plans',
+    'breeding_contracts',
+    'co_ownership_contracts',
+    'foster_contracts',
+    'reservation_contracts',
+    'custom_terms',
+    'gallery_images',
+    'temperature_records',
+    'kennel_settings',
+  ];
+
+  Map<String, dynamic> _migrationData(
+    Map<String, dynamic> data,
+    Map<String, dynamic> ownership, [
+    Map<String, dynamic> extra = const {},
+  ]) {
+    return {
+      ...data,
+      ...extra,
+      ...ownership,
+      'isDeleted': data['isDeleted'] ?? false,
+      'updatedAt': data['updatedAt'] ?? FieldValue.serverTimestamp(),
+    };
+  }
+
+  Query<Map<String, dynamic>> _tenantQuery(
+    String collectionName,
+    String userId,
+  ) {
+    final ownership = OwnershipHelper.fieldsForUser(userId);
+    final kennelId = ownership['kennelId'] as String?;
+    Query<Map<String, dynamic>> query = _firestore.collection(collectionName);
+    if (kennelId != null && kennelId.isNotEmpty) {
+      return query.where('kennelId', isEqualTo: kennelId);
+    }
+    return query.where('ownerId', isEqualTo: userId).where('kennelId', isNull: true);
+  }
+
+  Future<void> _backfillMissingIsDeleted(String userId) async {
+    final flagRef = _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('migration')
+        .doc('active_is_deleted_backfill_v1');
+    final flagDoc = await flagRef.get();
+    if (flagDoc.exists && flagDoc.data()?['done'] == true) return;
+
+    var updated = 0;
+    for (final collectionName in _flatCollectionsWithSoftDelete) {
+      final snap = await _tenantQuery(collectionName, userId).get();
+      WriteBatch? batch;
+      var pending = 0;
+      for (final doc in snap.docs) {
+        if (doc.data().containsKey('isDeleted')) continue;
+        batch ??= _firestore.batch();
+        batch.update(doc.reference, {'isDeleted': false});
+        pending++;
+        updated++;
+        if (pending == 450) {
+          await batch.commit();
+          batch = null;
+          pending = 0;
+        }
+      }
+      if (batch != null && pending > 0) {
+        await batch.commit();
+      }
+    }
+
+    await flagRef.set({
+      'done': true,
+      'completedAt': FieldValue.serverTimestamp(),
+      'updated': updated,
+    });
+  }
+
+  Future<int> _migrateTopLevelCollection({
+    required DocumentReference baseDoc,
+    required String collectionName,
+    required Map<String, dynamic> ownership,
+  }) async {
+    final snap = await baseDoc.collection(collectionName).get();
+    var migrated = 0;
+    for (final doc in snap.docs) {
+      await _firestore
+          .collection(collectionName)
+          .doc(doc.id)
+          .set(_migrationData(doc.data(), ownership), SetOptions(merge: true));
+      migrated++;
+    }
+    return migrated;
+  }
+
   /// Migrates dogs, litters, and show_results from the old nested paths
   /// (breeding_groups/{kennelId}/... or users/{userId}/...) to the new flat
   /// root collections (dogs/, litters/, show_results/).
@@ -1771,6 +1835,12 @@ class FirestoreService {
           .doc(userId)
           .collection('migration')
           .doc('flat_collections_v1');
+
+      try {
+        await _backfillMissingIsDeleted(userId);
+      } catch (e) {
+        debugPrint('[MIGRATE] active isDeleted backfill failed: $e');
+      }
 
       final flagDoc = await flagRef.get();
       if (flagDoc.exists && (flagDoc.data()?['done'] == true)) {
@@ -1796,13 +1866,14 @@ class FirestoreService {
       int dogsMigrated = 0;
       int littersMigrated = 0;
       int showResultsMigrated = 0;
+      int otherMigrated = 0;
 
       for (final baseDoc in oldBaseDocs) {
         // ── Dogs ────────────────────────────────────────────────────────────
         try {
           final dogsSnap = await baseDoc.collection('dogs').get();
           for (final dogDoc in dogsSnap.docs) {
-            final data = {...dogDoc.data(), ...ownership};
+            final data = _migrationData(dogDoc.data(), ownership);
             await _firestore
                 .collection('dogs')
                 .doc(dogDoc.id)
@@ -1817,7 +1888,7 @@ class FirestoreService {
         try {
           final littersSnap = await baseDoc.collection('litters').get();
           for (final litterDoc in littersSnap.docs) {
-            final data = {...litterDoc.data(), ...ownership};
+            final data = _migrationData(litterDoc.data(), ownership);
             final newLitterRef =
                 _firestore.collection('litters').doc(litterDoc.id);
             await newLitterRef.set(data, SetOptions(merge: true));
@@ -1829,10 +1900,17 @@ class FirestoreService {
                   .collection('puppies')
                   .get();
               for (final puppyDoc in puppiesSnap.docs) {
-                await newLitterRef
+                await _firestore
                     .collection('puppies')
                     .doc(puppyDoc.id)
-                    .set(puppyDoc.data(), SetOptions(merge: true));
+                    .set(
+                      _migrationData(
+                        puppyDoc.data(),
+                        ownership,
+                        {'litterId': litterDoc.id},
+                      ),
+                      SetOptions(merge: true),
+                    );
               }
             } catch (_) {}
 
@@ -1842,10 +1920,17 @@ class FirestoreService {
                   .collection('temperature_records')
                   .get();
               for (final tempDoc in tempSnap.docs) {
-                await newLitterRef
+                await _firestore
                     .collection('temperature_records')
                     .doc(tempDoc.id)
-                    .set(tempDoc.data(), SetOptions(merge: true));
+                    .set(
+                      _migrationData(
+                        tempDoc.data(),
+                        ownership,
+                        {'litterId': litterDoc.id},
+                      ),
+                      SetOptions(merge: true),
+                    );
               }
             } catch (_) {}
 
@@ -1855,10 +1940,17 @@ class FirestoreService {
                   .collection('gallery_images')
                   .get();
               for (final imgDoc in gallerySnap.docs) {
-                await newLitterRef
+                await _firestore
                     .collection('gallery_images')
                     .doc(imgDoc.id)
-                    .set(imgDoc.data(), SetOptions(merge: true));
+                    .set(
+                      _migrationData(
+                        imgDoc.data(),
+                        ownership,
+                        {'litterId': litterDoc.id},
+                      ),
+                      SetOptions(merge: true),
+                    );
               }
             } catch (_) {}
           }
@@ -1870,7 +1962,7 @@ class FirestoreService {
         try {
           final showSnap = await baseDoc.collection('show_results').get();
           for (final showDoc in showSnap.docs) {
-            final data = {...showDoc.data(), ...ownership};
+            final data = _migrationData(showDoc.data(), ownership);
             await _firestore
                 .collection('show_results')
                 .doc(showDoc.id)
@@ -1881,6 +1973,29 @@ class FirestoreService {
           debugPrint(
               '[MIGRATE] Error migrating show_results from ${baseDoc.path}: $e');
         }
+
+        for (final collectionName in _flatCollectionsWithSoftDelete) {
+          if (collectionName == 'dogs' ||
+              collectionName == 'litters' ||
+              collectionName == 'puppies' ||
+              collectionName == 'show_results' ||
+              collectionName == 'temperature_records' ||
+              collectionName == 'gallery_images' ||
+              collectionName == 'kennel_settings') {
+            continue;
+          }
+          try {
+            otherMigrated += await _migrateTopLevelCollection(
+              baseDoc: baseDoc,
+              collectionName: collectionName,
+              ownership: ownership,
+            );
+          } catch (e) {
+            debugPrint(
+              '[MIGRATE] Error migrating $collectionName from ${baseDoc.path}: $e',
+            );
+          }
+        }
       }
 
       // Mark migration as done
@@ -1890,10 +2005,11 @@ class FirestoreService {
         'dogsMigrated': dogsMigrated,
         'littersMigrated': littersMigrated,
         'showResultsMigrated': showResultsMigrated,
+        'otherMigrated': otherMigrated,
       });
 
       debugPrint(
-          '[MIGRATE] Done: $dogsMigrated dogs, $littersMigrated litters, $showResultsMigrated show results migrated to flat collections.');
+          '[MIGRATE] Done: $dogsMigrated dogs, $littersMigrated litters, $showResultsMigrated show results, $otherMigrated other records migrated to flat collections.');
       return RepositoryWriteResult.success();
     } catch (e) {
       // Migration is non-critical — app continues with whatever data is available
@@ -2105,4 +2221,6 @@ class FirestoreService {
     }
   }
 }
+
+typedef CloudSyncService = FirestoreService;
 

@@ -1,0 +1,11 @@
+name: gap
+description: Local compatibility shim for the Gap widget.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ^3.10.3
+
+dependencies:
+  flutter:
+    sdk: flutter
