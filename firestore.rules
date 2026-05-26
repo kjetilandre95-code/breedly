@@ -5,36 +5,216 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    function memberPath(kennelId, userId) {
+      return /databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(userId);
+    }
+
+    function kennelPath(kennelId) {
+      return /databases/$(database)/documents/breeding_groups/$(kennelId);
+    }
+
+    function isKennelMember(kennelId) {
+      return signedIn()
+        && kennelId is string
+        && exists(memberPath(kennelId, request.auth.uid));
+    }
+
+    function memberRole(kennelId) {
+      return get(memberPath(kennelId, request.auth.uid)).data.role;
+    }
+
+    function isKennelAdmin(kennelId) {
+      return isKennelMember(kennelId)
+        && memberRole(kennelId) in ['owner', 'admin'];
+    }
+
+    function isKennelOwner(kennelId) {
+      return isKennelMember(kennelId)
+        && memberRole(kennelId) == 'owner';
+    }
+
+    function isInvitee(invitation) {
+      return !invitation.keys().hasAny(['invitedEmail'])
+        || invitation.invitedEmail == null
+        || invitation.invitedEmail == ''
+        || invitation.invitedEmail == request.auth.token.email;
+    }
+
+    function canAcceptInvitation(invitation) {
+      return signedIn()
+        && invitation.isUsed == false
+        && isInvitee(invitation);
+    }
+
+    function invitePath(code) {
+      return /databases/$(database)/documents/invitations/$(code);
+    }
+
+    function hasValidInvitationForMember(kennelId, memberId) {
+      return signedIn()
+        && request.auth.uid == memberId
+        && request.resource.data.userId == memberId
+        && request.resource.data.kennelId == kennelId
+        && request.resource.data.keys().hasAny(['invitationCode'])
+        && exists(invitePath(request.resource.data.invitationCode))
+        && get(invitePath(request.resource.data.invitationCode)).data.kennelId == kennelId
+        && get(invitePath(request.resource.data.invitationCode)).data.role == request.resource.data.role
+        && canAcceptInvitation(get(invitePath(request.resource.data.invitationCode)).data);
+    }
+
+    function isInitialOwnerMember(kennelId, memberId) {
+      return signedIn()
+        && request.auth.uid == memberId
+        && request.resource.data.userId == memberId
+        && request.resource.data.kennelId == kennelId
+        && request.resource.data.role == 'owner'
+        && exists(kennelPath(kennelId))
+        && get(kennelPath(kennelId)).data.ownerId == request.auth.uid;
+    }
+
+    function isFlatOwnedCollection(collectionId) {
+      return collectionId in [
+        'dogs',
+        'litters',
+        'puppies',
+        'buyers',
+        'income',
+        'expenses',
+        'health_info',
+        'vaccines',
+        'kennel_settings',
+        'matings',
+        'contracts',
+        'puppy_weight_logs',
+        'temperature_records',
+        'progesterone_measurements',
+        'heat_cycles',
+        'show_results',
+        'vet_visits',
+        'medical_treatments',
+        'dna_tests',
+        'weight_records',
+        'delivery_checklists',
+        'treatment_plans',
+        'breeding_contracts',
+        'co_ownership_contracts',
+        'foster_contracts',
+        'reservation_contracts',
+        'custom_terms',
+        'gallery_images'
+      ];
+    }
+
+    function hasNoKennel(data) {
+      return !data.keys().hasAny(['kennelId']) || data.kennelId == null;
+    }
+
+    function canReadOwnedRecord(data) {
+      return signedIn()
+        && (
+          data.ownerId == request.auth.uid
+          || (data.kennelId is string && isKennelMember(data.kennelId))
+        );
+    }
+
+    function canCreateOwnedRecord(data) {
+      return signedIn()
+        && data.ownerId == request.auth.uid
+        && (
+          hasNoKennel(data)
+          || (data.kennelId is string && isKennelMember(data.kennelId))
+        );
+    }
+
+    function keepsOwnershipFields() {
+      return request.resource.data.ownerId == resource.data.ownerId
+        && (
+          (hasNoKennel(request.resource.data) && hasNoKennel(resource.data))
+          || request.resource.data.kennelId == resource.data.kennelId
+        );
+    }
 
     // ——— User document (profile) and all user data subcollections
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if isUser(userId);
+    }
+    match /users/{userId}/kennels/{kennelId} {
+      allow read: if isUser(userId);
+      allow create: if isUser(userId)
+        || (isKennelAdmin(kennelId) && request.resource.data.kennelId == kennelId);
+      allow update, delete: if isUser(userId) || isKennelAdmin(kennelId);
     }
     match /users/{userId}/{document=**} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if isUser(userId);
+    }
+
+    match /user_subscriptions/{userId} {
+      allow read: if isUser(userId);
+      allow write: if false;
     }
 
     // ——— Breeding groups (kennels): create allowed for any authenticated user; read/write only for members
     match /breeding_groups/{kennelId} {
-      allow create: if request.auth != null;
-      allow read, update, delete: if request.auth != null
-        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+      allow create: if signedIn()
+        && request.resource.data.ownerId == request.auth.uid;
+      allow read: if isKennelMember(kennelId);
+      allow update: if isKennelOwner(kennelId);
+      allow delete: if isKennelOwner(kennelId);
     }
-    // So the first member can be added when creating a kennel (you add yourself)
     match /breeding_groups/{kennelId}/members/{memberId} {
-      allow read, write: if request.auth != null
-        && (request.auth.uid == memberId
-            || exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid)));
+      allow read: if isKennelMember(kennelId);
+      allow create: if isInitialOwnerMember(kennelId, memberId)
+        || isKennelAdmin(kennelId)
+        || hasValidInvitationForMember(kennelId, memberId);
+      allow update: if isKennelAdmin(kennelId);
+      allow delete: if (isKennelAdmin(kennelId) && resource.data.role != 'owner')
+        || (isKennelOwner(kennelId) && request.auth.uid == memberId);
     }
     // All other subcollections at any depth (dogs, litters, puppies, weight_logs, buyers, etc.)
     match /breeding_groups/{kennelId}/{path=**} {
-      allow read, write: if request.auth != null
-        && exists(/databases/$(database)/documents/breeding_groups/$(kennelId)/members/$(request.auth.uid));
+      allow read, write: if isKennelMember(kennelId);
     }
 
     // ——— Invitations (join-by-code): authenticated users only
     match /invitations/{inviteId} {
-      allow read, write: if request.auth != null;
+      allow get: if signedIn();
+      allow list: if isKennelMember(resource.data.kennelId);
+      allow create: if signedIn()
+        && request.resource.data.kennelId is string
+        && isKennelAdmin(request.resource.data.kennelId)
+        && request.resource.data.invitedByUserId == request.auth.uid
+        && request.resource.data.isUsed == false
+        && request.resource.data.role in ['admin', 'member'];
+      allow update: if isKennelAdmin(resource.data.kennelId)
+        || (
+          canAcceptInvitation(resource.data)
+          && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['isUsed', 'usedByUserId', 'usedAt'])
+          && request.resource.data.isUsed == true
+          && request.resource.data.usedByUserId == request.auth.uid
+        );
+      allow delete: if isKennelAdmin(resource.data.kennelId);
+    }
+
+    // ——— Flat tenant-owned collections used by the sync layer
+    match /{collectionId}/{docId} {
+      allow read: if isFlatOwnedCollection(collectionId)
+        && canReadOwnedRecord(resource.data);
+      allow create: if isFlatOwnedCollection(collectionId)
+        && canCreateOwnedRecord(request.resource.data);
+      allow update: if isFlatOwnedCollection(collectionId)
+        && canReadOwnedRecord(resource.data)
+        && keepsOwnershipFields();
+      allow delete: if isFlatOwnedCollection(collectionId)
+        && canReadOwnedRecord(resource.data);
     }
   }
 }

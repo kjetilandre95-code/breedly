@@ -28,12 +28,20 @@ class SubscriptionService {
   // Entitlement identifier - must match RevenueCat dashboard
   static const String entitlementId = 'Peddex Pro';
 
-  Stream<bool> get isSubscribed => _isSubscribedController.stream;
+  Stream<bool> get isSubscribed async* {
+    yield _isSubscribed;
+    yield* _isSubscribedController.stream;
+  }
   bool get currentIsSubscribed => _isSubscribed;
 
   void _emitSubscriptionState(bool value) {
     _isSubscribed = value;
     _isSubscribedController.add(value);
+  }
+
+  /// Publish entitlement state from non-RevenueCat sources such as promo codes.
+  void setExternalSubscriptionState(bool value) {
+    _emitSubscriptionState(value);
   }
 
   /// Initialize RevenueCat SDK

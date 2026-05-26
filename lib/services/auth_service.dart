@@ -31,6 +31,8 @@ class AuthService {
   /// Get id token changes stream
   Stream<User?> get idTokenChanges => _firebaseAuth.idTokenChanges();
 
+  Future<void> handleGoogleRedirectResult() async {}
+
   /// Sign up with email and password
   Future<UserCredential> signUpWithEmail({
     required String email,

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:peddex/services/subscription_service.dart';
-import 'package:peddex/services/promo_code_service.dart';
+import 'package:breedly/services/subscription_service.dart';
+import 'package:breedly/services/promo_code_service.dart';
 
 /// Provider that manages subscription state across the app
 class SubscriptionProvider extends ChangeNotifier {
@@ -39,6 +39,7 @@ class SubscriptionProvider extends ChangeNotifier {
       if (!SubscriptionService.enabled) {
         _isPremium = true;
         _subscriptionSource = 'disabled';
+        _subscriptionService.setExternalSubscriptionState(true);
         _isLoading = false;
         _isInitialized = true;
         notifyListeners();
@@ -86,6 +87,7 @@ class SubscriptionProvider extends ChangeNotifier {
         if (details != null && details['expiresAt'] != null) {
           _expirationDate = (details['expiresAt'] as dynamic).toDate();
         }
+        _subscriptionService.setExternalSubscriptionState(true);
         notifyListeners();
         return;
       }
@@ -94,6 +96,7 @@ class SubscriptionProvider extends ChangeNotifier {
       _isPremium = false;
       _subscriptionSource = null;
       _expirationDate = null;
+      _subscriptionService.setExternalSubscriptionState(false);
       notifyListeners();
     } catch (e) {
       debugPrint('Refresh subscription status error: $e');
