@@ -347,7 +347,10 @@ class KennelService {
         .doc(invitation.kennelId)
         .collection('members')
         .doc(user.uid)
-        .set(member.toJson());
+        .set({
+      ...member.toJson(),
+      'invitationCode': code.toUpperCase(),
+    });
 
     // Add kennel reference to user
     await _firestore
