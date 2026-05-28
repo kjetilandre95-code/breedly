@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:peddex/repositories/generic_repository.dart';
-import 'package:peddex/utils/ownership_helper.dart';
+import 'package:breedly/repositories/generic_repository.dart';
+import 'package:breedly/utils/ownership_helper.dart';
 
 typedef PeddexFromJson<T> = T Function(Map<String, dynamic> json);
 typedef PeddexToJson<T> = Map<String, dynamic> Function(T entity);
@@ -49,7 +49,9 @@ class PeddexRepository<T> {
   }
 
   String _cacheKey(String userId, bool includeDeleted, int? limit) {
-    return '$userId|$includeDeleted|${limit ?? 'all'}';
+    final ownership = OwnershipHelper.fieldsForUser(userId);
+    final kennelId = ownership['kennelId'] as String?;
+    return '$userId|${kennelId ?? 'private'}|$includeDeleted|${limit ?? 'all'}';
   }
 
   Query<Map<String, dynamic>> baseQuery(
@@ -171,6 +173,7 @@ class PeddexRepository<T> {
         data: {
           ...data,
           'id': id,
+          'isDeleted': data['isDeleted'] ?? false,
           'updatedAt': FieldValue.serverTimestamp(),
         },
       );
