@@ -1757,7 +1757,8 @@ class FirestoreService {
 
   // ============ ONE-TIME MIGRATION ============
 
-  /// Migrates dogs, litters, and show_results from the old nested paths
+  /// Migrates dogs, litters, puppies, gallery images, temperature records,
+  /// and show_results from the old nested paths
   /// (breeding_groups/{kennelId}/... or users/{userId}/...) to the new flat
   /// root collections (dogs/, litters/, show_results/).
   ///
@@ -1771,11 +1772,11 @@ class FirestoreService {
           .collection('users')
           .doc(userId)
           .collection('migration')
-          .doc('flat_collections_v2');
+          .doc('flat_collections_v3');
 
       final flagDoc = await flagRef.get();
       if (flagDoc.exists && (flagDoc.data()?['done'] == true)) {
-        debugPrint('[MIGRATE] flat_collections_v2 already done — skipping');
+        debugPrint('[MIGRATE] flat_collections_v3 already done — skipping');
         return RepositoryWriteResult.success();
       }
 
@@ -1785,10 +1786,39 @@ class FirestoreService {
 
       // Build list of old base document references to migrate from
       final oldBaseDocs = <DocumentReference>[];
-      if (kennelId != null && kennelId.isNotEmpty) {
-        oldBaseDocs.add(_firestore.collection('breeding_groups').doc(kennelId));
+      final addedBasePaths = <String>{};
+      void addOldBaseDoc(DocumentReference doc) {
+        if (addedBasePaths.add(doc.path)) {
+          oldBaseDocs.add(doc);
+        }
       }
-      oldBaseDocs.add(_firestore.collection('users').doc(userId));
+
+      if (kennelId != null && kennelId.isNotEmpty) {
+        addOldBaseDoc(_firestore.collection('breeding_groups').doc(kennelId));
+      }
+      try {
+        final userKennels = await _firestore
+            .collection('users')
+            .doc(userId)
+            .collection('kennels')
+            .get();
+        for (final kennelDoc in userKennels.docs) {
+          final membershipKennelId =
+              kennelDoc.data()['kennelId'] as String? ?? kennelDoc.id;
+          if (membershipKennelId.isNotEmpty) {
+            addOldBaseDoc(
+              _firestore.collection('breeding_groups').doc(membershipKennelId),
+            );
+          }
+        }
+      } catch (e) {
+        debugPrint('[MIGRATE] Error loading user kennel memberships: $e');
+        return RepositoryWriteResult.failure(
+          message: 'Migration incomplete; will retry on next startup',
+          error: e,
+        );
+      }
+      addOldBaseDoc(_firestore.collection('users').doc(userId));
 
       int dogsMigrated = 0;
       int littersMigrated = 0;

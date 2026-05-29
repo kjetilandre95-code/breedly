@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -27,9 +28,11 @@ import 'package:breedly/providers/kennel_provider.dart';
 import 'package:breedly/services/auth_service.dart';
 import 'package:breedly/services/web_push_service.dart';
 import 'package:breedly/services/fcm_token_service.dart';
+import 'package:breedly/services/offline_mode_manager.dart';
 import 'package:breedly/services/cloud_sync_service.dart';
 import 'package:breedly/providers/subscription_provider.dart';
 import 'package:breedly/providers/progesterone_unit_provider.dart';
+import 'package:breedly/utils/hive_initializer.dart';
 import 'package:breedly/widgets/startup_gate.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -127,11 +130,32 @@ void main() async {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
 
+  // Initialize Hive before any providers/screens open boxes.
+  try {
+    await Hive.initFlutter();
+    await initializeHive();
+  } catch (e) {
+    debugPrint('Hive initialization error: $e');
+    try {
+      await initializeHive();
+    } catch (e2) {
+      debugPrint('Hive re-initialization error: $e2');
+    }
+  }
+
   // Initialize notifications (wrapped in try-catch for release safety)
   try {
     await NotificationService().initialize();
   } catch (e) {
     debugPrint('Notification initialization error: $e');
+  }
+
+  // Initialize connectivity status used by MainNavigationScreen.
+  final offlineModeManager = OfflineModeManager();
+  try {
+    await offlineModeManager.initialize();
+  } catch (e) {
+    debugPrint('OfflineModeManager initialization error: $e');
   }
   
   // Enable Firestore offline persistence as the sole offline mechanism.
@@ -170,6 +194,7 @@ void main() async {
         ChangeNotifierProvider.value(value: kennelProvider),
         ChangeNotifierProvider.value(value: subscriptionProvider),
         ChangeNotifierProvider.value(value: progesteroneUnitProvider),
+        Provider.value(value: offlineModeManager),
       ],
       child: const MyApp(),
     ),
