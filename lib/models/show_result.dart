@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
 part 'show_result.g.dart';
@@ -61,6 +62,18 @@ class ShowResult extends HiveObject {
   @HiveField(18)
   String? bisJudge; // BIS-dommer
 
+  @HiveField(19)
+  String? place;
+
+  @HiveField(20)
+  String? country;
+
+  @HiveField(21, defaultValue: false)
+  bool isDeleted = false;
+
+  @HiveField(22)
+  DateTime? updatedAt;
+
   ShowResult({
     required this.id,
     required this.dogId,
@@ -81,6 +94,10 @@ class ShowResult extends HiveObject {
     this.bestOfSexPlacement,
     this.groupJudge,
     this.bisJudge,
+    this.place,
+    this.country,
+    this.isDeleted = false,
+    this.updatedAt,
   });
 
   /// Sjekk om hunden ble BIR (kvalifisert for gruppefinale)
@@ -128,7 +145,19 @@ class ShowResult extends HiveObject {
       'bestOfSexPlacement': bestOfSexPlacement,
       'groupJudge': groupJudge,
       'bisJudge': bisJudge,
+      'place': place,
+      'country': country,
+      'isDeleted': isDeleted,
+      'updatedAt': updatedAt?.toIso8601String(),
     };
+  }
+
+  static DateTime? _parseOptionalDate(dynamic value) {
+    if (value == null) return null;
+    if (value is DateTime) return value;
+    if (value is Timestamp) return value.toDate();
+    if (value is String) return DateTime.tryParse(value);
+    return null;
   }
 
   /// Deserialize ShowResult from Firebase JSON
@@ -136,9 +165,7 @@ class ShowResult extends HiveObject {
     return ShowResult(
       id: json['id'] ?? '',
       dogId: json['dogId'] ?? '',
-      date: json['date'] != null 
-          ? DateTime.parse(json['date']) 
-          : DateTime.now(),
+      date: _parseOptionalDate(json['date']) ?? DateTime.now(),
       showName: json['showName'] ?? '',
       judge: json['judge'],
       showClass: json['showClass'] ?? 'Åpen',
@@ -157,6 +184,10 @@ class ShowResult extends HiveObject {
       bestOfSexPlacement: json['bestOfSexPlacement'],
       groupJudge: json['groupJudge'],
       bisJudge: json['bisJudge'],
+      place: json['place'],
+      country: json['country'],
+      isDeleted: json['isDeleted'] == true,
+      updatedAt: _parseOptionalDate(json['updatedAt']),
     );
   }
 }

@@ -18,7 +18,6 @@ import 'package:peddex/screens/login_screen.dart';
 import 'package:peddex/screens/sign_up_screen.dart';
 import 'package:peddex/screens/onboarding_screen.dart';
 import 'package:peddex/screens/web_landing_screen.dart';
-import 'package:peddex/services/subscription_service.dart';
 import 'package:peddex/screens/paywall_screen.dart';
 import 'package:peddex/utils/notification_service.dart';
 import 'package:peddex/providers/language_provider.dart';
@@ -381,8 +380,8 @@ class _MyAppState extends State<MyApp> {
                   if (_initializedForUserId != user.uid) {
                     _initializedForUserId = user.uid;
                     WidgetsBinding.instance.addPostFrameCallback((_) async {
-                      // Start subscription init immediately
-                      subscriptionProvider.initialize(user.uid);
+                      // Block startup until the entitlement source of truth is loaded.
+                      await subscriptionProvider.initialize(user.uid);
 
                       // Await kennel initialization
                       await kennelProvider.initialize(user.uid, user.email ?? '');
@@ -410,7 +409,6 @@ class _MyAppState extends State<MyApp> {
           )
         : StartupGate(
             authService: _authService,
-            isSubscribedStream: SubscriptionService().isSubscribed,
             paywallBuilder: (context, user) => PaywallScreen(
               allowDismiss: false,
               onDismissed: () {},
@@ -420,8 +418,8 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             onAuthenticated: (user) async {
-              // Start subscription initialization immediately.
-              subscriptionProvider.initialize(user.uid);
+              // Block startup until the entitlement source of truth is loaded.
+              await subscriptionProvider.initialize(user.uid);
 
               // Block app content until kennel context is loaded.
               await kennelProvider.initialize(user.uid, user.email ?? '');

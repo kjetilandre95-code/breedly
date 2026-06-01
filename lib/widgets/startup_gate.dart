@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:peddex/providers/kennel_provider.dart';
+import 'package:peddex/providers/subscription_provider.dart';
 import 'package:peddex/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,6 @@ class StartupGate extends StatefulWidget {
   final UserInitCallback onAuthenticated;
   final AuthenticatedBuilder authenticatedBuilder;
   final UnauthenticatedBuilder unauthenticatedBuilder;
-  final Stream<bool> isSubscribedStream;
   final PaywallBuilder paywallBuilder;
   final UserGuard? guard;
 
@@ -30,7 +30,6 @@ class StartupGate extends StatefulWidget {
     required this.onAuthenticated,
     required this.authenticatedBuilder,
     required this.unauthenticatedBuilder,
-    required this.isSubscribedStream,
     required this.paywallBuilder,
     this.guard,
   });
@@ -93,16 +92,13 @@ class _StartupGateState extends State<StartupGate> {
             if (kDebugMode) {
               return widget.authenticatedBuilder(context, user);
             }
-            return StreamBuilder<bool>(
-              stream: widget.isSubscribedStream,
-              initialData: false,
-              builder: (context, subscriptionSnapshot) {
-                if (subscriptionSnapshot.connectionState ==
-                    ConnectionState.waiting) {
+            return Consumer<SubscriptionProvider>(
+              builder: (context, subscriptionProvider, _) {
+                if (!subscriptionProvider.isInitialized ||
+                    subscriptionProvider.isLoading) {
                   return const _StartupLoadingScreen();
                 }
-                final isSubscribed = subscriptionSnapshot.data ?? false;
-                if (!isSubscribed) {
+                if (!subscriptionProvider.isPremium) {
                   return widget.paywallBuilder(context, user);
                 }
                 return widget.authenticatedBuilder(context, user);

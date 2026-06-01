@@ -70,7 +70,12 @@ class PeddexRepository<T> {
     }
 
     if (!includeDeleted) {
-      query = query.where('isDeleted', isEqualTo: false);
+      query = query.where(
+        Filter.or(
+          Filter('isDeleted', isEqualTo: false),
+          Filter('isDeleted', isNull: true),
+        ),
+      );
     }
     if (limit != null && limit > 0) {
       query = query.limit(limit);
@@ -170,6 +175,7 @@ class PeddexRepository<T> {
         userId: userId,
         data: {
           ...data,
+          'isDeleted': data['isDeleted'] ?? false,
           'id': id,
           'updatedAt': FieldValue.serverTimestamp(),
         },
