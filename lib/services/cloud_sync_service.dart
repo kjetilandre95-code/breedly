@@ -1795,6 +1795,9 @@ class FirestoreService {
 
       int dogsMigrated = 0;
       int littersMigrated = 0;
+      int puppiesMigrated = 0;
+      int temperatureRecordsMigrated = 0;
+      int galleryImagesMigrated = 0;
       int showResultsMigrated = 0;
 
       for (final baseDoc in oldBaseDocs) {
@@ -1802,7 +1805,12 @@ class FirestoreService {
         try {
           final dogsSnap = await baseDoc.collection('dogs').get();
           for (final dogDoc in dogsSnap.docs) {
-            final data = {...dogDoc.data(), ...ownership};
+            final data = {
+              ...dogDoc.data(),
+              ...ownership,
+              'id': dogDoc.id,
+              'isDeleted': dogDoc.data()['isDeleted'] ?? false,
+            };
             await _firestore
                 .collection('dogs')
                 .doc(dogDoc.id)
@@ -1817,7 +1825,12 @@ class FirestoreService {
         try {
           final littersSnap = await baseDoc.collection('litters').get();
           for (final litterDoc in littersSnap.docs) {
-            final data = {...litterDoc.data(), ...ownership};
+            final data = {
+              ...litterDoc.data(),
+              ...ownership,
+              'id': litterDoc.id,
+              'isDeleted': litterDoc.data()['isDeleted'] ?? false,
+            };
             final newLitterRef =
                 _firestore.collection('litters').doc(litterDoc.id);
             await newLitterRef.set(data, SetOptions(merge: true));
@@ -1829,10 +1842,18 @@ class FirestoreService {
                   .collection('puppies')
                   .get();
               for (final puppyDoc in puppiesSnap.docs) {
-                await newLitterRef
+                final puppyData = {
+                  ...puppyDoc.data(),
+                  ...ownership,
+                  'id': puppyDoc.id,
+                  'litterId': litterDoc.id,
+                  'isDeleted': puppyDoc.data()['isDeleted'] ?? false,
+                };
+                await _firestore
                     .collection('puppies')
                     .doc(puppyDoc.id)
-                    .set(puppyDoc.data(), SetOptions(merge: true));
+                    .set(puppyData, SetOptions(merge: true));
+                puppiesMigrated++;
               }
             } catch (_) {}
 
@@ -1842,10 +1863,18 @@ class FirestoreService {
                   .collection('temperature_records')
                   .get();
               for (final tempDoc in tempSnap.docs) {
-                await newLitterRef
+                final tempData = {
+                  ...tempDoc.data(),
+                  ...ownership,
+                  'id': tempDoc.id,
+                  'litterId': litterDoc.id,
+                  'isDeleted': tempDoc.data()['isDeleted'] ?? false,
+                };
+                await _firestore
                     .collection('temperature_records')
                     .doc(tempDoc.id)
-                    .set(tempDoc.data(), SetOptions(merge: true));
+                    .set(tempData, SetOptions(merge: true));
+                temperatureRecordsMigrated++;
               }
             } catch (_) {}
 
@@ -1855,10 +1884,18 @@ class FirestoreService {
                   .collection('gallery_images')
                   .get();
               for (final imgDoc in gallerySnap.docs) {
-                await newLitterRef
+                final imageData = {
+                  ...imgDoc.data(),
+                  ...ownership,
+                  'id': imgDoc.id,
+                  'litterId': litterDoc.id,
+                  'isDeleted': imgDoc.data()['isDeleted'] ?? false,
+                };
+                await _firestore
                     .collection('gallery_images')
                     .doc(imgDoc.id)
-                    .set(imgDoc.data(), SetOptions(merge: true));
+                    .set(imageData, SetOptions(merge: true));
+                galleryImagesMigrated++;
               }
             } catch (_) {}
           }
@@ -1870,7 +1907,12 @@ class FirestoreService {
         try {
           final showSnap = await baseDoc.collection('show_results').get();
           for (final showDoc in showSnap.docs) {
-            final data = {...showDoc.data(), ...ownership};
+            final data = {
+              ...showDoc.data(),
+              ...ownership,
+              'id': showDoc.id,
+              'isDeleted': showDoc.data()['isDeleted'] ?? false,
+            };
             await _firestore
                 .collection('show_results')
                 .doc(showDoc.id)
@@ -1889,11 +1931,14 @@ class FirestoreService {
         'completedAt': FieldValue.serverTimestamp(),
         'dogsMigrated': dogsMigrated,
         'littersMigrated': littersMigrated,
+        'puppiesMigrated': puppiesMigrated,
+        'temperatureRecordsMigrated': temperatureRecordsMigrated,
+        'galleryImagesMigrated': galleryImagesMigrated,
         'showResultsMigrated': showResultsMigrated,
       });
 
       debugPrint(
-          '[MIGRATE] Done: $dogsMigrated dogs, $littersMigrated litters, $showResultsMigrated show results migrated to flat collections.');
+          '[MIGRATE] Done: $dogsMigrated dogs, $littersMigrated litters, $puppiesMigrated puppies, $temperatureRecordsMigrated temperature records, $galleryImagesMigrated gallery images, $showResultsMigrated show results migrated to flat collections.');
       return RepositoryWriteResult.success();
     } catch (e) {
       // Migration is non-critical — app continues with whatever data is available
